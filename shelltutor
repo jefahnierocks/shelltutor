@@ -1,0 +1,459 @@
+#!/usr/bin/env bash
+# shelltutor — a vimtutor-style introduction to the Unix shell.
+#
+# Usage:
+#   shelltutor            resume where you left off (or start fresh)
+#   shelltutor N          jump to lesson N (1 through 9)
+#   shelltutor -h         this help
+#
+# Inside each lesson, type 'next' at the shell prompt to advance,
+# or 'quit' to leave the tutor entirely. Progress is remembered.
+#
+# v3.3 changes vs v3:
+#   - Lesson screens tightened to fit a default 80x24 terminal.
+#   - ANSI color highlights the commands you should type, keystroke
+#     names (Ctrl+C, Tab), warnings, and paths. Auto-disabled when
+#     stdout is not a TTY or NO_COLOR is set (no-color.org).
+#   - Title + action footer styled in WYN OPS ember.
+#   - Welcome now explicitly defines what a prompt is and teaches
+#     navigation (next / prev / show / quit) upfront.
+#   - Command history (Up/Down arrow + Ctrl+R) split into its own
+#     Lesson 2 with a walkthrough of the (reverse-i-search) prompt.
+#   - In-tutor navigation: 'show' (redisplay current lesson),
+#     'prev' (go back), 'exit' aliased to 'quit'.
+#   - Lesson 1 teaches 'q' for leaving pagers, distinct from Ctrl+L.
+#   - Lesson 4's Ctrl+C drill points the user to 'show' so they can
+#     get instructions back after the screen fills with y's.
+
+set -u
+
+SANDBOX="${SHELLTUTOR_HOME:-$HOME/.shelltutor}"
+PROGRESS_FILE="$SANDBOX/.progress"
+
+# ANSI styling. Disabled when stdout isn't a TTY or NO_COLOR is set.
+if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+    H1=$'\e[1;38;5;208m'      # lesson title — bold orange (WYN OPS accent)
+    SUB=$'\e[1;38;5;244m'     # sub-section header — bold ash
+    CMD=$'\e[1;38;5;220m'     # command to type — bold gold
+    KEY=$'\e[38;5;208m'       # key combo — orange
+    EM=$'\e[1;38;5;196m'      # warning / emphasis — bold red
+    DIR=$'\e[38;5;109m'       # path / filename — steel
+    INSTR=$'\e[1;38;5;208m'   # action footer ("Type next.") — bold orange
+    DIM=$'\e[2m'              # dim — inline comments, faint examples
+    RST=$'\e[0m'              # reset
+else
+    H1= SUB= CMD= KEY= EM= DIR= INSTR= DIM= RST=
+fi
+
+# NOTE: do NOT `trap '' INT` here. SIG_IGN propagates across exec,
+# bash inherits it, and Ctrl+C breaks inside the practice subshell —
+# silently breaking Lesson 4's whole point. If the user Ctrl+Cs the
+# parent script between lessons, auto-resume recovers them next run.
+
+usage() {
+    cat <<EOF
+shelltutor — a vimtutor-style introduction to the Unix shell.
+
+Usage:
+  shelltutor            resume where you left off (or start fresh)
+  shelltutor N          jump to lesson N (1 through 9)
+  shelltutor -h         this help
+
+Sandbox folder: $SANDBOX
+EOF
+}
+
+setup_sandbox() {
+    mkdir -p "$SANDBOX"
+    if [ ! -f "$SANDBOX/poem.txt" ]; then
+        cat > "$SANDBOX/poem.txt" <<'POEM'
+The terminal is a quiet room.
+You speak to it, it answers back.
+Words have shapes here, and shapes have weight.
+A pipe is a doorway between rooms.
+POEM
+    fi
+    if [ ! -f "$SANDBOX/numbers.txt" ]; then
+        seq 1 50 > "$SANDBOX/numbers.txt"
+    fi
+    touch "$SANDBOX/.shelltutor_history"
+}
+
+save_progress() {
+    echo "$1" > "$PROGRESS_FILE" 2>/dev/null || true
+}
+
+read_progress() {
+    local n=0
+    if [ -f "$PROGRESS_FILE" ]; then
+        read -r n < "$PROGRESS_FILE" 2>/dev/null || n=0
+        [[ "$n" =~ ^[0-9]+$ ]] || n=0
+    fi
+    echo "$n"
+}
+
+# Drop into a real interactive bash in the sandbox folder.
+#
+# Key invariants:
+#   - `-i`          forces interactive mode (so --rcfile is honored).
+#   - `< /dev/tty`  reattaches stdin to the controlling terminal,
+#                   defeating the heredoc-EOF inheritance that
+#                   silently broke v1.
+#   - HISTFILE is sandboxed so tutor history doesn't pollute
+#     the user's real ~/.bash_history.
+practice() {
+    setup_sandbox  # self-heal in case files got deleted
+    bash --rcfile <(cat <<RCFILE
+[ -r /etc/bashrc ] && . /etc/bashrc
+
+cd "$SANDBOX"
+
+HISTFILE="$SANDBOX/.shelltutor_history"
+HISTSIZE=2000
+HISTFILESIZE=4000
+shopt -s histappend
+history -r 2>/dev/null || true
+PROMPT_COMMAND='history -a'
+
+PS1='shelltutor> '
+
+# Navigation: type these at the shelltutor> prompt. Each leaves the
+# practice subshell with a code the outer script interprets:
+#   0 = next     97 = show     98 = prev     99 = quit
+# Implemented as functions (not aliases) so alias chains can't recurse
+# — \`alias exit='exit 99'\` would expand to \`exit 99 99\`.
+# \`exit\` is overridden so it leaves the tutor as users expect.
+next()  { builtin exit  0; }
+prev()  { builtin exit 98; }
+show()  { builtin exit 97; }
+quit()  { builtin exit 99; }
+exit()  { builtin exit 99; }
+
+printf "\n${DIM}(Real shell.${RST}  ${CMD}next${RST}${DIM}=advance${RST}  ${CMD}prev${RST}${DIM}=back${RST}  ${CMD}show${RST}${DIM}=this lesson again${RST}  ${CMD}quit${RST}${DIM}=leave${RST}${DIM})${RST}\n\n"
+RCFILE
+) -i < /dev/tty
+    local code=$?
+    if [ "$code" -eq 99 ]; then
+        clear 2>/dev/null || true
+        echo "Bye. Run 'shelltutor' again to pick up where you left off."
+        exit 0
+    fi
+    return "$code"
+}
+
+lesson() {
+    clear 2>/dev/null || printf '\n'
+    cat
+    echo
+    practice
+    return $?
+}
+
+welcome() {
+    lesson <<EOF
+${H1}SHELL TUTOR${RST}
+
+A short hands-on tour of the Unix shell. Nine lessons. Each is a
+page followed by a real shell prompt where you try things.
+
+${SUB}WHAT'S A PROMPT?${RST}  The text the shell shows when ready for you
+to type — yours probably ends in ${KEY}\$${RST} or ${KEY}>${RST}. In this tutor:
+    ${DIM}shelltutor>${RST}
+
+${SUB}FOUR WORDS STEER THE TUTOR${RST} — learn these now:
+  ${CMD}next${RST}   advance to the next lesson
+  ${CMD}prev${RST}   go back one lesson
+  ${CMD}show${RST}   redisplay the current lesson (after a long output)
+  ${CMD}quit${RST}   leave the tutor (also: ${CMD}exit${RST}; progress is saved)
+
+Everything happens in ${DIR}~/.shelltutor${RST}; you cannot break anything.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to begin.${RST}
+EOF
+}
+
+lesson1() {
+    lesson <<EOF
+${H1}LESSON 1 — speaking to the shell${RST}
+
+${SUB}ECHO${RST} prints whatever you give it.
+  ${CMD}echo hello${RST}
+  ${CMD}echo "I am at the shell"${RST}     ${DIM}# quotes group words${RST}
+
+${SUB}KEYBOARD HABITS:${RST}
+  ${KEY}Up Arrow${RST}   recall the last command — more in Lesson 2
+  ${KEY}Tab${RST}        complete what you started — try ${CMD}ls /et${RST} then Tab
+  ${KEY}Tab Tab${RST}    list every match when there are several
+  ${KEY}Ctrl+L${RST}     clear the screen (when you're at a shell prompt)
+  ${KEY}q${RST}          leave a pager — ${DIM}:${RST} or ${DIM}--More--${RST} prompt, e.g. inside ${CMD}man${RST}
+
+${EM}Ctrl+C is the escape hatch.${RST} Stuck prompt, command running too
+long, something you want out of — press ${KEY}Ctrl+C${RST}. You will use it.
+
+${INSTR}▶ Try a few, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+lesson2() {
+    lesson <<EOF
+${H1}LESSON 2 — command history${RST}
+
+Every command you run is remembered. Two ways to bring an old one back.
+
+${SUB}1. STEP THROUGH IT.${RST}
+  ${KEY}Up Arrow${RST}     previous command at the prompt
+  ${KEY}Down Arrow${RST}   forward toward the present
+  ${KEY}Enter${RST}        run what's shown (or edit first)
+
+${SUB}2. SEARCH WITH Ctrl+R.${RST} Press ${KEY}Ctrl+R${RST}. The prompt becomes:
+    ${DIM}(reverse-i-search)\`':${RST}
+Type letters from an old command — say ${CMD}echo${RST}. Bash shows the
+most recent match after the colon:
+    ${DIM}(reverse-i-search)\`echo': echo hello${RST}
+Then:
+  ${KEY}Ctrl+R${RST}  next-older match     ${KEY}Enter${RST}  run it
+  ${KEY}Ctrl+G${RST}  cancel back          ${KEY}Esc${RST}    edit before running
+
+${INSTR}▶ Practice a few, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+lesson3() {
+    lesson <<EOF
+${H1}LESSON 3 — counting with wc${RST}
+
+${SUB}wc${RST} = word count, but it also counts lines and characters.
+A small file is waiting for you here: ${DIR}poem.txt${RST}.
+
+  ${CMD}cat poem.txt${RST}      ${DIM}# show its contents${RST}
+  ${CMD}wc poem.txt${RST}       ${DIM}# three numbers: lines, words, chars${RST}
+
+Flags pick one count:
+  ${CMD}wc -l poem.txt${RST}    ${DIM}# lines${RST}
+  ${CMD}wc -w poem.txt${RST}    ${DIM}# words${RST}
+  ${CMD}wc -c poem.txt${RST}    ${DIM}# characters${RST}
+
+Try a real system file. ${DIR}/etc/services${RST} lists every internet
+service the system knows about:
+  ${CMD}wc -l /etc/services${RST}
+  ${CMD}head /etc/services${RST}      ${DIM}# 'head' = first 10 lines${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson4() {
+    lesson <<EOF
+${H1}LESSON 4 — generating text${RST}
+
+The shell has commands that generate text on their own.
+
+${SUB}seq${RST} prints number sequences:
+  ${CMD}seq 1 10${RST}          ${DIM}# 1 through 10${RST}
+  ${CMD}seq 1 2 21${RST}        ${DIM}# count by twos${RST}
+  ${CMD}seq 5 -1 1${RST}        ${DIM}# count down${RST}
+
+${SUB}yes${RST} repeats text forever — careful. Pair with ${SUB}head${RST} to stop it:
+  ${CMD}yes "I am unstoppable" | head -n 12${RST}
+
+${EM}Now practice Ctrl+C on purpose.${RST} Run:
+  ${CMD}yes${RST}
+The screen fills with y's. Press ${KEY}Ctrl+C${RST}. It stops. Then type
+${CMD}show${RST} to bring these instructions back. Try it a few times.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson5() {
+    lesson <<EOF
+${H1}LESSON 5 — the pipe ( | )${RST}
+
+A pipe sends output of one command into the input of another. The
+symbol is ${CMD}|${RST} (Shift+Backslash). ${EM}Most important idea in Unix.${RST}
+
+  ${CMD}seq 1 1000000 | wc -l${RST}
+
+Generates a million numbers and counts them, in about a second.
+
+Counting non-file things:
+  ${CMD}ls /usr/bin | wc -l${RST}       ${DIM}# how many programs are installed${RST}
+  ${CMD}cat /etc/passwd | wc -l${RST}   ${DIM}# how many user accounts${RST}
+
+Pipes stack:
+  ${CMD}ls /usr/bin | sort | head${RST}      ${DIM}# list → sort → first 10${RST}
+  ${CMD}ls /usr/bin | grep ^a${RST}          ${DIM}# names starting with 'a'${RST}
+  ${CMD}ls /usr/bin | grep ^a | wc -l${RST}  ${DIM}# …and count them${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson6() {
+    lesson <<EOF
+${H1}LESSON 6 — redirection ( > >> < ) and globs ( * )${RST}
+
+A pipe sends output to another program. ${EM}Redirection sends it to a file.${RST}
+
+${SUB}>${RST}  replaces a file with the output:
+   ${CMD}echo hello > greeting.txt${RST}   ${EM}# overwrites — old contents gone${RST}
+${SUB}>>${RST} appends instead:
+   ${CMD}echo "another line" >> greeting.txt${RST}
+${SUB}<${RST}  feeds a file into a command:
+   ${CMD}wc -w < poem.txt${RST}
+
+Combine pipes with redirection:
+   ${CMD}ls /usr/bin | sort > programs.txt${RST}
+   ${CMD}wc -l programs.txt${RST}
+
+${SUB}*${RST} (glob) names many files at once:
+   ${CMD}ls *.txt${RST}     ${CMD}wc -l *.txt${RST}     ${CMD}cat *.txt${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson7() {
+    lesson <<EOF
+${H1}LESSON 7 — asking the computer about itself${RST}
+
+${SUB}Identity:${RST}
+  ${CMD}whoami${RST}     ${DIM}# what user am I?${RST}
+  ${CMD}hostname${RST}   ${DIM}# what is this computer?${RST}
+  ${CMD}pwd${RST}        ${DIM}# what folder am I in?${RST}
+  ${CMD}date${RST}       ${DIM}# what time is it?${RST}
+  ${CMD}uptime${RST}     ${DIM}# how long has it been on?${RST}
+
+${SUB}Resources${RST} (-h = human-readable):
+  ${CMD}free -h${RST}    ${DIM}# memory${RST}        ${CMD}df -h${RST}      ${DIM}# disk space${RST}
+
+${SUB}${DIR}/proc${RST}${SUB}${RST} is Linux's self-report folder. Files are made up
+when you read them:
+  ${CMD}cat /proc/cpuinfo | head${RST}
+  ${CMD}cat /proc/meminfo | head${RST}
+  ${CMD}ls /proc | grep ^[0-9] | wc -l${RST}   ${DIM}# running programs${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson8() {
+    lesson <<EOF
+${H1}LESSON 8 — making the terminal perform${RST}
+
+Uses extras that may not be installed: ${SUB}cowsay${RST}, ${SUB}figlet${RST}, ${SUB}lolcat${RST}. Skip
+any that says 'command not found'. To install:
+  ${CMD}sudo dnf install cowsay figlet lolcat${RST}
+
+  ${CMD}cowsay "hello human"${RST}        ${DIM}# a talking cow${RST}
+  ${CMD}figlet "BIG TEXT"${RST}           ${DIM}# huge ASCII letters${RST}
+  ${CMD}echo "rainbows" | lolcat${RST}    ${DIM}# rainbow output${RST}
+
+Same pipe idea from Lesson 5:
+  ${CMD}yes "I am the best" | head -5 | cowsay | lolcat${RST}
+  ${CMD}figlet "WHOA" | lolcat${RST}
+  ${CMD}seq 1 5 | cowsay | lolcat${RST}
+
+With redirection from Lesson 6:
+  ${CMD}figlet "MY SIGN" > sign.txt${RST}     ${CMD}cat sign.txt${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+EOF
+}
+
+lesson9() {
+    lesson <<EOF
+${H1}LESSON 9 — putting it together${RST}
+
+No new commands. Combine what you have learned.
+
+${SUB}9.1${RST}  Lines produced by ${CMD}seq 1 1000000${RST}?  ${DIM}Hint: pipe to a counter.${RST}
+${SUB}9.2${RST}  Programs in ${DIR}/usr/bin${RST} starting with 'a'?  ${DIM}Hint: ls, grep, wc.${RST}
+${SUB}9.3${RST}  Words in ${DIR}/etc/services${RST}?
+${SUB}9.4${RST}  Make ${DIR}programs.txt${RST} — every program in ${DIR}/usr/bin${RST}, sorted
+     alphabetically; count its lines.  ${DIM}Hint: ls, sort, > , wc.${RST}
+${SUB}9.5${RST}  Free play. Try these and see what changes:
+       ${CMD}cat poem.txt numbers.txt${RST}     ${CMD}cat *.txt | wc -l${RST}
+       ${CMD}sort numbers.txt${RST}      ${CMD}sort -n numbers.txt${RST}
+     What is different between ${CMD}sort${RST} and ${CMD}sort -n${RST}, and why?
+
+${INSTR}▶ When you're done, type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+finale() {
+    clear 2>/dev/null || printf '\n'
+    cat <<EOF
+${H1}You finished the Shell Tutor.${RST}
+
+You have met:
+  ${SUB}commands${RST}   echo, cat, wc, seq, yes, head, sort, grep, ls,
+              whoami, hostname, pwd, date, uptime, free, df,
+              cowsay, figlet, lolcat ${DIM}(if installed)${RST}
+  ${SUB}keys${RST}       Tab, Up/Down Arrow, Ctrl+R, Ctrl+G, Ctrl+C, Ctrl+L
+  ${SUB}operators${RST}  ${CMD}|${RST} (pipe)   ${CMD}>${RST} (redirect)   ${CMD}*${RST} (glob)
+
+${SUB}What's next?${RST}
+  ${CMD}shelltutor 2${RST}      ${DIM}# replay a specific lesson${RST}
+  ${CMD}man wc${RST}            ${DIM}# manual for any command — press q to exit${RST}
+  ${CMD}vimtutor${RST}          ${DIM}# the same tutor, for the vim editor${RST}
+
+Commands sysadmins use daily:
+  ${CMD}htop${RST}                  ${DIM}# live dashboard of running programs${RST}
+  ${CMD}df -h${RST}                 ${DIM}# how full each disk is${RST}
+  ${CMD}du -sh ~/*${RST}            ${DIM}# size of each thing in your home${RST}
+  ${CMD}find . -name '*.txt'${RST}  ${DIM}# locate files by name${RST}
+
+Sandbox is at ${DIR}~/.shelltutor${RST} if you want to keep playing.
+
+EOF
+}
+
+main() {
+    local start
+    local explicit=0
+    case "${1:-}" in
+        -h|--help) usage; exit 0 ;;
+        '')
+            start=$(read_progress)
+            ;;
+        [1-9])
+            start=$1
+            explicit=1
+            ;;
+        *)
+            echo "shelltutor: lesson must be 1 through 9." >&2
+            usage >&2
+            exit 1
+            ;;
+    esac
+
+    setup_sandbox
+
+    local lessons=(welcome lesson1 lesson2 lesson3 lesson4 \
+                   lesson5 lesson6 lesson7 lesson8 lesson9 finale)
+    local total=${#lessons[@]}
+
+    if [ "$start" -ge "$total" ] || [ "$start" -lt 0 ]; then
+        start=0
+    fi
+
+    local i rc
+    for ((i=start; i<total; i++)); do
+        "${lessons[$i]}"
+        rc=$?
+        case "$rc" in
+            97)  ((i--)) ;;                         # show: redisplay current
+            98)  i=$((i > 0 ? i - 2 : -1)) ;;       # prev: go back one
+        esac
+
+        local next_i=$((i + 1))
+        if [ "$next_i" -lt "$total" ]; then
+            save_progress "$next_i"
+        fi
+    done
+
+    rm -f "$PROGRESS_FILE"
+}
+
+main "$@"
