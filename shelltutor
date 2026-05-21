@@ -14,7 +14,7 @@
 #   - ANSI color highlights the commands you should type, keystroke
 #     names (Ctrl+C, Tab), warnings, and paths. Auto-disabled when
 #     stdout is not a TTY or NO_COLOR is set (no-color.org).
-#   - Title + action footer styled in WYN OPS ember.
+#   - Title + action footer styled with a single accent color.
 #   - Welcome now explicitly defines what a prompt is and teaches
 #     navigation (next / prev / show / quit) upfront.
 #   - Command history (Up/Down arrow + Ctrl+R) split into its own
@@ -32,7 +32,7 @@ PROGRESS_FILE="$SANDBOX/.progress"
 
 # ANSI styling. Disabled when stdout isn't a TTY or NO_COLOR is set.
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
-    H1=$'\e[1;38;5;208m'      # lesson title — bold orange (WYN OPS accent)
+    H1=$'\e[1;38;5;208m'      # lesson title — bold orange accent
     SUB=$'\e[1;38;5;244m'     # sub-section header — bold ash
     CMD=$'\e[1;38;5;220m'     # command to type — bold gold
     KEY=$'\e[38;5;208m'       # key combo — orange
