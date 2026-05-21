@@ -1,0 +1,29 @@
+# Local runtime / environment state
+.env
+.env.*
+!.env.example
+.direnv/
+.cache/
+
+# Agent tool local state
+.claude/settings.local.json
+.claude/worktrees/
+.codex/auth.json
+
+# OS / editor / IDE noise
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+
+# Secrets and credentials
+*.key
+*.pem
+*.p12
+secrets.*
