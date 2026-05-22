@@ -348,7 +348,7 @@ show()  { builtin exit 97; }
 quit()  { builtin exit 99; }
 exit()  { builtin exit 99; }
 
-printf "\n${DIM}(Real shell.${RST}  ${CMD}next${RST}${DIM}=advance${RST}  ${CMD}show${RST}${DIM}=this screen again${RST}  ${CMD}quit${RST}${DIM}=leave${RST}${DIM}; ${RST}${CMD}check${RST}${DIM}=verify gate task)${RST}\n\n"
+printf "\n${DIM}(you're at a normal shell prompt now — try a command, then use ${RST}${CMD}next${DIM} to advance, ${RST}${CMD}show${DIM} to redisplay, ${RST}${CMD}prev${DIM} to go back, or ${RST}${CMD}quit${DIM} to leave)${RST}\n\n"
 RCFILE
 ) -i < /dev/tty
     local code=$?
@@ -704,6 +704,14 @@ run_stage1() {
             "$RC_NEXT")  ((i++)) ;;
             "$RC_SHOW")  : ;;
             "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            "$RC_CHECK")
+                # `check` only verifies a gate task; at a lesson it is
+                # a no-op. Print a one-line note, pause briefly so the
+                # learner can read it, then re-display the lesson via
+                # the loop's default (i unchanged).
+                printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                sleep 2
+                ;;
             *)         return "$rc" ;;
         esac
     done
@@ -899,6 +907,14 @@ run_stage2() {
             "$RC_NEXT")  ((i++)) ;;
             "$RC_SHOW")  : ;;
             "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            "$RC_CHECK")
+                # `check` only verifies a gate task; at a lesson it is
+                # a no-op. Print a one-line note, pause briefly so the
+                # learner can read it, then re-display the lesson via
+                # the loop's default (i unchanged).
+                printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                sleep 2
+                ;;
             *)         return "$rc" ;;
         esac
     done
@@ -1096,6 +1112,14 @@ run_stage3() {
             "$RC_NEXT")  ((i++)) ;;
             "$RC_SHOW")  : ;;
             "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            "$RC_CHECK")
+                # `check` only verifies a gate task; at a lesson it is
+                # a no-op. Print a one-line note, pause briefly so the
+                # learner can read it, then re-display the lesson via
+                # the loop's default (i unchanged).
+                printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                sleep 2
+                ;;
             *)         return "$rc" ;;
         esac
     done
@@ -1341,6 +1365,14 @@ run_stage4() {
             "$RC_NEXT")  ((i++)) ;;
             "$RC_SHOW")  : ;;
             "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            "$RC_CHECK")
+                # `check` only verifies a gate task; at a lesson it is
+                # a no-op. Print a one-line note, pause briefly so the
+                # learner can read it, then re-display the lesson via
+                # the loop's default (i unchanged).
+                printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                sleep 2
+                ;;
             *)         return "$rc" ;;
         esac
     done
@@ -1652,6 +1684,14 @@ run_stage5() {
             "$RC_NEXT")  ((i++)) ;;
             "$RC_SHOW")  : ;;
             "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            "$RC_CHECK")
+                # `check` only verifies a gate task; at a lesson it is
+                # a no-op. Print a one-line note, pause briefly so the
+                # learner can read it, then re-display the lesson via
+                # the loop's default (i unchanged).
+                printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                sleep 2
+                ;;
             *)         return "$rc" ;;
         esac
     done
