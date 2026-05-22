@@ -484,29 +484,40 @@ history_since() {
 
 stage1_intro() {
     lesson <<EOF
-${H1}STAGE 1 — Where am I?${RST}
+${H1}SHELLTUTOR${RST}  —  a vimtutor prerequisite course
 
-Five short screens, then a gate. The gate has three recall questions
-(all three must be correct) and one short task. You can retry as many
-times as you like.
+Welcome. A short hands-on course to prepare you for ${CMD}vimtutor${RST}.
+About 45 to 60 minutes, depending on how much you experiment.
 
-${SUB}WHAT'S A PROMPT?${RST}  The text the shell shows when it is ready
-for you to type. Yours probably ends in ${KEY}\$${RST} or ${KEY}>${RST}.
-In this tutor it is:
-    ${DIM}shelltutor>${RST}
+The course has ${SUB}five stages${RST}. Each stage is a few short
+lessons followed by a small task. Pass the task to advance — and
+retry as much as you like. No time pressure, no skip.
 
-${SUB}FIVE WORDS STEER THE TUTOR${RST}:
-  ${CMD}next${RST}   advance
-  ${CMD}prev${RST}   go back
-  ${CMD}show${RST}   re-display the current screen
-  ${CMD}quit${RST}   leave the tutor (progress is saved; also: ${CMD}exit${RST})
-  ${CMD}check${RST}  verify a gate task (only at a gate)
+${SUB}TWO PRACTICAL NOTES${RST}
 
-Your tutor work happens in ${DIR}${SANDBOX}${RST}.
-The practice prompts run as ordinary commands in your account, so the
-usual cautions apply. The tutor itself never reaches outside this folder.
+  ${SUB}Terminal size${RST}  Use a window at least 80 columns × 24 rows.
+                 Resize larger now if text wraps oddly.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 1.1.${RST}
+  ${SUB}The prompt${RST}     The small text the shell shows when it is ready
+                 for you to type. In this tutor it looks like:
+                     ${DIM}shelltutor>${RST}
+                 You type a command, press Enter, the shell runs it.
+                 You can't click into the middle of a line to move
+                 the cursor — terminals are keyboard-only.
+
+${SUB}FOUR WORDS STEER THE TUTOR${RST} at every screen:
+
+  ${CMD}next${RST}   advance              ${CMD}show${RST}   redisplay this screen
+  ${CMD}prev${RST}   go back              ${CMD}quit${RST}   leave (progress is saved; also: ${CMD}exit${RST})
+
+A fifth word, ${CMD}check${RST}, appears at gate tasks to verify your
+work — you'll see it when it matters.
+
+Your work happens in ${DIR}${SANDBOX}${RST}. Practice prompts run as
+ordinary commands in your account; the tutor never writes outside
+this folder.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to begin Stage 1.${RST}
 EOF
     return $?
 }
@@ -515,23 +526,31 @@ stage1_lesson_1() {
     lesson <<EOF
 ${H1}1.1 — running commands${RST}
 
-${SUB}ECHO${RST} prints whatever you give it.
-  ${CMD}echo hello${RST}
-  ${CMD}echo I am at the shell${RST}     ${DIM}# words separated by spaces${RST}
+You'll be at the practice prompt below in a moment. Try this:
 
-When a command finishes, the prompt returns. That return-to-prompt is
-how you know one command is done and the next one can start.
+  ${CMD}echo hello${RST}        ${DIM}# type those two words; press Enter${RST}
 
-${SUB}KEYBOARD HABITS${RST}:
-  ${KEY}Tab${RST}        complete what you started — try ${CMD}ls /et${RST} then Tab
-  ${KEY}Tab Tab${RST}    list every match when several apply
-  ${KEY}Ctrl+L${RST}     clear the screen
-  ${KEY}Up Arrow${RST}   recall the last command (more in Stage 4)
+You should see ${DIM}hello${RST} printed back, then the prompt returns.
+That return-to-prompt is your signal — the command is done, you can
+run another one. (${CMD}echo${RST} just prints back whatever you give it.)
 
-${EM}Ctrl+C is the escape hatch.${RST}  Stuck prompt, command running
-too long — press ${KEY}Ctrl+C${RST}. You will use it.
+Now try a few more:
+  ${CMD}echo I am at the shell${RST}     ${DIM}# spaces separate words${RST}
+  ${CMD}echo "I am at the shell"${RST}   ${DIM}# quotes keep them as one${RST}
 
-${INSTR}▶ Try a few echoes, then type ${CMD}next${INSTR}.${RST}
+${SUB}Four keyboard habits${RST} — try each a couple of times:
+
+  ${KEY}Tab${RST}        the shell finishes a word for you. Type ${CMD}ec${RST} then ${KEY}Tab${RST} —
+                it should fill in ${CMD}echo${RST} on its own.
+  ${KEY}Tab Tab${RST}    when several words could match, it lists them all.
+  ${KEY}Ctrl+L${RST}     clear the screen. To bring this lesson screen back
+                after Ctrl+L, type ${CMD}show${RST} at the prompt.
+  ${KEY}Up Arrow${RST}   recall the last command you ran (more in Stage 4).
+
+${EM}Ctrl+C is the escape hatch.${RST}  If a command runs too long or the
+prompt feels stuck, press ${KEY}Ctrl+C${RST}.  You will use it.
+
+${INSTR}▶ When you've tried a few, type ${CMD}next${INSTR} to continue.${RST}
 EOF
     return $?
 }
