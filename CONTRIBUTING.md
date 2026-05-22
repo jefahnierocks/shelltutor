@@ -27,15 +27,43 @@ aligned.
 ./shelltutor
 ```
 
-Walk the affected lesson surface. If you cannot run the tutor (no bash 4+,
+Walk the affected stage surface. If you cannot run the tutor (no bash 4+,
 unsupported terminal, etc.), state that verification is pending rather than
 implying success.
 
-If `shellcheck` is available, run it against the script:
+## Quality Gates
+
+Three checks are wrapped in `Makefile` and run locally without external
+infrastructure (CI activation is deferred per the GitHub Posture section
+below). The intent is a one-command pre-commit verification for
+contributors.
 
 ```bash
-shellcheck shelltutor
+make check       # FF-001 + FF-002 + FF-007 static analysis (always runs)
+make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
+make smoke       # FF-006 minimal smoke test (when implemented)
+make verify      # check + lint + smoke (full gate)
+make self-test   # exercise the checkers against built-in fixtures
 ```
+
+Each `make` target maps to a single audit fitness function so that a
+failure points back to a specific rule. The forbidden-pattern lists
+live in the scripts themselves (canonical source); the descriptions
+here are deliberately patternless so this document stays consistent
+with the rules it describes.
+
+| Target             | Rule (audit ID) | What it enforces |
+| ---                | ---             | --- |
+| `check-safety`     | FF-001          | the script does not invoke privilege-escalation, network, or remote-shell commands at runtime (lesson heredocs are exempt) — see `scripts/check-safety.sh` for the pattern list |
+| `check-safety`     | FF-002          | every write target resolves to a path under `$SANDBOX` or `$PROGRESS_FILE`; system-paths are blocked — see `scripts/check-safety.sh` |
+| `check-governance` | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
+| `lint`             | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
+| `smoke`            | FF-006          | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
+
+The checkers use `# nofitness:` line annotations for legitimate
+exceptions in the script. The Markdown checker skips fenced (` ``` `)
+code blocks so that pedagogical examples can demonstrate path shapes
+without being flagged.
 
 ## Portability Rules
 
