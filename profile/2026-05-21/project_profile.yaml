@@ -1,0 +1,747 @@
+# ---------- META ----------
+meta:
+  profile_version: "1.2"
+  generated_at: "2026-05-21T16:45:00-08:00"
+  snapshot_date: "2026-05-21"
+  generated_by: "shelltutor audit agent (Claude Code, Opus 4.7)"
+  directive_version: "project-profile-directive-v1.2"
+  audit_spec_target: "agentic-audit-spec-v3.1"
+  profile_mode: first-profile
+  previous_profile:
+    path: none
+    snapshot_date: none
+  repository_revision:
+    vcs: git
+    branch: main
+    revision: "e6257aa420b037139764c1f8f213853bd2574b92"
+  source_confidence: high
+
+# ---------- PROJECT ----------
+project:
+  name: shelltutor
+  kind: app
+  primary_purpose: |
+    Self-contained, single-file interactive tutor for the Unix shell. Teaches
+    the first ~15 commands a learner needs (pwd, ls, cd, cat, man, whoami,
+    hostname, date, uptime, df, free, and friends) through nine lessons,
+    each followed by a real bash subshell in a per-learner sandbox. Project
+    is intentionally user-agnostic: no operator name, host, distro, theme,
+    or pre-existing shell setup is assumed.
+  repository:
+    root: "/Users/verlyn13/Organizations/jefahnierocks/shelltutor"
+    remote: "git@github.com:jefahnierocks/shelltutor.git"
+    default_branch: main
+  deployable_units:
+    - name: shelltutor
+      path: shelltutor
+      kind: cli
+      runtime: "bash 4+"
+      entrypoint: shelltutor
+      evidence:
+        - path: shelltutor
+          lines: "1-2"
+          evidence: "#!/usr/bin/env bash | shelltutor — a vimtutor-style introduction to the Unix shell."
+        - path: shelltutor
+          lines: "412-459"
+          evidence: "main() dispatcher; -h flag; 1-9 lesson indices; default behaviour resumes from .progress."
+
+# ---------- STACK ----------
+stack:
+  languages:
+    - name: bash
+      share: primary
+      evidence:
+        - path: shelltutor
+          lines: "1"
+    - name: markdown
+      share: supporting
+      evidence:
+        - path: README.md
+          lines: "1-90"
+  runtimes:
+    - name: bash
+      version: "4+"
+      applies_to: [shelltutor]
+      evidence:
+        path: README.md
+        lines: "52-55"
+  frameworks: []
+  package_managers: []
+  build_tools: []
+  test_frameworks: []
+  eval_frameworks: []
+
+# ---------- INFRASTRUCTURE ----------
+infrastructure:
+  data_stores: []
+  caches: []
+  queues: []
+  workflow_engines: []
+  durable_execution: []
+  background_execution: []
+  callback_receivers: []
+  object_stores: []
+  vector_stores: []
+  retrieval_pipelines: []
+  external_services: []
+  model_providers: []
+  secrets_managers: []
+  observability_backends: []
+  policy_engines: []
+  computer_use_harnesses: []
+  browser_use_harnesses: []
+  local_development_infrastructure:
+    - name: "shelltutor sandbox"
+      role: "per-learner sandbox directory + educational fixtures + lesson-resume progress file"
+      path: "$HOME/.shelltutor (default; overridable via SHELLTUTOR_HOME)"
+      contents:
+        - "poem.txt — 4-line educational fixture (created if missing)"
+        - "numbers.txt — seq 1 50 educational fixture (created if missing)"
+        - ".shelltutor_history — HISTFILE for practice subshell"
+        - ".progress — single-integer next-lesson index (removed when finale completes)"
+      deletion_or_reset_path: "Removing $HOME/.shelltutor (or $SHELLTUTOR_HOME) resets all state; tutor re-creates fixtures on next run via setup_sandbox()."
+      evidence:
+        path: shelltutor
+        lines: "30-80"
+      classification_note: |
+        Recorded under local_development_infrastructure rather than agent_surface.memory_surfaces_detected
+        because the state is per-learner CLI tutor state, not agent-runtime memory in the directive's
+        agentic taxonomy. See profile-discovery.md §Phase C for the reasoning.
+
+# ---------- AGENT AND AUTOMATION SURFACE ----------
+agent_surface:
+  model_call_sites: []
+  agent_frameworks: []
+  tools:
+    count: 0
+    locations: []
+    schemas_defined: false
+    schema_tech: absent
+    registry_path: none
+  protocol_surfaces:
+    mcp:
+      present: false
+      protocol_version: n/a
+      tools: 0
+      resources: 0
+      resource_templates: 0
+      prompts: 0
+      roots_exposed: false
+      sampling_supported: false
+      elicitation_supported: false
+      completion_supported: false
+      authorization_metadata: absent
+      evidence: []
+      search_notes: |
+        Grep across all tracked files for the patterns
+        `mcp|modelcontextprotocol|@anthropic|openai|claude-|gpt-|sampling|elicitation`
+        returned only one match (`component: claude-instructions` in CLAUDE.md
+        frontmatter — that field names the file's role, not an MCP surface).
+        No SDK imports, no server stubs, no client stubs.
+    a2a:
+      present: false
+      protocol_version: n/a
+      agent_cards: []
+      advertised_skills: 0
+      task_state_contracts: absent
+      streaming_supported: false
+      push_notifications_supported: false
+      registry_discovery: absent
+      authentication_schemes: []
+      evidence: []
+      search_notes: |
+        Grep across all tracked files for `@a2a|agent-card|advertised|task-state`
+        returned no matches. No Agent Card YAML/JSON files, no remote-agent service.
+    workflow_contracts:
+      api_descriptions: []
+      workflow_descriptions: []
+      overlays: []
+      schema_dialects: []
+  subagents:
+    count: 0
+    locations: []
+    typed_boundaries: false
+    manifest_path: none
+  resources:
+    count: 0
+    locations: []
+  prompts:
+    count: 0
+    locations: []
+    surface_types:
+      runtime_production: 0
+      runtime_nonproduction: 0
+      authoring_artifact: 0
+      documentation_about_prompts: 0
+      skill_or_sop: 0
+      server_exposed_prompt: 0
+      unknown: 0
+    templating_tech: none
+    search_notes: |
+      No model-mediated prompts exist in the repository. The shelltutor script
+      contains heredoc strings rendered to the terminal that explain to the
+      learner what a shell prompt is — these are CLI-tutor screen text, not
+      LLM prompts. They are recorded as in-script lesson copy under the
+      script's evidence rather than as `documentation-about-prompts` because
+      they describe shell prompts, not model prompts.
+  context_assembly:
+    retrieval_modules: []
+    memory_assemblers: []
+    tool_description_registries: []
+    skill_loaders: []
+  loops_detected: []
+  guardrails_detected: []
+  handoffs_detected: []
+  memory_surfaces_detected: []
+  execution_modes_detected: []
+  background_agents: []
+
+automation_surface:
+  scripts_or_workflows:
+    - name: shelltutor
+      path: shelltutor
+      can_modify: artifacts
+      approval_hint: |
+        Runs only when the learner invokes it directly. Writes are confined to
+        $SANDBOX (default $HOME/.shelltutor) via setup_sandbox() and a `cd
+        "$SANDBOX"` inside the practice subshell rcfile. Never requests
+        elevated privileges, never reaches the network, never writes outside
+        $SANDBOX (per AGENTS.md:87-88, CONTRIBUTING.md:42-49).
+      evidence:
+        path: shelltutor
+        lines: "66-80,104-134"
+
+# ---------- CONVENTIONS ----------
+conventions:
+  rules:
+    - classification: process
+      text: "Stay inside `/Users/verlyn13/Organizations/jefahnierocks/shelltutor` for normal work. Reading or modifying material outside this repository requires explicit user scope expansion."
+      topic: agent-behavior
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "45-47"
+    - classification: process
+      text: "The prior-art repository at `fedora-top:~/Projects/shelltutor` is intake provenance only. Do not treat its current state as ambient truth, and do not silently re-import its user-specific surfaces (`wyn-setup/`, theme branding, operator-named comments)."
+      topic: agent-behavior
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "49-53"
+    - classification: forbidden
+      text: "The tutor must not write outside its own working directory, must not request elevated privileges, and must not reach the network."
+      topic: auth
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "87-88"
+    - classification: forbidden
+      text: "Treat anything that requires a specific username, hostname, distro, or shell theme as a portability bug."
+      topic: agent-behavior
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "89-90"
+    - classification: required
+      text: "Lessons must be runnable end-to-end on a clean Linux or macOS terminal without prerequisite installation beyond `bash`."
+      topic: testing
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "91-92"
+    - classification: forbidden
+      text: "Do not introduce dependencies that require installation outside `bash` and a standard POSIX userland; do not access files outside this repository during normal operation; do not perform account, billing, or credential changes."
+      topic: agent-behavior
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "75-78"
+    - classification: process
+      text: "Use Conventional Commits for any commits created (`type(scope): description`)."
+      topic: branching
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "83-84"
+    - classification: process
+      text: "Keep each change focused and inspectable; one coherent change per commit."
+      topic: branching
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "85"
+    - classification: process
+      text: "Preserve linear history; do not rewrite unrelated history."
+      topic: branching
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "86"
+    - classification: process
+      text: "Run the tutor (`./shelltutor`) and complete at least the lesson surface affected by a change."
+      topic: testing
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "96-97"
+    - classification: forbidden
+      text: "Do not commit secrets, credentials, account identifiers, private financial data, or sensitive personal data."
+      topic: secrets
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "105-107"
+    - classification: process
+      text: "Conventional Commits: `type(scope): description`. Common types: `feat`, `fix`, `refactor`, `docs`, `chore`, `test`."
+      topic: branching
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "19-20"
+    - classification: process
+      text: "One coherent change per commit. Do not bundle unrelated edits."
+      topic: branching
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "21"
+    - classification: process
+      text: "Linear history. No merge commits."
+      topic: branching
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "22"
+    - classification: forbidden
+      text: "`shelltutor` is **user-agnostic** by contract. A change is a portability regression if it: Requires a specific operator name, hostname, distro, or shell theme. Depends on tools beyond `bash` (4+) and a standard POSIX userland. Writes outside the script's working directory, asks for elevated privileges, or reaches the network. Assumes a particular `$HOME` layout, prompt, or pre-existing configuration."
+      topic: protocol-surface
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "42-49"
+    - classification: process
+      text: "When importing or porting material from prior-art (e.g., `fedora-top:~/Projects/shelltutor`), cite the source path and commit SHA in the commit body."
+      topic: provenance
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "59-60"
+    - classification: precedence
+      text: "Following the Jefahnierocks workspace posture, this repository intentionally omits CI workflows, `CODEOWNERS`, PR templates, branch protection, and Actions secrets until a real activation trigger exists. Until then, local commit discipline is the enforcement layer."
+      topic: git-hooks
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "72-75"
+    - classification: precedence
+      text: "If `STATUS.md`, `ROADMAP.md`, and `CONTRIBUTING.md` disagree about project-level posture, fix the disagreement here first; downstream documents defer to this file for current truth."
+      topic: other
+      source:
+        type: file
+        path: STATUS.md
+        lines: "65-69"
+    - classification: precedence
+      text: "When instructions conflict, prefer the most specific repo-local governance file, then ask the operator if the conflict affects implementation, portability claims, or authority boundaries."
+      topic: other
+      source:
+        type: file
+        path: CLAUDE.md
+        lines: "19-22"
+    - classification: precedence
+      text: "When guidance conflicts, the closest local rule wins inside this repository, while the Jefahnierocks workspace boundary still applies."
+      topic: other
+      source:
+        type: file
+        path: AGENTS.md
+        lines: "29-30"
+    - classification: conditional
+      text: "If a lesson genuinely requires a non-portable surface, gate it on a runtime check and degrade gracefully — do not couple the script's default path to the non-portable surface."
+      topic: protocol-surface
+      source:
+        type: file
+        path: CONTRIBUTING.md
+        lines: "51-54"
+  result_or_error_pattern:
+    in_use: false
+    access_field: n/a
+    base_type: n/a
+    evidence:
+      path: shelltutor
+      lines: "82-93"
+  error_handling_style: n/a
+  git_hooks_policy: none
+  type_check_policy: none
+  documented_language_style_guide: none
+
+# ---------- GOVERNANCE ----------
+governance:
+  readme_paths: [README.md]
+  contributing_paths: [CONTRIBUTING.md]
+  architecture_docs: []
+  glossary_paths: []
+  security_docs: []
+  release_docs: []
+  adr:
+    directories: []
+    count: 0
+    naming_convention: none
+    supersession_chain_clean: true
+    template_includes_does_not_decide: unknown
+  agent_instruction_files: [AGENTS.md, CLAUDE.md]
+  skill_md_files: []
+  ci_workflows: []
+  existing_fitness_functions: []
+  existing_audit_artifacts: []
+  companion_artifacts:
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/project-profile-directive.md
+      role: profile-directive
+      targets_spec_version: "project-profile-directive-v1.2 (2026-05-08)"
+      drift_status: aligned
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/agentic-audit-spec-v3.md
+      role: authority-spec
+      targets_spec_version: "agentic-audit-spec-v3.1 (2026-05-08)"
+      drift_status: aligned
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-kickoff-prompt.md
+      role: kickoff-prompt
+      targets_spec_version: "agentic-audit-spec-v3.1 and project-profile-directive-v1.2 (2026-05-08)"
+      drift_status: aligned
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-spec-friendly-explainer.md
+      role: friendly-explainer
+      targets_spec_version: "agentic-audit-spec-v3.1 and project-profile-directive-v1.2 (2026-05-08)"
+      drift_status: aligned
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-directive-set-manifest.md
+      role: manifest
+      targets_spec_version: "agentic-audit-spec-v3.1 and project-profile-directive-v1.2 (2026-05-08)"
+      drift_status: aligned
+    - path: docs/audit/directives/agentic-architecture-audit-v3.1-package/README.md
+      role: other
+      targets_spec_version: "Audit Spec v3.1 / Profile Directive v1.2 (2026-05-08)"
+      drift_status: aligned
+  cycle_history_path: none
+
+# ---------- CLAIMED STRUCTURE ----------
+claimed_bounded_contexts: []
+
+claimed_ownership:
+  - unit_or_context: shelltutor
+    owner: "Jefahnierocks (personal workspace)"
+    source: docs
+
+# ---------- BASELINES ----------
+baselines:
+  evals:
+    suites_directory: none
+    suite_count: 0
+    modes_present: []
+    golden_datasets_present: false
+    ci_integrated: false
+    release_gate: false
+    scoring_methods: []
+    judge_calibration_present: false
+    last_known_pass_rate: unknown
+    search_notes: |
+      No `tests/`, `evals/`, `__tests__/`, or `*.test.*` files exist. CONTRIBUTING.md
+      describes local verification ('Walk the affected lesson surface'; `shellcheck`
+      if available) but does not specify a behavior-quality eval suite.
+  observability:
+    tracing: none
+    semantic_conventions_used: none
+    semantic_convention_version: n/a
+    semantic_convention_stability: n/a
+    genai_semconv_used: n/a
+    agent_or_mcp_semconv_used: n/a
+    cost_attribution: none
+    latency_attribution: none
+    quality_attribution: none
+    search_notes: |
+      No tracing/metrics/logs infrastructure. The tutor writes only to its sandbox
+      and stdout; no telemetry export, no audit log, no OpenTelemetry references.
+  authority:
+    approval_gates:
+      - tool_or_action: "scope-expansion outside the shelltutor repository"
+        policy: human-in-loop
+        approval_mode: ask
+        precedence_hint: "AGENTS.md §Scope: 'requires explicit user scope expansion'"
+        bypass_modes: []
+        evidence:
+          path: AGENTS.md
+          lines: "43-47"
+      - tool_or_action: "change tutor safety surface (file writes, network, privilege, sandbox boundaries)"
+        policy: human-in-loop
+        approval_mode: ask
+        precedence_hint: "AGENTS.md §Authority Levels: sensitive work"
+        bypass_modes: []
+        evidence:
+          path: AGENTS.md
+          lines: "71-74"
+      - tool_or_action: "introduce dependency outside `bash` + POSIX userland"
+        policy: blocked
+        approval_mode: deny
+        precedence_hint: "AGENTS.md §Authority Levels: restricted work"
+        bypass_modes: []
+        evidence:
+          path: AGENTS.md
+          lines: "75-78"
+    protected_paths: []
+    sandbox_roots:
+      - "$HOME/.shelltutor (default)"
+      - "$SHELLTUTOR_HOME (operator override of the sandbox root)"
+    browser_scope: []
+    filesystem_scope:
+      - "Tutor script writes only inside $SANDBOX (shelltutor:67, 69, 76, 79, 83)."
+      - "Practice subshell is a real interactive bash, `cd`'d to $SANDBOX with HISTFILE sandboxed (shelltutor:109, 111), but inherits the learner's normal filesystem authority (see audit_attention_flags[subshell-safety-claim-vs-shell-authority])."
+    callback_authentication: n/a
+    secondary_credentials: []
+    hosted_or_local_agent_execution: n/a
+    default_agent_authority: sandboxed
+  provenance:
+    runtime_action_emission: none
+    content_provenance_position: not-applicable
+    build_source_provenance_position: absent
+    format: none
+    evidence:
+      path: STATUS.md
+      lines: "53-58"
+    notes: |
+      No agent-mediated runtime, so runtime/action provenance is non-applicable.
+      Content provenance is not-applicable because no LLM-generated content is
+      produced or distributed. Build/source provenance is absent at first profile:
+      no tagged release exists yet (STATUS.md §Deferrals: CHANGELOG and v0.1.0
+      deferred per ROADMAP Phase 4). Repository carries Conventional Commits
+      and a prior-art provenance commit (f69389e) but no signed releases or
+      SLSA/C2PA attestations.
+
+# ---------- VERSIONING ----------
+versioning_conventions:
+  http_apis: n/a
+  schemas: n/a
+  workflow_contracts: n/a
+  protocol_surfaces: n/a
+  semantic_conventions: n/a
+  prompts: n/a
+  tools: n/a
+  resources: n/a
+  subagents: n/a
+  policies: none
+  provenance_records: n/a
+  eval_datasets: n/a
+  public_sdks: none
+  evidence:
+    path: STATUS.md
+    lines: "53-58"
+  notes: |
+    Repository follows Conventional Commits and intends a `v0.1.0` semver tag
+    once Phase 4 of ROADMAP closes (license + CHANGELOG). No public API,
+    schema, prompt, or tool surface to version. Documentation files declare
+    `version: 0.1.0` in YAML frontmatter (e.g., README.md:6, AGENTS.md:6).
+
+# ---------- SCOPE, STRATEGY, AND DEBT ----------
+scope:
+  include_paths:
+    - shelltutor
+    - README.md
+    - AGENTS.md
+    - CLAUDE.md
+    - CONTRIBUTING.md
+    - STATUS.md
+    - ROADMAP.md
+    - .editorconfig
+    - .gitignore
+  exclude_paths:
+    - .git/
+    - profile/
+    - docs/audit/directives/agentic-architecture-audit-v3.1-package/
+  focus_question: |
+    Does the sandbox-safety claim hold? The tutor tells the learner
+    "Everything happens in ~/.shelltutor; you cannot break anything"
+    (shelltutor:169) and the practice subshell `cd`s to $SANDBOX and
+    sandboxes HISTFILE (shelltutor:109-117), but the subshell is otherwise
+    a real interactive bash with the learner's normal filesystem authority.
+    Audit whether the claim and the implementation agree at the level a
+    beginner is likely to test (cd .., rm, etc.) and whether documentation
+    should narrow the claim or implementation should tighten the sandbox.
+  audit_cadence: unknown
+
+strategic_themes:
+  - name: "Single-file portability"
+    description: |
+      Tutor is one bash script that must run on a clean Linux or macOS terminal
+      with no prerequisite installation beyond bash. Audit weighting should
+      favor checks for contract discipline (Phase 4) and vocabulary clarity
+      around "portable across Linux and macOS" (Phase 1), particularly at the
+      lesson-content level where Linux-only or distro-specific surfaces leak
+      in (see audit_attention_flags[lesson-portability-gaps]).
+    weighting:
+      dimensions: []
+      multiplier: 1.5
+    source: operator-interview
+    evidence:
+      path: null
+      lines: null
+    unchanged_since: first-snapshot
+  - name: "Documentation–code consistency"
+    description: |
+      Project ships a deliberate documentation set (README, AGENTS, CLAUDE,
+      CONTRIBUTING, STATUS, ROADMAP). The recent refactor commit (e6257aa)
+      removed user-specific accent branding from the script but downstream
+      docs still list user-agnostic refactor as the immediate next step.
+      Audit weighting should favor vocabulary/claims checks (Phase 1) and
+      documentation-as-policy checks (Phase 8) to catch drift between
+      documentation claims and source state.
+    weighting:
+      dimensions: []
+      multiplier: 1.5
+    source: operator-interview
+    evidence:
+      path: null
+      lines: null
+    unchanged_since: first-snapshot
+
+known_debt:
+  - area: "release posture"
+    description: "LICENSE file not yet chosen; repository is public and default copyright applies. STATUS.md and README.md note the deferral; ROADMAP Phase 4 lists license decision as the trigger to revisit."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+  - area: "release posture"
+    description: "CHANGELOG.md absent; no tagged release. ROADMAP Phase 4 trigger to revisit."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+  - area: "github-side automation"
+    description: "CI workflows, CODEOWNERS, PR templates, branch protection, and Actions secrets intentionally omitted until a real activation trigger exists. Local commit discipline is the current enforcement layer (CONTRIBUTING.md:72-75)."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+  - area: "portability validation"
+    description: "Tutor not yet validated on Linux distros (Fedora and Debian/Ubuntu families called out as minimum in ROADMAP.md:55-58). macOS Homebrew bash 5+ validation also pending."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+  - area: "static analysis"
+    description: "shellcheck pass not yet recorded. CONTRIBUTING.md lists it as 'if available' rather than required (CONTRIBUTING.md:34-38). ROADMAP Phase 2 names it as exit criterion."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+  - area: "lesson surface review"
+    description: "Initial command set (`pwd`, `ls`, `cd`, `cat`, `man`, `whoami`, `hostname`, `date`, `uptime`, `df`, `free`) not yet reviewed against a 'first 15 commands' frame; lessons not yet individually jump-addressable from the menu (ROADMAP Phase 3)."
+    raised_at: "2026-05-21"
+    source: docs
+    status: open
+    resolved_in_cycle: null
+
+open_questions:
+  - "Audit cadence preference (one-off, post-refactor, release-gated, quarterly) was not answered in Phase G; recorded as `unknown` per directive §5 schema."
+
+audit_attention_flags:
+  - id: drift-status-roadmap-vs-commit
+    description: |
+      STATUS.md and ROADMAP.md describe the user-agnostic refactor as the
+      pending immediate next step ("Immediate Next Steps #1: User-agnostic
+      refactor commit — replace WYN OPS accent comments with neutral wording";
+      "Phase 1 — User-Agnostic Refactor"). But commit e6257aa
+      ("refactor: remove user-specific accent branding from tutor") shows the
+      refactor has been performed; current `shelltutor` script contains no
+      `WYN OPS` references and the named lines (17, 35) carry neutral content.
+      This is documentation drift, not deliberate posture, and aligns with the
+      operator-selected strategic theme "documentation–code consistency".
+    evidence:
+      - path: STATUS.md
+        lines: "31-46"
+      - path: ROADMAP.md
+        lines: "30-46"
+      - path: shelltutor
+        lines: "17,35"
+    target_audit_phase: 1
+    reason: "Documentation claims contradicted by source state; affects Phase-1 vocabulary/claims and the documentation–code consistency theme."
+    raised_at: "2026-05-21"
+    resolved_in_cycle: null
+  - id: subshell-safety-claim-vs-shell-authority
+    description: |
+      Welcome screen tells the learner "Everything happens in ~/.shelltutor;
+      you cannot break anything." (shelltutor:169). The implementation drops
+      into a real interactive bash with `--rcfile` (shelltutor:104-134) that
+      `cd`s to $SANDBOX and sandboxes HISTFILE, HISTSIZE, HISTFILESIZE. But
+      the subshell is otherwise a normal user shell — `cd ..`, `rm`, and any
+      command the learner's account can run remain available. The
+      "you cannot break anything" claim is true for the tutor's own writes
+      but overstated as a guarantee about what the learner can do at the
+      practice prompt. Matches operator-selected focus question.
+    evidence:
+      - path: shelltutor
+        lines: "104-134"
+      - path: shelltutor
+        lines: "169"
+    target_audit_phase: 6
+    reason: "Authority/sandbox claim is narrower in code than in user-facing documentation; matches operator focus question."
+    raised_at: "2026-05-21"
+    resolved_in_cycle: null
+  - id: lesson-portability-gaps
+    description: |
+      Repository portability contract claims clean Linux+macOS coverage with
+      bash-only dependency (README.md:50-55, AGENTS.md:91-92, CONTRIBUTING.md:42-49).
+      Lesson 7 instructs `free -h` and reads from `/proc/cpuinfo`,
+      `/proc/meminfo`, `/proc` (shelltutor:325-336) — `/proc` does not exist
+      on macOS and `free` is not a default macOS binary. Lesson 8 (shelltutor:340-362)
+      shows `sudo dnf install cowsay figlet lolcat` as the install hint, a
+      Fedora-specific package manager. Lesson 8 does say "Skip any that says
+      'command not found'" but the single-distro install hint is not aligned
+      with the broader portability claim. Matches operator-selected strategic
+      theme "single-file portability".
+    evidence:
+      - path: shelltutor
+        lines: "316-338"
+      - path: shelltutor
+        lines: "340-362"
+      - path: README.md
+        lines: "50-55"
+      - path: AGENTS.md
+        lines: "91-92"
+      - path: CONTRIBUTING.md
+        lines: "42-49"
+    target_audit_phase: 1
+    reason: "Lesson content makes Linux/Fedora-specific assumptions while the project claims Linux+macOS portability; affects the single-file portability strategic theme."
+    raised_at: "2026-05-21"
+    resolved_in_cycle: null
+  - id: agents-md-parent-reference-style
+    description: |
+      AGENTS.md:22 references `/Users/verlyn13/Organizations/jefahnierocks/AGENTS.md`
+      as the parent contract path. AGENTS.md itself explicitly restates the
+      relevant rules on shelltutor's own authority (lines 24-30), so the
+      reference is informational/provenance, not load-bearing — but a stranger
+      cloning the repository cannot resolve the absolute path. Recorded as a
+      contract-reference-style observation rather than a portability bug,
+      since the agent-authority text is restated locally.
+    evidence:
+      - path: AGENTS.md
+        lines: "18-30"
+    target_audit_phase: 4
+    reason: "Companion-doc reference style; minor operator-specificity edge in agent governance."
+    raised_at: "2026-05-21"
+    resolved_in_cycle: null
+
+# ---------- SOURCES ----------
+sources_summary:
+  files_read: 16
+  files_grepped: 8
+  commands_run:
+    - "ls -la (shelltutor repo + audit-package directory)"
+    - "git rev-parse HEAD; git rev-parse --abbrev-ref HEAD; git remote -v; git log --oneline --all"
+    - "git symbolic-ref refs/remotes/origin/HEAD (returned 'not set locally')"
+    - "find . -maxdepth 3 -type f -not -path './.git/*'"
+    - "wc -l shelltutor; git ls-files"
+    - "grep across tracked files for agentic/protocol/observability/eval markers"
+    - "mkdir -p docs/audit/directives/agentic-architecture-audit-v3.1-package profile/2026-05-21"
+    - "cp -p package files from Downloads into docs/audit/directives/"
+  operator_questions_asked: 3
+  operator_questions_answered: 2
+  halt_conditions_triggered: 0
+  limitations:
+    - "Default branch for the GitHub remote could not be confirmed from the local clone (`origin/HEAD` symbolic ref not set locally; no network access during profile). Recorded `main` based on the only branch present in the local repo and on STATUS.md's narrative posture."
+    - "Audit cadence preference unanswered by operator in Phase G; recorded as `unknown` per directive §5 schema."
+    - "macOS-specific portability for lessons 7 and 8 is captured as audit-attention rather than verified by running the tutor on macOS during profile (verification belongs to the audit, not the profile)."
