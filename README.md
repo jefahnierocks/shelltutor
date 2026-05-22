@@ -85,9 +85,10 @@ The tutor is a single bash script with no installation step:
 Requirements:
 
 - A POSIX-ish terminal (any modern Linux or macOS terminal works).
-- `bash` 4+ on `PATH`. macOS ships bash 3.2 by default; install a newer
-  bash via Homebrew (`brew install bash`) or run on a Linux host if you
-  hit bash-version-specific syntax.
+- `bash` 3.2+ on `PATH`. The stock macOS `/bin/bash` (3.2.57) is fine —
+  no install step is required on macOS. Linux distros ship modern bash.
+  The tutor's practice prompts explicitly spawn `bash --rcfile`, so the
+  experience is identical regardless of your login shell (bash, zsh, fish).
 - ANSI color support in the terminal (the standard default; set
   `NO_COLOR=1` to disable).
 

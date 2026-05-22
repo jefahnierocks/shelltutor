@@ -60,7 +60,9 @@ environment assumptions.
 
 Work:
 
-- Validate on macOS with Homebrew bash 5+.
+- Validate on macOS with stock `/bin/bash` (3.2). The tutor's
+  documented floor is bash 3.2; Apple's vendored bash satisfies it
+  with no install step required.
 - Validate on a generic Linux distro (Fedora and Debian/Ubuntu families
   at minimum).
 - Document any bash version floor.
@@ -341,7 +343,7 @@ identity commands. No information is lost.
 - `./shelltutor` invocation walkthrough recorded in `STATUS.md` (date
   + result), partial credit toward ROADMAP Phase 2's portability-
   validation exit criterion.
-- The script remains a single bash file, bash 4+, POSIX userland
+- The script remains a single bash file, bash 3.2+, POSIX userland
   only, no network, no privilege, no writes outside `$SANDBOX`.
 
 ### Out of scope for Phase 3

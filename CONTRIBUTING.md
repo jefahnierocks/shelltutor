@@ -27,7 +27,7 @@ aligned.
 ./shelltutor
 ```
 
-Walk the affected stage surface. If you cannot run the tutor (no bash 4+,
+Walk the affected stage surface. If you cannot run the tutor (no bash 3.2+,
 unsupported terminal, etc.), state that verification is pending rather than
 implying success.
 

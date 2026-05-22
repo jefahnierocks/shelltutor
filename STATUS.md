@@ -52,9 +52,9 @@ Current truth for the `shelltutor` repository.
    screen sandbox claim) and `F-003` (moves lesson 7 `/proc`+`free` and
    lesson 8 `dnf` install hint out of the gated path).
 2. **Portability sweep (ROADMAP Phase 2)** — once Phase 3 lands, walk
-   the redesigned stages on macOS (Homebrew bash 5+) and a generic
-   Linux distro. Record results. Run `shellcheck shelltutor`
-   (operationalizes `FF-005`).
+   the redesigned stages on macOS with stock `/bin/bash` (3.2) and on
+   a generic Linux distro. Record results. Run `make verify` to
+   exercise the static-analysis gates locally.
 3. **License decision (ROADMAP Phase 4 trigger)** — pick a posture
    before inviting outside contribution or linking the repo publicly.
 

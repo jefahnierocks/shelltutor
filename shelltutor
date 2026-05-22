@@ -24,7 +24,7 @@
 #   5  Ready for vimtutor             man, less (full-screen), vim, vimtutor
 #
 # Implementation invariants:
-#   - one bash file, bash 4+, no installation, no network, no privilege
+#   - one bash file, bash 3.2+, no installation, no network, no privilege
 #   - tutor writes only inside $SANDBOX (default $HOME/.shelltutor)
 #   - practice subshell `cd`s to a stage-specific subdir; HISTFILE is
 #     sandboxed; PS1 is rewritten; navigation builtins are overridden
@@ -33,6 +33,18 @@
 #     screen scopes the safety claim accordingly (per audit F-002)
 
 set -u
+
+# Bash version sanity check. The script uses features present since
+# bash 3.2 (arrays, C-style for, process substitution, [[ =~ ]],
+# ANSI-C $'\\e[...' quoting). macOS ships bash 3.2 by default and that
+# is sufficient — no install step is required to run the tutor. The
+# check below only catches truly ancient (bash < 3) systems with a
+# clear diagnostic instead of a cryptic syntax error.
+if [ "${BASH_VERSINFO[0]:-0}" -lt 3 ]; then
+    printf 'shelltutor: requires bash 3.2 or later (found %s).\n' \
+        "${BASH_VERSION:-unknown}" >&2
+    exit 1
+fi
 
 # ---------------------------------------------------------------------
 # Constants
@@ -150,6 +162,12 @@ read_progress() {
     if [ -f "$PROGRESS_FILE" ]; then
         read -r n < "$PROGRESS_FILE" 2>/dev/null || n=0
         [[ "$n" =~ ^[0-9]+$ ]] || n=0
+        # Defensive clamp. A pre-curriculum-redesign sandbox may carry
+        # a .progress value in the old "next lesson index" semantics
+        # (0..9). Anything above TOTAL_STAGES is treated as stale and
+        # reset to 0 so the learner re-enters at Stage 1 rather than
+        # being skipped to the finale.
+        if [ "$n" -gt "$TOTAL_STAGES" ]; then n=0; fi
     fi
     echo "$n"
 }
