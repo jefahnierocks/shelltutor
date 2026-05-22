@@ -1,0 +1,127 @@
+{
+  "audit_spec_version": "v3.1",
+  "audit_spec_date": "2026-05-08",
+  "profile_directive_version": "v1.2",
+  "profile_directive_date": "2026-05-08",
+  "audit_date": "2026-05-21",
+  "profile_snapshot_date": "2026-05-21",
+  "audit_mode": "first-cycle",
+  "profile": {
+    "yaml_path": "profile/2026-05-21/project_profile.yaml",
+    "discovery_path": "profile/2026-05-21/profile-discovery.md",
+    "diff_path": null,
+    "cycle_history_path": null
+  },
+  "repository_revision": {
+    "vcs": "git",
+    "branch": "main",
+    "current_revision": "e6257aa420b037139764c1f8f213853bd2574b92",
+    "profile_snapshot_revision": "e6257aa420b037139764c1f8f213853bd2574b92"
+  },
+  "deployable_units": [
+    {
+      "name": "shelltutor",
+      "path": "shelltutor",
+      "kind": "cli",
+      "runtime": "bash 4+",
+      "entrypoint": "shelltutor"
+    }
+  ],
+  "scope": {
+    "include_paths": [
+      "shelltutor",
+      "README.md",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "CONTRIBUTING.md",
+      "STATUS.md",
+      "ROADMAP.md",
+      ".editorconfig",
+      ".gitignore"
+    ],
+    "exclude_paths": [
+      ".git/",
+      "profile/",
+      "docs/audit/directives/agentic-architecture-audit-v3.1-package/",
+      "docs/audit/references/"
+    ]
+  },
+  "strategic_themes": [
+    {
+      "name": "Single-file portability",
+      "multiplier": 1.5,
+      "weighted_dimensions": ["11.3 Contract discipline", "11.1 Bounded contexts"],
+      "default_mapping_used": false,
+      "rationale": "Custom theme. No §11.12 default applies. Audit-assigned weighting derived from theme description and the lesson-portability-gaps flag.",
+      "source": "operator-interview",
+      "unchanged_since": "first-snapshot"
+    },
+    {
+      "name": "Documentation–code consistency",
+      "multiplier": 1.5,
+      "weighted_dimensions": ["11.10 Governance and audit trail", "11.8 Policy/prompt separation"],
+      "default_mapping_used": false,
+      "rationale": "Custom theme. No §11.12 default applies. Audit-assigned weighting derived from theme description and the drift-status-roadmap-vs-commit flag.",
+      "source": "operator-interview",
+      "unchanged_since": "first-snapshot"
+    }
+  ],
+  "focus_question": "Does the sandbox-safety claim hold? The practice subshell at shelltutor:104-134 cd's to $SANDBOX and sandboxes HISTFILE, but is otherwise a real interactive bash with the learner's normal filesystem authority — not the totalising sandbox the welcome text at shelltutor:169 suggests.",
+  "companion_artifacts": [
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/project-profile-directive.md",
+      "targets_spec_version": "project-profile-directive-v1.2 (2026-05-08)",
+      "drift_status": "aligned"
+    },
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/agentic-audit-spec-v3.md",
+      "targets_spec_version": "agentic-audit-spec-v3.1 (2026-05-08)",
+      "drift_status": "aligned"
+    },
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-kickoff-prompt.md",
+      "targets_spec_version": "spec v3.1 + directive v1.2 (2026-05-08)",
+      "drift_status": "aligned"
+    },
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-spec-friendly-explainer.md",
+      "targets_spec_version": "spec v3.1 + directive v1.2 (2026-05-08)",
+      "drift_status": "aligned"
+    },
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/audit-directive-set-manifest.md",
+      "targets_spec_version": "manifest (drift-control)",
+      "drift_status": "aligned"
+    },
+    {
+      "path": "docs/audit/directives/agentic-architecture-audit-v3.1-package/README.md",
+      "targets_spec_version": "package overview",
+      "drift_status": "aligned"
+    }
+  ],
+  "reference_materials": [
+    {
+      "path": "docs/audit/references/shell-research.md",
+      "role": "curriculum-design reference",
+      "applies_to_phases": [1, 8],
+      "source": "operator-supplied",
+      "subject_status": "not-an-audit-subject (reference only)"
+    }
+  ],
+  "routed_audit_attention_flags": [
+    {"id": "drift-status-roadmap-vs-commit", "target_phase": 1},
+    {"id": "subshell-safety-claim-vs-shell-authority", "target_phase": 6},
+    {"id": "lesson-portability-gaps", "target_phase": 1},
+    {"id": "agents-md-parent-reference-style", "target_phase": 4}
+  ],
+  "profile_path_drift": [],
+  "previous_cycle_conventions": [],
+  "exit_check": {
+    "scope_bounded_and_mode_recorded": true,
+    "all_flags_routed": true,
+    "profile_path_drift_listed": true,
+    "themes_recorded_or_empty": true,
+    "anchors_pinned_or_explicit_na": true,
+    "phase_0_pass": true
+  }
+}

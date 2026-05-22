@@ -1,0 +1,39 @@
+%% shelltutor — Phase 2 bounded-context map
+%% Single confirmed context. Profile recorded zero claimed contexts.
+%% Edges show what crosses the system boundary at runtime.
+graph LR
+    classDef external fill:#eef,stroke:#558,stroke-width:1px,color:#113;
+    classDef context fill:#efe,stroke:#383,stroke-width:2px,color:#131;
+    classDef sandbox fill:#ffe,stroke:#a83,stroke-width:1px,color:#552;
+    classDef governance fill:#fee,stroke:#a55,stroke-width:1px,color:#522;
+
+    %% External actors and inputs
+    LEARNER["learner<br/>(terminal user)"]:::external
+    OPERATOR["operator<br/>(invokes ./shelltutor)"]:::external
+    BASH["bash >= 4<br/>POSIX userland"]:::external
+    TERM["ANSI terminal<br/>/dev/tty"]:::external
+    HOME["$HOME (or $SHELLTUTOR_HOME)"]:::external
+
+    %% Context boundary
+    subgraph shelltutor-tutor [shelltutor-tutor]
+        SCRIPT["shelltutor<br/>(459-line CLI)"]:::context
+        SUBSHELL["practice subshell<br/>(interactive bash)"]:::context
+        SANDBOX["$SANDBOX directory<br/>poem.txt | numbers.txt<br/>.progress | .shelltutor_history"]:::sandbox
+        GOVERNANCE["README | AGENTS | CLAUDE<br/>CONTRIBUTING | STATUS | ROADMAP"]:::governance
+    end
+
+    %% Edges
+    OPERATOR -->|"./shelltutor [N] | -h"| SCRIPT
+    SCRIPT -->|"main() iterates<br/>lessons=(welcome ... finale)"| SCRIPT
+    SCRIPT -->|"setup_sandbox()<br/>mkdir + fixtures"| SANDBOX
+    SCRIPT -->|"save_progress()"| SANDBOX
+    SCRIPT -->|"practice():<br/>bash --rcfile&lt;(...) -i &lt; /dev/tty"| SUBSHELL
+    SUBSHELL -->|"cd $SANDBOX<br/>HISTFILE=$SANDBOX/.shelltutor_history"| SANDBOX
+    SUBSHELL -->|"exit codes: 0 | 97 | 98 | 99"| SCRIPT
+    SUBSHELL -->|"learner key input"| LEARNER
+    LEARNER -->|"types next | prev | show | quit"| SUBSHELL
+    SCRIPT -->|"clear + printf heredoc text"| TERM
+    LEARNER -->|"reads terminal output"| TERM
+    SCRIPT -->|"reads $HOME / $SHELLTUTOR_HOME"| HOME
+    SCRIPT -->|"invokes bash + POSIX commands"| BASH
+    GOVERNANCE -.->|"audit input only<br/>(not runtime)"| SCRIPT

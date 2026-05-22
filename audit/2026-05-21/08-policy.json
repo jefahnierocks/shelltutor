@@ -1,0 +1,66 @@
+{
+  "phase": 8,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "embedded_policy_findings": [
+    {
+      "id": "POL-001",
+      "surface_id": "P-001",
+      "surface_path": "AGENTS.md",
+      "classification": "embedded-policy",
+      "rules": [
+        {"text": "tutor must not write outside its own working directory", "lines": "87", "policy_character": "safety / write authority"},
+        {"text": "tutor must not request elevated privileges", "lines": "87-88", "policy_character": "safety / privilege boundary"},
+        {"text": "tutor must not reach the network", "lines": "88", "policy_character": "safety / outbound network"},
+        {"text": "do not introduce dependencies outside bash and a standard POSIX userland", "lines": "75-77", "policy_character": "dependency policy"},
+        {"text": "Lessons must be runnable end-to-end on Linux or macOS without prerequisite installation beyond bash", "lines": "91-92", "policy_character": "testing / portability policy"},
+        {"text": "anything that requires a specific username, hostname, distro, or shell theme is a portability bug", "lines": "89-90", "policy_character": "portability policy"}
+      ],
+      "policy_home_proposed": "static-analysis fitness function (FF-001 / FF-002 in Phase 10); consistent with project's bash-only constraint",
+      "drift_target": "any future change to shelltutor that violates one of the six rules",
+      "citations": [
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view"},
+        {"path": "AGENTS.md", "lines": "87-92", "evidence": "tutor must not write outside its own working directory, must not request elevated privileges, and must not reach the network", "method": "view"},
+        {"path": "CONTRIBUTING.md", "lines": "42-49", "evidence": "shelltutor is user-agnostic by contract", "method": "view"}
+      ]
+    }
+  ],
+  "contradictory_guidance": {
+    "exists": true,
+    "summary": "STATUS.md and ROADMAP.md claim user-agnostic refactor is pending; commit e6257aa shows it complete (Phase 1 finding). Surfaces as documentation-as-policy drift at the skill-or-sop layer.",
+    "forecast_finding_id": "F-001",
+    "citations": [
+      {"path": "STATUS.md", "lines": "33-46", "method": "view", "evidence": "User-agnostic refactor commit ... Immediate Next Step #1"},
+      {"path": "ROADMAP.md", "lines": "30-46", "method": "view", "evidence": "Phase 1 — User-Agnostic Refactor"},
+      {"path": "shelltutor", "lines": "17,35", "method": "view", "evidence": "no WYN OPS reference in current script"}
+    ]
+  },
+  "retrieval_pipelines": {"present": false, "reason": "no retrieval surface"},
+  "tool_description_policy": {"present": false, "reason": "no tools in the agent-runtime sense"},
+  "untrusted_input_boundary": {
+    "applicable": false,
+    "reason": "Learner input goes to a real bash subshell, not into model context. No privileged prompt context exists.",
+    "flag_privileged_context_injection_risk": false
+  },
+  "server_exposed_prompts": {"present": false, "reason": "no MCP / A2A / protocol-advertised prompt surface"},
+  "strategic_theme_alignment": {
+    "theme": "Documentation–code consistency",
+    "weight_multiplier": 1.5,
+    "evidence_in_phase_8": [
+      "Embedded policy in AGENTS.md without code-level enforcement (POL-001)",
+      "Documentation drift between STATUS/ROADMAP and commit log (referred to forecast F-001)"
+    ]
+  },
+  "reference_doc_observation": {
+    "reference": "docs/audit/references/shell-research.md",
+    "surface_type": "not-a-prompt",
+    "role": "Operator-supplied curriculum reference for a hypothetical Shell Foundations for Vimtutor course. Not project authority. Phase 1 already noted vocabulary subset is intentional per README non-goals 67-75. No Phase 8 finding derives from this comparison."
+  },
+  "exit_check": {
+    "every_prompt_surface_classified": true,
+    "every_embedded_policy_cites_lines_and_policy_home": true,
+    "every_stale_authoring_artifact_cited_or_no_source": true,
+    "every_server_exposed_prompt_and_privileged_context_mapped_or_na": true,
+    "phase_8_pass": true
+  }
+}

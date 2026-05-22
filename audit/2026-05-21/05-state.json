@@ -1,0 +1,117 @@
+{
+  "phase": 5,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "stores": [
+    {
+      "id": "S-001",
+      "name": "$SANDBOX/poem.txt",
+      "classification": "artifact",
+      "owner_context": "shelltutor-tutor",
+      "retention": "Until learner deletes $SANDBOX. Self-healing: setup_sandbox() recreates if missing.",
+      "read_authority": ["learner via lesson copy in lessons 3 and 6"],
+      "write_authority": ["setup_sandbox() (shelltutor:68-75)", "learner inside practice subshell (CWD is $SANDBOX)"],
+      "invalidation_trigger": "none",
+      "deletion_or_reset_path": "rm $SANDBOX/poem.txt -> next run recreates; or rm -rf $SANDBOX",
+      "lifecycle": "stable",
+      "sensitivity": "none",
+      "citations": [
+        {"path": "shelltutor", "lines": "68-75", "evidence": "if [ ! -f \"$SANDBOX/poem.txt\" ]; then cat > \"$SANDBOX/poem.txt\" <<'POEM' ... POEM fi", "method": "view"}
+      ]
+    },
+    {
+      "id": "S-002",
+      "name": "$SANDBOX/numbers.txt",
+      "classification": "artifact",
+      "owner_context": "shelltutor-tutor",
+      "retention": "Until learner deletes $SANDBOX. Self-healing: setup_sandbox() recreates if missing.",
+      "read_authority": ["learner via lessons 5, 6, 9 (cat / sort)"],
+      "write_authority": ["setup_sandbox() via seq 1 50 > $SANDBOX/numbers.txt (shelltutor:76-78)", "learner inside practice subshell"],
+      "invalidation_trigger": "none",
+      "deletion_or_reset_path": "rm $SANDBOX/numbers.txt -> next run recreates; or rm -rf $SANDBOX",
+      "lifecycle": "stable",
+      "sensitivity": "none",
+      "citations": [
+        {"path": "shelltutor", "lines": "76-78", "evidence": "if [ ! -f \"$SANDBOX/numbers.txt\" ]; then seq 1 50 > \"$SANDBOX/numbers.txt\"; fi", "method": "view"}
+      ]
+    },
+    {
+      "id": "S-003",
+      "name": "$SANDBOX/.shelltutor_history",
+      "classification": "artifact",
+      "owner_context": "shelltutor-tutor",
+      "retention": "Accumulates across runs; HISTSIZE=2000, HISTFILESIZE=4000 rotate oldest.",
+      "read_authority": ["practice subshell via 'history -r'", "learner via Up arrow / Ctrl+R"],
+      "write_authority": ["practice subshell via PROMPT_COMMAND='history -a'"],
+      "invalidation_trigger": "HISTFILESIZE rotation",
+      "deletion_or_reset_path": "rm $SANDBOX/.shelltutor_history; next run touches it back into existence",
+      "lifecycle": "stable",
+      "sensitivity": "low (bash history of tutor commands; sandboxed away from ~/.bash_history)",
+      "citations": [
+        {"path": "shelltutor", "lines": "79", "evidence": "touch \"$SANDBOX/.shelltutor_history\"", "method": "view"},
+        {"path": "shelltutor", "lines": "102-103", "evidence": "HISTFILE is sandboxed so tutor history doesn't pollute the user's real ~/.bash_history", "method": "view"},
+        {"path": "shelltutor", "lines": "111-116", "evidence": "HISTFILE=\"$SANDBOX/.shelltutor_history\"; HISTSIZE=2000; HISTFILESIZE=4000; shopt -s histappend; history -r; PROMPT_COMMAND='history -a'", "method": "view"}
+      ]
+    },
+    {
+      "id": "S-004",
+      "name": "$SANDBOX/.progress",
+      "classification": "checkpoint-state",
+      "owner_context": "shelltutor-tutor",
+      "retention": "Written each time dispatcher advances; removed by finale via rm -f.",
+      "read_authority": ["read_progress() on startup"],
+      "write_authority": ["save_progress() only (soft-fails with 2>/dev/null || true)"],
+      "invalidation_trigger": "finale completes -> rm -f; or non-integer content -> read_progress falls back to 0",
+      "deletion_or_reset_path": "Run to finale; or rm $SANDBOX/.progress; or rm -rf $SANDBOX",
+      "lifecycle": "stable",
+      "sensitivity": "none (single non-negative integer)",
+      "citations": [
+        {"path": "shelltutor", "lines": "30-32", "evidence": "PROGRESS_FILE=\"$SANDBOX/.progress\"", "method": "view"},
+        {"path": "shelltutor", "lines": "82-93", "evidence": "save_progress() { echo \"$1\" > \"$PROGRESS_FILE\" 2>/dev/null || true } ; read_progress() { ... [[ \"$n\" =~ ^[0-9]+$ ]] || n=0 ; echo \"$n\" }", "method": "view"},
+        {"path": "shelltutor", "lines": "452-456", "evidence": "save_progress \"$next_i\" ... done ; rm -f \"$PROGRESS_FILE\"", "method": "view"}
+      ]
+    },
+    {
+      "id": "S-DIR",
+      "name": "$SANDBOX directory",
+      "classification": "artifact-store",
+      "owner_context": "shelltutor-tutor",
+      "retention": "Persistent until learner deletes.",
+      "read_authority": ["learner (normal user permissions)", "script", "practice subshell"],
+      "write_authority": ["setup_sandbox() (mkdir -p)", "save_progress()", "practice subshell (history appends + learner commands while CWD=$SANDBOX)"],
+      "invalidation_trigger": "none",
+      "deletion_or_reset_path": "rm -rf $SANDBOX (or rm -rf $SHELLTUTOR_HOME if overridden)",
+      "lifecycle": "stable",
+      "sensitivity": "none",
+      "citations": [
+        {"path": "shelltutor", "lines": "30", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"},
+        {"path": "shelltutor", "lines": "67", "evidence": "mkdir -p \"$SANDBOX\"", "method": "view"}
+      ]
+    }
+  ],
+  "absent_memory_classes": [
+    {"class": "request-local-ephemeral", "reason": "no request lifecycle"},
+    {"class": "session-state", "reason": "no runtime session model owned by the script"},
+    {"class": "durable-conversation-state", "reason": "no conversation"},
+    {"class": "long-term-memory", "reason": "no long-term memory store"},
+    {"class": "operator-rules-memory", "reason": "AGENTS.md / CLAUDE.md are skill-or-sop (Phase 8), not runtime memory"},
+    {"class": "retrieval-corpus", "reason": "no retrieval"},
+    {"class": "retrieval-index", "reason": "no retrieval"},
+    {"class": "eval-dataset", "reason": "no evals (Phase 9)"},
+    {"class": "agent-scratchpad", "reason": "no agent scratchpad"},
+    {"class": "prompt-policy-config", "reason": "no prompts"},
+    {"class": "tenant-memory", "reason": "single-user CLI"},
+    {"class": "user-memory", "reason": "no per-user persistent rules"},
+    {"class": "cache", "reason": "no cache"},
+    {"class": "index", "reason": "no index"},
+    {"class": "audit-log", "reason": "no audit log emission"},
+    {"class": "derived-durable", "reason": "no derived-from-authoritative store"},
+    {"class": "authoritative-durable", "reason": "no business-level authoritative store; the script itself is the authority"}
+  ],
+  "exit_check": {
+    "every_store_has_owner_or_flag": true,
+    "every_writable_store_has_write_authority_or_flag": true,
+    "every_memory_surface_classified_by_purpose_durability_owner_reset": true,
+    "phase_5_pass": true
+  }
+}

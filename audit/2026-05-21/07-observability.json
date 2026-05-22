@@ -1,0 +1,50 @@
+{
+  "phase": 7,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "telemetry_signals": [],
+  "absent_signals": [
+    {"class": "tracing", "reason": "No OTel / vendor tracer. Grep otel|opentelemetry|tracer|span -> 0 matches."},
+    {"class": "metrics", "reason": "No counters/gauges/histograms."},
+    {"class": "structured-logs", "reason": "Script uses printf/echo for user-facing UI only; no log levels."},
+    {"class": "audit-log", "reason": "No audit trail emitted."},
+    {"class": "events", "reason": "No event bus or publication."},
+    {"class": "eval-result", "reason": "No evals (Phase 9)."}
+  ],
+  "cost_latency_quality_provenance": {
+    "cost": {"applicable": false, "reason": "no model calls"},
+    "latency": {"applicable": false, "reason": "no agentic loop iterations"},
+    "quality": {"applicable": false, "reason": "no model output to evaluate"},
+    "provenance": {
+      "runtime_action": {"applicable": false, "reason": "no agent runtime"},
+      "content": {"applicable": false, "reason": "no LLM-generated content"},
+      "build_source": {"applicable": false, "reason": "release pipeline deferred per ROADMAP Phase 4"}
+    }
+  },
+  "semantic_conventions": {
+    "otel_genai": {"adopted": false, "version": "n/a", "stability": "n/a", "reason": "no model-mediated paths"},
+    "otel_agent": {"adopted": false, "version": "n/a", "stability": "n/a", "reason": "no agent surface"},
+    "otel_mcp": {"adopted": false, "version": "n/a", "stability": "n/a", "reason": "no MCP surface"},
+    "otel_core_trace_metric_log": {"adopted": false, "version": "n/a", "stability": "n/a", "reason": "no telemetry"}
+  },
+  "current_observability_surrogates": [
+    {"surrogate": "$SANDBOX/.progress", "role": "external indicator of learner's current lesson", "classification": "checkpoint-state (Phase 5 S-004)"},
+    {"surrogate": "$SANDBOX/.shelltutor_history", "role": "record of learner's commands in the practice subshell", "classification": "artifact (Phase 5 S-003)"},
+    {"surrogate": "git log", "role": "project history; no CHANGELOG.md yet (deferred)"}
+  ],
+  "telemetry_trigger_events_for_future_cycles": [
+    "Tutor adds telemetry by intent (e.g., learner drop-off analytics)",
+    "Tutor adds a runtime LLM surface",
+    "Tutor adopts a release pipeline (build/source provenance)",
+    "Tutor adds an eval suite (eval-result correlation)"
+  ],
+  "score_context": "Dimension 11.7 scores 0 on the rubric; the score should be read as 'no telemetry by design on a CLI tutor with no agentic or production runtime', not 'telemetry expected and missing'.",
+  "flags": [],
+  "exit_check": {
+    "naming_inconsistencies_flagged": true,
+    "convention_alignment_scored": true,
+    "agentic_paths_quartet_or_gaps": true,
+    "semconv_version_stability_recorded_if_claimed": true,
+    "phase_7_pass": true
+  }
+}

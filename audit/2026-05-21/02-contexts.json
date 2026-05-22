@@ -1,0 +1,83 @@
+{
+  "phase": 2,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "contexts": [
+    {
+      "name": "shelltutor-tutor",
+      "status": "confirmed",
+      "owner": "Jefahnierocks (personal workspace)",
+      "ubiquitous_language": [
+        "tutor",
+        "lesson",
+        "practice subshell",
+        "sandbox",
+        "learner",
+        "operator",
+        "single-file",
+        "portable",
+        "user-agnostic",
+        "Day-1 scaffold"
+      ],
+      "authority_basis": ["authoritative-store", "stateless-policy"],
+      "authoritative_stores": [
+        "$SANDBOX directory ($HOME/.shelltutor, overridable via SHELLTUTOR_HOME)",
+        "shelltutor script (the executable itself, 459 lines, one file)"
+      ],
+      "inbound_commands": [
+        "./shelltutor",
+        "./shelltutor N (N=1..9)",
+        "./shelltutor -h | --help"
+      ],
+      "outbound_events": [],
+      "external_dependencies": [
+        "bash >= 4",
+        "POSIX userland (mkdir, touch, seq, cat, rm, clear, printf)",
+        "ANSI terminal",
+        "/dev/tty"
+      ],
+      "produced_contracts": [
+        "-h / --help text",
+        "practice() exit codes: 0 (next), 97 (show), 98 (prev), 99 (quit/exit)",
+        "$SANDBOX layout: poem.txt, numbers.txt, .progress, .shelltutor_history",
+        "Welcome and lesson1..lesson9 screen heredocs"
+      ],
+      "consumed_contracts": [
+        "Bash 4+ syntax (arrays, C-style for, --rcfile, process substitution)",
+        "ANSI escape sequences (256-color via \\e[1;38;5;Nm)",
+        "Env vars: HOME, SHELLTUTOR_HOME, NO_COLOR, PATH",
+        "/dev/tty controlling-terminal access",
+        "Lesson-content reads: /etc/services, /etc/passwd, /usr/bin, /proc (Linux-only — see Phase 1 portable/portability collision)"
+      ],
+      "subagents_consumed": [],
+      "subagents_exposed": [],
+      "citations": [
+        {"path": "shelltutor", "lines": "1", "evidence": "#!/usr/bin/env bash", "method": "view"},
+        {"path": "shelltutor", "lines": "412-459", "evidence": "main() { local start; ... main \"$@\" }", "method": "view"},
+        {"path": "shelltutor", "lines": "433-434", "evidence": "lessons=(welcome lesson1 ... lesson9 finale)", "method": "view"},
+        {"path": "STATUS.md", "lines": "21", "evidence": "Semantic owner: Jefahnierocks (personal workspace)", "method": "view"},
+        {"path": "STATUS.md", "lines": "65-69", "evidence": "Decision-Disagreement Rule", "method": "view"},
+        {"path": "shelltutor", "lines": "30-31", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"}
+      ]
+    }
+  ],
+  "candidate_internal_distinctions": [
+    {
+      "name": "lesson-surface-vs-practice-subshell",
+      "promoted_to_context": false,
+      "reason": "Internal partition of one file; shares sandbox state, authority model, governance. ROADMAP Phase 3 may later restructure.",
+      "future_trigger": "ROADMAP.md:66-82 (Lesson Surface Review)"
+    },
+    {
+      "name": "tutor-script-vs-governance-artifacts",
+      "promoted_to_context": false,
+      "reason": "Governance files are §6.1 category 10 (governance); they are audit inputs, not runtime contexts."
+    }
+  ],
+  "exit_check": {
+    "every_claimed_context_resolved": true,
+    "confirmed_contexts_have_authority_basis": true,
+    "every_map_edge_has_evidence": true,
+    "phase_2_pass": true
+  }
+}

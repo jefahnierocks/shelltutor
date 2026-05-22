@@ -1,0 +1,29 @@
+%% EP-LOOP-001 — shelltutor main lesson dispatcher
+%% Static for-loop over an 11-entry lesson array. Not an agentic loop.
+%% Termination: array exhausted, or practice() returns rc=99.
+flowchart TD
+    START["start = read_progress()<br/>(or argv lesson number)"] --> CLAMP
+    CLAMP{"start in<br/>[0, total-1]?"}
+    CLAMP -- no --> ZERO["start = 0"]
+    CLAMP -- yes --> ENTER
+    ZERO --> ENTER
+    ENTER["i = start"] --> CHECK
+    CHECK{"i &lt; total?<br/>(total = 11)"}
+    CHECK -- no --> EXIT_LOOP["loop exits<br/>(falls off end)"]
+    CHECK -- yes --> CALL["call lessons[i]<br/>(welcome | lesson1 ... | finale)"]
+    CALL --> RC{"rc = $?"}
+    RC -- 0 next --> ADV
+    RC -- 97 show --> SHOW["i--"]
+    SHOW --> ADV
+    RC -- 98 prev --> PREV["i = max(i-2, -1)"]
+    PREV --> ADV
+    RC -- 99 quit/exit --> SCRIPT_EXIT["practice() handles rc=99:<br/>clear; echo bye; exit 0<br/>(bypasses this loop)"]
+    SCRIPT_EXIT --> END_99(((script exit)))
+    ADV["next_i = i + 1"] --> SAVE
+    SAVE{"next_i &lt; total?"}
+    SAVE -- yes --> WRITE["save_progress(next_i):<br/>write $SANDBOX/.progress"]
+    WRITE --> INC
+    SAVE -- no --> INC["i++<br/>(loop continues)"]
+    INC --> CHECK
+    EXIT_LOOP --> CLEANUP["rm -f $PROGRESS_FILE<br/>(finale completes)"]
+    CLEANUP --> END_NORMAL(((script exit)))

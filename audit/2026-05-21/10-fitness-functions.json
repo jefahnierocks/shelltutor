@@ -1,0 +1,99 @@
+{
+  "phase": 10,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "fitness_functions": [
+    {
+      "id": "FF-001",
+      "title": "Safety-rule static analysis on shelltutor",
+      "rule": "shelltutor (the script file) must not contain sudo / setuid / chmod +s / curl / wget / nc / ssh / http:// / https:// outside explicitly annotated educational heredocs.",
+      "enforcement_category": "static-analysis",
+      "scope": "shelltutor",
+      "failure_condition": "grep finds a match outside a lesson*() heredoc and outside a '# nofitness:safety-rule' annotation.",
+      "ff_bucket": "safety-rule-enforcement",
+      "related_findings": ["F-004"],
+      "implementation_notes": "bash + grep. Can live as scripts/check-safety.sh invoked from pre-commit hook or Makefile target. No dependency beyond POSIX userland (compatible with AGENTS.md:75-78). Edge case: lesson 8 dnf install hint at shelltutor:346 — the annotation permits this exception until F-003 resolves the lesson surface question."
+    },
+    {
+      "id": "FF-002",
+      "title": "Write-scope static analysis on shelltutor",
+      "rule": "Every write target in shelltutor must resolve to a path inside $SANDBOX or $PROGRESS_FILE.",
+      "enforcement_category": "static-analysis",
+      "scope": "shelltutor",
+      "failure_condition": "Automated check finds any mkdir/touch/cp/mv/rm/tee/>/>> target that does not include $SANDBOX or $PROGRESS_FILE.",
+      "ff_bucket": "safety-rule-enforcement",
+      "related_findings": ["F-004"],
+      "implementation_notes": "For initial implementation, grep + manual review of each match. Current expected matches: mkdir -p $SANDBOX, three file writes inside $SANDBOX, .progress write, .progress removal — all should pass."
+    },
+    {
+      "id": "FF-003",
+      "title": "Documentation-code drift check",
+      "rule": "STATUS.md 'Immediate Next Steps' and ROADMAP.md current-phase items must not name work whose commit message already appears in git log for the current branch.",
+      "enforcement_category": "companion-doc-drift",
+      "scope": "STATUS.md § Immediate Next Steps; ROADMAP.md § current Phase",
+      "failure_condition": "Any 'Immediate Next Steps' bullet matches (case-insensitive substring) a subject in git log --pretty=%s for HEAD.",
+      "ff_bucket": "documentation-consistency",
+      "related_findings": ["F-001"],
+      "implementation_notes": "Bash + grep + git log. Initial implementation can be manual-review-only (audit recommends remediation of F-001 first). Promote to automated check once a matching pattern stabilizes."
+    },
+    {
+      "id": "FF-004",
+      "title": "Lesson portability check",
+      "rule": "Lesson heredoc command lines referencing non-portable surfaces (/proc, /sys, free, apt, dnf, yum, pacman, brew install, port install, vm_stat, ...) must be paired with runtime gate-and-fallback per CONTRIBUTING.md:51-54.",
+      "enforcement_category": "static-analysis",
+      "scope": "shelltutor lesson heredocs (lines 152-409)",
+      "failure_condition": "grep finds a non-portable surface inside a lesson heredoc that is not paired with a nearby 'command -v ... 2>/dev/null' gate or equivalent narration.",
+      "ff_bucket": "lesson-portability",
+      "related_findings": ["F-003"],
+      "implementation_notes": "Initial: manual-review-only (lesson surface is small and stable). Promote when ROADMAP Phase 3 begins adding lessons."
+    },
+    {
+      "id": "FF-005",
+      "title": "shellcheck shelltutor clean pass",
+      "rule": "shellcheck shelltutor must exit zero. Any suppression must be inline ('# shellcheck disable=SC...') with a one-line justification comment immediately above.",
+      "enforcement_category": "static-analysis",
+      "scope": "shelltutor",
+      "failure_condition": "shellcheck shelltutor exits non-zero, or any suppression lacks a justification.",
+      "ff_bucket": "static-analysis",
+      "related_findings": ["F-006"],
+      "implementation_notes": "ROADMAP.md:64 already names this as a Phase 2 exit criterion. shellcheck is not bash-only; CONTRIBUTING.md:34-38 treats it as 'if available'. Implementation: Makefile target 'check: shellcheck shelltutor', or pre-commit hook for contributors with shellcheck installed."
+    },
+    {
+      "id": "FF-006",
+      "title": "Lesson-flow smoke test",
+      "rule": "shelltutor must complete a full lesson sequence non-interactively in under N seconds (initial budget 5s) and leave $SANDBOX/.progress removed on success.",
+      "enforcement_category": "eval-coverage",
+      "scope": "end-to-end shelltutor invocation",
+      "failure_condition": "Test driver pipes next\\n (11 times) via pseudo-tty; observes (a) exit zero, (b) $SANDBOX/.progress absent at end, (c) all 11 lesson headings appear on stdout. Any failing -> FF failure.",
+      "ff_bucket": "lesson-flow-smoke",
+      "related_findings": ["F-006"],
+      "implementation_notes": "Hardest of the seven. practice() reads /dev/tty. Test harness needs pty (expect / python pty / socat). For Day-1, a simpler 'shelltutor -h' smoke test (verify exit zero + known help text) is sufficient and needs no pty harness. Demotion: if expect/python-pty cannot land within AGENTS.md:75-78 bash-only constraint, this FF demotes to manual-review-only for full lesson-flow and to static-analysis for the -h minimal version."
+    },
+    {
+      "id": "FF-007",
+      "title": "Avoid absolute machine-local paths in governance citations",
+      "rule": "Tracked governance files (AGENTS.md, CLAUDE.md, CONTRIBUTING.md, STATUS.md, ROADMAP.md, README.md) must not contain absolute paths beginning with /Users/, /home/, /root/, C:\\, or similar.",
+      "enforcement_category": "companion-doc-drift",
+      "scope": "the six governance files",
+      "failure_condition": "grep -nE '(/Users/|/home/|/root/|C:\\\\)' on the six files returns a match.",
+      "ff_bucket": "governance-citation-portability",
+      "related_findings": ["F-005"],
+      "implementation_notes": "One-line grep; trivial."
+    }
+  ],
+  "out_of_scope_categories": [
+    "protocol-contract-registry",
+    "authority-manifest",
+    "approval-matrix",
+    "memory-lifecycle-lint",
+    "telemetry-lint",
+    "provenance-attestation",
+    "adr-template",
+    "release-gate",
+    "eval-coverage-for-agent-paths",
+    "dependency-boundary (covered by AGENTS.md:75-78 + FF-001/FF-002)",
+    "policy-as-code (conflicts with AGENTS.md:75-78 bash-only constraint)",
+    "prompt-scan"
+  ],
+  "phase_10_pass": true
+}

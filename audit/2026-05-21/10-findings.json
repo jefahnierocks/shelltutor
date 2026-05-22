@@ -1,0 +1,147 @@
+{
+  "phase": 10,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "findings": [
+    {
+      "id": "F-001",
+      "title": "Documentation drift: STATUS/ROADMAP claim user-agnostic refactor pending; commit e6257aa shows it complete",
+      "dimension": "11.10 Governance and audit trail",
+      "severity": 2,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "direct",
+      "finding_bucket": "documentation-consistency",
+      "snapshot_evidence": [
+        {"path": "STATUS.md", "lines": "33-34", "evidence": "imported script still carries two WYN OPS accent comments (lines 17 and 35); user-agnostic refactor is the next change", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "STATUS.md", "lines": "41-43", "evidence": "User-agnostic refactor commit — replace WYN OPS accent comments with neutral wording", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "ROADMAP.md", "lines": "30-46", "evidence": "Phase 1 — User-Agnostic Refactor ... Replace WYN OPS accent comments with neutral language", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "17", "evidence": "#   - Title + action footer styled with a single accent color.", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "35", "evidence": "H1=$'\\e[1;38;5;208m'      # lesson title — bold orange accent", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "(git log)", "lines": "n/a", "evidence": "e6257aa refactor: remove user-specific accent branding from tutor", "method": "git log --oneline", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": ["FF-003"],
+      "recommendation_boundary": "Update STATUS.md (lines 33-34, 41-46) and ROADMAP.md (Phase 1, lines 30-46) to reflect that commit e6257aa has performed the refactor. Scope: 2 documentation files; no script changes."
+    },
+    {
+      "id": "F-002",
+      "title": "Welcome-screen sandbox-safety claim broader than the practice subshell actually sandboxes",
+      "dimension": "11.6 Authority boundaries",
+      "severity": 2,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "direct",
+      "finding_bucket": "authority-claim-accuracy",
+      "snapshot_evidence": [
+        {"path": "shelltutor", "lines": "169", "evidence": "Everything happens in ~/.shelltutor; you cannot break anything", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "104-134", "evidence": "practice() spawns bash --rcfile <(cat <<RCFILE ... cd $SANDBOX; HISTFILE=...; PS1=...; next/prev/show/quit/exit overrides", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": [],
+      "recommendation_boundary": "Narrow the welcome-screen text at shelltutor:169 to match implementation. The actual sandboxing is (1) cd $SANDBOX inside the practice subshell, and (2) HISTFILE sandboxing. Strengthening enforcement (bwrap/firejail/chroot) violates AGENTS.md:75-78. Remediation is text-only; manual-review-only fitness function. Scope: 1 line."
+    },
+    {
+      "id": "F-003",
+      "title": "Lesson portability gaps: Lesson 7 (/proc, free -h) and Lesson 8 (sudo dnf install) use platform-specific surfaces without gate-and-fallback",
+      "dimension": "11.1 Bounded contexts / 11.3 Contract discipline",
+      "severity": 2,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "direct",
+      "finding_bucket": "lesson-portability",
+      "snapshot_evidence": [
+        {"path": "README.md", "lines": "50-63", "evidence": "POSIX-ish terminal (any modern Linux or macOS terminal works) ... Stay portable across Linux and macOS", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "AGENTS.md", "lines": "91-92", "evidence": "Lessons must be runnable end-to-end on a clean Linux or macOS terminal", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "CONTRIBUTING.md", "lines": "51-54", "evidence": "If a lesson genuinely requires a non-portable surface, gate it on a runtime check and degrade gracefully", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "325-335", "evidence": "free -h ... cat /proc/cpuinfo ... cat /proc/meminfo ... ls /proc", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "330", "evidence": "/proc is Linux's self-report folder", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "344-346", "evidence": "Skip any that says 'command not found'. To install: sudo dnf install cowsay figlet lolcat", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": ["FF-004"],
+      "recommendation_boundary": "Either (a) apply CONTRIBUTING.md:51-54 gate-and-fallback to lesson 7's /proc and free references and lesson 8's dnf install hint, or (b) narrow the portability claim. Scope: ~30 lines of lesson heredoc OR three lines of governance text."
+    },
+    {
+      "id": "F-004",
+      "title": "Safety policy rules in AGENTS.md have no code-level enforcement",
+      "dimension": "11.8 Policy/prompt separation / 11.11 Architectural fitness functions",
+      "severity": 2,
+      "confidence": 0.9,
+      "status": "active",
+      "strategic_relevance": "indirect",
+      "finding_bucket": "safety-rule-enforcement",
+      "snapshot_evidence": [
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "AGENTS.md", "lines": "87-92", "evidence": "tutor must not write outside its own working directory, must not request elevated privileges, and must not reach the network", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "CONTRIBUTING.md", "lines": "72-75", "evidence": "local commit discipline is the enforcement layer", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": ".git/hooks/", "lines": "n/a", "evidence": "no project-tracked git hooks; nothing in .githooks/ or .github/workflows/", "method": "ls", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": ["FF-001", "FF-002"],
+      "recommendation_boundary": "Add FF-001 (safety-rule static analysis) and FF-002 (write-scope static analysis). Implementation does not require CI activation; pre-commit hook OR Makefile target OR manual-review checklist documented in CONTRIBUTING.md suffices. Scope: one new script or one section in CONTRIBUTING.md."
+    },
+    {
+      "id": "F-005",
+      "title": "AGENTS.md:22 cites parent workspace governance by absolute machine-local path",
+      "dimension": "11.10 Governance and audit trail",
+      "severity": 1,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "none",
+      "finding_bucket": "governance-citation-style",
+      "snapshot_evidence": [
+        {"path": "AGENTS.md", "lines": "21-23", "evidence": "The Jefahnierocks workspace contract at /Users/verlyn13/Organizations/jefahnierocks/AGENTS.md also applies inside this repository.", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "AGENTS.md", "lines": "24-30", "evidence": "Rules in that file and rules restated here are stated on shelltutor's own authority", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": ["FF-007"],
+      "recommendation_boundary": "Replace the absolute path in AGENTS.md:22 with a relative path expression (../AGENTS.md) or a phrase without a filesystem citation. The rules are restated locally on lines 24-30; the absolute path is informational. Classification: cosmetic-or-framing-deviation (§9.6). Scope: 1 line."
+    },
+    {
+      "id": "F-006",
+      "title": "No automated eval / smoke / regression coverage for any path",
+      "dimension": "11.9 Evals and quality gates",
+      "severity": 1,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "none",
+      "finding_bucket": "quality-gates",
+      "snapshot_evidence": [
+        {"path": ".", "lines": "n/a", "evidence": "find . -name '*test*' -o -name '*spec*' -o -name '*eval*' returns only directive set + profile snapshot (audit infrastructure)", "method": "find", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "ROADMAP.md", "lines": "50-65", "evidence": "Phase 2 — Portability Validation ... Add a shellcheck pass; resolve or annotate findings", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "CONTRIBUTING.md", "lines": "26-38", "evidence": "Walk the affected lesson surface ... If shellcheck is available, run it", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": ["FF-005", "FF-006"],
+      "recommendation_boundary": "Either (a) implement FF-005 (shellcheck shelltutor clean) and FF-006 (lesson-flow smoke test), or (b) execute ROADMAP Phase 2 manual walkthrough on macOS + Linux and record the result in STATUS.md. Both are valid; the latter is consistent with the workspace's current 'norms-based' enforcement layer. Scope: new test infrastructure OR a STATUS.md update with date-stamped validation."
+    },
+    {
+      "id": "F-007",
+      "title": "De-facto external contracts (CLI args, exit codes, env vars, sandbox layout) lack formal schemas",
+      "dimension": "11.3 Contract discipline",
+      "severity": 1,
+      "confidence": 1.0,
+      "status": "active",
+      "strategic_relevance": "indirect",
+      "finding_bucket": "contract-formalization",
+      "snapshot_evidence": [
+        {"path": "audit/2026-05-21/04-contracts.json", "lines": "n/a", "evidence": "Six contracts (C-001..C-006) all classified 'ad-hoc'", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"},
+        {"path": "shelltutor", "lines": "53-64", "evidence": "usage() heredoc — the only place the CLI shape is enumerated", "method": "view", "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92"}
+      ],
+      "current_evidence": [],
+      "smoke_test": "not-run",
+      "related_fitness_functions": [],
+      "recommendation_boundary": "Not actionable at current scope. Document the four de-facto contracts (CLI args, exit codes, env vars, sandbox layout) in a 'Contracts' section of README.md or a new docs/contracts.md. No machine-readable schema warranted for a single-file CLI with no public SDK. Promote to formal schema when release posture closes (ROADMAP Phase 4) or when SHELLTUTOR_HOME becomes a documented integration point."
+    }
+  ],
+  "priority_ranking_note": "Three findings tied at priority 3.0 (F-001, F-002, F-003). Within the tie they are listed by chronological audit-attention order (the order in which evidence accumulated). The operator may resolve the tie by remediation order at planning time.",
+  "phase_10_pass": true
+}

@@ -1,0 +1,90 @@
+{
+  "phase": "8.0 — Prompt-surface classification",
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "prompt_surfaces": [
+    {
+      "id": "P-001",
+      "path": "AGENTS.md",
+      "surface_type": "skill-or-sop",
+      "classification": "embedded-policy",
+      "embedded_values": [
+        {"value": "must not write outside its own working directory", "kind": "tool-constraint", "line": 87},
+        {"value": "must not request elevated privileges", "kind": "authority", "line": 87},
+        {"value": "must not reach the network", "kind": "tool-constraint", "line": 88},
+        {"value": "do not introduce dependencies outside bash and a standard POSIX userland", "kind": "tool-constraint", "line": 75},
+        {"value": "Lessons must be runnable end-to-end on a clean Linux or macOS terminal without prerequisite installation beyond bash", "kind": "release-criterion", "line": 91},
+        {"value": "anything that requires a specific username, hostname, distro, or shell theme is a portability bug", "kind": "release-criterion", "line": 89}
+      ],
+      "policy_home": "static-analysis fitness function (FF-001 / FF-002 candidates in Phase 10)",
+      "drift_target": "future commits that introduce sudo / network calls / non-POSIX deps / writes outside $SANDBOX",
+      "privileged_context": false,
+      "untrusted_input_boundary": "n/a (skill-or-sop file; not a runtime prompt surface)",
+      "server_exposed": false,
+      "citations": [
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view"},
+        {"path": "AGENTS.md", "lines": "87-92", "evidence": "tutor must not write outside its own working directory, must not request elevated privileges, and must not reach the network", "method": "view"}
+      ]
+    },
+    {
+      "id": "P-002",
+      "path": "CLAUDE.md",
+      "surface_type": "skill-or-sop",
+      "classification": "pure-instruction",
+      "embedded_values": [],
+      "policy_home": "n/a (pointer + precedence rule; no business policy)",
+      "drift_target": "n/a",
+      "privileged_context": false,
+      "untrusted_input_boundary": "n/a",
+      "server_exposed": false,
+      "citations": [
+        {"path": "CLAUDE.md", "lines": "14-22", "evidence": "Use AGENTS.md as the shared operating contract for this repository.", "method": "view"}
+      ]
+    },
+    {
+      "id": "P-003",
+      "path": "shelltutor (lesson heredocs)",
+      "surface_type": "not-a-prompt",
+      "classification": "not-a-prompt",
+      "embedded_values": [],
+      "embedded_values_scan_note": "Currency: 0. Thresholds (policy-bearing): 0. Roles: 0. Time windows: 0. Quotas: 0. Approval rules: 0. Authority grants: 0. Secrets-handling: 0. Tool constraints: 1 (lesson 8 'Skip any that says command not found' soft fallback — already covered by lesson-portability-gaps flag). Release criteria: 0. Eval rubrics: 0.",
+      "policy_home": "n/a",
+      "drift_target": "n/a",
+      "privileged_context": false,
+      "untrusted_input_boundary": "n/a (CLI UI text; no model context)",
+      "server_exposed": false,
+      "citations": [
+        {"path": "shelltutor", "lines": "152-409", "evidence": "welcome() ... finale() heredocs", "method": "view"},
+        {"path": "shelltutor", "lines": "344", "evidence": "Skip any that says 'command not found'", "method": "view"}
+      ]
+    },
+    {
+      "id": "P-004",
+      "path": "shelltutor:53-64 (usage() heredoc)",
+      "surface_type": "not-a-prompt",
+      "classification": "not-a-prompt",
+      "embedded_values": [],
+      "policy_home": "n/a",
+      "drift_target": "matches argv parsing at the current revision (no drift)",
+      "privileged_context": false,
+      "untrusted_input_boundary": "n/a",
+      "server_exposed": false,
+      "citations": [
+        {"path": "shelltutor", "lines": "53-64", "evidence": "usage() { cat <<EOF ... }", "method": "view"}
+      ]
+    }
+  ],
+  "surface_type_counts": {
+    "runtime-production-prompt": 0,
+    "runtime-nonproduction-prompt": 0,
+    "authoring-artifact-prompt": 0,
+    "documentation-about-prompts": 0,
+    "skill-or-sop": 2,
+    "server-exposed-prompt": 0,
+    "not-a-prompt": 2
+  },
+  "exit_check": {
+    "every_surface_classified": true,
+    "phase_8_0_pass": true
+  }
+}

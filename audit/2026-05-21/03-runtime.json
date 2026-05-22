@@ -1,0 +1,111 @@
+{
+  "phase": 3,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "entrypoints": [
+    {
+      "id": "EP-001",
+      "kind": "cli",
+      "path": "shelltutor:459 (main \"$@\")",
+      "sync_model": "sync",
+      "execution_mode": "sync",
+      "side_effects": [
+        "mkdir -p $SANDBOX",
+        "create $SANDBOX/poem.txt (4 lines, fixture)",
+        "create $SANDBOX/numbers.txt (seq 1 50 output)",
+        "touch $SANDBOX/.shelltutor_history",
+        "save_progress: write next-lesson index to $SANDBOX/.progress",
+        "rm -f $PROGRESS_FILE on finale",
+        "clear; printf heredoc text to stdout",
+        "spawn practice subshell (EP-002)"
+      ],
+      "touches_loop": true,
+      "termination_condition": "lesson array exhausted (i >= 11) OR practice() observes rc=99 and calls exit 0 from inside the helper (shelltutor:136-140)",
+      "lifecycle_contract": "synchronous CLI; one-shot or argv-driven jump-to-lesson",
+      "resume_state": "n/a (caller-side; .progress file is per-invocation resume token, classified in Phase 5)",
+      "callback_channel": "n/a",
+      "approval_gates": [],
+      "checkpoint_state": "n/a (not a durable workflow)",
+      "citations": [
+        {"path": "shelltutor", "lines": "1", "evidence": "#!/usr/bin/env bash", "method": "view"},
+        {"path": "shelltutor", "lines": "412-459", "evidence": "main() { local start; local explicit=0; case ... main \"$@\"", "method": "view"},
+        {"path": "shelltutor", "lines": "415-428", "evidence": "case \"${1:-}\" in -h|--help) usage; exit 0 ;; '') ... [1-9]) ... esac", "method": "view"},
+        {"path": "shelltutor", "lines": "66-80", "evidence": "setup_sandbox() { mkdir -p \"$SANDBOX\"; ... touch \"$SANDBOX/.shelltutor_history\"; }", "method": "view"},
+        {"path": "shelltutor", "lines": "441-454", "evidence": "for ((i=start; i<total; i++)) { ${lessons[$i]}; rc=$?; ... }", "method": "view"}
+      ]
+    },
+    {
+      "id": "EP-002",
+      "kind": "other",
+      "kind_note": "Interactive bash sub-process spawned via 'bash --rcfile <(cat <<RCFILE ... RCFILE) -i < /dev/tty'. Closest enum value is 'cli', but the schema also allows 'other' which more accurately captures this nested-shell pattern.",
+      "path": "shelltutor:104-134 (practice())",
+      "sync_model": "sync",
+      "execution_mode": "sync",
+      "side_effects": [
+        "cd $SANDBOX (subshell's PWD)",
+        "HISTFILE=$SANDBOX/.shelltutor_history (sandboxed history file)",
+        "history -r (read history from sandboxed file)",
+        "PROMPT_COMMAND='history -a' (append on each command)",
+        "PS1='shelltutor> '",
+        "override next/prev/show/quit/exit shell builtins to exit codes 0/97/98/99",
+        "execute any subsequent learner-typed command with the learner's normal user authority"
+      ],
+      "touches_loop": true,
+      "termination_condition": "Subshell exit. Navigation overrides return 0 (next), 97 (show), 98 (prev), 99 (quit/exit). If rc=99, practice() calls 'exit 0' directly (script-level exit, bypassing the lesson loop).",
+      "lifecycle_contract": "synchronous foreground subprocess; one subshell per lesson",
+      "resume_state": "n/a",
+      "callback_channel": "n/a",
+      "approval_gates": [],
+      "checkpoint_state": "n/a",
+      "authority_followup": "subshell-safety-claim-vs-shell-authority — sandbox boundary is `cd $SANDBOX` + HISTFILE only; learner retains normal filesystem authority inside the subshell. Phase 6 owns full analysis.",
+      "citations": [
+        {"path": "shelltutor", "lines": "104-134", "evidence": "practice() { setup_sandbox; bash --rcfile <(cat <<RCFILE ... RCFILE) -i < /dev/tty; ... }", "method": "view"},
+        {"path": "shelltutor", "lines": "109", "evidence": "cd \"$SANDBOX\"", "method": "view"},
+        {"path": "shelltutor", "lines": "111-117", "evidence": "HISTFILE=\"$SANDBOX/.shelltutor_history\"; HISTSIZE=2000; ...", "method": "view"},
+        {"path": "shelltutor", "lines": "118", "evidence": "PS1='shelltutor> '", "method": "view"},
+        {"path": "shelltutor", "lines": "126-130", "evidence": "next() { builtin exit 0; } prev() { builtin exit 98; } show() { builtin exit 97; } quit() { builtin exit 99; } exit() { builtin exit 99; }", "method": "view"},
+        {"path": "shelltutor", "lines": "169", "evidence": "Everything happens in ~/.shelltutor; you cannot break anything", "method": "view"}
+      ]
+    }
+  ],
+  "loops": [
+    {
+      "id": "EP-LOOP-001",
+      "kind": "lesson-dispatch",
+      "path": "shelltutor:441-454",
+      "iteration_mechanism": "C-style for-loop over a fixed lesson array (size 11)",
+      "agentic": false,
+      "termination_conditions": [
+        "i reaches total (array exhausted; 11 lessons including welcome and finale)",
+        "rc=99 from practice() escapes the loop via 'exit 0' in practice() (shelltutor:136-140)"
+      ],
+      "iteration_cap": "static (11; equal to ${#lessons[@]})",
+      "approval_gates": [],
+      "diagram": "audit/2026-05-21/03-loops/EP-LOOP-001-main-dispatcher.mmd",
+      "citations": [
+        {"path": "shelltutor", "lines": "433-435", "evidence": "lessons=(welcome lesson1 lesson2 ... finale); total=${#lessons[@]}", "method": "view"},
+        {"path": "shelltutor", "lines": "441-454", "evidence": "for ((i=start; i<total; i++)) { ... case \"$rc\" in 97) ((i--)) ;; 98) i=$((i > 0 ? i - 2 : -1)) ;; ... }", "method": "view"},
+        {"path": "shelltutor", "lines": "136-140", "evidence": "if [ \"$code\" -eq 99 ]; then clear...; echo \"Bye. ...\"; exit 0; fi", "method": "view"}
+      ]
+    }
+  ],
+  "subagent_invocations": [],
+  "remote_agent_invocations": [],
+  "mcp_paths": [],
+  "a2a_paths": [],
+  "background_paths": [],
+  "paused_for_approval_paths": [],
+  "resumable_paths": [],
+  "durable_paths": [],
+  "callback_paths": [],
+  "event_triggered_paths": [],
+  "human_in_the_loop_approval_gates": [],
+  "exit_check": {
+    "every_entrypoint_traced_or_blocked": true,
+    "every_loop_has_termination_or_flagged": true,
+    "every_write_path_routed_to_phase_6": true,
+    "every_subagent_caller_callee_recorded": true,
+    "every_async_path_has_lifecycle_or_flagged": true,
+    "phase_3_pass": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "phase": "10.5",
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "current_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "current_status": "Working tree clean except for untracked audit/, docs/, profile/ (audit infrastructure, no source changes).",
+  "findings_smoke_test": [
+    {"finding_id": "F-001", "outcome": "confirmed-current", "rationale": "STATUS.md:33-34, 41-43 still claim user-agnostic refactor pending; ROADMAP.md:37 still lists 'Replace WYN OPS accent comments'; shelltutor:17,35 still contain no WYN OPS reference; grep WYN OPS shelltutor still returns exit=1."},
+    {"finding_id": "F-002", "outcome": "confirmed-current", "rationale": "shelltutor:169 'Everything happens in ~/.shelltutor; you cannot break anything' unchanged; shelltutor:104-134 practice() body unchanged; AGENTS.md:75-78 bash-only constraint unchanged."},
+    {"finding_id": "F-003", "outcome": "confirmed-current", "rationale": "shelltutor:330 /proc Linux-only note; shelltutor:346 sudo dnf install hint; README.md:50-63 / AGENTS.md:91-92 portability claim; CONTRIBUTING.md:51-54 gate-and-fallback rule — all unchanged."},
+    {"finding_id": "F-004", "outcome": "confirmed-current", "rationale": "AGENTS.md:75-78, 87-92 safety rules unchanged; CONTRIBUTING.md:72-75 'local commit discipline is the enforcement layer' unchanged; .git/hooks/ contains only *.sample files; .github/ and .githooks/ absent."},
+    {"finding_id": "F-005", "outcome": "confirmed-current", "rationale": "AGENTS.md:21-23 absolute-path citation unchanged; AGENTS.md:24-30 restatement clause unchanged."},
+    {"finding_id": "F-006", "outcome": "confirmed-current", "rationale": "find . -name '*test*' ... returns only audit/2026-05-21/09-evals.{md,json}; no project-tracked tests; ROADMAP.md:50-65 Phase 2 quality gates pending; CONTRIBUTING.md:34-38 shellcheck 'if available' status unchanged."},
+    {"finding_id": "F-007", "outcome": "confirmed-current", "rationale": "audit/2026-05-21/04-contracts.json six ad-hoc contracts; shelltutor:53-64 usage() heredoc unchanged."}
+  ],
+  "fitness_function_reality_check": [
+    {"ff_id": "FF-001", "tech": "bash + grep", "status": "installed", "action": "no demotion"},
+    {"ff_id": "FF-002", "tech": "bash + grep", "status": "installed", "action": "no demotion"},
+    {"ff_id": "FF-003", "tech": "bash + grep + git", "status": "installed", "action": "no demotion; initial manual-review-only per FF text"},
+    {"ff_id": "FF-004", "tech": "bash + grep", "status": "installed", "action": "no demotion; initial manual-review-only per FF text"},
+    {"ff_id": "FF-005", "tech": "shellcheck", "status": "installable (contributor-side per CONTRIBUTING.md:34-38)", "action": "no demotion"},
+    {"ff_id": "FF-006", "tech": "pty harness (expect / python pty / socat) for full lesson-flow", "status": "outside AGENTS.md:75-78 runtime constraint", "action": "demote full-lesson-flow variant to manual-review-only; retain minimal -h smoke (bash + grep) as static-analysis per FF-006's documented demotion path"},
+    {"ff_id": "FF-007", "tech": "bash + grep", "status": "installed", "action": "no demotion"}
+  ],
+  "stale_rate": {
+    "struck": 0,
+    "drift_only": 0,
+    "not_run": 0,
+    "total_findings": 7,
+    "stale_fraction": 0.0,
+    "halt_threshold": 0.333,
+    "halts": false
+  },
+  "exit_check": {
+    "every_finding_has_outcome": true,
+    "struck_findings_absent_from_priority": true,
+    "drift_only_recorded_as_profile_code_drift": true,
+    "no_stale_rate_halt": true,
+    "phase_10_5_pass": true
+  }
+}

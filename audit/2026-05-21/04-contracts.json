@@ -1,0 +1,187 @@
+{
+  "phase": 4,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "contracts": [
+    {
+      "id": "C-001",
+      "name": "shelltutor CLI args",
+      "format": "ad-hoc",
+      "surface": "other",
+      "surface_note": "CLI; closest enum value 'other' since 'cli' is not a Contract.surface enum value (it appears on Entrypoint.kind instead).",
+      "location": "shelltutor:415-428 (parsing); shelltutor:53-64 (usage())",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": ["<empty>", "1..9", "-h|--help"],
+      "auth_scheme": null,
+      "producers": ["shelltutor"],
+      "consumers": ["the operator invoking ./shelltutor", "the learner reading -h output"],
+      "validation": "Inline case statement; rejects anything outside [1-9]|''|-h|--help with stderr message and exit 1.",
+      "compatibility_policy": null,
+      "flags": ["route-without-spec"],
+      "citations": [
+        {"path": "shelltutor", "lines": "415-428", "evidence": "case \"${1:-}\" in -h|--help) usage; exit 0 ;; '') start=$(read_progress) ;; [1-9]) ...", "method": "view"},
+        {"path": "shelltutor", "lines": "53-64", "evidence": "usage() { cat <<EOF shelltutor — a vimtutor-style introduction to the Unix shell. ...", "method": "view"}
+      ]
+    },
+    {
+      "id": "C-002",
+      "name": "practice() exit codes",
+      "format": "ad-hoc",
+      "surface": "other",
+      "surface_note": "Internal exit-code protocol between practice() subshell and the lesson dispatcher loop.",
+      "location": "shelltutor:120-131, 136-141, 444-449",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": ["0=next", "97=show", "98=prev", "99=quit/exit"],
+      "auth_scheme": null,
+      "producers": ["next/prev/show/quit/exit overrides in practice() rcfile"],
+      "consumers": ["practice() helper (handles rc=99)", "EP-LOOP-001 dispatcher (handles 97, 98)"],
+      "validation": "Implicit. Only the four overrides return non-zero per design; default subshell exit (e.g., learner typed Ctrl+D) returns whatever bash returns.",
+      "compatibility_policy": null,
+      "flags": [],
+      "citations": [
+        {"path": "shelltutor", "lines": "120-130", "evidence": "# 0 = next     97 = show     98 = prev     99 = quit", "method": "view"},
+        {"path": "shelltutor", "lines": "136-140", "evidence": "if [ \"$code\" -eq 99 ]; then clear...; echo \"Bye. ...\"; exit 0; fi", "method": "view"},
+        {"path": "shelltutor", "lines": "444-449", "evidence": "case \"$rc\" in 97) ((i--)) ;; 98) i=$((i > 0 ? i - 2 : -1)) ;; esac", "method": "view"}
+      ]
+    },
+    {
+      "id": "C-003",
+      "name": "$SANDBOX file layout",
+      "format": "ad-hoc",
+      "surface": "persisted-format",
+      "location": "shelltutor:30-32, 66-80, 82-93, 109-117, 452-456",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": [
+        "$SANDBOX/poem.txt (4-line fixture)",
+        "$SANDBOX/numbers.txt (seq 1 50 output)",
+        "$SANDBOX/.shelltutor_history (HISTFILE)",
+        "$SANDBOX/.progress (single non-negative integer; next-lesson index)"
+      ],
+      "auth_scheme": null,
+      "producers": ["setup_sandbox() — fixtures + history file", "save_progress() — .progress", "practice subshell — appends to .shelltutor_history"],
+      "consumers": ["read_progress()", "practice subshell (cd $SANDBOX + HISTFILE)", "lesson heredocs (refer to poem.txt and numbers.txt by relative path)"],
+      "validation": "read_progress() enforces integer regex [[ \"$n\" =~ ^[0-9]+$ ]] || n=0; other files unvalidated.",
+      "compatibility_policy": null,
+      "flags": ["persisted-format-without-versioning"],
+      "citations": [
+        {"path": "shelltutor", "lines": "30-32", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"; PROGRESS_FILE=\"$SANDBOX/.progress\"", "method": "view"},
+        {"path": "shelltutor", "lines": "66-80", "evidence": "setup_sandbox() { mkdir -p \"$SANDBOX\"; ... touch \"$SANDBOX/.shelltutor_history\"; }", "method": "view"},
+        {"path": "shelltutor", "lines": "82-93", "evidence": "save_progress() ... read_progress() ... [[ \"$n\" =~ ^[0-9]+$ ]] || n=0", "method": "view"},
+        {"path": "shelltutor", "lines": "111-116", "evidence": "HISTFILE=\"$SANDBOX/.shelltutor_history\"; HISTSIZE=2000; HISTFILESIZE=4000; shopt -s histappend", "method": "view"}
+      ]
+    },
+    {
+      "id": "C-004",
+      "name": "shelltutor environment variables",
+      "format": "ad-hoc",
+      "surface": "config",
+      "location": "shelltutor:30, 34, 62",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": [
+        "SHELLTUTOR_HOME — overrides default sandbox root",
+        "NO_COLOR — disables ANSI styling per no-color.org",
+        "HOME — default sandbox parent"
+      ],
+      "auth_scheme": null,
+      "producers": ["the operator's environment"],
+      "consumers": ["shelltutor script"],
+      "validation": "None beyond bash default parameter substitution semantics.",
+      "compatibility_policy": null,
+      "flags": ["config-without-validation"],
+      "citations": [
+        {"path": "shelltutor", "lines": "30", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"},
+        {"path": "shelltutor", "lines": "34", "evidence": "if [ -t 1 ] && [ -z \"${NO_COLOR:-}\" ]; then", "method": "view"},
+        {"path": "shelltutor", "lines": "62", "evidence": "Sandbox folder: $SANDBOX", "method": "view"}
+      ]
+    },
+    {
+      "id": "C-005",
+      "name": "-h | --help usage text",
+      "format": "ad-hoc",
+      "surface": "other",
+      "surface_note": "CLI help text.",
+      "location": "shelltutor:53-64",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": ["usage line", "argv shape", "resolved $SANDBOX path"],
+      "auth_scheme": null,
+      "producers": ["usage()"],
+      "consumers": ["the operator"],
+      "validation": "Not validated; matches argv parsing at this revision.",
+      "compatibility_policy": null,
+      "flags": [],
+      "citations": [
+        {"path": "shelltutor", "lines": "53-64", "evidence": "usage() { cat <<EOF shelltutor — a vimtutor-style introduction ... EOF }", "method": "view"}
+      ]
+    },
+    {
+      "id": "C-006",
+      "name": "lesson heredoc content (welcome through finale)",
+      "format": "ad-hoc",
+      "surface": "other",
+      "surface_note": "User-facing terminal output via bash heredocs with ANSI color interpolation; not a model-mediated prompt.",
+      "location": "shelltutor:152-409",
+      "versioning": "none",
+      "schema_dialect": null,
+      "protocol_version": null,
+      "advertised_capabilities": [
+        "welcome (navigation primer)",
+        "lesson1..lesson9 (lesson content)",
+        "finale (summary)"
+      ],
+      "auth_scheme": null,
+      "producers": ["lesson functions in shelltutor"],
+      "consumers": ["the learner"],
+      "validation": "None.",
+      "compatibility_policy": null,
+      "flags": [],
+      "classification_note": "Phase 8 classifies as 'not-a-prompt' (CLI UI heredocs, not LLM prompts). Contract layer records the surface to document the carrier of the welcome-screen sandbox claim (shelltutor:169).",
+      "citations": [
+        {"path": "shelltutor", "lines": "152-173", "evidence": "welcome() { lesson <<EOF SHELL TUTOR ... navigation: next prev show quit", "method": "view"},
+        {"path": "shelltutor", "lines": "169", "evidence": "Everything happens in ~/.shelltutor; you cannot break anything", "method": "view"}
+      ]
+    }
+  ],
+  "agents_md_parent_reference_observation": {
+    "audit_attention_flag": "agents-md-parent-reference-style",
+    "classification": "cosmetic-or-framing-deviation",
+    "rationale": "AGENTS.md cites the parent workspace AGENTS.md by absolute machine-local path, but immediately restates the relevant rules on shelltutor's own authority (lines 24-30). Strangers cloning the repo cannot resolve the path; however, the restatement is load-bearing, so no governance information is lost. Fitness-function candidate: avoid absolute machine-local paths in governance citations.",
+    "citations": [
+      {"path": "AGENTS.md", "lines": "18-30", "evidence": "The Jefahnierocks workspace contract at /Users/verlyn13/Organizations/jefahnierocks/AGENTS.md also applies inside this repository.", "method": "view"}
+    ]
+  },
+  "absent_surfaces": [
+    {"surface": "http", "reason": "no HTTP/RPC surface"},
+    {"surface": "workflow", "reason": "no workflow contracts"},
+    {"surface": "event", "reason": "no events"},
+    {"surface": "tool", "reason": "no tools in agent sense"},
+    {"surface": "resource", "reason": "no resources"},
+    {"surface": "mcp", "reason": "no MCP surface (grep confirmed)"},
+    {"surface": "prompt", "reason": "no model-mediated prompts"},
+    {"surface": "sdk", "reason": "no public SDK surface"},
+    {"surface": "device", "reason": "no device interface"},
+    {"surface": "a2a", "reason": "no A2A surface"},
+    {"surface": "subagent", "reason": "no subagents"},
+    {"surface": "callback", "reason": "no callbacks/webhooks"},
+    {"surface": "provenance-runtime-action", "reason": "no agent runtime to provenance-emit"},
+    {"surface": "provenance-content", "reason": "no LLM-generated content"},
+    {"surface": "provenance-build-source", "reason": "no release/build pipeline yet (open known-debt: release posture)"}
+  ],
+  "exit_check": {
+    "no_unflagged_ad_hoc_external_contract": true,
+    "tools_actions_skills_have_schema_or_flagged": true,
+    "mcp_a2a_surfaces_inventoried_or_flagged": true,
+    "public_interfaces_have_producer_consumer_evidence": true,
+    "subagent_boundaries_typed_or_flagged": true,
+    "phase_4_pass": true
+  }
+}

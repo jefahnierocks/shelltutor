@@ -1,0 +1,61 @@
+{
+  "pinned_at": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "anchors_in_use": [
+    {
+      "name": "Bash",
+      "applies_to": "shelltutor script syntax and runtime",
+      "pin": "bash 4+",
+      "pin_source": "README.md:53-55, AGENTS.md:75-77, CONTRIBUTING.md:42-49",
+      "stability_status": "stable",
+      "notes": "Pin is a floor (>= 4). README documents that macOS ships 3.2 and recommends Homebrew bash 5+. Script uses bash 4+ syntax: arrays (`local lessons=(...)`), C-style for loops, process substitution, `local`, builtin `clear` (with `|| true` fallback)."
+    },
+    {
+      "name": "POSIX userland",
+      "applies_to": "external commands used by the script (mkdir, touch, seq, cat, rm, printf, clear)",
+      "pin": "IEEE Std 1003.1 (POSIX.1) baseline",
+      "pin_source": "AGENTS.md:75-77 (\"`bash` and a standard POSIX userland\")",
+      "stability_status": "stable",
+      "notes": "No specific POSIX revision pinned. The script also uses `head`, `tail`, `wc`, `seq` in lessons (taught content, not script dependencies); `seq` is GNU coreutils on Linux, present on macOS BSD coreutils too."
+    },
+    {
+      "name": "ANSI terminal color (NO_COLOR)",
+      "applies_to": "color styling at shelltutor:34-46",
+      "pin": "no-color.org convention",
+      "pin_source": "shelltutor:33-46",
+      "stability_status": "stable",
+      "notes": "The script honors the NO_COLOR environment variable per https://no-color.org. ANSI 256-color codes used (`\\e[1;38;5;208m` etc.)."
+    },
+    {
+      "name": "shellcheck (optional)",
+      "applies_to": "static analysis of shelltutor",
+      "pin": "unpinned",
+      "pin_source": "CONTRIBUTING.md:34-38 (\"if `shellcheck` is available, run it\")",
+      "stability_status": "stable",
+      "notes": "Optional in the contributor workflow; ROADMAP Phase 2 names it as exit criterion but no pass has been recorded. Profile records this as known debt."
+    }
+  ],
+  "anchors_not_applicable": [
+    {"name": "OpenAPI Specification", "reason": "No HTTP API surface in scope."},
+    {"name": "Arazzo or workflow-description specification", "reason": "No workflow contracts in scope."},
+    {"name": "Overlay / API-augmentation specification", "reason": "No API overlays in scope."},
+    {"name": "JSON Schema", "reason": "No structured payload validation surface in scope."},
+    {"name": "Model Context Protocol (MCP)", "reason": "No MCP server or client surface. Grep returned no matches across tracked files."},
+    {"name": "MCP authorization metadata", "reason": "Follows from MCP absent."},
+    {"name": "MCP roots / sampling / elicitation / completion", "reason": "Follows from MCP absent."},
+    {"name": "OpenTelemetry semantic conventions (GenAI, agent, MCP)", "reason": "No model-mediated or protocol-mediated paths; no telemetry."},
+    {"name": "OpenTelemetry trace/metric/log conventions", "reason": "No tracing/metrics/logs in scope."},
+    {"name": "A2A / inter-agent protocols", "reason": "No remote-agent surface in scope. Grep returned no matches."},
+    {"name": "Agent Card / advertised skill specifications", "reason": "Follows from A2A absent."},
+    {"name": "Provenance standards (SLSA)", "reason": "No release/build pipeline; no signed artifact provenance. Profile records build/source provenance as `absent` (open known-debt: release posture)."},
+    {"name": "Provenance standards (C2PA / Content Credentials)", "reason": "No content provenance — the tutor does not generate LLM-mediated content."},
+    {"name": "Model-provider SDK documentation (Anthropic / OpenAI / etc.)", "reason": "No model SDK in scope."},
+    {"name": "Agent-framework documentation (LangChain / LlamaIndex / etc.)", "reason": "No agent framework in scope."},
+    {"name": "NIST AI Risk Management Framework", "reason": "Project has no AI surface; NIST AI RMF not in scope."},
+    {"name": "OWASP GenAI / LLM / agentic / MCP risk materials", "reason": "Project has no AI surface; not in scope."},
+    {"name": "Computer-use sandbox patterns", "reason": "No computer-use harness in scope."},
+    {"name": "Browser-use sandbox patterns", "reason": "No browser-use harness in scope."},
+    {"name": "Durable-workflow / Temporal / Inngest documentation", "reason": "No durable execution in scope."},
+    {"name": "Webhook / callback authentication standards", "reason": "No webhooks or callbacks in scope."}
+  ]
+}

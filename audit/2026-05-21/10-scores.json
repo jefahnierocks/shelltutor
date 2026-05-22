@@ -1,0 +1,115 @@
+{
+  "phase": 10,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "dimensions": [
+    {
+      "dimension": "11.1 Bounded contexts",
+      "score": 2,
+      "rubric": "Distinct vocabulary and mostly distinct authority, with leaks.",
+      "score_context": "One confirmed context (Phase 2). Vocabulary mostly coherent (Phase 1); one same-term-different-meaning collision around 'user-agnostic' (mild) and one drift in 'WYN OPS' references (captured as F-001). Lesson-content portability collision around 'portable' captured as F-003.",
+      "strategic_weighting": ["Single-file portability (1.5x)"],
+      "evidence": ["audit/2026-05-21/02-contexts.json", "audit/2026-05-21/01-vocabulary.json"]
+    },
+    {
+      "dimension": "11.2 Domain/application separation",
+      "score": 3,
+      "rubric": "Domain purity and dependency direction are enforced.",
+      "score_context": "Vacuously satisfied: shelltutor is a single-file CLI tutor; there is no domain layer to leak into adapters, and no application orchestrator to leak business rules into UI. The shape of the codebase does not allow these violations. Score 3 reflects 'no leak observed because no structural plane exists to leak between.'",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/03-runtime.json"]
+    },
+    {
+      "dimension": "11.3 Contract discipline",
+      "score": 1,
+      "rubric": "Partial schema coverage; producer/consumer or validation unclear.",
+      "score_context": "Phase 4 inventoried six de-facto contracts (CLI args, exit codes, env vars, sandbox layout, usage text, lesson heredocs). All classified 'ad-hoc'. Producer/consumer is clear from code; validation exists for some inputs (read_progress regex, argv case statement) but nothing is schema-defined. F-007 records this. Appropriate for project scope; score 1 honestly applied per the rubric.",
+      "strategic_weighting": ["Single-file portability (1.5x)"],
+      "evidence": ["audit/2026-05-21/04-contracts.json"]
+    },
+    {
+      "dimension": "11.4 Tool/action surface clarity",
+      "score": 3,
+      "rubric": "Registry includes descriptions, schemas, protocol versions, authority scopes, approval policies, lifecycle modes, and version pins.",
+      "score_context": "Vacuously satisfied: there are no tools in the agent-runtime sense. The script's internal functions (next/prev/show/quit/exit) are bash navigation builtins overridden at shelltutor:126-130, well-named and non-overlapping. Score 3 reflects 'no surface to be unclear.'",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/04-contracts.json"]
+    },
+    {
+      "dimension": "11.5 State and memory clarity",
+      "score": 2,
+      "rubric": "Stores and memory surfaces are classified with retention, owners, and delete/reset paths.",
+      "score_context": "Phase 5 inventoried five stores (S-001..S-004 + S-DIR). Each has owner, retention, write authority, deletion path. The narrower concern is the gap between A-002's declared filesystem scope ($SANDBOX) and actual subshell scope — captured as F-002.",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/05-state.json"]
+    },
+    {
+      "dimension": "11.6 Authority boundaries",
+      "score": 2,
+      "rubric": "Per-tool/action/principal authority declared with approval gates for write paths, but bypass/precedence/callback/secondary-credential handling may have gaps.",
+      "score_context": "Three approval gates in AGENTS.md:43-78 (contributor-side); approval modes and precedence recorded. A-001 (script) honors its declared sandbox. A-002 (practice subshell) declared vs actual scope mismatch is F-002 (focus question). Enforcement of contributor-side gates is via norms (CONTRIBUTING.md:72-75), not code — this is intentional posture but lowers the score from 3 to 2.",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/06-authority.json"]
+    },
+    {
+      "dimension": "11.7 Observability semantics",
+      "score": 0,
+      "rubric": "Logs only or no meaningful telemetry.",
+      "score_context": "No telemetry. Score 0 honestly applied. Context per Phase 7: this is appropriate for a Day-1 CLI tutor with no agentic runtime, no production deployment, no SLA. The score should not be read as 'observability expected and missing.'",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/07-observability.json"]
+    },
+    {
+      "dimension": "11.8 Policy/prompt separation",
+      "score": 2,
+      "rubric": "Runtime and server-exposed prompts are mostly parameterized from policy-controlled sources; authoring artifacts or privileged-context boundaries may drift.",
+      "score_context": "No runtime LLM prompts (vacuous). AGENTS.md (skill-or-sop) has six embedded-policy rules without code-level enforcement (P-001, F-004); contradictory-guidance drift between STATUS/ROADMAP and commit log (F-001). Score 2 reflects skill-or-sop class doing its job overall, with the safety-rule enforcement gap pulling away from 3.",
+      "strategic_weighting": ["Documentation–code consistency (1.5x)"],
+      "evidence": ["audit/2026-05-21/08-policy.json", "audit/2026-05-21/08-prompt-surfaces.json"]
+    },
+    {
+      "dimension": "11.9 Evals and quality gates",
+      "score": 0,
+      "rubric": "No eval coverage for model/agent/automation paths.",
+      "score_context": "No evals. Score 0 honestly applied. Context per Phase 9: no agentic runtime to eval; ROADMAP Phase 2 plans manual walkthrough + shellcheck (pending). F-006 captures the gap.",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/09-evals.json"]
+    },
+    {
+      "dimension": "11.10 Governance and audit trail",
+      "score": 2,
+      "rubric": "Governance artifacts are current enough to guide the audit; some drift remains.",
+      "score_context": "Comprehensive governance docs (AGENTS, CLAUDE, CONTRIBUTING, STATUS, ROADMAP, README). Decision-Disagreement Rule (STATUS.md:65-69) and conflict-resolution rule (CLAUDE.md:14-22, AGENTS.md:29-30) are explicit. Drift in STATUS/ROADMAP vs commit log (F-001). Absolute-path citation in AGENTS.md:22 (F-005). No ADRs (no ADR template required by current ROADMAP). Score 2.",
+      "strategic_weighting": ["Documentation–code consistency (1.5x)"],
+      "evidence": ["audit/2026-05-21/01-vocabulary.json", "audit/2026-05-21/10-findings.json"]
+    },
+    {
+      "dimension": "11.11 Architectural fitness functions",
+      "score": 0,
+      "rubric": "None.",
+      "score_context": "No fitness functions at the snapshot revision. The seven candidates in 10-fitness-functions.{md,json} are proposals; none are implemented yet.",
+      "strategic_weighting": [],
+      "evidence": ["audit/2026-05-21/10-fitness-functions.json"]
+    }
+  ],
+  "aggregate_summary": {
+    "informational_only": true,
+    "lowest_dimensions": ["11.7 Observability (0)", "11.9 Evals (0)", "11.11 Fitness functions (0)"],
+    "lowest_dimensions_note": "All three score 0 because the underlying capability is absent and intentionally so for a Day-1 CLI tutor with no agentic runtime. The score should be read with context, not as a bare 'low.'",
+    "mid_dimensions": ["11.3 Contract discipline (1)", "11.5 State (2)", "11.6 Authority (2)", "11.8 Policy/prompt (2)", "11.10 Governance (2)"],
+    "high_dimensions": ["11.1 Bounded contexts (2)", "11.2 Domain/application (3, vacuous)", "11.4 Tool surface (3, vacuous)"]
+  },
+  "strategic_theme_summary": [
+    {
+      "theme": "Single-file portability",
+      "weights": ["11.3 Contract discipline (1.5x)", "11.1 Bounded contexts (1.5x)"],
+      "findings_that_advance_theme": ["F-003 (direct)", "F-007 (indirect)"]
+    },
+    {
+      "theme": "Documentation–code consistency",
+      "weights": ["11.10 Governance (1.5x)", "11.8 Policy/prompt (1.5x)"],
+      "findings_that_advance_theme": ["F-001 (direct)", "F-004 (indirect)"]
+    }
+  ],
+  "phase_10_pass": true
+}

@@ -1,0 +1,201 @@
+{
+  "phase": 6,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "principals": [
+    {
+      "principal": "shelltutor script process (A-001)",
+      "readable_scopes": [
+        "learner's full user filesystem (read side, conventional CLI process)",
+        "env vars: HOME, SHELLTUTOR_HOME, NO_COLOR, PATH",
+        "stdin via /dev/tty"
+      ],
+      "writable_scopes": [
+        "$SANDBOX (declared and observed)"
+      ],
+      "callable_capabilities": [
+        "bash builtins (mkdir, touch, printf, echo, cat, clear, seq, rm)",
+        "spawn one sub-process: practice subshell (A-002)"
+      ],
+      "callable_subagents": [],
+      "callable_externals": [],
+      "workspace_roots": ["$SANDBOX (default $HOME/.shelltutor; SHELLTUTOR_HOME override)"],
+      "browser_scope": [],
+      "filesystem_scope": ["$SANDBOX (write side)"],
+      "secrets_access": [],
+      "approval_policy": "none required at runtime; contributor-side gates declared in AGENTS.md (see A-005)",
+      "approval_mode": "none-required",
+      "approval_precedence": "n/a (runtime)",
+      "bypass_modes": [],
+      "protected_paths": ["everything outside $SANDBOX (norm-enforced; no kernel-level mechanism)"],
+      "secondary_credentials": [],
+      "outbound_network_scope": [],
+      "callback_auth": "n/a",
+      "hosted_or_local": "local",
+      "token_delegation": "n/a",
+      "sandbox_model": "filesystem-only; script confines its own writes to $SANDBOX. No kernel-level isolation (bash + POSIX userland constraint).",
+      "flags": [],
+      "citations": [
+        {"path": "shelltutor", "lines": "30", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"},
+        {"path": "shelltutor", "lines": "67-79", "evidence": "setup_sandbox mkdir/heredoc-write/seq-redirect/touch — all under $SANDBOX", "method": "view"},
+        {"path": "shelltutor", "lines": "82-84", "evidence": "save_progress writes only $PROGRESS_FILE", "method": "view"},
+        {"path": "shelltutor", "lines": "456", "evidence": "rm -f \"$PROGRESS_FILE\"", "method": "view"},
+        {"path": "AGENTS.md", "lines": "87-92", "evidence": "tutor must not write outside its own working directory", "method": "view"}
+      ]
+    },
+    {
+      "principal": "practice subshell (A-002)",
+      "readable_scopes": [
+        "learner's full user filesystem (real interactive bash)"
+      ],
+      "writable_scopes_claimed": [
+        "$SANDBOX only — implied by welcome-screen text 'you cannot break anything' (shelltutor:169)"
+      ],
+      "writable_scopes_actual": [
+        "learner's full user filesystem — cd .., rm, writes to $HOME, etc. all work"
+      ],
+      "callable_capabilities": [
+        "every command on the learner's $PATH",
+        "anything bash can launch"
+      ],
+      "callable_subagents": [],
+      "callable_externals": [
+        "anything the learner's account can run (curl, wget, ssh, sudo if the learner has the password, vim, man, ...)"
+      ],
+      "workspace_roots": ["$SANDBOX (starting CWD; not enforced)"],
+      "browser_scope": [],
+      "filesystem_scope_claimed": ["$SANDBOX (per shelltutor:169 user-facing copy)"],
+      "filesystem_scope_actual": ["learner's normal user-mode filesystem"],
+      "secrets_access": [
+        "anything the learner's account can read (~/.ssh, ~/.aws, etc.) — script neither grants nor blocks"
+      ],
+      "approval_policy": "none — learner-controlled bash; no agentic approval applies",
+      "approval_mode": "none-required",
+      "approval_precedence": "n/a",
+      "bypass_modes": ["the entire subshell is a 'bypass' of the implied sandbox if read at the welcome-screen level"],
+      "protected_paths": [],
+      "secondary_credentials": [],
+      "outbound_network_scope": ["the learner's normal network access; script neither grants nor blocks"],
+      "callback_auth": "n/a",
+      "hosted_or_local": "local",
+      "token_delegation": "n/a",
+      "sandbox_model": "filesystem-only at the directory layer: rcfile sets CWD (cd $SANDBOX) and HISTFILE; no restriction on subsequent commands.",
+      "flags": ["undeclared-scope", "ambient-authority"],
+      "flags_note": "Wide subshell scope is not declared in user-facing copy; the welcome-screen claim implies a tighter sandbox than the implementation provides. Not 'escalation' — the learner already had this authority before opening the tutor.",
+      "remediation_constraint": "Strengthening enforcement (bwrap/firejail/chroot/unshare/sandbox-exec) violates AGENTS.md:75-78 bash-only dependency rule. Remediation path is narrowing the welcome-screen claim to match implementation, not the reverse.",
+      "citations": [
+        {"path": "shelltutor", "lines": "104-134", "evidence": "practice() spawns bash --rcfile <(...) -i < /dev/tty with cd $SANDBOX + HISTFILE + PS1 + navigation overrides", "method": "view"},
+        {"path": "shelltutor", "lines": "109", "evidence": "cd \"$SANDBOX\"", "method": "view"},
+        {"path": "shelltutor", "lines": "111-117", "evidence": "HISTFILE=$SANDBOX/.shelltutor_history; HISTSIZE=2000; HISTFILESIZE=4000; history -r; PROMPT_COMMAND='history -a'", "method": "view"},
+        {"path": "shelltutor", "lines": "126-130", "evidence": "next/prev/show/quit/exit overrides", "method": "view"},
+        {"path": "shelltutor", "lines": "169", "evidence": "Everything happens in ~/.shelltutor; you cannot break anything", "method": "view"}
+      ]
+    },
+    {
+      "principal": "operator (A-003)",
+      "readable_scopes": ["full user filesystem (OS-level)"],
+      "writable_scopes": ["full user filesystem (OS-level)"],
+      "callable_capabilities": ["./shelltutor [N|-h]; SHELLTUTOR_HOME=... ./shelltutor"],
+      "approval_policy": "n/a (OS-governed)",
+      "approval_mode": "none-required",
+      "hosted_or_local": "local",
+      "flags": [],
+      "citations": [
+        {"path": "shelltutor", "lines": "30", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"}
+      ]
+    },
+    {
+      "principal": "learner (A-004)",
+      "readable_scopes": ["same as A-002 once inside practice subshell"],
+      "writable_scopes": ["same as A-002"],
+      "authority_claim_addressed_to_them": "shelltutor:169 — 'you cannot break anything'",
+      "authority_actually_held": "normal user-mode authority",
+      "approval_mode": "none-required",
+      "hosted_or_local": "local",
+      "flags": ["undeclared-scope (inherits A-002's flag)"],
+      "citations": [
+        {"path": "shelltutor", "lines": "155-173", "evidence": "welcome heredoc addressed to the learner", "method": "view"}
+      ]
+    },
+    {
+      "principal": "coding agent / contributor (A-005, non-runtime)",
+      "readable_scopes": ["/Users/verlyn13/Organizations/jefahnierocks/shelltutor/"],
+      "writable_scopes": ["the repository (within AGENTS.md §Scope and §Authority Levels)"],
+      "callable_capabilities": ["./shelltutor for validation", "read governance docs", "make focused commits"],
+      "approval_policy": "human-in-loop for sensitive work; blocked for restricted work",
+      "approval_mode": "ask | deny",
+      "approval_precedence": "AGENTS.md §Authority Levels + STATUS.md §Decision-Disagreement Rule",
+      "bypass_modes": [],
+      "protected_paths": ["paths outside /Users/verlyn13/Organizations/jefahnierocks/shelltutor/"],
+      "approval_gates": [
+        {
+          "tool_or_action": "scope-expansion outside the shelltutor repository",
+          "policy": "human-in-loop",
+          "approval_mode": "ask",
+          "bypass_modes": [],
+          "precedence_hint": "AGENTS.md §Scope: 'requires explicit user scope expansion'",
+          "evidence": {"path": "AGENTS.md", "lines": "43-47", "method": "view"}
+        },
+        {
+          "tool_or_action": "change tutor safety surface (writes/network/privilege/sandbox)",
+          "policy": "human-in-loop",
+          "approval_mode": "ask",
+          "bypass_modes": [],
+          "precedence_hint": "AGENTS.md §Authority Levels: sensitive work",
+          "evidence": {"path": "AGENTS.md", "lines": "71-74", "method": "view"}
+        },
+        {
+          "tool_or_action": "introduce dependency outside bash + POSIX userland",
+          "policy": "blocked",
+          "approval_mode": "deny",
+          "bypass_modes": [],
+          "precedence_hint": "AGENTS.md §Authority Levels: restricted work",
+          "evidence": {"path": "AGENTS.md", "lines": "75-78", "method": "view"}
+        }
+      ],
+      "hosted_or_local": "local",
+      "sandbox_model": "AGENTS.md-declared repo boundary; coding agents pause and ask before traversing.",
+      "enforcement_layer": "norms (CONTRIBUTING.md:72-75 'local commit discipline is the enforcement layer'); no pre-commit hook, no CI, no policy-as-code.",
+      "flags": [],
+      "citations": [
+        {"path": "AGENTS.md", "lines": "43-47", "evidence": "Stay inside .../shelltutor for normal work. Reading or modifying material outside this repository requires explicit user scope expansion.", "method": "view"},
+        {"path": "AGENTS.md", "lines": "71-74", "evidence": "Change the tutor's safety surface ... only when the user request clearly calls for it.", "method": "view"},
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view"},
+        {"path": "CONTRIBUTING.md", "lines": "72-75", "evidence": "local commit discipline is the enforcement layer", "method": "view"}
+      ]
+    }
+  ],
+  "cross_cutting_observations": [
+    {
+      "id": "AUTH-OBS-001",
+      "title": "Safety rules have no code-level enforcement",
+      "description": "AGENTS.md safety rules (no privilege, no network, no writes outside $SANDBOX) are honored by current code but have no pre-commit hook, no CI scan, no fitness function. Norm-based enforcement (CONTRIBUTING.md:72-75) is the current layer.",
+      "candidate_fitness_function": true,
+      "citations": [
+        {"path": "AGENTS.md", "lines": "87-92", "method": "view", "evidence": "tutor must not write outside its own working directory, must not request elevated privileges, and must not reach the network"},
+        {"path": "CONTRIBUTING.md", "lines": "72-75", "method": "view", "evidence": "local commit discipline is the enforcement layer"}
+      ]
+    },
+    {
+      "id": "AUTH-OBS-002",
+      "title": "Subshell scope claim vs implementation",
+      "description": "A-002's actual filesystem scope is the learner's full user authority; user-facing claim at shelltutor:169 implies narrower sandbox. Remediation path consistent with project constraints is narrowing the claim (not strengthening enforcement, which would require non-bash dependencies forbidden by AGENTS.md:75-78).",
+      "matches_profile_flag": "subshell-safety-claim-vs-shell-authority",
+      "matches_operator_focus_question": true,
+      "phase_10_forecast_finding_id": "F-002",
+      "citations": [
+        {"path": "shelltutor", "lines": "169", "evidence": "you cannot break anything", "method": "view"},
+        {"path": "shelltutor", "lines": "104-134", "evidence": "practice() — narrow rcfile-level sandboxing", "method": "view"},
+        {"path": "AGENTS.md", "lines": "75-78", "evidence": "Do not introduce dependencies that require installation outside bash and a standard POSIX userland", "method": "view"}
+      ]
+    }
+  ],
+  "exit_check": {
+    "every_write_path_has_approval_policy_value": true,
+    "every_authority_escalation_explained_or_flagged": true,
+    "every_principal_has_readable_writable_scopes": true,
+    "every_browser_computer_filesystem_use_agent_has_declared_scope": true,
+    "every_callback_hosted_remote_principal_has_auth_token_evidence_or_flag": true,
+    "phase_6_pass": true
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "phase": 1,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "terms": [
+    {
+      "term": "user-agnostic",
+      "definitions": [
+        {
+          "unit": "README.md",
+          "definition": "Tutor does not assume operator name, home layout, distro, hostname, prompt theme, or pre-existing shell setup.",
+          "context_hint": "user = operator-private detail",
+          "citations": [{"path": "README.md", "lines": "20-23", "evidence": "intentionally user-agnostic: it does not assume a particular operator name", "method": "view"}]
+        },
+        {
+          "unit": "AGENTS.md",
+          "definition": "Project's defining property; no operator name/distro/hostname/theme/pre-existing setup assumed.",
+          "context_hint": "user = operator-private detail",
+          "citations": [{"path": "AGENTS.md", "lines": "34-37", "evidence": "user-agnostic: no operator name, distro, hostname, theme", "method": "view"}]
+        },
+        {
+          "unit": "CONTRIBUTING.md",
+          "definition": "User-agnostic by contract; portability regression definitions follow.",
+          "context_hint": "user = operator-private detail",
+          "citations": [{"path": "CONTRIBUTING.md", "lines": "42-49", "evidence": "shelltutor is user-agnostic by contract", "method": "view"}]
+        },
+        {
+          "unit": "STATUS.md",
+          "definition": "User-agnostic refactor was the immediate next step at the time of writing.",
+          "context_hint": "claims pending; commit e6257aa shows complete",
+          "citations": [{"path": "STATUS.md", "lines": "41-43", "evidence": "User-agnostic refactor commit", "method": "view"}]
+        }
+      ],
+      "collision": true,
+      "collision_type": "same-term-different-meaning",
+      "collision_note": "user in 'user-agnostic' means 'operator-private detail', not 'learner-input'. Mild policy-masquerade risk."
+    },
+    {
+      "term": "WYN OPS",
+      "definitions": [
+        {
+          "unit": "shelltutor",
+          "definition": "(no occurrence in current revision) — accent comments removed by commit e6257aa.",
+          "context_hint": "current code",
+          "citations": [{"path": "shelltutor", "lines": "1-459", "evidence": "grep WYN OPS -> 0 matches", "method": "rg"}]
+        },
+        {
+          "unit": "STATUS.md",
+          "definition": "Treated as still present and as Immediate Next Step #1.",
+          "context_hint": "stale claim",
+          "citations": [
+            {"path": "STATUS.md", "lines": "33-34", "evidence": "imported script still carries two WYN OPS accent comments", "method": "view"},
+            {"path": "STATUS.md", "lines": "41-43", "evidence": "User-agnostic refactor commit — replace WYN OPS accent comments", "method": "view"}
+          ]
+        },
+        {
+          "unit": "ROADMAP.md",
+          "definition": "Listed under Phase 1 work to be done.",
+          "context_hint": "stale claim",
+          "citations": [{"path": "ROADMAP.md", "lines": "37", "evidence": "Replace WYN OPS accent comments with neutral language", "method": "view"}]
+        },
+        {
+          "unit": "README.md",
+          "definition": "Provenance note treats it as historical; not carried forward.",
+          "context_hint": "accurate provenance",
+          "citations": [{"path": "README.md", "lines": "79-83", "evidence": "WYN OPS accent comments... intentionally not carried forward", "method": "view"}]
+        },
+        {
+          "unit": "git log",
+          "definition": "Commit e6257aa removed all user-specific accent branding.",
+          "context_hint": "ground truth",
+          "citations": [{"path": ".git/refs/heads/main", "lines": "n/a", "evidence": "e6257aa refactor: remove user-specific accent branding from tutor", "method": "git log"}]
+        }
+      ],
+      "collision": true,
+      "collision_type": "different-term-same-meaning",
+      "collision_note": "Same referent ('WYN OPS comments'); documents disagree about presence. Confirms profile flag drift-status-roadmap-vs-commit."
+    },
+    {
+      "term": "sandbox",
+      "definitions": [
+        {
+          "unit": "shelltutor (narrow)",
+          "definition": "$SANDBOX is the per-learner working directory at $HOME/.shelltutor (overridable via SHELLTUTOR_HOME). setup_sandbox() seeds fixtures (poem.txt, numbers.txt) and HISTFILE.",
+          "context_hint": "filesystem path",
+          "citations": [
+            {"path": "shelltutor", "lines": "30-31", "evidence": "SANDBOX=\"${SHELLTUTOR_HOME:-$HOME/.shelltutor}\"", "method": "view"},
+            {"path": "shelltutor", "lines": "66-80", "evidence": "setup_sandbox() { mkdir -p ... }", "method": "view"}
+          ]
+        },
+        {
+          "unit": "shelltutor (wide, user-facing)",
+          "definition": "Welcome screen frames the sandbox as a complete safety guarantee for the learner.",
+          "context_hint": "safety claim, overstated",
+          "citations": [{"path": "shelltutor", "lines": "169", "evidence": "Everything happens in ~/.shelltutor; you cannot break anything", "method": "view"}]
+        },
+        {
+          "unit": "AGENTS.md",
+          "definition": "Sandbox boundaries are part of the tutor's safety surface; changes require operator direction.",
+          "context_hint": "governance",
+          "citations": [{"path": "AGENTS.md", "lines": "71-73", "evidence": "tutor's safety surface (... sandbox boundaries)", "method": "view"}]
+        },
+        {
+          "unit": "README.md",
+          "definition": "Lessons paired with safe, sandboxed practice.",
+          "context_hint": "marketing summary",
+          "citations": [{"path": "README.md", "lines": "18", "evidence": "lessons paired with safe, sandboxed practice", "method": "view"}]
+        }
+      ],
+      "collision": true,
+      "collision_type": "same-term-different-meaning",
+      "collision_note": "Narrow ($SANDBOX directory, accurate) vs wide ('you cannot break anything', overstated — practice subshell holds learner's real filesystem authority). Confirms profile flag subshell-safety-claim-vs-shell-authority; full analysis Phase 6."
+    },
+    {
+      "term": "operator",
+      "definitions": [
+        {
+          "unit": "AGENTS.md",
+          "definition": "Project owner / coding-agent's user / contributor.",
+          "context_hint": "governance",
+          "citations": [{"path": "AGENTS.md", "lines": "34-37", "evidence": "no operator name, distro, hostname, theme", "method": "view"}]
+        },
+        {
+          "unit": "CONTRIBUTING.md",
+          "definition": "Same.",
+          "context_hint": "governance",
+          "citations": [{"path": "CONTRIBUTING.md", "lines": "42-46", "evidence": "Requires a specific operator name, hostname, distro, or shell theme", "method": "view"}]
+        },
+        {
+          "unit": "CLAUDE.md",
+          "definition": "Same; coding agent (Claude Code) consults the operator on conflicts.",
+          "context_hint": "governance",
+          "citations": [{"path": "CLAUDE.md", "lines": "19-22", "evidence": "ask the operator if the conflict affects implementation", "method": "view"}]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none"
+    },
+    {
+      "term": "learner",
+      "definitions": [
+        {
+          "unit": "README.md",
+          "definition": "Tutor's end user; person at the practice prompt.",
+          "context_hint": "user-facing role",
+          "citations": [
+            {"path": "README.md", "lines": "22-25", "evidence": "A learner sitting at any Linux or macOS terminal", "method": "view"},
+            {"path": "README.md", "lines": "62", "evidence": "Teach a learner the first ~15 shell commands", "method": "view"}
+          ]
+        },
+        {
+          "unit": "ROADMAP.md",
+          "definition": "Same.",
+          "context_hint": "user-facing role",
+          "citations": [{"path": "ROADMAP.md", "lines": "76", "evidence": "Make lessons individually addressable so a learner can jump to one", "method": "view"}]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none"
+    },
+    {
+      "term": "prompt",
+      "definitions": [
+        {
+          "unit": "shelltutor (shell prompt)",
+          "definition": "The text the shell displays when ready for input ($, >, shelltutor>, (reverse-i-search), pager prompts).",
+          "context_hint": "CLI UI",
+          "citations": [
+            {"path": "shelltutor", "lines": "118", "evidence": "PS1='shelltutor> '", "method": "view"},
+            {"path": "shelltutor", "lines": "155-161", "evidence": "WHAT'S A PROMPT? The text the shell shows when ready", "method": "view"},
+            {"path": "shelltutor", "lines": "208-216", "evidence": "(reverse-i-search) prompt", "method": "view"}
+          ]
+        },
+        {
+          "unit": "README.md / ROADMAP.md (prompt theme)",
+          "definition": "$PS1 customization (an operator-private detail).",
+          "context_hint": "operator-private setting",
+          "citations": [
+            {"path": "README.md", "lines": "20-21", "evidence": "prompt theme, or pre-existing shell setup", "method": "view"},
+            {"path": "ROADMAP.md", "lines": "38", "evidence": "operator-name, distro-specific, or prompt-theme assumptions", "method": "view"}
+          ]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none",
+      "note": "Within the project, all 'prompt' meanings are shell-related. No LLM-prompt collision; Phase 8 records prompts.count=0."
+    },
+    {
+      "term": "portable / portability",
+      "definitions": [
+        {
+          "unit": "README.md",
+          "definition": "Across Linux and macOS without environment assumptions; bash 4+ floor.",
+          "context_hint": "stated property",
+          "citations": [
+            {"path": "README.md", "lines": "50-55", "evidence": "POSIX-ish terminal (any modern Linux or macOS terminal works)", "method": "view"},
+            {"path": "README.md", "lines": "63", "evidence": "Stay portable across Linux and macOS", "method": "view"}
+          ]
+        },
+        {
+          "unit": "AGENTS.md",
+          "definition": "Username/hostname/distro/shell-theme dependency = portability bug.",
+          "context_hint": "policy",
+          "citations": [
+            {"path": "AGENTS.md", "lines": "89-90", "evidence": "Treat anything that requires a specific username, hostname, distro, or shell theme as a portability bug", "method": "view"},
+            {"path": "AGENTS.md", "lines": "91-92", "evidence": "Lessons must be runnable end-to-end on a clean Linux or macOS terminal", "method": "view"}
+          ]
+        },
+        {
+          "unit": "CONTRIBUTING.md",
+          "definition": "Conditional rule: gate non-portable surfaces on runtime check; do not couple default path.",
+          "context_hint": "remediation pattern",
+          "citations": [{"path": "CONTRIBUTING.md", "lines": "51-54", "evidence": "If a lesson genuinely requires a non-portable surface, gate it on a runtime check and degrade gracefully", "method": "view"}]
+        },
+        {
+          "unit": "shelltutor (lesson 7)",
+          "definition": "Lesson uses Linux-only constructs without runtime gating: `free -h`, `/proc/cpuinfo`, `/proc/meminfo`, `ls /proc`.",
+          "context_hint": "claim contradiction",
+          "citations": [{"path": "shelltutor", "lines": "319-336", "evidence": "free -h ... /proc is Linux's self-report folder", "method": "view"}]
+        },
+        {
+          "unit": "shelltutor (lesson 8)",
+          "definition": "Lesson uses Fedora-only install hint without runtime gating: `sudo dnf install cowsay figlet lolcat`.",
+          "context_hint": "claim contradiction",
+          "citations": [{"path": "shelltutor", "lines": "340-362", "evidence": "sudo dnf install cowsay figlet lolcat", "method": "view"}]
+        }
+      ],
+      "collision": true,
+      "collision_type": "same-term-different-meaning",
+      "collision_note": "Governance claims Linux+macOS portability; lessons 7 and 8 use Linux-only and Fedora-only surfaces without the CONTRIBUTING.md:51-54 gate-and-fallback pattern. Confirms profile flag lesson-portability-gaps."
+    },
+    {
+      "term": "single-file",
+      "definitions": [
+        {
+          "unit": "README.md",
+          "definition": "One executable file with no installation step; readable in one sitting.",
+          "context_hint": "stated property",
+          "citations": [
+            {"path": "README.md", "lines": "43-44", "evidence": "single bash script with no installation step", "method": "view"},
+            {"path": "README.md", "lines": "64-66", "evidence": "Be readable as a single script", "method": "view"},
+            {"path": "README.md", "lines": "73-74", "evidence": "The tutor is one file on purpose", "method": "view"}
+          ]
+        },
+        {
+          "unit": "git ls-files",
+          "definition": "Exactly one executable: shelltutor (459 lines).",
+          "context_hint": "ground truth",
+          "citations": [{"path": ".gitignore", "lines": "n/a", "evidence": "git ls-files shows shelltutor as the only executable; 9 tracked files total", "method": "git ls-files"}]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none"
+    },
+    {
+      "term": "lesson",
+      "definitions": [
+        {
+          "unit": "shelltutor",
+          "definition": "Bash function (welcome, lesson1-lesson9, finale); each renders a heredoc, then drops into the practice subshell.",
+          "context_hint": "code",
+          "citations": [
+            {"path": "shelltutor", "lines": "144-150", "evidence": "lesson() { clear...; cat; echo; practice; ...}", "method": "view"},
+            {"path": "shelltutor", "lines": "433-435", "evidence": "lessons=(welcome lesson1 lesson2 ... finale)", "method": "view"}
+          ]
+        },
+        {
+          "unit": "README.md",
+          "definition": "Discrete teaching unit; ~15-command surface.",
+          "context_hint": "user-facing",
+          "citations": [{"path": "README.md", "lines": "62", "evidence": "Teach a learner the first ~15 shell commands", "method": "view"}]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none"
+    },
+    {
+      "term": "Day-1 scaffold",
+      "definitions": [
+        {
+          "unit": "STATUS.md",
+          "definition": "Current lifecycle posture; foundation only.",
+          "context_hint": "status",
+          "citations": [{"path": "STATUS.md", "lines": "18", "evidence": "Lifecycle: foundation / Day-1 scaffold", "method": "view"}]
+        }
+      ],
+      "collision": false,
+      "collision_type": "none"
+    }
+  ],
+  "collisions_summary": [
+    {"term": "user-agnostic", "type": "same-term-different-meaning", "severity_hint": "mild", "note": "policy-masquerade risk: 'user' = operator-private, not learner-input"},
+    {"term": "WYN OPS", "type": "different-term-same-meaning", "severity_hint": "documentation-drift", "note": "STATUS/ROADMAP claim present; code and git log show removed", "confirms_profile_flag": "drift-status-roadmap-vs-commit"},
+    {"term": "sandbox", "type": "same-term-different-meaning", "severity_hint": "moderate", "note": "Narrow (directory, accurate) vs wide (safety guarantee, overstated)", "confirms_profile_flag": "subshell-safety-claim-vs-shell-authority", "phase6_followup": true},
+    {"term": "portable / portability", "type": "same-term-different-meaning", "severity_hint": "moderate", "note": "Governance claims Linux+macOS; lessons 7 and 8 use Linux-only / Fedora-only surfaces", "confirms_profile_flag": "lesson-portability-gaps"}
+  ],
+  "reference_doc_comparison": {
+    "reference": "docs/audit/references/shell-research.md",
+    "summary": "Reference targets a Vimtutor-prereq goal; shelltutor's lesson surface is a subset by intentional scope (README non-goals 67-75). Not a finding; recorded for Phase 8 authoring-artifact context."
+  },
+  "exit_check": {
+    "every_term_cited": true,
+    "every_collision_cited_for_each_use": true,
+    "unsupported_terms_removed_or_unclassified": true,
+    "phase_1_pass": true
+  }
+}

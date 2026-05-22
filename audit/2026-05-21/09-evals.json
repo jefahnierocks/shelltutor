@@ -1,0 +1,50 @@
+{
+  "phase": 9,
+  "audit_date": "2026-05-21",
+  "snapshot_ref": "e6257aa420b037139764c1f8f213853bd2574b92",
+  "eval_suites": [],
+  "modes_present": [],
+  "no_eval_justification": {
+    "cited": true,
+    "reasons": [
+      "No model-mediated, agent-mediated, or automation-with-LLM surface exists (Phases 3-8 confirm).",
+      "No production deployment; lifecycle is 'foundation / Day-1 scaffold' (STATUS.md:18).",
+      "No public SDK / API consumer.",
+      "Quality gates planned per ROADMAP Phase 2 (macOS + Linux manual walkthrough; shellcheck pass) — pending per known-debt."
+    ],
+    "citations": [
+      {"path": "STATUS.md", "lines": "18", "evidence": "Lifecycle: foundation / Day-1 scaffold", "method": "view"},
+      {"path": "ROADMAP.md", "lines": "50-65", "evidence": "Phase 2 — Portability Validation ... Add a shellcheck pass", "method": "view"},
+      {"path": "CONTRIBUTING.md", "lines": "34-38", "evidence": "If shellcheck is available, run it against the script", "method": "view"},
+      {"path": "CONTRIBUTING.md", "lines": "72-75", "evidence": "local commit discipline is the enforcement layer", "method": "view"}
+    ]
+  },
+  "uncovered_surfaces": [
+    {"surface": "approval-path", "details": "3 contributor-side gates at AGENTS.md:43-78; norms-only enforcement", "applies_flag": "approval-path-untested"},
+    {"surface": "memory-lifecycle", "details": ".progress create/append/delete + read_progress regex parsing not unit-tested", "applies_flag": "memory-lifecycle-untested", "severity_hint": "low"},
+    {"surface": "lesson-portability", "details": "Linux+macOS claim; lessons 7 and 8 contain unguarded Linux-only / Fedora-only constructs", "covered_by_separate_flag": "lesson-portability-gaps"},
+    {"surface": "lesson-end-to-end", "details": "manual walkthrough planned per ROADMAP Phase 2; no automated regression"}
+  ],
+  "flags_applied": [
+    {"flag": "no-ci", "applies": true, "note": "Intentional posture (CONTRIBUTING.md:72-75)"},
+    {"flag": "no-release-gate", "applies": true, "note": "Deferred per ROADMAP Phase 4"},
+    {"flag": "approval-path-untested", "applies": true, "note": "AGENTS.md:43-78 gates exist; norms-only enforcement"},
+    {"flag": "memory-lifecycle-untested", "applies": true, "severity": "low", "note": ".progress + setup_sandbox file lifecycle"}
+  ],
+  "fitness_function_forecast": [
+    {"id": "FF-001", "domain": "safety-rule static analysis on shelltutor (sudo/curl/wget/network)"},
+    {"id": "FF-002", "domain": "write-scope static analysis on shelltutor (every write under $SANDBOX or $PROGRESS_FILE)"},
+    {"id": "FF-003", "domain": "documentation-code drift check (STATUS/ROADMAP next-steps vs git log)"},
+    {"id": "FF-004", "domain": "lesson portability check (gate-and-fallback for non-portable surfaces per CONTRIBUTING.md:51-54)"},
+    {"id": "FF-005", "domain": "shellcheck shelltutor clean (ROADMAP Phase 2)"},
+    {"id": "FF-006", "domain": "lesson-flow smoke test (non-interactive run; final .progress check)"}
+  ],
+  "score_context": "Dimension 11.9 scores 0 on the rubric; score context: 'no evals on a Day-1 scaffold with no agentic runtime', appropriate for current scope.",
+  "exit_check": {
+    "every_model_path_maps_to_eval_or_justification": true,
+    "every_write_path_has_quality_safety_policy_gate_or_flag": true,
+    "every_protocol_async_path_has_coverage_or_flag": true,
+    "ci_and_release_gate_recorded_separately": true,
+    "phase_9_pass": true
+  }
+}
