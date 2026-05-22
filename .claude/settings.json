@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": "Project-local Claude Code settings for shelltutor. Tracked in git; operator-private overrides go in .claude/settings.local.json (gitignored). Scope kept minimal per CONTRIBUTING.md:72-75 ('local commit discipline is the enforcement layer'). Two purposes: (1) auto-allow the small set of project-specific verifications without prompting, (2) operationalize FF-005 (shellcheck shelltutor) from the audit as a soft post-edit warning.",
+  "permissions": {
+    "allow": [
+      "Bash(./shelltutor -h)",
+      "Bash(shellcheck shelltutor)",
+      "Bash(shellcheck -s bash shelltutor)",
+      "Bash(shellcheck -s bash -S warning shelltutor)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v shellcheck >/dev/null 2>&1 && [ -f shelltutor ]; then out=$(shellcheck -s bash -S warning shelltutor 2>&1 || true); if [ -n \"$out\" ]; then printf '\\n--- shellcheck warnings on shelltutor (FF-005) ---\\n%s\\n' \"$out\"; fi; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

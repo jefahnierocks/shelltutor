@@ -100,6 +100,31 @@ When authority is unclear, ask before acting.
 - For documentation-only changes, check links, paths, and that frontmatter
   fields remain accurate.
 
+## Active Artifacts
+
+Read these before any substantive change. They are the durable record of
+prior decisions and ongoing direction; not reading them means re-deriving
+context that already exists.
+
+- `audit/2026-05-21/SUMMARY.md` — first audit cycle (Agentic Architecture
+  Audit Spec v3.1). Seven active findings (`F-001`–`F-007`) all
+  smoke-tested `confirmed-current` at revision `e6257aa`. Seven proposed
+  fitness functions (`FF-001`–`FF-007`).
+- `profile/2026-05-21/project_profile.yaml` and `profile-discovery.md` —
+  first profile snapshot (Project Profile Discovery Directive v1.2).
+- `ROADMAP.md` Phase 3 — curriculum redesign spec: five mastery-gated
+  stages, vimtutor-prerequisite framing, 3/3 recall + task gates.
+- `docs/audit/references/shell-research.md` — operator-supplied
+  curriculum reference (Shell Foundations for `vimtutor`). The Phase 3
+  spec maps to its 12 concepts and 6 units.
+- `docs/audit/directives/agentic-architecture-audit-v3.1-package/` —
+  authority texts the profile and audit were generated against;
+  not modified, treated as an in-repo snapshot.
+
+If a change touches one of the findings or fitness functions, cite the
+ID in the commit body (e.g., `refactor(welcome): narrow sandbox claim
+(F-002)`).
+
 ## Secrets And Sensitive Data
 
 Do not commit secrets, credentials, account identifiers, private financial
