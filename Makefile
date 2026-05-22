@@ -53,3 +53,4 @@ verify: check lint smoke
 self-test:
 	@./scripts/check-safety.sh --self-test
 	@./scripts/check-governance.sh --self-test
+	@./scripts/smoke-test.sh --self-test
