@@ -39,9 +39,9 @@ before applying.
 
 ## Scope
 
-Stay inside `/Users/verlyn13/Organizations/jefahnierocks/shelltutor` for
-normal work. Reading or modifying material outside this repository requires
-explicit user scope expansion.
+Stay inside this repository for normal work. Reading or modifying
+material outside the repository root requires explicit user scope
+expansion.
 
 The prior-art repository at `fedora-top:~/Projects/shelltutor` is intake
 provenance only. Do not treat its current state as ambient truth, and do not
