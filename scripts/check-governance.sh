@@ -29,7 +29,7 @@
 
 set -eu
 
-DEFAULT_FILES=(README.md AGENTS.md CLAUDE.md CONTRIBUTING.md STATUS.md ROADMAP.md)
+DEFAULT_FILES=(README.md AGENTS.md CLAUDE.md CONTRIBUTING.md STATUS.md ROADMAP.md docs/contracts.md)
 
 awk_check() {
     awk '

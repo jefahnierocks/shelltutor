@@ -50,17 +50,27 @@ shelltutor/
 ├── README.md         # This file
 ├── AGENTS.md         # Operating contract for coding agents
 ├── CLAUDE.md         # Claude Code pointer to AGENTS.md
-├── CONTRIBUTING.md   # Change discipline
+├── CONTRIBUTING.md   # Change discipline + Quality Gates
 ├── STATUS.md         # Current truth, posture, deferrals
 ├── ROADMAP.md        # Phase sequence; Phase 3 carries the curriculum spec
 ├── shelltutor        # The tutor itself (single bash script, executable)
+├── Makefile          # `make check | lint | smoke | verify | self-test`
+├── scripts/          # check-safety.sh, check-governance.sh, smoke-test.sh
+├── docs/
+│   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
+│   ├── audit/        # Audit-spec authority package + reference docs
+│   └── audit/references/  # Curriculum reference: shell-research.md
 ├── .claude/          # Claude Code agentic context (settings.json)
-├── docs/audit/       # Audit-spec authority package + reference docs
 ├── profile/          # Dated project-profile snapshots
 ├── audit/            # Dated audit-cycle artifacts
 ├── .editorconfig
 └── .gitignore
 ```
+
+The interface contracts (CLI arguments, practice-subshell exit codes,
+sandbox file layout, environment variables read at startup) live in
+`docs/contracts.md`. Read that before adding a flag, changing an exit
+code, or relocating a sandbox file.
 
 ## Run
 
