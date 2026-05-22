@@ -52,13 +52,14 @@ live in the scripts themselves (canonical source); the descriptions
 here are deliberately patternless so this document stays consistent
 with the rules it describes.
 
-| Target             | Rule (audit ID) | What it enforces |
-| ---                | ---             | --- |
-| `check-safety`     | FF-001          | the script does not invoke privilege-escalation, network, or remote-shell commands at runtime (lesson heredocs are exempt) — see `scripts/check-safety.sh` for the pattern list |
-| `check-safety`     | FF-002          | every write target resolves to a path under `$SANDBOX` or `$PROGRESS_FILE`; system-paths are blocked — see `scripts/check-safety.sh` |
-| `check-governance` | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
-| `lint`             | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
-| `smoke`            | FF-006          | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
+| Target               | Rule (audit ID) | What it enforces |
+| ---                  | ---             | --- |
+| `check-safety`       | FF-001          | the script does not invoke privilege-escalation, network, or remote-shell commands at runtime (lesson heredocs are exempt) — see `scripts/check-safety.sh` for the pattern list |
+| `check-safety`       | FF-002          | every write target resolves to a path under `$SANDBOX` or `$PROGRESS_FILE`; system paths are blocked — see `scripts/check-safety.sh` |
+| `check-portability`  | FF-004          | lesson heredocs do not teach platform-specific paths (`/proc/`, `/sys/`) or platform-specific runtime commands (`free -`, `vm_stat`, `systemctl`, `launchctl`); install hints (`brew install`, `dnf install`, etc.) are allowed by nature — see `scripts/check-portability.sh` |
+| `check-governance`   | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
+| `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
+| `smoke`              | FF-006          | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
 
 The checkers use `# nofitness:` line annotations for legitimate
 exceptions in the script. The Markdown checker skips fenced (` ``` `)

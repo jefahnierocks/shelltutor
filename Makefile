@@ -14,25 +14,28 @@
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
 
-.PHONY: help check check-safety check-governance lint smoke verify self-test
+.PHONY: help check check-safety check-governance check-portability lint smoke verify self-test
 
 SCRIPT := shelltutor
 
 help:
 	@printf 'Targets:\n'
-	@printf '  check        FF-001 + FF-002 + FF-007 static analysis (default)\n'
+	@printf '  check        FF-001 + FF-002 + FF-004 + FF-007 static analysis (default)\n'
 	@printf '  lint         shellcheck $(SCRIPT) (FF-005)\n'
 	@printf '  smoke        FF-006 minimal smoke test\n'
 	@printf '  verify       check + lint + smoke\n'
 	@printf '  self-test    run checker self-tests\n'
 
-check: check-safety check-governance
+check: check-safety check-governance check-portability
 
 check-safety:
 	@./scripts/check-safety.sh
 
 check-governance:
 	@./scripts/check-governance.sh
+
+check-portability:
+	@./scripts/check-portability.sh
 
 lint:
 	@if command -v shellcheck >/dev/null 2>&1; then \
@@ -53,4 +56,5 @@ verify: check lint smoke
 self-test:
 	@./scripts/check-safety.sh --self-test
 	@./scripts/check-governance.sh --self-test
+	@./scripts/check-portability.sh --self-test
 	@./scripts/smoke-test.sh --self-test
