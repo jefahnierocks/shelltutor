@@ -565,15 +565,14 @@ At the prompt below, try this:
 
   ${CMD}echo hello${RST}        ${DIM}# type those words; press Enter${RST}
 
-You'll see ${DIM}hello${RST} printed, then the prompt returns. That
-return-to-prompt is the signal — your command is done. Try more:
-
+You'll see ${DIM}hello${RST} printed. Then more:
   ${CMD}echo I am at the shell${RST}     ${DIM}# spaces separate words${RST}
   ${CMD}echo "I am at the shell"${RST}   ${DIM}# quotes group them${RST}
 
-${SUB}Five keys to remember${RST}:
-  ${KEY}Tab${RST}        finishes a word: try ${CMD}ec${RST}+${KEY}Tab${RST} → ${CMD}echo${RST}.
-  ${KEY}Tab Tab${RST}    lists every match when several apply.
+${SUB}Four keys to remember${RST}:
+  ${KEY}Tab${RST}        bash finishes a word. Try ${CMD}echo p${RST}+${KEY}Tab${RST} → ${CMD}echo poem.txt${RST}.
+             If several match, bash beeps; ${KEY}Tab${RST} again lists them.
+             (Bash doesn't cycle on repeated ${KEY}Tab${RST} — zsh and fish do.)
   ${KEY}Ctrl+L${RST}     clear screen — then ${CMD}show${RST} brings this back.
   ${KEY}↑${RST}          recall the last command.
   ${KEY}Ctrl+C${RST}     escape hatch if anything feels stuck.
