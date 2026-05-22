@@ -348,7 +348,7 @@ show()  { builtin exit 97; }
 quit()  { builtin exit 99; }
 exit()  { builtin exit 99; }
 
-printf "\n${DIM}(you're at a normal shell prompt now — try a command, then use ${RST}${CMD}next${DIM} to advance, ${RST}${CMD}show${DIM} to redisplay, ${RST}${CMD}prev${DIM} to go back, or ${RST}${CMD}quit${DIM} to leave)${RST}\n\n"
+printf "${DIM}(this is a normal shell — type any command, or ${RST}${CMD}next${DIM} / ${RST}${CMD}prev${DIM} / ${RST}${CMD}show${DIM} / ${RST}${CMD}quit${DIM})${RST}\n"
 RCFILE
 ) -i < /dev/tty
     local code=$?
@@ -479,78 +479,106 @@ history_since() {
 }
 
 # ---------------------------------------------------------------------
-# STAGE 1 — Where am I?
+# Welcome + orientation
+#
+# Two separate screens, each well within the vertical budget (24-row
+# terminal). The first establishes identity and structure; the second
+# teaches the prompt and the four navigation words by inviting the
+# learner to use one (`next`) to reach Stage 1.
+#
+# Vertical budget convention used throughout the script:
+#   24-row terminal, minus ~4 rows for the practice subshell prelude
+#   (echo blank + footer + blank + prompt line), leaves ≤20 rows for
+#   the heredoc content. Most pages target 10-18 lines; lesson screens
+#   may run up to 20.
 # ---------------------------------------------------------------------
 
-stage1_intro() {
+welcome() {
+    # Vertical budget: ~11 lines.
     lesson <<EOF
 ${H1}SHELLTUTOR${RST}  —  a vimtutor prerequisite course
 
-Welcome. A short hands-on course to prepare you for ${CMD}vimtutor${RST}.
-About 45 to 60 minutes, depending on how much you experiment.
+Welcome. A short hands-on course in ${SUB}five stages${RST} that
+prepare you for ${CMD}vimtutor${RST}. About 45 to 60 minutes total.
 
-The course has ${SUB}five stages${RST}. Each stage is a few short
-lessons followed by a small task. Pass the task to advance — and
-retry as much as you like. No time pressure, no skip.
+Each stage is a few short lessons followed by a small task. Pass the
+task to advance. Retry as much as you like — no time pressure, no
+skip.
 
-${SUB}TWO PRACTICAL NOTES${RST}
+Your work happens in ${DIR}${SANDBOX}${RST}; the tutor never writes
+outside that folder.
 
-  ${SUB}Terminal size${RST}  Use a window at least 80 columns × 24 rows.
-                 Resize larger now if text wraps oddly.
+${INSTR}▶ Type ${CMD}next${INSTR} for a quick orientation.${RST}
+EOF
+    return $?
+}
 
-  ${SUB}The prompt${RST}     The small text the shell shows when it is ready
-                 for you to type. In this tutor it looks like:
-                     ${DIM}shelltutor>${RST}
-                 You type a command, press Enter, the shell runs it.
-                 You can't click into the middle of a line to move
-                 the cursor — terminals are keyboard-only.
+orientation() {
+    # Vertical budget: ~17 lines.
+    lesson <<EOF
+${H1}Orientation${RST}
 
-${SUB}FOUR WORDS STEER THE TUTOR${RST} at every screen:
+In a moment you'll be at the practice prompt below. It looks like:
 
-  ${CMD}next${RST}   advance              ${CMD}show${RST}   redisplay this screen
-  ${CMD}prev${RST}   go back              ${CMD}quit${RST}   leave (progress is saved; also: ${CMD}exit${RST})
+    ${DIM}shelltutor>${RST}
 
-A fifth word, ${CMD}check${RST}, appears at gate tasks to verify your
-work — you'll see it when it matters.
+Type a command, press Enter — the shell runs it. The terminal is
+keyboard-only; you can't click mid-line to move the cursor. Resize
+your terminal larger if text wraps (80×24 or bigger).
 
-Your work happens in ${DIR}${SANDBOX}${RST}. Practice prompts run as
-ordinary commands in your account; the tutor never writes outside
-this folder.
+${SUB}Four words steer the tutor:${RST}
+  ${CMD}next${RST}  advance        ${CMD}prev${RST}  go back
+  ${CMD}show${RST}  redisplay      ${CMD}quit${RST}  leave (progress saved)
+
+A fifth word, ${CMD}check${RST}, appears at gate tasks when relevant.
 
 ${INSTR}▶ Type ${CMD}next${INSTR} to begin Stage 1.${RST}
 EOF
     return $?
 }
 
+# ---------------------------------------------------------------------
+# STAGE 1 — Where am I?
+# ---------------------------------------------------------------------
+
+stage1_intro() {
+    # Vertical budget: ~7 lines. Stage banner pattern shared with
+    # stages 2-5. Welcome and orientation are separate screens above.
+    lesson <<EOF
+${H1}STAGE 1 — Where am I?${RST}
+
+Three short lessons (about 10 minutes) followed by a small task.
+You'll meet the prompt, run a few simple commands, and learn the
+keyboard habits that make the shell easy to live with.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to start lesson 1.1.${RST}
+EOF
+    return $?
+}
+
 stage1_lesson_1() {
+    # Vertical budget: ~20 lines of content.
     lesson <<EOF
 ${H1}1.1 — running commands${RST}
 
-You'll be at the practice prompt below in a moment. Try this:
+At the prompt below, try this:
 
-  ${CMD}echo hello${RST}        ${DIM}# type those two words; press Enter${RST}
+  ${CMD}echo hello${RST}        ${DIM}# type those words; press Enter${RST}
 
-You should see ${DIM}hello${RST} printed back, then the prompt returns.
-That return-to-prompt is your signal — the command is done, you can
-run another one. (${CMD}echo${RST} just prints back whatever you give it.)
+You'll see ${DIM}hello${RST} printed, then the prompt returns. That
+return-to-prompt is the signal — your command is done. Try more:
 
-Now try a few more:
   ${CMD}echo I am at the shell${RST}     ${DIM}# spaces separate words${RST}
-  ${CMD}echo "I am at the shell"${RST}   ${DIM}# quotes keep them as one${RST}
+  ${CMD}echo "I am at the shell"${RST}   ${DIM}# quotes group them${RST}
 
-${SUB}Four keyboard habits${RST} — try each a couple of times:
+${SUB}Five keys to remember${RST}:
+  ${KEY}Tab${RST}        finishes a word: try ${CMD}ec${RST}+${KEY}Tab${RST} → ${CMD}echo${RST}.
+  ${KEY}Tab Tab${RST}    lists every match when several apply.
+  ${KEY}Ctrl+L${RST}     clear screen — then ${CMD}show${RST} brings this back.
+  ${KEY}↑${RST}          recall the last command.
+  ${KEY}Ctrl+C${RST}     escape hatch if anything feels stuck.
 
-  ${KEY}Tab${RST}        the shell finishes a word for you. Type ${CMD}ec${RST} then ${KEY}Tab${RST} —
-                it should fill in ${CMD}echo${RST} on its own.
-  ${KEY}Tab Tab${RST}    when several words could match, it lists them all.
-  ${KEY}Ctrl+L${RST}     clear the screen. To bring this lesson screen back
-                after Ctrl+L, type ${CMD}show${RST} at the prompt.
-  ${KEY}Up Arrow${RST}   recall the last command you ran (more in Stage 4).
-
-${EM}Ctrl+C is the escape hatch.${RST}  If a command runs too long or the
-prompt feels stuck, press ${KEY}Ctrl+C${RST}.  You will use it.
-
-${INSTR}▶ When you've tried a few, type ${CMD}next${INSTR} to continue.${RST}
+${INSTR}▶ Try a few, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
@@ -714,7 +742,7 @@ EOF
 }
 
 run_stage1() {
-    local lessons=(stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3)
+    local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         "${lessons[$i]}"
