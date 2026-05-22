@@ -11,17 +11,37 @@ priority: high
 
 # shelltutor
 
-`shelltutor` is a self-contained interactive tutor for the Unix shell. It teaches
-the small set of commands that turn a terminal from a wall of text into a
-navigable workspace — `pwd`, `ls`, `cd`, `cat`, `man`, `whoami`, `hostname`,
-`date`, `uptime`, `df`, `free`, and a handful of friends — through short
-lessons paired with safe, sandboxed practice.
+`shelltutor` is a **vimtutor prerequisite course** delivered as a single
+bash script. It teaches the small set of shell concepts a learner needs
+before sitting down to `vimtutor`: where am I, how do paths work, how do
+I create and edit files safely, how do commands and pipes combine, and
+how do I tell when I'm at the shell prompt versus inside a full-screen
+program like Vim.
 
-The tutor is intentionally **user-agnostic**: it does not assume a particular
-operator name, home layout, distro, hostname, prompt theme, or pre-existing
-shell setup. A learner sitting at any Linux or macOS terminal should be able
-to read it, run it, and complete the lessons without first having to
-configure their environment.
+The course is structured as **five mastery-gated stages**. Each stage
+closes with a gate: three recall questions (all three must be correct)
+plus one practical task that the script verifies on the filesystem.
+**Passing means passing** — unlimited retries, no time pressure, no
+skip. About 45–60 minutes for a motivated learner.
+
+The tutor is intentionally **user-agnostic**: it does not assume a
+particular operator name, home layout, distro, hostname, prompt theme,
+or pre-existing shell setup. A learner sitting at any Linux or macOS
+terminal should be able to read it, run it, and complete the stages
+without first having to configure their environment.
+
+## Stages
+
+| # | Title | Commands introduced |
+| --- | --- | --- |
+| 1 | Where am I? | `echo`, `pwd`, `whoami`, `date`, `clear`, `exit` |
+| 2 | Paths and the filesystem | `ls`, `ls -l`, `ls -a`, `cd`, `cd ..`, `cd ~` |
+| 3 | Files and operations | `touch`, `mkdir`, `rmdir`, `cat`, `less`, `cp`, `mv`, `rm` |
+| 4 | Commands, streams, composition | `command -v`, `wc`, `seq`, `head`, `sort`, `grep`, `\|`, `>`, `>>`, `<`, `*` |
+| 5 | Ready for `vimtutor` | `man`, `less` (full-screen), `vim`, `:q!`, `:wq`, `vimtutor` |
+
+The full curriculum spec, learning goals, and gate definitions live in
+`ROADMAP.md` Phase 3.
 
 ## Current Shape
 
@@ -32,8 +52,12 @@ shelltutor/
 ├── CLAUDE.md         # Claude Code pointer to AGENTS.md
 ├── CONTRIBUTING.md   # Change discipline
 ├── STATUS.md         # Current truth, posture, deferrals
-├── ROADMAP.md        # Phase sequence
-├── shelltutor        # The tutor itself (bash script, executable)
+├── ROADMAP.md        # Phase sequence; Phase 3 carries the curriculum spec
+├── shelltutor        # The tutor itself (single bash script, executable)
+├── .claude/          # Claude Code agentic context (settings.json)
+├── docs/audit/       # Audit-spec authority package + reference docs
+├── profile/          # Dated project-profile snapshots
+├── audit/            # Dated audit-cycle artifacts
 ├── .editorconfig
 └── .gitignore
 ```
@@ -43,7 +67,9 @@ shelltutor/
 The tutor is a single bash script with no installation step:
 
 ```bash
-./shelltutor
+./shelltutor          # resume where you left off
+./shelltutor 3        # re-take or jump to stage 3
+./shelltutor -h       # help
 ```
 
 Requirements:
@@ -52,35 +78,60 @@ Requirements:
 - `bash` 4+ on `PATH`. macOS ships bash 3.2 by default; install a newer
   bash via Homebrew (`brew install bash`) or run on a Linux host if you
   hit bash-version-specific syntax.
-- ANSI color support in the terminal (the standard default).
+- ANSI color support in the terminal (the standard default; set
+  `NO_COLOR=1` to disable).
 
-The tutor never writes outside its own working directory, never asks for
-elevated privileges, and never reaches the network.
+The tutor never writes outside its own working directory
+(`~/.shelltutor` by default; override with `SHELLTUTOR_HOME=/path`),
+never asks for elevated privileges, and never reaches the network.
+
+Inside the practice prompt the learner has five navigation words:
+
+```text
+next   advance to the next lesson
+prev   go back one lesson
+show   redisplay the current screen
+quit   leave (progress is saved); also: exit
+check  verify a gate task (only at a gate)
+```
 
 ## Goals
 
-- Teach a learner the first ~15 shell commands they actually need.
+- Land a learner ready to run `vimtutor` without panic.
+- Teach the ~25 commands a learner actually needs before their first
+  Vim session.
 - Stay portable across Linux and macOS without environment assumptions.
+- Verify mastery at the end of each stage with both recall questions
+  and a filesystem-checked task.
 - Be readable as a single script — a learner can open it and inspect
-  the code that just ran them through a lesson.
+  the code that just walked them through a stage.
 - Be safe to run on a stranger's machine.
 
 ## Non-Goals
 
-- Replace `man`, `info`, or a full shell course.
-- Teach scripting, sysadmin, or shell programming patterns (a future
-  companion may, but not this script).
+- Teach the inside of Vim. That is `vimtutor`'s job; the final stage
+  hands you off.
+- Teach shell scripting, sysadmin, or shell programming patterns (a
+  future companion may, but not this script).
+- Replace `man` or `info`. The course points learners at `man` and
+  exits cleanly with `q`; the manual itself is the manual.
 - Bundle into a package manager or framework. The tutor is one file
   on purpose.
 
 ## Provenance
 
-The initial script is imported from prior-art at
+The initial script was imported from prior-art at
 `fedora-top:~/Projects/shelltutor/shelltutor` (commit `136f6a3`,
 2026-05-17). The prior-art repo carried user-specific framing
-(`WYN OPS` accent comments and a sibling `wyn-setup/` installer);
-the user-specific surface is intentionally not carried forward into
-this repository.
+(`WYN OPS` accent comments and a sibling `wyn-setup/` installer); the
+user-specific surface is intentionally not carried forward into this
+repository (commit `e6257aa`, 2026-05-21).
+
+The curriculum redesign that produced the current five-stage structure
+is recorded in `ROADMAP.md` Phase 3 and tracks the operator-supplied
+reference at `docs/audit/references/shell-research.md`. The first
+project profile and first audit cycle (snapshot 2026-05-21) live under
+`profile/2026-05-21/` and `audit/2026-05-21/`.
 
 ## License Posture
 

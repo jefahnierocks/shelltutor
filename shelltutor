@@ -1,70 +1,122 @@
 #!/usr/bin/env bash
-# shelltutor — a vimtutor-style introduction to the Unix shell.
+# shelltutor — a vimtutor prerequisite course in five mastery-gated stages.
 #
 # Usage:
-#   shelltutor            resume where you left off (or start fresh)
-#   shelltutor N          jump to lesson N (1 through 9)
-#   shelltutor -h         this help
+#   shelltutor          resume where you left off
+#   shelltutor N        enter stage N (1..5) for re-take or first-time
+#   shelltutor -h       this help
 #
-# Inside each lesson, type 'next' at the shell prompt to advance,
-# or 'quit' to leave the tutor entirely. Progress is remembered.
+# Inside lessons, type 'next' at the shelltutor> prompt to advance, 'prev'
+# to go back, 'show' to redisplay, 'quit' to leave (progress is saved).
+# At a gate task, type 'check' once you have completed the task; the
+# script will verify and either pass you or ask you to try again.
 #
-# v3.3 changes vs v3:
-#   - Lesson screens tightened to fit a default 80x24 terminal.
-#   - ANSI color highlights the commands you should type, keystroke
-#     names (Ctrl+C, Tab), warnings, and paths. Auto-disabled when
-#     stdout is not a TTY or NO_COLOR is set (no-color.org).
-#   - Title + action footer styled with a single accent color.
-#   - Welcome now explicitly defines what a prompt is and teaches
-#     navigation (next / prev / show / quit) upfront.
-#   - Command history (Up/Down arrow + Ctrl+R) split into its own
-#     Lesson 2 with a walkthrough of the (reverse-i-search) prompt.
-#   - In-tutor navigation: 'show' (redisplay current lesson),
-#     'prev' (go back), 'exit' aliased to 'quit'.
-#   - Lesson 1 teaches 'q' for leaving pagers, distinct from Ctrl+L.
-#   - Lesson 4's Ctrl+C drill points the user to 'show' so they can
-#     get instructions back after the screen fills with y's.
+# Each of the five stages closes with a gate: three recall questions
+# (all three must be correct) and one practical task (verified by the
+# script). Passing means passing — there is no skip, but there is also
+# no time pressure and unlimited retries.
+#
+# Stage map (vimtutor prerequisite curriculum):
+#   1  Where am I?                    echo, pwd, whoami, date, clear, exit
+#   2  Paths and the filesystem       ls, cd, .., ~
+#   3  Files and operations           touch, mkdir, cat, less, cp, mv, rm
+#   4  Commands, streams, composition command -v, |, >, >>, *, wc, seq, ...
+#   5  Ready for vimtutor             man, less (full-screen), vim, vimtutor
+#
+# Implementation invariants:
+#   - one bash file, bash 4+, no installation, no network, no privilege
+#   - tutor writes only inside $SANDBOX (default $HOME/.shelltutor)
+#   - practice subshell `cd`s to a stage-specific subdir; HISTFILE is
+#     sandboxed; PS1 is rewritten; navigation builtins are overridden
+#   - the practice subshell is a real interactive bash, so the learner
+#     retains their normal account authority inside it. The welcome
+#     screen scopes the safety claim accordingly (per audit F-002)
 
 set -u
 
+# ---------------------------------------------------------------------
+# Constants
+# ---------------------------------------------------------------------
+
 SANDBOX="${SHELLTUTOR_HOME:-$HOME/.shelltutor}"
 PROGRESS_FILE="$SANDBOX/.progress"
+TOTAL_STAGES=5
 
-# ANSI styling. Disabled when stdout isn't a TTY or NO_COLOR is set.
+# Exit codes propagated from the practice subshell to the outer dispatcher.
+RC_NEXT=0
+RC_CHECK=96
+RC_SHOW=97
+RC_PREV=98
+RC_QUIT=99
+
+# ---------------------------------------------------------------------
+# ANSI styling. Disabled when stdout isn't a TTY or NO_COLOR is set
+# (https://no-color.org).
+# ---------------------------------------------------------------------
+
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
-    H1=$'\e[1;38;5;208m'      # lesson title — bold orange accent
+    H1=$'\e[1;38;5;208m'      # stage title — bold orange accent
     SUB=$'\e[1;38;5;244m'     # sub-section header — bold ash
     CMD=$'\e[1;38;5;220m'     # command to type — bold gold
     KEY=$'\e[38;5;208m'       # key combo — orange
     EM=$'\e[1;38;5;196m'      # warning / emphasis — bold red
     DIR=$'\e[38;5;109m'       # path / filename — steel
-    INSTR=$'\e[1;38;5;208m'   # action footer ("Type next.") — bold orange
-    DIM=$'\e[2m'              # dim — inline comments, faint examples
-    RST=$'\e[0m'              # reset
+    INSTR=$'\e[1;38;5;208m'   # action footer — bold orange
+    DIM=$'\e[2m'              # dim — inline comments
+    OK=$'\e[1;38;5;46m'       # gate pass — bold green
+    Q=$'\e[1;38;5;39m'        # gate question — bold blue
+    RST=$'\e[0m'
 else
-    H1= SUB= CMD= KEY= EM= DIR= INSTR= DIM= RST=
+    # shellcheck disable=SC1007  # multiple empty assignments on one line are intentional
+    H1=''; SUB=''; CMD=''; KEY=''; EM=''; DIR=''; INSTR=''; DIM=''; OK=''; Q=''; RST=''
 fi
 
-# NOTE: do NOT `trap '' INT` here. SIG_IGN propagates across exec,
-# bash inherits it, and Ctrl+C breaks inside the practice subshell —
-# silently breaking Lesson 4's whole point. If the user Ctrl+Cs the
-# parent script between lessons, auto-resume recovers them next run.
+# NOTE: do NOT `trap '' INT` here. SIG_IGN propagates across exec, bash
+# inherits it, and Ctrl+C breaks inside the practice subshell — silently
+# breaking the lessons that teach Ctrl+C. If the user Ctrl+Cs the parent
+# script between lessons, the next run auto-resumes from .progress.
+
+# ---------------------------------------------------------------------
+# Usage / help
+# ---------------------------------------------------------------------
 
 usage() {
     cat <<EOF
-shelltutor — a vimtutor-style introduction to the Unix shell.
+shelltutor — a vimtutor prerequisite course (five mastery-gated stages).
 
 Usage:
-  shelltutor            resume where you left off (or start fresh)
-  shelltutor N          jump to lesson N (1 through 9)
+  shelltutor            resume where you left off
+  shelltutor N          enter stage N (1..5) for re-take or first-time
   shelltutor -h         this help
 
+Stages:
+  1  Where am I?
+  2  Paths and the filesystem
+  3  Files and operations
+  4  Commands, streams, composition
+  5  Ready for vimtutor
+
+Each stage closes with a gate: three recall questions (all three must be
+correct) and one practical task (verified by the script). Passing means
+passing — unlimited retries, no time pressure, no skip.
+
+Inside the practice prompt:
+  next   advance              show   redisplay current screen
+  prev   go back              quit   leave (progress is saved)
+  check  verify gate task (only at a gate)
+
 Sandbox folder: $SANDBOX
+(Override with SHELLTUTOR_HOME=/path ./shelltutor; NO_COLOR disables colour.)
 EOF
 }
 
+# ---------------------------------------------------------------------
+# Sandbox + progress
+# ---------------------------------------------------------------------
+
 setup_sandbox() {
     mkdir -p "$SANDBOX"
+    # Educational fixtures used by Stage 4. Self-heal if removed.
     if [ ! -f "$SANDBOX/poem.txt" ]; then
         cat > "$SANDBOX/poem.txt" <<'POEM'
 The terminal is a quiet room.
@@ -79,8 +131,18 @@ POEM
     touch "$SANDBOX/.shelltutor_history"
 }
 
+setup_stage_dir() {
+    local n=$1
+    mkdir -p "$SANDBOX/stage${n}"
+}
+
 save_progress() {
-    echo "$1" > "$PROGRESS_FILE" 2>/dev/null || true
+    # Only advance, never regress. .progress = number of stages passed.
+    local cur
+    cur=$(read_progress)
+    if [ "$1" -gt "$cur" ]; then
+        echo "$1" > "$PROGRESS_FILE" 2>/dev/null || true
+    fi
 }
 
 read_progress() {
@@ -92,21 +154,24 @@ read_progress() {
     echo "$n"
 }
 
-# Drop into a real interactive bash in the sandbox folder.
+# ---------------------------------------------------------------------
+# Practice subshell
 #
-# Key invariants:
-#   - `-i`          forces interactive mode (so --rcfile is honored).
-#   - `< /dev/tty`  reattaches stdin to the controlling terminal,
-#                   defeating the heredoc-EOF inheritance that
-#                   silently broke v1.
-#   - HISTFILE is sandboxed so tutor history doesn't pollute
-#     the user's real ~/.bash_history.
+# Spawns a real interactive bash with a sandboxed HISTFILE and PS1, in
+# the requested working directory (defaults to $SANDBOX). The rcfile
+# overrides five builtins so that the learner's navigation words exit
+# with codes the outer dispatcher interprets:
+#   next  -> 0   check -> 96   show -> 97   prev -> 98   quit/exit -> 99
+# ---------------------------------------------------------------------
+
 practice() {
-    setup_sandbox  # self-heal in case files got deleted
+    local pd="${1:-$SANDBOX}"
+    setup_sandbox
+    mkdir -p "$pd"
     bash --rcfile <(cat <<RCFILE
 [ -r /etc/bashrc ] && . /etc/bashrc
 
-cd "$SANDBOX"
+cd "$pd"
 
 HISTFILE="$SANDBOX/.shelltutor_history"
 HISTSIZE=2000
@@ -117,23 +182,19 @@ PROMPT_COMMAND='history -a'
 
 PS1='shelltutor> '
 
-# Navigation: type these at the shelltutor> prompt. Each leaves the
-# practice subshell with a code the outer script interprets:
-#   0 = next     97 = show     98 = prev     99 = quit
-# Implemented as functions (not aliases) so alias chains can't recurse
-# — \`alias exit='exit 99'\` would expand to \`exit 99 99\`.
-# \`exit\` is overridden so it leaves the tutor as users expect.
+# Navigation: functions, not aliases, so alias chains can't recurse.
 next()  { builtin exit  0; }
+check() { builtin exit 96; }
 prev()  { builtin exit 98; }
 show()  { builtin exit 97; }
 quit()  { builtin exit 99; }
 exit()  { builtin exit 99; }
 
-printf "\n${DIM}(Real shell.${RST}  ${CMD}next${RST}${DIM}=advance${RST}  ${CMD}prev${RST}${DIM}=back${RST}  ${CMD}show${RST}${DIM}=this lesson again${RST}  ${CMD}quit${RST}${DIM}=leave${RST}${DIM})${RST}\n\n"
+printf "\n${DIM}(Real shell.${RST}  ${CMD}next${RST}${DIM}=advance${RST}  ${CMD}show${RST}${DIM}=this screen again${RST}  ${CMD}quit${RST}${DIM}=leave${RST}${DIM}; ${RST}${CMD}check${RST}${DIM}=verify gate task)${RST}\n\n"
 RCFILE
 ) -i < /dev/tty
     local code=$?
-    if [ "$code" -eq 99 ]; then
+    if [ "$code" -eq $RC_QUIT ]; then
         clear 2>/dev/null || true
         echo "Bye. Run 'shelltutor' again to pick up where you left off."
         exit 0
@@ -141,288 +202,1385 @@ RCFILE
     return "$code"
 }
 
-lesson() {
+# ---------------------------------------------------------------------
+# Lesson screen helper
+# ---------------------------------------------------------------------
+
+show_screen() {
     clear 2>/dev/null || printf '\n'
     cat
     echo
-    practice
+}
+
+lesson() {
+    show_screen
+    practice "${1:-$SANDBOX}"
     return $?
 }
 
-welcome() {
-    lesson <<EOF
-${H1}SHELL TUTOR${RST}
+# ---------------------------------------------------------------------
+# Recall-question helper
+#
+# Usage: ask_question "<prompt>" <accepted-answer>...
+# - Reads input from /dev/tty so it works inside the parent shell.
+# - Normalizes by lowercasing + trimming whitespace.
+# - Accepts the answer if it matches any of the trailing arguments
+#   (also normalized). Loops until correct. No hints, no answer reveal.
+# - Returns 0 on correct answer. (Quit via Ctrl+C at the parent shell.)
+# ---------------------------------------------------------------------
 
-A short hands-on tour of the Unix shell. Nine lessons. Each is a
-page followed by a real shell prompt where you try things.
-
-${SUB}WHAT'S A PROMPT?${RST}  The text the shell shows when ready for you
-to type — yours probably ends in ${KEY}\$${RST} or ${KEY}>${RST}. In this tutor:
-    ${DIM}shelltutor>${RST}
-
-${SUB}FOUR WORDS STEER THE TUTOR${RST} — learn these now:
-  ${CMD}next${RST}   advance to the next lesson
-  ${CMD}prev${RST}   go back one lesson
-  ${CMD}show${RST}   redisplay the current lesson (after a long output)
-  ${CMD}quit${RST}   leave the tutor (also: ${CMD}exit${RST}; progress is saved)
-
-Everything happens in ${DIR}~/.shelltutor${RST}; you cannot break anything.
-
-${INSTR}▶ Type ${CMD}next${INSTR} to begin.${RST}
-EOF
+ask_question() {
+    local prompt="$1"; shift
+    local accept=("$@")
+    local ans norm ok_norm matched
+    while true; do
+        printf '%b%b%b\n' "$Q" "$prompt" "$RST"
+        printf '  %byour answer:%b ' "$CMD" "$RST"
+        if ! IFS= read -r ans < /dev/tty; then
+            printf '\n'
+            return 1
+        fi
+        norm=$(printf '%s' "$ans" | tr '[:upper:]' '[:lower:]' \
+            | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]\+/ /g')
+        matched=0
+        for ok in "${accept[@]}"; do
+            ok_norm=$(printf '%s' "$ok" | tr '[:upper:]' '[:lower:]' \
+                | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]\+/ /g')
+            if [ "$norm" = "$ok_norm" ]; then
+                matched=1; break
+            fi
+        done
+        if [ "$matched" -eq 1 ]; then
+            printf '  %b✓%b\n\n' "$OK" "$RST"
+            return 0
+        fi
+        printf '  %bnot quite. try again.%b\n\n' "$EM" "$RST"
+    done
 }
 
-lesson1() {
+# ---------------------------------------------------------------------
+# Gate task helper
+#
+# Renders a task screen, then loops practice() until verify() succeeds
+# after a `check` exit code. Other exit codes:
+#   show -> redisplay the task screen
+#   prev -> redisplay the task screen (no cross-gate back-step)
+#   next -> redisplay the task screen with a small nudge
+#   quit -> exit (handled in practice())
+# ---------------------------------------------------------------------
+
+run_gate_task() {
+    # $1: stage number; $2: task screen content (via stdin); rest: verify fn name
+    local n=$1
+    local verify=$2
+    while true; do
+        # Re-render task screen from caller's heredoc on first iteration
+        # by reading it back from a stashed file in $SANDBOX. We use a
+        # different pattern below: callers print the screen themselves
+        # and then call this helper for the practice+verify loop.
+        practice "$SANDBOX/stage${n}"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if "$verify"; then
+                    printf '%b✓ Task verified.%b\n\n' "$OK" "$RST"
+                    return 0
+                fi
+                printf '\n%bNot yet. Re-read the task and try again.%b\n' "$EM" "$RST"
+                printf '%b(Type %bshow%b%b at the prompt to re-display the task screen.)%b\n\n' "$DIM" "$CMD" "$RST" "$DIM" "$RST"
+                ;;
+            "$RC_SHOW" | "$RC_PREV" | "$RC_NEXT")
+                return "$rc"
+                ;;
+            *)
+                return "$rc"
+                ;;
+        esac
+    done
+}
+
+# ---------------------------------------------------------------------
+# History helpers
+# ---------------------------------------------------------------------
+
+# Marks the current size of HISTFILE; later, history_since_marker shows
+# only lines added since.
+history_mark() {
+    [ -f "$SANDBOX/.shelltutor_history" ] || touch "$SANDBOX/.shelltutor_history"
+    wc -l < "$SANDBOX/.shelltutor_history" 2>/dev/null | tr -d '[:space:]'
+}
+
+history_since() {
+    local mark=$1
+    local total
+    total=$(wc -l < "$SANDBOX/.shelltutor_history" 2>/dev/null | tr -d '[:space:]')
+    if [ -z "$total" ] || [ "$total" -le "$mark" ]; then
+        return 0
+    fi
+    tail -n "$((total - mark))" "$SANDBOX/.shelltutor_history"
+}
+
+# ---------------------------------------------------------------------
+# STAGE 1 — Where am I?
+# ---------------------------------------------------------------------
+
+stage1_intro() {
     lesson <<EOF
-${H1}LESSON 1 — speaking to the shell${RST}
+${H1}STAGE 1 — Where am I?${RST}
+
+Five short screens, then a gate. The gate has three recall questions
+(all three must be correct) and one short task. You can retry as many
+times as you like.
+
+${SUB}WHAT'S A PROMPT?${RST}  The text the shell shows when it is ready
+for you to type. Yours probably ends in ${KEY}\$${RST} or ${KEY}>${RST}.
+In this tutor it is:
+    ${DIM}shelltutor>${RST}
+
+${SUB}FIVE WORDS STEER THE TUTOR${RST}:
+  ${CMD}next${RST}   advance
+  ${CMD}prev${RST}   go back
+  ${CMD}show${RST}   re-display the current screen
+  ${CMD}quit${RST}   leave the tutor (progress is saved; also: ${CMD}exit${RST})
+  ${CMD}check${RST}  verify a gate task (only at a gate)
+
+Your tutor work happens in ${DIR}${SANDBOX}${RST}.
+The practice prompts run as ordinary commands in your account, so the
+usual cautions apply. The tutor itself never reaches outside this folder.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 1.1.${RST}
+EOF
+    return $?
+}
+
+stage1_lesson_1() {
+    lesson <<EOF
+${H1}1.1 — running commands${RST}
 
 ${SUB}ECHO${RST} prints whatever you give it.
   ${CMD}echo hello${RST}
-  ${CMD}echo "I am at the shell"${RST}     ${DIM}# quotes group words${RST}
+  ${CMD}echo I am at the shell${RST}     ${DIM}# words separated by spaces${RST}
 
-${SUB}KEYBOARD HABITS:${RST}
-  ${KEY}Up Arrow${RST}   recall the last command — more in Lesson 2
+When a command finishes, the prompt returns. That return-to-prompt is
+how you know one command is done and the next one can start.
+
+${SUB}KEYBOARD HABITS${RST}:
   ${KEY}Tab${RST}        complete what you started — try ${CMD}ls /et${RST} then Tab
-  ${KEY}Tab Tab${RST}    list every match when there are several
-  ${KEY}Ctrl+L${RST}     clear the screen (when you're at a shell prompt)
-  ${KEY}q${RST}          leave a pager — ${DIM}:${RST} or ${DIM}--More--${RST} prompt, e.g. inside ${CMD}man${RST}
+  ${KEY}Tab Tab${RST}    list every match when several apply
+  ${KEY}Ctrl+L${RST}     clear the screen
+  ${KEY}Up Arrow${RST}   recall the last command (more in Stage 4)
 
-${EM}Ctrl+C is the escape hatch.${RST} Stuck prompt, command running too
-long, something you want out of — press ${KEY}Ctrl+C${RST}. You will use it.
+${EM}Ctrl+C is the escape hatch.${RST}  Stuck prompt, command running
+too long — press ${KEY}Ctrl+C${RST}. You will use it.
 
-${INSTR}▶ Try a few, then type ${CMD}next${INSTR}.${RST}
+${INSTR}▶ Try a few echoes, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage1_lesson_2() {
+    lesson <<EOF
+${H1}1.2 — where am I, who am I, when is it${RST}
+
+Three commands that ask the system about itself.
+
+  ${CMD}whoami${RST}     ${DIM}# the user name you're logged in as${RST}
+  ${CMD}pwd${RST}        ${DIM}# print working directory (the folder you're in)${RST}
+  ${CMD}date${RST}       ${DIM}# the current date and time${RST}
+
+In this practice prompt, ${CMD}pwd${RST} reports the tutor sandbox
+folder. That's because the tutor ${CMD}cd${RST}'d here before handing
+you the prompt — see Stage 2.
+
+${SUB}CLEAR THE SCREEN${RST}.  ${KEY}Ctrl+L${RST}, or the command:
+  ${CMD}clear${RST}
+
+${INSTR}▶ Run all three, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage1_lesson_3() {
+    lesson <<EOF
+${H1}1.3 — what just happened${RST}
+
+When you type ${CMD}whoami${RST} and press Enter:
+
+  1. The terminal hands your line to ${SUB}the shell${RST}.
+  2. The shell looks for a program named ${CMD}whoami${RST}.
+  3. It runs it.
+  4. The program prints to ${SUB}standard output${RST} — your screen.
+  5. The shell shows the prompt again, ready for the next command.
+
+The shell is not "Unix." It is a program — a ${SUB}command interpreter${RST}.
+The terminal is a window that lets you talk to the shell. The program
+${CMD}whoami${RST} is a third thing — it runs, prints, and exits.
+
+You will keep these three apart for the rest of this tutor:
+  ${SUB}terminal${RST}  →  ${SUB}shell${RST}  →  ${SUB}program${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 1's gate.${RST}
+EOF
+    return $?
+}
+
+stage1_gate_screen() {
+    show_screen <<EOF
+${H1}STAGE 1 — GATE${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+
+Then a ${SUB}practical task${RST}: run a few commands and tell me what
+they printed. The script verifies your answers.
+
+${DIM}Unlimited retries. No skip.${RST}
 EOF
 }
 
-lesson2() {
+stage1_verify_task() {
+    # Re-read the values the learner reported. The four task questions
+    # were asked just before this verification runs.
+    [ "${TASK_S1_WHOAMI:-x}" = "$(whoami 2>/dev/null)" ] || return 1
+    # pwd in practice subshell == $SANDBOX/stage1
+    local expected_pwd="$SANDBOX/stage1"
+    [ "${TASK_S1_PWD:-x}" = "$expected_pwd" ] || return 1
+    # date day-of-week (e.g., Mon, Tue, ...)
+    [ "${TASK_S1_DAY:-x}" = "$(date +%a 2>/dev/null)" ] || return 1
+    return 0
+}
+
+stage1_gate() {
+    stage1_gate_screen
+
+    ask_question \
+        "Q1: Which character usually ends a shell prompt? (\$, ;, :, or #)" \
+        '$' || return $?
+
+    ask_question \
+        "Q2: What does ${CMD}pwd${RST} print?" \
+        'the current working directory' \
+        'current working directory' \
+        'the working directory' \
+        'working directory' \
+        'the current folder' \
+        'current folder' \
+        'the folder im in' \
+        'the folder i am in' || return $?
+
+    ask_question \
+        "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
+        'stdout' \
+        'standard output' \
+        'the screen' \
+        'screen' \
+        'the terminal' \
+        'terminal' || return $?
+
+    # ---- Task: run three commands, then answer three short questions
+    while true; do
+        show_screen <<EOF
+${H1}STAGE 1 — GATE TASK${RST}
+
+Inside the practice prompt, run each of these once. Read each output.
+Then type ${CMD}check${RST}.
+
+  ${CMD}whoami${RST}
+  ${CMD}pwd${RST}
+  ${CMD}date${RST}
+
+I will ask you what each one printed.
+
+${INSTR}▶ When ready, you'll see ${DIM}shelltutor>${INSTR}. Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        setup_stage_dir 1
+        practice "$SANDBOX/stage1"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                printf '%bThree short follow-ups based on what you saw.%b\n\n' "$SUB" "$RST"
+
+                printf '%bWhat did %bwhoami%b print? (just the username)%b\n' "$Q" "$CMD" "$Q" "$RST"
+                printf '  %byour answer:%b ' "$CMD" "$RST"
+                IFS= read -r TASK_S1_WHOAMI < /dev/tty || return 1
+                TASK_S1_WHOAMI=$(printf '%s' "$TASK_S1_WHOAMI" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+
+                printf '\n%bWhat did %bpwd%b print? (paste the full path)%b\n' "$Q" "$CMD" "$Q" "$RST"
+                printf '  %byour answer:%b ' "$CMD" "$RST"
+                IFS= read -r TASK_S1_PWD < /dev/tty || return 1
+                TASK_S1_PWD=$(printf '%s' "$TASK_S1_PWD" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+
+                printf '\n%bWhat day of the week did %bdate%b show? (Mon, Tue, Wed, Thu, Fri, Sat, Sun)%b\n' "$Q" "$CMD" "$Q" "$RST"
+                printf '  %byour answer:%b ' "$CMD" "$RST"
+                IFS= read -r TASK_S1_DAY < /dev/tty || return 1
+                TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+                # Normalize day to the 3-letter abbreviation
+                TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" \
+                    | tr '[:lower:]' '[:upper:]' \
+                    | sed 's/^\(...\).*/\1/' \
+                    | sed 's/^./&/; s/\(.\)\(.\)\(.\)/\1\L\2\L\3/')
+
+                if stage1_verify_task; then
+                    printf '\n%b✓ Stage 1 cleared.%b\n\n' "$OK" "$RST"
+                    save_progress 1
+                    return 0
+                fi
+                printf '\n%bOne or more answers did not match. Let'\''s redo the task.%b\n\n' "$EM" "$RST"
+                ;;
+            "$RC_QUIT")
+                return $rc
+                ;;
+            *)
+                # show/prev/next at a gate → redisplay task
+                ;;
+        esac
+    done
+}
+
+run_stage1() {
+    local lessons=(stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3)
+    local i=0
+    while [ "$i" -lt "${#lessons[@]}" ]; do
+        "${lessons[$i]}"
+        local rc=$?
+        case "$rc" in
+            "$RC_NEXT")  ((i++)) ;;
+            "$RC_SHOW")  : ;;
+            "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            *)         return "$rc" ;;
+        esac
+    done
+    stage1_gate
+}
+
+# ---------------------------------------------------------------------
+# STAGE 2 — Paths and the filesystem
+# ---------------------------------------------------------------------
+
+stage2_intro() {
     lesson <<EOF
-${H1}LESSON 2 — command history${RST}
+${H1}STAGE 2 — Paths and the filesystem${RST}
 
-Every command you run is remembered. Two ways to bring an old one back.
+Three lessons, then a gate. The shell is always ${SUB}somewhere${RST} in
+the filesystem; this stage teaches you to move around and to predict
+where files land.
 
-${SUB}1. STEP THROUGH IT.${RST}
-  ${KEY}Up Arrow${RST}     previous command at the prompt
-  ${KEY}Down Arrow${RST}   forward toward the present
-  ${KEY}Enter${RST}        run what's shown (or edit first)
+You'll use:
+  ${CMD}ls${RST}    list what's in the current folder
+  ${CMD}cd${RST}    change to another folder
+  ${CMD}pwd${RST}   print where you are now
 
-${SUB}2. SEARCH WITH Ctrl+R.${RST} Press ${KEY}Ctrl+R${RST}. The prompt becomes:
-    ${DIM}(reverse-i-search)\`':${RST}
-Type letters from an old command — say ${CMD}echo${RST}. Bash shows the
-most recent match after the colon:
-    ${DIM}(reverse-i-search)\`echo': echo hello${RST}
-Then:
-  ${KEY}Ctrl+R${RST}  next-older match     ${KEY}Enter${RST}  run it
-  ${KEY}Ctrl+G${RST}  cancel back          ${KEY}Esc${RST}    edit before running
+And the path symbols:
+  ${SUB}.${RST}     this folder
+  ${SUB}..${RST}    the parent folder
+  ${SUB}~${RST}     your home folder
 
-${INSTR}▶ Practice a few, then type ${CMD}next${INSTR}.${RST}
+${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 2.1.${RST}
 EOF
 }
 
-lesson3() {
+stage2_lesson_1() {
     lesson <<EOF
-${H1}LESSON 3 — counting with wc${RST}
+${H1}2.1 — ls: what's in here${RST}
 
-${SUB}wc${RST} = word count, but it also counts lines and characters.
-A small file is waiting for you here: ${DIR}poem.txt${RST}.
+${CMD}ls${RST} lists files and folders in your current directory.
 
-  ${CMD}cat poem.txt${RST}      ${DIM}# show its contents${RST}
-  ${CMD}wc poem.txt${RST}       ${DIM}# three numbers: lines, words, chars${RST}
+  ${CMD}ls${RST}            ${DIM}# names only${RST}
+  ${CMD}ls -l${RST}         ${DIM}# long form (permissions, size, date)${RST}
+  ${CMD}ls -a${RST}         ${DIM}# include hidden files (those starting with .)${RST}
 
-Flags pick one count:
-  ${CMD}wc -l poem.txt${RST}    ${DIM}# lines${RST}
-  ${CMD}wc -w poem.txt${RST}    ${DIM}# words${RST}
-  ${CMD}wc -c poem.txt${RST}    ${DIM}# characters${RST}
+Try each. Then ${CMD}ls${RST} a folder you don't ${CMD}cd${RST} into:
+  ${CMD}ls /etc${RST}       ${DIM}# system config folder${RST}
+  ${CMD}ls /usr/bin${RST}   ${DIM}# where many commands live${RST}
 
-Try a real system file. ${DIR}/etc/services${RST} lists every internet
-service the system knows about:
-  ${CMD}wc -l /etc/services${RST}
-  ${CMD}head /etc/services${RST}      ${DIM}# 'head' = first 10 lines${RST}
+(${DIM}/etc${RST} and ${DIM}/usr/bin${RST} exist on both Linux and macOS.)
+
+${INSTR}▶ Try a few, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage2_lesson_2() {
+    lesson <<EOF
+${H1}2.2 — cd and the home folder${RST}
+
+${CMD}cd${RST} changes your current folder.
+
+  ${CMD}cd /tmp${RST}       ${DIM}# go to /tmp${RST}
+  ${CMD}pwd${RST}           ${DIM}# confirm you got there${RST}
+  ${CMD}cd${RST}            ${DIM}# go home (just 'cd' by itself)${RST}
+  ${CMD}cd ~${RST}          ${DIM}# also go home — ~ means \$HOME${RST}
+
+Two more useful ones:
+  ${CMD}cd -${RST}          ${DIM}# go back to the previous folder${RST}
+  ${CMD}cd ..${RST}         ${DIM}# go up one level (to the parent folder)${RST}
+
+${EM}This tutor's sandbox is the practice subshell's starting folder${RST},
+so you'll always start at ${DIR}${SANDBOX}${RST} when a lesson opens.
+If you wander, ${CMD}cd ~/.shelltutor${RST} brings you back.
 
 ${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
 EOF
 }
 
-lesson4() {
+stage2_lesson_3() {
     lesson <<EOF
-${H1}LESSON 4 — generating text${RST}
+${H1}2.3 — paths: relative, absolute, dot, dot-dot${RST}
 
-The shell has commands that generate text on their own.
+A ${SUB}path${RST} tells the shell where something is.
 
-${SUB}seq${RST} prints number sequences:
-  ${CMD}seq 1 10${RST}          ${DIM}# 1 through 10${RST}
-  ${CMD}seq 1 2 21${RST}        ${DIM}# count by twos${RST}
-  ${CMD}seq 5 -1 1${RST}        ${DIM}# count down${RST}
+${SUB}Relative paths${RST} start where you are now:
+  ${DIM}notes.txt${RST}            a file in this folder
+  ${DIM}practice/notes.txt${RST}   a file inside a subfolder
+  ${DIM}../notes.txt${RST}         a file in the parent folder
+  ${DIM}./notes.txt${RST}          same as 'notes.txt' (the . is this folder)
 
-${SUB}yes${RST} repeats text forever — careful. Pair with ${SUB}head${RST} to stop it:
-  ${CMD}yes "I am unstoppable" | head -n 12${RST}
+${SUB}Absolute paths${RST} start from the root, with ${KEY}/${RST}:
+  ${DIM}/etc/hosts${RST}
+  ${DIM}/usr/bin/vim${RST}
+  ${DIM}/home/alice/notes.txt${RST}
 
-${EM}Now practice Ctrl+C on purpose.${RST} Run:
-  ${CMD}yes${RST}
-The screen fills with y's. Press ${KEY}Ctrl+C${RST}. It stops. Then type
-${CMD}show${RST} to bring these instructions back. Try it a few times.
+${SUB}~${RST} is short for your home folder. ${DIM}~/notes${RST} means
+${DIM}\$HOME/notes${RST}.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+${EM}Predict before you act.${RST}  If you're in ${DIM}~/projects${RST}
+and you type ${CMD}cat notes.txt${RST}, the shell looks for
+${DIM}~/projects/notes.txt${RST}. If you mean a different folder, name it.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 2's gate.${RST}
 EOF
 }
 
-lesson5() {
+stage2_verify_task() {
+    [ -d "$SANDBOX/stage2/practice" ] || return 1
+    return 0
+}
+
+stage2_gate() {
+    show_screen <<EOF
+${H1}STAGE 2 — GATE${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: What does ${CMD}cd ..${RST} do?" \
+        'goes up one folder' \
+        'go up one folder' \
+        'goes up one level' \
+        'go up one level' \
+        'goes to the parent folder' \
+        'go to the parent folder' \
+        'parent folder' \
+        'up one' \
+        'up one folder' || return $?
+
+    ask_question \
+        "Q2: What does ${CMD}~${RST} mean in a path?" \
+        'home' \
+        'home folder' \
+        'home directory' \
+        'my home folder' \
+        'my home directory' \
+        'the home folder' \
+        'the home directory' \
+        '\$home' \
+        'home dir' || return $?
+
+    # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
+    ask_question \
+        "Q3: If I'm in ${DIM}~/projects${RST} and I type ${CMD}cd notes${RST}, what folder am I in?" \
+        '~/projects/notes' \
+        '\$home/projects/notes' \
+        'projects/notes' \
+        'home/projects/notes' || return $?
+
+    while true; do
+        show_screen <<EOF
+${H1}STAGE 2 — GATE TASK${RST}
+
+Inside the practice prompt, do these (in any order):
+
+  1. make a folder called ${DIR}practice${RST} (inside this stage's folder)
+  2. cd into it
+  3. confirm you're inside it with ${CMD}pwd${RST}
+
+Then type ${CMD}check${RST}. I'll look for ${DIR}practice${RST} on disk.
+
+${DIM}Hint: ${CMD}mkdir practice${RST}${DIM} creates the folder.${RST}
+
+${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        setup_stage_dir 2
+        practice "$SANDBOX/stage2"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if stage2_verify_task; then
+                    printf '\n%b✓ Stage 2 cleared.%b\n\n' "$OK" "$RST"
+                    save_progress 2
+                    return 0
+                fi
+                printf '\n%bI don'\''t see a %bpractice%b%b folder under %s.%b\n' \
+                    "$EM" "$DIR" "$RST" "$EM" "$SANDBOX/stage2" "$RST"
+                printf '%bTry again. %bshow%b%b redisplays the task.%b\n\n' \
+                    "$EM" "$CMD" "$RST" "$EM" "$RST"
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+run_stage2() {
+    local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3)
+    local i=0
+    while [ "$i" -lt "${#lessons[@]}" ]; do
+        "${lessons[$i]}"
+        local rc=$?
+        case "$rc" in
+            "$RC_NEXT")  ((i++)) ;;
+            "$RC_SHOW")  : ;;
+            "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            *)         return "$rc" ;;
+        esac
+    done
+    stage2_gate
+}
+
+# ---------------------------------------------------------------------
+# STAGE 3 — Files and operations
+# ---------------------------------------------------------------------
+
+stage3_intro() {
     lesson <<EOF
-${H1}LESSON 5 — the pipe ( | )${RST}
+${H1}STAGE 3 — Files and operations${RST}
 
-A pipe sends output of one command into the input of another. The
-symbol is ${CMD}|${RST} (Shift+Backslash). ${EM}Most important idea in Unix.${RST}
+Three lessons, then a gate. You'll create, read, copy, move, and remove
+files. ${EM}rm is immediate.${RST} It does not move things to a trash.
+We'll do everything inside ${DIR}${SANDBOX}/stage3${RST} so practice is
+contained.
 
-  ${CMD}seq 1 1000000 | wc -l${RST}
+Commands this stage:
+  ${CMD}touch${RST}   create an empty file (or update its timestamp)
+  ${CMD}mkdir${RST}   create a folder
+  ${CMD}rmdir${RST}   remove an EMPTY folder
+  ${CMD}cat${RST}     print a text file
+  ${CMD}less${RST}    page through a long file (exit with ${KEY}q${RST})
+  ${CMD}cp${RST}      copy
+  ${CMD}mv${RST}      move (or rename — same command)
+  ${CMD}rm${RST}      remove a file (${EM}immediate${RST})
 
-Generates a million numbers and counts them, in about a second.
+${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 3.1.${RST}
+EOF
+}
 
-Counting non-file things:
-  ${CMD}ls /usr/bin | wc -l${RST}       ${DIM}# how many programs are installed${RST}
-  ${CMD}cat /etc/passwd | wc -l${RST}   ${DIM}# how many user accounts${RST}
+stage3_lesson_1() {
+    lesson <<EOF
+${H1}3.1 — creating: touch, mkdir${RST}
+
+${CMD}touch${RST} creates an empty file (or updates the timestamp of
+an existing one).
+  ${CMD}touch hello.txt${RST}
+  ${CMD}ls${RST}              ${DIM}# you should see hello.txt${RST}
+
+${CMD}mkdir${RST} creates a folder.
+  ${CMD}mkdir notes${RST}
+  ${CMD}ls${RST}              ${DIM}# notes/ is now there${RST}
+
+To create a file ${SUB}with content${RST}, use redirection (Stage 4):
+  ${CMD}echo "first line" > greeting.txt${RST}
+
+But for now, ${CMD}touch${RST} for empty files, ${CMD}mkdir${RST} for
+folders.
+
+${INSTR}▶ Make a few, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage3_lesson_2() {
+    lesson <<EOF
+${H1}3.2 — reading: cat, less${RST}
+
+${CMD}cat${RST} prints the entire file at once.
+  ${CMD}cat hello.txt${RST}                ${DIM}# probably empty${RST}
+  ${CMD}cat ~/.shelltutor/poem.txt${RST}   ${DIM}# the tutor's poem fixture${RST}
+
+For a long file, ${CMD}cat${RST} floods the screen. Use ${CMD}less${RST}
+to page through it:
+  ${CMD}less ~/.shelltutor/poem.txt${RST}
+
+Inside ${CMD}less${RST}, the screen takes over. Press ${KEY}Space${RST}
+or ${KEY}f${RST} to page down, ${KEY}b${RST} to page back, and
+${KEY}q${RST} to exit. (More on full-screen programs in Stage 5.)
+
+${EM}Important:${RST} when ${CMD}less${RST} takes over, the prompt is
+gone. You're inside a program. ${KEY}q${RST} returns you to the shell.
+
+${INSTR}▶ Try both, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage3_lesson_3() {
+    lesson <<EOF
+${H1}3.3 — copy, move, delete${RST}
+
+${CMD}cp${RST} copies. The original stays.
+  ${CMD}cp hello.txt backup.txt${RST}
+
+${CMD}mv${RST} moves. The original moves to the new name or folder.
+The same command is used for ${SUB}rename${RST}:
+  ${CMD}mv hello.txt hi.txt${RST}            ${DIM}# rename${RST}
+  ${CMD}mv hi.txt notes/${RST}               ${DIM}# move into a folder${RST}
+
+${CMD}rm${RST} deletes. ${EM}Immediately and permanently.${RST}
+  ${CMD}rm backup.txt${RST}
+
+There is no Trash to recover from. There is no undo. ${EM}Type
+carefully and look before you press Enter.${RST}
+
+${SUB}A safety habit${RST}: list before you remove.
+  ${CMD}ls${RST}
+  ${CMD}rm <only-now-that-you-are-sure>${RST}
+
+${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 3's gate.${RST}
+EOF
+}
+
+stage3_verify_task() {
+    [ -f "$SANDBOX/stage3/done.txt" ] || return 1
+    [ ! -f "$SANDBOX/stage3/notes.txt" ] || return 1
+    [ ! -f "$SANDBOX/stage3/backup.txt" ] || return 1
+    grep -q 'hello' "$SANDBOX/stage3/done.txt" || return 1
+    return 0
+}
+
+stage3_gate() {
+    show_screen <<EOF
+${H1}STAGE 3 — GATE${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: Which command creates an empty file?  (touch, mkdir, new, cat)" \
+        'touch' || return $?
+
+    ask_question \
+        "Q2: After ${CMD}rm important.txt${RST}, where is the file?  (~/.Trash, on disk, gone, depends)" \
+        'gone' \
+        "it's gone" \
+        'its gone' || return $?
+
+    ask_question \
+        "Q3: What single command renames ${DIR}old.txt${RST} to ${DIR}new.txt${RST}?" \
+        'mv' \
+        'mv old.txt new.txt' \
+        'mv old new' || return $?
+
+    # Clean slate once at gate entry. Learner state then persists across
+    # in-gate `show` redisplays so a partial task can be completed.
+    setup_stage_dir 3
+    rm -f "$SANDBOX/stage3/notes.txt" "$SANDBOX/stage3/backup.txt" "$SANDBOX/stage3/done.txt" 2>/dev/null
+
+    while true; do
+        show_screen <<EOF
+${H1}STAGE 3 — GATE TASK${RST}
+
+You will work inside ${DIR}${SANDBOX}/stage3${RST}.
+
+Do these, in order:
+
+  1. create a file ${DIR}notes.txt${RST} containing the word ${SUB}hello${RST}
+     ${DIM}(hint: ${CMD}echo hello > notes.txt${RST}${DIM})${RST}
+  2. copy ${DIR}notes.txt${RST} to ${DIR}backup.txt${RST}
+  3. rename ${DIR}notes.txt${RST} to ${DIR}done.txt${RST}
+  4. remove ${DIR}backup.txt${RST}
+
+Then type ${CMD}check${RST}. The script will look at the folder.
+
+${DIM}I will check: done.txt exists with 'hello' in it; notes.txt and${RST}
+${DIM}backup.txt are gone.${RST}
+
+${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        practice "$SANDBOX/stage3"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if stage3_verify_task; then
+                    printf '\n%b✓ Stage 3 cleared.%b\n\n' "$OK" "$RST"
+                    save_progress 3
+                    return 0
+                fi
+                printf '\n%bThe folder state doesn'\''t match yet.%b\n' "$EM" "$RST"
+                printf '%bWhat I expected:%b\n' "$SUB" "$RST"
+                printf '  done.txt exists and contains the word ''hello''\n'
+                printf '  notes.txt is gone\n'
+                printf '  backup.txt is gone\n\n'
+                printf '%bWhat I see in %s:%b\n' "$SUB" "$SANDBOX/stage3" "$RST"
+                ls -1 "$SANDBOX/stage3" 2>/dev/null | sed 's/^/  /'
+                printf '\n'
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+run_stage3() {
+    local lessons=(stage3_intro stage3_lesson_1 stage3_lesson_2 stage3_lesson_3)
+    local i=0
+    while [ "$i" -lt "${#lessons[@]}" ]; do
+        "${lessons[$i]}"
+        local rc=$?
+        case "$rc" in
+            "$RC_NEXT")  ((i++)) ;;
+            "$RC_SHOW")  : ;;
+            "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            *)         return "$rc" ;;
+        esac
+    done
+    stage3_gate
+}
+
+# ---------------------------------------------------------------------
+# STAGE 4 — Commands, streams, composition
+# ---------------------------------------------------------------------
+
+stage4_intro() {
+    lesson <<EOF
+${H1}STAGE 4 — Commands, streams, composition${RST}
+
+Three lessons, then a gate. You'll read a command's structure, check
+whether a command exists, and chain commands together with pipes,
+redirects, and globs.
+
+Commands this stage:
+  ${CMD}command -v${RST}   ask the shell if a program is installed
+  ${CMD}wc${RST}           word, line, and character count
+  ${CMD}seq${RST}           generate number sequences
+  ${CMD}head${RST}          first N lines of input
+  ${CMD}sort${RST}          sort lines
+  ${CMD}grep${RST}          select lines matching a pattern
+  ${CMD}|${RST}             ${SUB}pipe${RST}: send one command's output into the next
+  ${CMD}>${RST}             ${SUB}redirect${RST}: write output to a file (overwrites)
+  ${CMD}>>${RST}            ${SUB}append${RST}: add output to the end of a file
+  ${CMD}<${RST}             ${SUB}input redirect${RST}: read a file into a command
+  ${CMD}*${RST}             ${SUB}glob${RST}: match many filenames at once
+
+${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 4.1.${RST}
+EOF
+}
+
+stage4_lesson_1() {
+    lesson <<EOF
+${H1}4.1 — reading a command${RST}
+
+A shell command has a small grammar:
+
+  ${SUB}command  options  arguments${RST}
+
+Examples:
+  ${CMD}ls${RST}
+  ${CMD}ls -l${RST}                    ${DIM}# one option, no argument${RST}
+  ${CMD}ls -l /etc${RST}               ${DIM}# option + argument${RST}
+  ${CMD}wc -l poem.txt${RST}           ${DIM}# count lines in a file${RST}
+  ${CMD}echo "hello world"${RST}       ${DIM}# argument with a space — quoted${RST}
+
+${EM}Spaces matter.${RST}  The shell splits on spaces. If a filename
+has a space, ${SUB}quote it${RST} or the shell will see two arguments:
+
+  ${CMD}vim "my notes.txt"${RST}       ${DIM}# opens one file${RST}
+  ${CMD}vim my notes.txt${RST}         ${DIM}# opens TWO files: 'my' and 'notes.txt'${RST}
+
+${SUB}command -v${RST} asks the shell whether a command exists.
+  ${CMD}command -v ls${RST}            ${DIM}# prints the path; exits 0${RST}
+  ${CMD}command -v vim${RST}           ${DIM}# does Vim exist on this system?${RST}
+  ${CMD}command -v vimtutor${RST}      ${DIM}# does vimtutor?${RST}
+
+${INSTR}▶ Try a few ${CMD}command -v${INSTR} probes, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage4_lesson_2() {
+    lesson <<EOF
+${H1}4.2 — the pipe${RST}
+
+A ${SUB}pipe${RST} ( ${CMD}|${RST} ) sends the standard output of one
+command into the standard input of the next. ${EM}Most important idea
+in the shell.${RST}
+
+${CMD}wc${RST} alone counts:
+  ${CMD}wc -l poem.txt${RST}          ${DIM}# lines in poem.txt${RST}
+
+${CMD}wc${RST} via pipe counts ${SUB}whatever you piped in${RST}:
+  ${CMD}seq 1 100 | wc -l${RST}       ${DIM}# 100${RST}
+  ${CMD}ls /usr/bin | wc -l${RST}     ${DIM}# how many programs are installed${RST}
 
 Pipes stack:
-  ${CMD}ls /usr/bin | sort | head${RST}      ${DIM}# list → sort → first 10${RST}
-  ${CMD}ls /usr/bin | grep ^a${RST}          ${DIM}# names starting with 'a'${RST}
-  ${CMD}ls /usr/bin | grep ^a | wc -l${RST}  ${DIM}# …and count them${RST}
+  ${CMD}ls /usr/bin | sort | head${RST}        ${DIM}# list → sort → first 10${RST}
+  ${CMD}ls /usr/bin | grep ^a${RST}            ${DIM}# names starting with 'a'${RST}
+  ${CMD}ls /usr/bin | grep ^a | wc -l${RST}    ${DIM}# …and count them${RST}
 
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+Things to notice while you try these:
+  - ${CMD}|${RST} is Shift+Backslash on most keyboards.
+  - Each piece is a normal command; only the connector is new.
+  - The pipeline runs left-to-right; output flows.
+
+${INSTR}▶ Try a few pipelines, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
-lesson6() {
+stage4_lesson_3() {
     lesson <<EOF
-${H1}LESSON 6 — redirection ( > >> < ) and globs ( * )${RST}
+${H1}4.3 — redirection and globs${RST}
 
-A pipe sends output to another program. ${EM}Redirection sends it to a file.${RST}
+A pipe sends output to ${SUB}another program${RST}. A redirect sends it
+to ${SUB}a file${RST}.
 
-${SUB}>${RST}  replaces a file with the output:
-   ${CMD}echo hello > greeting.txt${RST}   ${EM}# overwrites — old contents gone${RST}
-${SUB}>>${RST} appends instead:
-   ${CMD}echo "another line" >> greeting.txt${RST}
-${SUB}<${RST}  feeds a file into a command:
-   ${CMD}wc -w < poem.txt${RST}
+  ${CMD}>${RST}    write to a file (${EM}overwrites${RST} if it exists)
+  ${CMD}>>${RST}   append to a file (creates if missing)
+  ${CMD}<${RST}    read a file ${SUB}into${RST} a command
 
-Combine pipes with redirection:
-   ${CMD}ls /usr/bin | sort > programs.txt${RST}
-   ${CMD}wc -l programs.txt${RST}
+Examples:
+  ${CMD}echo first > greeting.txt${RST}        ${DIM}# overwrite${RST}
+  ${CMD}echo second >> greeting.txt${RST}      ${DIM}# append${RST}
+  ${CMD}cat greeting.txt${RST}                 ${DIM}# two lines${RST}
+  ${CMD}wc -w < poem.txt${RST}                 ${DIM}# count words read from poem.txt${RST}
 
-${SUB}*${RST} (glob) names many files at once:
-   ${CMD}ls *.txt${RST}     ${CMD}wc -l *.txt${RST}     ${CMD}cat *.txt${RST}
+Combine with pipes:
+  ${CMD}ls /usr/bin | sort > programs.txt${RST}
+  ${CMD}wc -l programs.txt${RST}
 
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+${SUB}Globs${RST} match many filenames at once. The shell expands them
+${SUB}before${RST} the command sees them.
+
+  ${CMD}ls *.txt${RST}              ${DIM}# every .txt file in this folder${RST}
+  ${CMD}wc -l *.txt${RST}           ${DIM}# count lines in each .txt file${RST}
+  ${CMD}cat *.txt${RST}             ${DIM}# print them all back-to-back${RST}
+
+${EM}Predict before you act.${RST}  ${CMD}rm *${RST} removes everything
+in the current folder. ${CMD}rm *.tmp${RST} removes only .tmp files.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 4's gate.${RST}
 EOF
 }
 
-lesson7() {
+stage4_verify_task() {
+    [ -f "$SANDBOX/stage4/count.txt" ] || return 1
+    local content
+    content=$(tr -d '[:space:]' < "$SANDBOX/stage4/count.txt" 2>/dev/null)
+    [ "$content" = "100" ] || return 1
+    # Bonus: confirm at least one .txt file exists alongside count.txt to make
+    # the "list .txt files" portion meaningful. The setup creates a stub.
+    return 0
+}
+
+stage4_gate() {
+    show_screen <<EOF
+${H1}STAGE 4 — GATE${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: What does ${CMD}command -v vim${RST} print, if Vim is installed?" \
+        'the path to vim' \
+        'path to vim' \
+        'a path' \
+        'the path' \
+        'where vim is' \
+        "vim's path" \
+        'vims path' \
+        '/usr/bin/vim' || return $?
+
+    ask_question \
+        "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
+        '> overwrites, >> appends' \
+        '> overwrite, >> append' \
+        '> writes over, >> adds to the end' \
+        '>> appends' \
+        '> overwrites' \
+        'one overwrites one appends' \
+        '> replaces >> appends' || return $?
+
+    ask_question \
+        "Q3: Why does ${CMD}vim my notes.txt${RST} open two files instead of one?" \
+        'because of the space' \
+        'spaces split arguments' \
+        'spaces split words' \
+        'the space splits them' \
+        'no quotes' \
+        'missing quotes' \
+        'because spaces' \
+        'because of spaces' \
+        'the shell splits on spaces' || return $?
+
+    # Clean slate once at gate entry; seed.txt stub so the glob exercise has
+    # something to match before the learner creates count.txt.
+    setup_stage_dir 4
+    if [ ! -f "$SANDBOX/stage4/seed.txt" ]; then
+        cat > "$SANDBOX/stage4/seed.txt" <<'EOF'
+a small text file
+to give the glob something to match
+EOF
+    fi
+    rm -f "$SANDBOX/stage4/count.txt" 2>/dev/null
+
+    while true; do
+        show_screen <<EOF
+${H1}STAGE 4 — GATE TASK${RST}
+
+Work inside ${DIR}${SANDBOX}/stage4${RST}.
+
+Do these:
+
+  1. Use ${CMD}seq${RST} and a pipe to count from 1 to 100 and save
+     the count to ${DIR}count.txt${RST}.
+     ${DIM}(hint: ${CMD}seq 1 100 | wc -l > count.txt${RST}${DIM})${RST}
+
+  2. Use a glob to list every ${DIR}*.txt${RST} file in this folder.
+
+Then type ${CMD}check${RST}.
+
+${DIM}I will check: count.txt exists and contains 100.${RST}
+
+${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        practice "$SANDBOX/stage4"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if stage4_verify_task; then
+                    printf '\n%b✓ Stage 4 cleared.%b\n\n' "$OK" "$RST"
+                    save_progress 4
+                    return 0
+                fi
+                printf '\n%bcount.txt should exist and contain the number 100.%b\n' "$EM" "$RST"
+                if [ -f "$SANDBOX/stage4/count.txt" ]; then
+                    printf '%bI see count.txt with content: %s%b\n' "$SUB" "$(cat "$SANDBOX/stage4/count.txt")" "$RST"
+                else
+                    printf '%bI don'\''t see count.txt in %s.%b\n' "$SUB" "$SANDBOX/stage4" "$RST"
+                fi
+                printf '\n%bTry again. %bshow%b%b redisplays the task.%b\n\n' \
+                    "$EM" "$CMD" "$RST" "$EM" "$RST"
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+run_stage4() {
+    local lessons=(stage4_intro stage4_lesson_1 stage4_lesson_2 stage4_lesson_3)
+    local i=0
+    while [ "$i" -lt "${#lessons[@]}" ]; do
+        "${lessons[$i]}"
+        local rc=$?
+        case "$rc" in
+            "$RC_NEXT")  ((i++)) ;;
+            "$RC_SHOW")  : ;;
+            "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            *)         return "$rc" ;;
+        esac
+    done
+    stage4_gate
+}
+
+# ---------------------------------------------------------------------
+# STAGE 5 — Ready for vimtutor
+# ---------------------------------------------------------------------
+
+stage5_intro() {
     lesson <<EOF
-${H1}LESSON 7 — asking the computer about itself${RST}
+${H1}STAGE 5 — Ready for vimtutor${RST}
 
-${SUB}Identity:${RST}
-  ${CMD}whoami${RST}     ${DIM}# what user am I?${RST}
-  ${CMD}hostname${RST}   ${DIM}# what is this computer?${RST}
-  ${CMD}pwd${RST}        ${DIM}# what folder am I in?${RST}
-  ${CMD}date${RST}       ${DIM}# what time is it?${RST}
-  ${CMD}uptime${RST}     ${DIM}# how long has it been on?${RST}
+Four lessons, then a gate. By the end, you'll know the difference
+between a command that prints-and-exits and one that takes over the
+terminal; you'll be able to leave any of them deliberately; and you'll
+understand why Vim has ${CMD}:w${RST}, ${CMD}:q${RST}, and ${CMD}:q!${RST}.
 
-${SUB}Resources${RST} (-h = human-readable):
-  ${CMD}free -h${RST}    ${DIM}# memory${RST}        ${CMD}df -h${RST}      ${DIM}# disk space${RST}
+After the gate, this tutor hands you to ${CMD}vimtutor${RST} (if it's
+installed on your system) — that is the next step.
 
-${SUB}${DIR}/proc${RST}${SUB}${RST} is Linux's self-report folder. Files are made up
-when you read them:
-  ${CMD}cat /proc/cpuinfo | head${RST}
-  ${CMD}cat /proc/meminfo | head${RST}
-  ${CMD}ls /proc | grep ^[0-9] | wc -l${RST}   ${DIM}# running programs${RST}
-
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 5.1.${RST}
 EOF
 }
 
-lesson8() {
+stage5_lesson_1() {
     lesson <<EOF
-${H1}LESSON 8 — making the terminal perform${RST}
+${H1}5.1 — print-and-exit vs full-screen${RST}
 
-Uses extras that may not be installed: ${SUB}cowsay${RST}, ${SUB}figlet${RST}, ${SUB}lolcat${RST}. Skip
-any that says 'command not found'. To install:
-  ${CMD}sudo dnf install cowsay figlet lolcat${RST}
+Most of the commands you've used print output and return immediately:
+  ${CMD}ls${RST}          ${CMD}date${RST}          ${CMD}wc -l file${RST}
 
-  ${CMD}cowsay "hello human"${RST}        ${DIM}# a talking cow${RST}
-  ${CMD}figlet "BIG TEXT"${RST}           ${DIM}# huge ASCII letters${RST}
-  ${CMD}echo "rainbows" | lolcat${RST}    ${DIM}# rainbow output${RST}
+Other commands ${EM}take over the screen${RST} until you exit them:
+  ${CMD}man ls${RST}              ${DIM}# the manual page for ls${RST}
+  ${CMD}less long-file.txt${RST}  ${DIM}# page through a long file${RST}
+  ${CMD}vim file${RST}            ${DIM}# the Vim editor${RST}
 
-Same pipe idea from Lesson 5:
-  ${CMD}yes "I am the best" | head -5 | cowsay | lolcat${RST}
-  ${CMD}figlet "WHOA" | lolcat${RST}
-  ${CMD}seq 1 5 | cowsay | lolcat${RST}
+While a full-screen program is running, the shell prompt is ${SUB}gone${RST}.
+You're inside a program. The same keys may do different things there.
 
-With redirection from Lesson 6:
-  ${CMD}figlet "MY SIGN" > sign.txt${RST}     ${CMD}cat sign.txt${RST}
+${SUB}Exit keys${RST}:
+  ${CMD}man${RST}   →  press ${KEY}q${RST}
+  ${CMD}less${RST}  →  press ${KEY}q${RST}
+  ${CMD}vim${RST}   →  type ${CMD}:q${RST} then Enter (and friends — Lesson 5.3)
 
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+Try one:
+  ${CMD}man ls${RST}
+  ${DIM}(read a few lines; press ${KEY}q${DIM} to come back here.)${RST}
+
+${INSTR}▶ When back at ${DIM}shelltutor>${INSTR}, type ${CMD}next${INSTR}.${RST}
 EOF
 }
 
-lesson9() {
+stage5_lesson_2() {
     lesson <<EOF
-${H1}LESSON 9 — putting it together${RST}
+${H1}5.2 — entering and leaving Vim${RST}
 
-No new commands. Combine what you have learned.
+${CMD}vim${RST} is a text editor. Before you ${SUB}edit${RST} anything,
+let's learn how to ${SUB}leave${RST}.
 
-${SUB}9.1${RST}  Lines produced by ${CMD}seq 1 1000000${RST}?  ${DIM}Hint: pipe to a counter.${RST}
-${SUB}9.2${RST}  Programs in ${DIR}/usr/bin${RST} starting with 'a'?  ${DIM}Hint: ls, grep, wc.${RST}
-${SUB}9.3${RST}  Words in ${DIR}/etc/services${RST}?
-${SUB}9.4${RST}  Make ${DIR}programs.txt${RST} — every program in ${DIR}/usr/bin${RST}, sorted
-     alphabetically; count its lines.  ${DIM}Hint: ls, sort, > , wc.${RST}
-${SUB}9.5${RST}  Free play. Try these and see what changes:
-       ${CMD}cat poem.txt numbers.txt${RST}     ${CMD}cat *.txt | wc -l${RST}
-       ${CMD}sort numbers.txt${RST}      ${CMD}sort -n numbers.txt${RST}
-     What is different between ${CMD}sort${RST} and ${CMD}sort -n${RST}, and why?
+First, see if Vim is installed:
+  ${CMD}command -v vim${RST}
 
-${INSTR}▶ When you're done, type ${CMD}next${INSTR}.${RST}
+If you got a path, Vim is there. If not, install it before continuing.
+
+A safe entrance:
+  ${CMD}vim --version${RST}     ${DIM}# prints version info and exits${RST}
+
+A full Vim session:
+  ${CMD}vim${RST}
+
+This drops you into Vim with no file. To leave without doing anything,
+type:
+  ${CMD}:q${RST} then Enter
+
+If Vim refuses (because you typed something by accident and now there
+are unsaved changes), use the ${EM}discard${RST} form:
+  ${CMD}:q!${RST} then Enter
+
+${EM}You will need :q!${RST} the first few times you use Vim. Memorize it.
+
+${INSTR}▶ Try ${CMD}vim --version${INSTR} and ${CMD}vim${INSTR} (then ${CMD}:q${INSTR}). Then ${CMD}next${INSTR}.${RST}
 EOF
 }
+
+stage5_lesson_3() {
+    lesson <<EOF
+${H1}5.3 — buffer vs file${RST}
+
+This is the most important idea in this stage.
+
+When you open a file in Vim, Vim ${SUB}reads it into a buffer${RST} —
+a copy in memory. Your keystrokes change the ${SUB}buffer${RST}, not
+the file. The file on disk only changes when you ${SUB}write${RST} the
+buffer back.
+
+  ${SUB}file on disk${RST}  →  ${SUB}buffer in memory${RST}  →  ${SUB}file on disk${RST}
+       (read)                  (edit)                     (write)
+
+That's why Vim has separate commands for save and quit:
+
+  ${CMD}:w${RST}    write the buffer to the file
+  ${CMD}:q${RST}    quit (only if there are no unsaved changes)
+  ${CMD}:q!${RST}   quit and discard unsaved changes
+  ${CMD}:wq${RST}   write, then quit
+
+${EM}Practice this on a file you don't mind editing.${RST}  A
+${DIR}practice.txt${RST} fixture is in this stage's folder. Try:
+
+  ${CMD}vim practice.txt${RST}
+     type ${CMD}i${RST} to enter insert mode (vimtutor will teach modes)
+     type a few letters
+     press ${KEY}Esc${RST}
+     type ${CMD}:q!${RST} then Enter
+     ${CMD}cat practice.txt${RST}   ${DIM}# the file is unchanged${RST}
+
+  ${CMD}vim practice.txt${RST}
+     type ${CMD}i${RST}, then a few letters, ${KEY}Esc${RST}
+     type ${CMD}:wq${RST}, Enter
+     ${CMD}cat practice.txt${RST}   ${DIM}# now the file has changed${RST}
+
+${INSTR}▶ Try both, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage5_lesson_4() {
+    lesson <<EOF
+${H1}5.4 — calling vimtutor${RST}
+
+${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a
+${SUB}copy${RST} of a tutorial file so you can practice without
+damaging the original.
+
+Check whether it's installed:
+  ${CMD}command -v vimtutor${RST}
+
+If it prints a path, you're set.
+
+If not, you can install it:
+  - on Linux: install your distro's full ${SUB}vim${RST} package (often
+    a ${SUB}vim-enhanced${RST} or ${SUB}vim${RST} (not ${SUB}vim-minimal${RST})
+    package).
+  - on macOS: Vim ships in macOS, but ${CMD}vimtutor${RST} may not be
+    on PATH. ${CMD}brew install vim${RST} via Homebrew adds it.
+
+This stage's gate runs through the file-vs-buffer exercise from 5.3
+once more, then you'll be done.
+
+${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 5's gate.${RST}
+EOF
+}
+
+# Stage 5 verification is two-phase. The script controls a known starting
+# state for practice.txt and re-verifies between phases.
+
+stage5_seed_practice() {
+    setup_stage_dir 5
+    echo before > "$SANDBOX/stage5/practice.txt"
+}
+
+stage5_verify_phase1() {
+    # phase 1: learner opened, edited, did NOT save. File should still say 'before'.
+    [ -f "$SANDBOX/stage5/practice.txt" ] || return 1
+    local content
+    content=$(cat "$SANDBOX/stage5/practice.txt" 2>/dev/null)
+    [ "$content" = "before" ] || return 1
+    return 0
+}
+
+stage5_verify_phase2() {
+    # phase 2: learner opened, edited, SAVED. File should differ from 'before'.
+    [ -f "$SANDBOX/stage5/practice.txt" ] || return 1
+    local content
+    content=$(cat "$SANDBOX/stage5/practice.txt" 2>/dev/null)
+    [ "$content" != "before" ] || return 1
+    # also: file should be non-empty
+    [ -s "$SANDBOX/stage5/practice.txt" ] || return 1
+    return 0
+}
+
+stage5_gate() {
+    show_screen <<EOF
+${H1}STAGE 5 — GATE${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}two-phase practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: How do you exit ${CMD}man ls${RST}?" \
+        'q' \
+        'press q' \
+        'type q' \
+        'the q key' || return $?
+
+    ask_question \
+        "Q2: After ${CMD}vim notes.txt${RST}, what makes Vim write your edit to the file?" \
+        ':w' \
+        ':w<enter>' \
+        ':w then enter' \
+        ':wq' \
+        ':wq<enter>' \
+        ':wq then enter' \
+        'write command' \
+        ':write' \
+        'colon w' || return $?
+
+    ask_question \
+        "Q3: If you open ${DIR}notes.txt${RST} in ${CMD}vim${RST}, type some letters, and quit with ${CMD}:q!${RST} — did the file on disk change?" \
+        'no' \
+        'no it did not' \
+        'no it didnt' \
+        "no it didn't" \
+        'no the file did not change' \
+        'no, the file did not change' \
+        'unchanged' \
+        'it did not change' || return $?
+
+    # Phase 1: open, edit, discard. File must still read 'before' afterward.
+    while true; do
+        stage5_seed_practice
+        show_screen <<EOF
+${H1}STAGE 5 — GATE TASK (phase 1 of 2)${RST}
+
+I've reset ${DIR}practice.txt${RST} to contain just the word ${SUB}before${RST}.
+
+At the practice prompt:
+
+  1. ${CMD}cat practice.txt${RST}        ${DIM}# confirm it says 'before'${RST}
+  2. ${CMD}vim practice.txt${RST}
+       ${CMD}i${RST}  ${DIM}# enter insert mode${RST}
+       type a few letters
+       ${KEY}Esc${RST}
+       ${CMD}:q!${RST}  Enter   ${DIM}# discard your changes${RST}
+  3. ${CMD}cat practice.txt${RST}        ${DIM}# should still say 'before'${RST}
+
+Then type ${CMD}check${RST}.
+
+${DIM}I will verify the file is still exactly 'before'.${RST}
+
+${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        practice "$SANDBOX/stage5"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if stage5_verify_phase1; then
+                    printf '\n%b✓ Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$RST"
+                    break
+                fi
+                printf '\n%bThe file is no longer exactly ''before''.%b\n' "$EM" "$RST"
+                printf '%b(Did you use %b:wq%b%b instead of %b:q!%b%b?)%b\n' \
+                    "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
+                printf '%bI'\''ll reset it and we'\''ll try phase 1 again.%b\n\n' "$EM" "$RST"
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+
+    # Phase 2: open, edit, save. File must differ from 'before' afterward.
+    while true; do
+        # Don't reset between phases — the learner should see their phase-1
+        # 'before' state and edit forward from it.
+        show_screen <<EOF
+${H1}STAGE 5 — GATE TASK (phase 2 of 2)${RST}
+
+Now save a real edit.
+
+  1. ${CMD}vim practice.txt${RST}
+       ${CMD}i${RST}, type at least one letter, ${KEY}Esc${RST}
+       ${CMD}:wq${RST}  Enter   ${DIM}# write and quit${RST}
+  2. ${CMD}cat practice.txt${RST}        ${DIM}# now it differs from 'before'${RST}
+
+Then type ${CMD}check${RST}.
+
+${DIM}I will verify the file is no longer exactly 'before'.${RST}
+
+${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        practice "$SANDBOX/stage5"
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if stage5_verify_phase2; then
+                    printf '\n%b✓ Phase 2 verified — the file was written.%b\n\n' "$OK" "$RST"
+                    printf '%b✓ Stage 5 cleared.%b\n\n' "$OK" "$RST"
+                    save_progress 5
+                    return 0
+                fi
+                printf '\n%bThe file still reads exactly ''before''.%b\n' "$EM" "$RST"
+                printf '%b(Did you use %b:q!%b%b instead of %b:wq%b%b? Try again.)%b\n\n' \
+                    "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+run_stage5() {
+    local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4)
+    local i=0
+    while [ "$i" -lt "${#lessons[@]}" ]; do
+        "${lessons[$i]}"
+        local rc=$?
+        case "$rc" in
+            "$RC_NEXT")  ((i++)) ;;
+            "$RC_SHOW")  : ;;
+            "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+            *)         return "$rc" ;;
+        esac
+    done
+    stage5_gate
+}
+
+# ---------------------------------------------------------------------
+# Finale
+# ---------------------------------------------------------------------
 
 finale() {
     clear 2>/dev/null || printf '\n'
     cat <<EOF
-${H1}You finished the Shell Tutor.${RST}
+${H1}You're ready for vimtutor.${RST}
 
-You have met:
-  ${SUB}commands${RST}   echo, cat, wc, seq, yes, head, sort, grep, ls,
-              whoami, hostname, pwd, date, uptime, free, df,
-              cowsay, figlet, lolcat ${DIM}(if installed)${RST}
-  ${SUB}keys${RST}       Tab, Up/Down Arrow, Ctrl+R, Ctrl+G, Ctrl+C, Ctrl+L
-  ${SUB}operators${RST}  ${CMD}|${RST} (pipe)   ${CMD}>${RST} (redirect)   ${CMD}*${RST} (glob)
+Across five stages you have met:
 
-${SUB}What's next?${RST}
-  ${CMD}shelltutor 2${RST}      ${DIM}# replay a specific lesson${RST}
-  ${CMD}man wc${RST}            ${DIM}# manual for any command — press q to exit${RST}
-  ${CMD}vimtutor${RST}          ${DIM}# the same tutor, for the vim editor${RST}
+  ${SUB}commands${RST}    echo, pwd, whoami, date, clear, exit,
+                ls, cd, ~, .., touch, mkdir, rmdir,
+                cat, less, cp, mv, rm,
+                command -v, wc, seq, head, sort, grep,
+                man, vim, vim --version, vimtutor
+  ${SUB}keys${RST}        Tab, Up Arrow, Ctrl+C, Ctrl+L, q, Esc
+  ${SUB}operators${RST}   ${CMD}|${RST} (pipe)  ${CMD}>${RST} (redirect)  ${CMD}>>${RST} (append)
+                ${CMD}<${RST} (input)  ${CMD}*${RST} (glob)
+  ${SUB}ideas${RST}       prompt vs program  ·  buffer vs file
+                relative vs absolute paths
+                file is not changed until the buffer is written
 
-Commands sysadmins use daily:
-  ${CMD}htop${RST}                  ${DIM}# live dashboard of running programs${RST}
-  ${CMD}df -h${RST}                 ${DIM}# how full each disk is${RST}
-  ${CMD}du -sh ~/*${RST}            ${DIM}# size of each thing in your home${RST}
-  ${CMD}find . -name '*.txt'${RST}  ${DIM}# locate files by name${RST}
+${SUB}What's next${RST}:
 
-Sandbox is at ${DIR}~/.shelltutor${RST} if you want to keep playing.
+  ${CMD}vimtutor${RST}
+    ${DIM}# the Vim tutor itself; about 30 minutes, hands-on${RST}
+
+If ${CMD}vimtutor${RST} isn't installed:
+  - Linux: install your distro's full vim package
+    (Fedora: ${CMD}sudo dnf install vim-enhanced${RST}; Debian/Ubuntu: ${CMD}sudo apt install vim${RST})
+  - macOS:  ${CMD}brew install vim${RST}
+
+Re-take any stage at any time:
+  ${CMD}shelltutor 1${RST}   ${DIM}# replay Stage 1${RST}
+
+Sandbox stays at ${DIR}${SANDBOX}${RST} if you want to keep playing.
 
 EOF
+    # Clean up progress so the next plain `shelltutor` invocation starts from
+    # Stage 1 unless `shelltutor N` is given.
+    rm -f "$PROGRESS_FILE" 2>/dev/null || true
 }
+
+# ---------------------------------------------------------------------
+# Stage dispatcher
+# ---------------------------------------------------------------------
+
+run_stage() {
+    case "$1" in
+        1) run_stage1 ;;
+        2) run_stage2 ;;
+        3) run_stage3 ;;
+        4) run_stage4 ;;
+        5) run_stage5 ;;
+        *) return 1 ;;
+    esac
+}
+
+# ---------------------------------------------------------------------
+# main
+# ---------------------------------------------------------------------
 
 main() {
     local start
-    local explicit=0
     case "${1:-}" in
         -h|--help) usage; exit 0 ;;
         '')
-            start=$(read_progress)
+            start=$(($(read_progress) + 1))
+            if [ "$start" -gt "$TOTAL_STAGES" ]; then
+                # Everything passed — show finale and exit.
+                setup_sandbox
+                finale
+                exit 0
+            fi
             ;;
-        [1-9])
+        [1-5])
             start=$1
-            explicit=1
             ;;
         *)
-            echo "shelltutor: lesson must be 1 through 9." >&2
+            echo "shelltutor: argument must be a stage number (1..5)." >&2
             usage >&2
             exit 1
             ;;
@@ -430,30 +1588,17 @@ main() {
 
     setup_sandbox
 
-    local lessons=(welcome lesson1 lesson2 lesson3 lesson4 \
-                   lesson5 lesson6 lesson7 lesson8 lesson9 finale)
-    local total=${#lessons[@]}
-
-    if [ "$start" -ge "$total" ] || [ "$start" -lt 0 ]; then
-        start=0
-    fi
-
-    local i rc
-    for ((i=start; i<total; i++)); do
-        "${lessons[$i]}"
+    local s rc
+    for ((s=start; s<=TOTAL_STAGES; s++)); do
+        run_stage "$s"
         rc=$?
-        case "$rc" in
-            97)  ((i--)) ;;                         # show: redisplay current
-            98)  i=$((i > 0 ? i - 2 : -1)) ;;       # prev: go back one
-        esac
-
-        local next_i=$((i + 1))
-        if [ "$next_i" -lt "$total" ]; then
-            save_progress "$next_i"
+        if [ "$rc" -ne 0 ]; then
+            # quit / interrupt — bail without finale; progress file already saved.
+            exit 0
         fi
     done
 
-    rm -f "$PROGRESS_FILE"
+    finale
 }
 
 main "$@"
