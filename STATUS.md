@@ -28,25 +28,35 @@ Current truth for the `shelltutor` repository.
 
 - Day-1 documentation set (`README.md`, `CLAUDE.md`, `AGENTS.md`,
   `CONTRIBUTING.md`, `STATUS.md`, `ROADMAP.md`) is in place.
-- The tutor script (`shelltutor`) has been imported from prior-art at
+- The tutor script (`shelltutor`) was imported from prior-art at
   `fedora-top:~/Projects/shelltutor` (commit `136f6a3`, 2026-05-17).
-- The imported script still carries two `WYN OPS` accent comments
-  (lines 17 and 35); user-agnostic refactor is the next change.
+- **ROADMAP Phase 1 — User-Agnostic Refactor — is complete** (commit
+  `e6257aa`, 2026-05-21). The tracked script carries no operator-
+  named or theme-named content.
 - The companion `wyn-setup/` directory from prior-art is intentionally
   not carried forward.
+- First profile cycle and first audit cycle are complete (snapshot
+  2026-05-21). See `profile/2026-05-21/` and `audit/2026-05-21/SUMMARY.md`.
+  Seven active findings (`F-001`–`F-007`) and seven proposed fitness
+  functions (`FF-001`–`FF-007`).
+- ROADMAP Phase 3 has been expanded into a five-stage mastery-gated
+  curriculum spec (vimtutor-prerequisite framing). Implementation is
+  the current active engagement.
 - No `LICENSE` or `CHANGELOG.md` file yet (see Deferrals).
 
 ## Immediate Next Steps
 
-1. **User-agnostic refactor commit** — replace `WYN OPS` accent comments
-   with neutral wording; sweep for any other user-specific framing.
-2. **Portability sweep** — confirm the script behaves on macOS (Homebrew
-   bash 5+) and a generic Linux. Note which surfaces are validated.
-3. **Lesson surface review** — decide whether the initial command list
-   (`pwd`, `ls`, `cd`, `cat`, `man`, `whoami`, `hostname`, `date`,
-   `uptime`, `df`, `free`) is the right Day-1 set.
-4. **License decision** — pick a posture before inviting outside
-   contribution or linking the repo publicly.
+1. **Curriculum redesign implementation (ROADMAP Phase 3)** — implement
+   the five mastery-gated stages in `shelltutor` per the spec in
+   `ROADMAP.md`. Fixes audit findings `F-002` (narrows the welcome-
+   screen sandbox claim) and `F-003` (moves lesson 7 `/proc`+`free` and
+   lesson 8 `dnf` install hint out of the gated path).
+2. **Portability sweep (ROADMAP Phase 2)** — once Phase 3 lands, walk
+   the redesigned stages on macOS (Homebrew bash 5+) and a generic
+   Linux distro. Record results. Run `shellcheck shelltutor`
+   (operationalizes `FF-005`).
+3. **License decision (ROADMAP Phase 4 trigger)** — pick a posture
+   before inviting outside contribution or linking the repo publicly.
 
 ## Deferrals
 
