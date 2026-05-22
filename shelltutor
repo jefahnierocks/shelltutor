@@ -324,8 +324,20 @@ read_progress() {
 
 practice() {
     local pd="${1:-$SANDBOX}"
+    local mode="${2:-lesson}"
     setup_sandbox
     mkdir -p "$pd"
+
+    # Context-aware footer. At a lesson the most likely next action is
+    # `next`; at a gate it is `check`. Showing the wrong verb at the
+    # wrong time trains the learner to type the wrong thing.
+    local footer
+    if [ "$mode" = "gate" ]; then
+        footer="(type ${CMD}check${RST}${DIM} when done — or ${RST}${CMD}show${DIM}, ${RST}${CMD}prev${DIM}, ${RST}${CMD}quit${DIM})"
+    else
+        footer="(type ${CMD}next${RST}${DIM} to advance — or ${RST}${CMD}prev${DIM}, ${RST}${CMD}show${DIM}, ${RST}${CMD}quit${DIM})"
+    fi
+
     bash --rcfile <(cat <<RCFILE
 [ -r /etc/bashrc ] && . /etc/bashrc
 
@@ -340,15 +352,19 @@ PROMPT_COMMAND='history -a'
 
 PS1='shelltutor> '
 
-# Navigation: functions, not aliases, so alias chains can't recurse.
-next()  { builtin exit  0; }
-check() { builtin exit 96; }
-prev()  { builtin exit 98; }
-show()  { builtin exit 97; }
-quit()  { builtin exit 99; }
-exit()  { builtin exit 99; }
+# Navigation builtins: functions, not aliases, so alias chains can't
+# recurse. \`exec >/dev/null 2>&1\` immediately before \`builtin exit\`
+# suppresses bash's "exit\n" interactive-logout print (which beginners
+# read as a separate command being run); the subshell then exits with
+# the navigation code the outer dispatcher interprets.
+next()  { exec >/dev/null 2>&1; builtin exit  0; }
+check() { exec >/dev/null 2>&1; builtin exit 96; }
+prev()  { exec >/dev/null 2>&1; builtin exit 98; }
+show()  { exec >/dev/null 2>&1; builtin exit 97; }
+quit()  { exec >/dev/null 2>&1; builtin exit 99; }
+exit()  { exec >/dev/null 2>&1; builtin exit 99; }
 
-printf "${DIM}(type ${RST}${CMD}next${DIM} to advance — or ${RST}${CMD}prev${DIM}, ${RST}${CMD}show${DIM}, ${RST}${CMD}quit${DIM})${RST}\n"
+printf "${DIM}${footer}${RST}\n"
 RCFILE
 ) -i < /dev/tty
     local code=$?
@@ -653,6 +669,32 @@ stage1_verify_task() {
     return 0
 }
 
+# Verify the learner actually ran whoami / pwd / date during the task
+# practice subshell. Called before the follow-up questions so they
+# never see "what did pwd print?" if they didn't run pwd. Argument is
+# a history-mark taken at task entry.
+stage1_check_commands_run() {
+    local hist_mark="$1"
+    local recent missing=()
+    recent=$(history_since "$hist_mark")
+
+    grep -qE '^[[:space:]]*whoami([[:space:]]|$)' <<< "$recent" || missing+=("whoami")
+    grep -qE '^[[:space:]]*pwd([[:space:]]|$)'    <<< "$recent" || missing+=("pwd")
+    grep -qE '^[[:space:]]*date([[:space:]]|$)'   <<< "$recent" || missing+=("date")
+
+    if [ "${#missing[@]}" -eq 0 ]; then
+        return 0
+    fi
+
+    printf '\n%bAlmost — you still need to run:%b\n' "$EM" "$RST"
+    local c
+    for c in "${missing[@]}"; do
+        printf '  %b%s%b\n' "$CMD" "$c" "$RST"
+    done
+    printf '\nRun the missing one(s) at the prompt below, then type %bcheck%b again.\n' "$CMD" "$RST"
+    return 1
+}
+
 stage1_gate() {
     stage1_gate_screen
 
@@ -681,8 +723,14 @@ stage1_gate() {
         'terminal' || return $?
 
     # ---- Task: run three commands, then answer three short questions
+    setup_stage_dir 1
+    local hist_mark
+    hist_mark=$(history_mark)
+
+    local skip_screen=0
     while true; do
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 1 — GATE TASK${RST}
 
 Inside the practice prompt, run each of these once. Read each output.
@@ -692,15 +740,25 @@ Then type ${CMD}check${RST}.
   ${CMD}pwd${RST}
   ${CMD}date${RST}
 
-I will ask you what each one printed.
+After all three have run, I'll ask you what each one printed.
 
-${INSTR}▶ When ready, you'll see ${DIM}shelltutor>${INSTR}. Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}▶ Type ${CMD}check${INSTR} only after running all three.${RST}
 EOF
-        setup_stage_dir 1
-        practice "$SANDBOX/stage1"
+        fi
+        skip_screen=0
+
+        practice "$SANDBOX/stage1" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
+                if ! stage1_check_commands_run "$hist_mark"; then
+                    # Helper printed the missing-commands list. Re-enter
+                    # the practice subshell with the same task — do NOT
+                    # redisplay the task screen, so the missing-commands
+                    # message stays visible above the new prompt.
+                    skip_screen=1
+                    continue
+                fi
                 printf '%bThree short follow-ups based on what you saw.%b\n\n' "$SUB" "$RST"
 
                 printf '%bWhat did %bwhoami%b print? (just the username)%b\n' "$Q" "$CMD" "$Q" "$RST"
@@ -923,7 +981,7 @@ ${DIM}Hint: ${CMD}mkdir practice${RST}${DIM} creates the folder.${RST}
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
         setup_stage_dir 2
-        practice "$SANDBOX/stage2"
+        practice "$SANDBOX/stage2" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1124,7 +1182,7 @@ ${DIM}backup.txt are gone.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
-        practice "$SANDBOX/stage3"
+        practice "$SANDBOX/stage3" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1377,7 +1435,7 @@ ${DIM}I will check: count.txt exists and contains 100.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
-        practice "$SANDBOX/stage4"
+        practice "$SANDBOX/stage4" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1662,7 +1720,7 @@ ${DIM}I will verify the file is still exactly 'before'.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
-        practice "$SANDBOX/stage5"
+        practice "$SANDBOX/stage5" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1700,7 +1758,7 @@ ${DIM}I will verify the file is no longer exactly 'before'.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
-        practice "$SANDBOX/stage5"
+        practice "$SANDBOX/stage5" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
