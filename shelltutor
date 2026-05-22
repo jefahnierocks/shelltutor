@@ -100,6 +100,7 @@ Usage:
   shelltutor            resume where you left off
   shelltutor N          enter stage N (1..5) for re-take or first-time
   shelltutor -h         this help
+  shelltutor --info     environment check (bash, shell, sandbox, vim, ...)
 
 Stages:
   1  Where am I?
@@ -120,6 +121,145 @@ Inside the practice prompt:
 Sandbox folder: $SANDBOX
 (Override with SHELLTUTOR_HOME=/path ./shelltutor; NO_COLOR disables colour.)
 EOF
+}
+
+# ---------------------------------------------------------------------
+# Preflight
+#
+# Early-startup checks that catch the most common "this won't work on
+# your system" problems before any lesson screen tries to render.
+# Silent on success; one-sentence diagnostic + exit 1 on failure.
+#
+# The checks are intentionally narrow: bash version (already enforced
+# at the top of the file), interactive terminal, and writable sandbox.
+# Per-command availability (vim, vimtutor, seq, less, ...) is reported
+# by --info but is not a hard preflight gate because the lessons that
+# need each one handle absence with a fallback or a clear runtime
+# message.
+# ---------------------------------------------------------------------
+
+preflight() {
+    # 1. Interactive terminal. The practice subshell uses
+    #    `bash --rcfile <(...) -i < /dev/tty` which only works when
+    #    stdin/stdout are a real TTY and /dev/tty is available.
+    if [ ! -t 1 ] || [ ! -t 0 ]; then
+        printf '%bshelltutor:%b this is an interactive tutor; please run it directly\n' "$EM" "$RST" >&2
+        printf 'in a terminal window. stdout or stdin is not a terminal — perhaps the\n' >&2
+        printf 'output is being piped, redirected, or the script is running under cron / CI.\n' >&2
+        return 1
+    fi
+    if [ ! -e /dev/tty ]; then
+        printf '%bshelltutor:%b /dev/tty is not available; the practice prompts cannot work.\n' "$EM" "$RST" >&2
+        printf 'Run the tutor from a normal terminal session, not under a non-interactive service.\n' >&2
+        return 1
+    fi
+
+    # 2. Writable sandbox.
+    if ! mkdir -p "$SANDBOX" 2>/dev/null; then
+        printf '%bshelltutor:%b cannot create the sandbox folder at %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
+        printf 'Set SHELLTUTOR_HOME to a writable location, e.g.:\n' >&2
+        printf '    %bSHELLTUTOR_HOME=/tmp/shelltutor %s%b\n' "$CMD" "$0" "$RST" >&2
+        return 1
+    fi
+    local writetest="$SANDBOX/.shelltutor_writetest"
+    if ! ( : > "$writetest" ) 2>/dev/null; then
+        printf '%bshelltutor:%b the sandbox folder exists but is not writable: %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
+        printf 'Set SHELLTUTOR_HOME to a writable location, e.g.:\n' >&2
+        printf '    %bSHELLTUTOR_HOME=/tmp/shelltutor %s%b\n' "$CMD" "$0" "$RST" >&2
+        return 1
+    fi
+    rm -f "$writetest" 2>/dev/null
+    return 0
+}
+
+# ---------------------------------------------------------------------
+# Diagnostic info (--info)
+#
+# Prints what the tutor sees about the current environment so a
+# beginner can self-diagnose before reading docs. Honest about what's
+# OK, what's missing, and what's optional. Exits 0 in all cases —
+# this is information, not a gate.
+# ---------------------------------------------------------------------
+
+show_info() {
+    local ok="${OK}ok${RST}" no="${EM}not ok${RST}" info="${DIM}info${RST}"
+    printf '\n%bshelltutor — environment check%b\n\n' "$H1" "$RST"
+
+    # --- bash version
+    printf '  %bbash%b         : %s\n' "$SUB" "$RST" "${BASH_VERSION:-unknown}"
+    if [ "${BASH_VERSINFO[0]:-0}" -ge 3 ]; then
+        printf '                 [%s] requires 3.2+\n' "$ok"
+    else
+        printf '                 [%s] requires 3.2+; please upgrade bash\n' "$no"
+    fi
+
+    # --- login shell (informational)
+    printf '  %b$SHELL%b       : %s\n' "$SUB" "$RST" "${SHELL:-(unset)}"
+    printf '                 [%s] tutor spawns bash for practice regardless of your login shell\n' "$info"
+
+    # --- sandbox
+    printf '  %bSandbox%b      : %s\n' "$SUB" "$RST" "$SANDBOX"
+    if [ -d "$SANDBOX" ] && [ -w "$SANDBOX" ]; then
+        printf '                 [%s] writable\n' "$ok"
+    elif [ -d "$SANDBOX" ]; then
+        printf '                 [%s] exists but is not writable — see SHELLTUTOR_HOME override\n' "$no"
+    elif [ -w "$(dirname "$SANDBOX")" ] 2>/dev/null; then
+        printf '                 [%s] not yet created; will be made on first run\n' "$info"
+    else
+        printf '                 [%s] parent directory is not writable — see SHELLTUTOR_HOME override\n' "$no"
+    fi
+    if [ -n "${SHELLTUTOR_HOME:-}" ]; then
+        printf '  %b$SHELLTUTOR_HOME%b : %s\n' "$SUB" "$RST" "$SHELLTUTOR_HOME"
+    else
+        printf '  %b$SHELLTUTOR_HOME%b : %b(unset; default applies)%b\n' "$SUB" "$RST" "$DIM" "$RST"
+    fi
+
+    # --- terminal / colour
+    printf '  %b$TERM%b        : %s\n' "$SUB" "$RST" "${TERM:-(unset)}"
+    if [ -e /dev/tty ]; then
+        printf '  %b/dev/tty%b     : available\n' "$SUB" "$RST"
+    else
+        printf '  %b/dev/tty%b     : %bnot available — practice prompts will fail%b\n' "$SUB" "$RST" "$EM" "$RST"
+    fi
+    if [ -n "${NO_COLOR:-}" ]; then
+        printf '  %bColour%b       : disabled (NO_COLOR is set)\n' "$SUB" "$RST"
+    elif [ -t 1 ]; then
+        printf '  %bColour%b       : enabled\n' "$SUB" "$RST"
+    else
+        printf '  %bColour%b       : disabled (stdout is not a terminal)\n' "$SUB" "$RST"
+    fi
+
+    # --- vim / vimtutor (Stage 5 hand-off)
+    printf '\n'
+    local vim_path vimtutor_path man_path less_path
+    vim_path=$(command -v vim 2>/dev/null || true)
+    vimtutor_path=$(command -v vimtutor 2>/dev/null || true)
+    man_path=$(command -v man 2>/dev/null || true)
+    less_path=$(command -v less 2>/dev/null || true)
+    if [ -n "$man_path" ]; then
+        printf '  %bman%b          : %s\n' "$SUB" "$RST" "$man_path"
+    else
+        printf '  %bman%b          : %bnot found — Stage 5 lesson 5.1 will skip the man demo%b\n' "$SUB" "$RST" "$EM" "$RST"
+    fi
+    if [ -n "$less_path" ]; then
+        printf '  %bless%b         : %s\n' "$SUB" "$RST" "$less_path"
+    else
+        printf '  %bless%b         : %bnot found — Stage 3 lesson 3.2 will skip the less demo%b\n' "$SUB" "$RST" "$EM" "$RST"
+    fi
+    if [ -n "$vim_path" ]; then
+        printf '  %bvim%b          : %s\n' "$SUB" "$RST" "$vim_path"
+    else
+        printf '  %bvim%b          : %bnot found — Stage 5 cannot demo Vim entry/exit until installed%b\n' "$SUB" "$RST" "$EM" "$RST"
+    fi
+    if [ -n "$vimtutor_path" ]; then
+        printf '  %bvimtutor%b     : %s\n' "$SUB" "$RST" "$vimtutor_path"
+        printf '                 [%s] Stage 5 finale will hand off to this\n' "$ok"
+    else
+        printf '  %bvimtutor%b     : %bnot found%b\n' "$SUB" "$RST" "$DIM" "$RST"
+        printf '                 [%s] Stage 5 finale will print install hints instead of handing off\n' "$info"
+    fi
+
+    printf '\n%bIf anything above is marked "not ok", see README.md "Run" section.%b\n\n' "$DIM" "$RST"
 }
 
 # ---------------------------------------------------------------------
@@ -1585,10 +1725,12 @@ main() {
     local start
     case "${1:-}" in
         -h|--help) usage; exit 0 ;;
+        --info|-i) show_info; exit 0 ;;
         '')
             start=$(($(read_progress) + 1))
             if [ "$start" -gt "$TOTAL_STAGES" ]; then
                 # Everything passed — show finale and exit.
+                preflight || exit 1
                 setup_sandbox
                 finale
                 exit 0
@@ -1603,6 +1745,10 @@ main() {
             exit 1
             ;;
     esac
+
+    # Catch the most common "this won't work on your system" problems
+    # with a one-sentence diagnostic before any lesson screen renders.
+    preflight || exit 1
 
     setup_sandbox
 
