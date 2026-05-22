@@ -12,19 +12,16 @@ priority: high
 # AGENTS.md — shelltutor
 
 This file provides Codex, Claude Code, and other coding agents with local
-guidance for:
+guidance for the shelltutor repository — the directory holding this file.
 
-```text
-/Users/verlyn13/Organizations/jefahnierocks/shelltutor
-```
-
-The Jefahnierocks workspace contract at
-`/Users/verlyn13/Organizations/jefahnierocks/AGENTS.md` also applies inside
-this repository. Rules in that file and rules restated here are stated on
-shelltutor's own authority, on Jefahnierocks's own authority — they are not
-inherited from a parent organization at runtime. Where a parent
-organizational spec is the original source of a rule, the parent is cited as
-a reference, not a runtime authority.
+A parent Jefahnierocks workspace contract may exist as an `AGENTS.md`
+alongside this repository (typically when shelltutor is checked out under
+a `jefahnierocks/` workspace root). When present, that parent contract
+also applies. Rules in that file and rules restated here are stated on
+shelltutor's own authority, on Jefahnierocks's own authority — they are
+not inherited from a parent organization at runtime. Where a parent
+organizational spec is the original source of a rule, the parent is
+cited as a reference, not a runtime authority.
 
 When guidance conflicts, the closest local rule wins inside this repository,
 while the Jefahnierocks workspace boundary still applies.
