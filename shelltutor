@@ -348,7 +348,7 @@ show()  { builtin exit 97; }
 quit()  { builtin exit 99; }
 exit()  { builtin exit 99; }
 
-printf "${DIM}(this is a normal shell — type any command, or ${RST}${CMD}next${DIM} / ${RST}${CMD}prev${DIM} / ${RST}${CMD}show${DIM} / ${RST}${CMD}quit${DIM})${RST}\n"
+printf "${DIM}(type ${RST}${CMD}next${DIM} to advance — or ${RST}${CMD}prev${DIM}, ${RST}${CMD}show${DIM}, ${RST}${CMD}quit${DIM})${RST}\n"
 RCFILE
 ) -i < /dev/tty
     local code=$?
