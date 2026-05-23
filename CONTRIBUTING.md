@@ -4,7 +4,7 @@ category: process
 component: contributing
 status: active
 version: 0.1.0
-last_updated: 2026-05-21
+last_updated: 2026-05-23
 tags: [contributing, verification, change-discipline]
 priority: medium
 ---

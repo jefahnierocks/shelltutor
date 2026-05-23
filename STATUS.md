@@ -4,7 +4,7 @@ category: status
 component: project-status
 status: active
 version: 0.1.0
-last_updated: 2026-05-21
+last_updated: 2026-05-23
 tags: [status, posture, deferrals]
 priority: high
 ---
