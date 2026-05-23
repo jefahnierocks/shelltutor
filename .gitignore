@@ -28,3 +28,9 @@ Desktop.ini
 *.pem
 *.p12
 secrets.*
+
+# Python build artifacts (scripts/sim/ contributor harness, FF-006b)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
