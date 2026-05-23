@@ -8,7 +8,8 @@
 # Agent tool local state
 .claude/settings.local.json
 .claude/worktrees/
-.codex/auth.json
+.codex/*
+!.codex/hooks.json
 
 # OS / editor / IDE noise
 .DS_Store

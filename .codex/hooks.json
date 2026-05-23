@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if command -v shellcheck >/dev/null 2>&1 && [ -f shelltutor ]; then out=$(shellcheck -s bash -S warning shelltutor 2>&1 || true); if [ -n \"$out\" ]; then printf '\\n--- shellcheck warnings on shelltutor (FF-005) ---\\n%s\\n' \"$out\"; fi; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

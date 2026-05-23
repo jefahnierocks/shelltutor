@@ -111,9 +111,14 @@ context that already exists.
   first profile snapshot (Project Profile Discovery Directive v1.2).
 - `ROADMAP.md` Phase 3 — curriculum redesign spec: five mastery-gated
   stages, vimtutor-prerequisite framing, 3/3 recall + task gates.
-- `docs/audit/references/shell-research.md` — operator-supplied
-  curriculum reference (Shell Foundations for `vimtutor`). The Phase 3
-  spec maps to its 12 concepts and 6 units.
+- `docs/audit/references/` — verified research reference set (six docs,
+  v0.2.0; see `README.md` for the index and verification notes).
+  `shell-research.md` is the curriculum basis for Phase 3 (12 concepts /
+  6 units). The other five — `pty-harness-research.md`,
+  `simulation-evidence-model.md`, `persona-simulation-research.md`,
+  `practice-shell-hardening-research.md`, `educational-design-research.md`
+  — underpin the FF-006 implementation ladder (static smoke /
+  PTY lesson flow / multi-persona depth).
 - `docs/audit/directives/agentic-architecture-audit-v3.1-package/` —
   authority texts the profile and audit were generated against;
   not modified, treated as an in-repo snapshot.

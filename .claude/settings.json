@@ -4,9 +4,16 @@
   "permissions": {
     "allow": [
       "Bash(./shelltutor -h)",
+      "Bash(./shelltutor --info)",
       "Bash(shellcheck shelltutor)",
       "Bash(shellcheck -s bash shelltutor)",
-      "Bash(shellcheck -s bash -S warning shelltutor)"
+      "Bash(shellcheck -s bash -S warning shelltutor)",
+      "Bash(make help)",
+      "Bash(make check)",
+      "Bash(make lint)",
+      "Bash(make smoke)",
+      "Bash(make verify)",
+      "Bash(make self-test)"
     ]
   },
   "hooks": {
