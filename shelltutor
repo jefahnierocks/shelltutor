@@ -734,11 +734,13 @@ EOF
                 printf '  %byour answer:%b ' "$CMD" "$RST"
                 IFS= read -r TASK_S1_DAY < /dev/tty || return 1
                 TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-                # Normalize day to the 3-letter abbreviation
+                # Normalize day to the 3-letter abbreviation. awk for
+                # the title-case step because BSD sed (macOS) lacks the
+                # GNU \L modifier — see audit/2026-05-23/findings.md F-008.
                 TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" \
                     | tr '[:lower:]' '[:upper:]' \
                     | sed 's/^\(...\).*/\1/' \
-                    | sed 's/^./&/; s/\(.\)\(.\)\(.\)/\1\L\2\L\3/')
+                    | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}')
 
                 if stage1_verify_task; then
                     printf '\n%b✓ Stage 1 cleared.%b\n\n' "$OK" "$RST"

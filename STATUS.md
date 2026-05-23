@@ -69,6 +69,14 @@ Current truth for the `shelltutor` repository.
   per simulation-design-plan §Pedagogy And UX ordering rule —
   Stage 1 lesson text does not change before the harness captures the
   `current-rc` baseline.
+- **F-008 surfaced and fixed** — Stage 1 gate verifier was broken on
+  macOS BSD sed (`\L` GNU extension). Caught by the Slice 1 PTY
+  harness on its first `current-rc` baseline run, 2026-05-23.
+  Release-blocking; silent since commit `9f61570`. Fix replaces the
+  affected `sed` call with portable `awk`; see
+  `audit/2026-05-23/findings.md` F-008 for the writeup. First
+  value-add from FF-006b ("observe before harden") validating the
+  simulation-design-plan posture.
 - `.claude/settings.json` carries a PostToolUse shellcheck hook so
   Claude Code sessions get the FF-005 warning immediately on script
   edits.
