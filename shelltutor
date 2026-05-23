@@ -433,47 +433,6 @@ ask_question() {
 }
 
 # ---------------------------------------------------------------------
-# Gate task helper
-#
-# Renders a task screen, then loops practice() until verify() succeeds
-# after a `check` exit code. Other exit codes:
-#   show -> redisplay the task screen
-#   prev -> redisplay the task screen (no cross-gate back-step)
-#   next -> redisplay the task screen with a small nudge
-#   quit -> exit (handled in practice())
-# ---------------------------------------------------------------------
-
-run_gate_task() {
-    # $1: stage number; $2: task screen content (via stdin); rest: verify fn name
-    local n=$1
-    local verify=$2
-    while true; do
-        # Re-render task screen from caller's heredoc on first iteration
-        # by reading it back from a stashed file in $SANDBOX. We use a
-        # different pattern below: callers print the screen themselves
-        # and then call this helper for the practice+verify loop.
-        practice "$SANDBOX/stage${n}"
-        local rc=$?
-        case "$rc" in
-            "$RC_CHECK")
-                if "$verify"; then
-                    printf '%b✓ Task verified.%b\n\n' "$OK" "$RST"
-                    return 0
-                fi
-                printf '\n%bNot yet. Re-read the task and try again.%b\n' "$EM" "$RST"
-                printf '%b(Type %bshow%b%b at the prompt to re-display the task screen.)%b\n\n' "$DIM" "$CMD" "$RST" "$DIM" "$RST"
-                ;;
-            "$RC_SHOW" | "$RC_PREV" | "$RC_NEXT")
-                return "$rc"
-                ;;
-            *)
-                return "$rc"
-                ;;
-        esac
-    done
-}
-
-# ---------------------------------------------------------------------
 # History helpers
 # ---------------------------------------------------------------------
 
