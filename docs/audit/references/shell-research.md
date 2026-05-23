@@ -491,6 +491,8 @@ man vimtutor
 
 But they should also learn that `cd` may be a shell builtin, so `man cd` may not always behave the way they expect. The Bash manual notes that builtins such as `cd` directly manipulate the shell itself, which is why they cannot simply be ordinary external utilities. ([GNU][3])
 
+Reviewer note (2026-05-22): the realistic beginner experience of `man cd` differs by platform. On macOS, `man cd` resolves to `builtin(1)`, a stub page listing builtin names and pointing the reader to the shell manual — i.e., it gives no actual `cd` semantics. On most Linux distributions with the `man-pages` package, `man cd` shows the POSIX `cd(1p)` page, which is usable but is the POSIX spec rather than a Bash-specific description. In Bash, the reliable beginner path is `help cd`. Curriculum screens that send a learner to `man cd` should be aware of this and either steer to `help cd` or warn that the man page output is platform-dependent.
+
 Learning goals:
 
 ```text
