@@ -54,6 +54,21 @@ Current truth for the `shelltutor` repository.
   fuzzy CI check.
 - Quality gates: `make check | lint | smoke | verify | self-test`
   (Makefile). 12 fixture-based self-test cases pass locally.
+- **Simulation-design plan adopted** (`docs/simulation-design-plan.md`
+  v0.3.0, commit `f4f0a23`, 2026-05-23). Reframes FF-006 as a ladder:
+  `FF-006a` static smoke (in place via `make smoke`), `FF-006b`
+  lesson-flow PTY harness (Slice 1 — current track, scaffolded via
+  `make lesson-flow` placeholder), `FF-006c` depth + multi-persona
+  (deferred to follow-on slices). The harness is optional contributor
+  tooling on Python 3.9+ stdlib only and is **not** part of
+  `make verify`.
+- **Stage 1 density audit** recorded
+  (`audit/2026-05-23/stage1-density.md`, commit `c8b2dd8`,
+  2026-05-23). Two screens (S1-L1 running commands; S1-L2 identity)
+  flagged SPLIT; the audit is a prerequisite for the Slice 1 baseline
+  per simulation-design-plan §Pedagogy And UX ordering rule —
+  Stage 1 lesson text does not change before the harness captures the
+  `current-rc` baseline.
 - `.claude/settings.json` carries a PostToolUse shellcheck hook so
   Claude Code sessions get the FF-005 warning immediately on script
   edits.

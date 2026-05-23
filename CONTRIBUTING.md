@@ -39,11 +39,12 @@ below). The intent is a one-command pre-commit verification for
 contributors.
 
 ```bash
-make check       # FF-001 + FF-002 + FF-007 static analysis (always runs)
+make check       # FF-001 + FF-002 + FF-004 + FF-007 static analysis (always runs)
 make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
-make smoke       # FF-006 minimal smoke test (when implemented)
+make smoke       # FF-006a minimal static smoke test
 make verify      # check + lint + smoke (full gate)
 make self-test   # exercise the checkers against built-in fixtures
+make lesson-flow # FF-006b PTY harness (optional; Python 3.9+; not in verify)
 ```
 
 Each `make` target maps to a single audit fitness function so that a
@@ -59,12 +60,23 @@ with the rules it describes.
 | `check-portability`  | FF-004          | lesson heredocs do not teach platform-specific paths (`/proc/`, `/sys/`) or platform-specific runtime commands (`free -`, `vm_stat`, `systemctl`, `launchctl`); install hints (`brew install`, `dnf install`, etc.) are allowed by nature — see `scripts/check-portability.sh` |
 | `check-governance`   | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
 | `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
-| `smoke`              | FF-006          | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
+| `smoke`              | FF-006a         | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
+| `lesson-flow`        | FF-006b         | Optional contributor target. Drives the `scripts/sim/` Python 3.9+ stdlib PTY harness through a persona walkthrough of Stage 1 and emits a v1 evidence bundle (project-local `terminal.jsonl`, `events.jsonl`, `summary.md`, `result.tap`). Skips with a clear message when `python3` is missing or `<3.9`. Not part of `make verify`. Governed by `docs/simulation-design-plan.md`. |
 
 The checkers use `# nofitness:` line annotations for legitimate
 exceptions in the script. The Markdown checker skips fenced (` ``` `)
 code blocks so that pedagogical examples can demonstrate path shapes
 without being flagged.
+
+## Contributor Tooling Floor
+
+The runtime tutor (`shelltutor`) is bash-only and POSIX-userland only,
+per AGENTS.md §Authority Levels. Optional contributor-side tooling
+under `scripts/sim/` (FF-006b PTY harness) requires Python 3.9+ —
+syntax and stdlib use must not exceed that floor so the harness runs
+on stock macOS Python and on ordinary Linux distros without a venv.
+Third-party Python dependencies (Pexpect, pytest, etc.) are not
+adopted; the harness is stdlib only by design.
 
 ## Portability Rules
 

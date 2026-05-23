@@ -356,6 +356,11 @@ identity commands. No information is lost.
   operationalizes `FF-005` opportunistically via `.claude/settings.json`
   (shellcheck-on-edit warning), but the other fitness functions land
   in a follow-on cycle.
+- **Contributor-side PTY simulation harness (FF-006b / FF-006c).**
+  The Slice 1..3 implementation track is governed by
+  `docs/simulation-design-plan.md` (adopted 2026-05-23) and is
+  independent of Phase 2 portability validation. The harness is
+  optional contributor tooling and is not part of `make verify`.
 
 ## Phase 4 — Release Posture
 
