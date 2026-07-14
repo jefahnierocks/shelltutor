@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-# smoke-test.sh — operationalize audit FF-006 (minimum-viable variant).
+# smoke-test.sh — operationalize audit FF-006a (static-smoke variant).
 #
-# Full audit FF-006 calls for a non-interactive lesson-flow harness that
-# drives the practice subshell via pty (expect / python pty / socat). That
-# variant is demoted to manual-review-only per Phase 10.5 because it
-# requires a non-bash dependency forbidden by AGENTS.md:75-78.
+# The complementary FF-006b lesson-flow harness lives under scripts/sim/
+# as optional Python 3.9+ stdlib-only contributor tooling. It remains outside
+# `make verify`; the tutor runtime itself stays bash-only.
 #
-# This script implements the static / -h-flag variant that remained at
-# enforcement_category: static-analysis. It does three things:
+# This script implements the static / -h-flag variant. It does four things:
 #
 #   1. bash-syntax check          (`bash -n shelltutor`)
 #   2. help-text content check    (./shelltutor -h | grep …)
@@ -105,9 +103,10 @@ smoke_run() {
     grep -q '^main()' "$script"        || { missing+=" main"; s_failed=1; }
     grep -q '^main "\$@"$' "$script"   || { missing+=" main\"\$@\"-call"; s_failed=1; }
     grep -q '^TOTAL_STAGES=5$' "$script" || { missing+=" TOTAL_STAGES=5"; s_failed=1; }
+    grep -q '^BASH_COMPAT=5\.0$' "$script" || { missing+=" BASH_COMPAT=5.0"; s_failed=1; }
     grep -q '^finale()' "$script"      || { missing+=" finale"; s_failed=1; }
     if [ "$s_failed" -eq 0 ]; then
-        printf '  ✓ structural         5 stage_intro, 5 stage_gate, 5 run_stage, main, finale, TOTAL_STAGES=5\n'
+        printf '  ✓ structural         stages, main, finale, TOTAL_STAGES=5, BASH_COMPAT=5.0\n'
     else
         printf '  ✗ structural         missing:%s\n' "$missing" >&2
         failed=1

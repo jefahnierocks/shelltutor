@@ -34,6 +34,12 @@
 
 set -u
 
+# Bash 5.1+ may buffer here-documents in pipes before their readers start.
+# On macOS, reduced pipe capacity can then block this here-doc-heavy script
+# before argument dispatch. Compatibility level 5.0 keeps Bash 5.x on the
+# temporary-file path; Bash 3.2 treats this as an ordinary variable.
+BASH_COMPAT=5.0
+
 # Bash version sanity check. The script uses features present since
 # bash 3.2 (arrays, C-style for, process substitution, [[ =~ ]],
 # ANSI-C $'\\e[...' quoting). macOS ships bash 3.2 by default and that
@@ -140,7 +146,7 @@ EOF
 
 preflight() {
     # 1. Interactive terminal. The practice subshell uses
-    #    `bash --rcfile <(...) -i < /dev/tty` which only works when
+    #    `bash --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty`, which only works when
     #    stdin/stdout are a real TTY and /dev/tty is available.
     if [ ! -t 1 ] || [ ! -t 0 ]; then
         printf '%bshelltutor:%b this is an interactive tutor; please run it directly\n' "$EM" "$RST" >&2
@@ -338,7 +344,9 @@ practice() {
         footer="(type ${CMD}next${RST}${DIM} to advance — or ${RST}${CMD}prev${DIM}, ${RST}${CMD}show${DIM}, ${RST}${CMD}quit${DIM})"
     fi
 
-    bash --rcfile <(cat <<RCFILE
+    # Feed the rcfile on fd 3 instead of process substitution. macOS Bash
+    # 3.2 can parse <(...) here but does not reliably load it as --rcfile.
+    bash --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
 [ -r /etc/bashrc ] && . /etc/bashrc
 
 cd "$pd"
@@ -366,7 +374,6 @@ exit()  { exec >/dev/null 2>&1; builtin exit 99; }
 
 printf "${DIM}${footer}${RST}\n"
 RCFILE
-) -i < /dev/tty
     local code=$?
     if [ "$code" -eq $RC_QUIT ]; then
         clear 2>/dev/null || true
