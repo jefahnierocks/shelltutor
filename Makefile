@@ -1,15 +1,15 @@
 # Makefile — quality-tooling targets for shelltutor.
 #
-# Bash-only / POSIX-userland operations per AGENTS.md:75-78.
+# Bash-only / POSIX-userland operations per AGENTS.md "Authority Levels".
 # Optional contributor-side tools (shellcheck) are invoked only when
 # present. CI activation is deferred per CONTRIBUTING.md "GitHub Posture";
 # these targets give contributors a one-command pre-commit verification
 # without imposing a CI dependency.
 #
 # Targets:
-#   check        FF-001 + FF-002 + FF-007 static analysis (default)
+#   check        FF-001 + FF-002 + FF-004 + FF-007 static analysis (default)
 #   lint         shellcheck shelltutor (FF-005; warns if shellcheck absent)
-#   smoke        FF-006 minimal smoke test
+#   smoke        FF-006a minimal smoke test
 #   verify       check + lint + smoke (full pre-commit gate)
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
@@ -46,7 +46,7 @@ lint:
 	@if command -v shellcheck >/dev/null 2>&1; then \
 	    shellcheck -s bash -S warning $(SCRIPT) && printf 'lint: clean (%s)\n' "$(SCRIPT)"; \
 	else \
-	    printf 'lint: shellcheck not installed; skipping (FF-005 deferred)\n'; \
+	    printf 'lint: shellcheck not installed; skipping local FF-005 run\n'; \
 	fi
 
 smoke:

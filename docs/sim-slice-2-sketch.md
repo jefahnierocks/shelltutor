@@ -4,7 +4,7 @@ category: planning
 component: sim-slice-2
 status: draft
 version: 0.1.0
-last_updated: 2026-05-23
+last_updated: 2026-07-14
 tags: [simulation, slice-2, hardening, pty, planning]
 priority: medium
 ---
@@ -48,8 +48,8 @@ distributions typically do.
 The plan's `§Practice-Shell Hardening Sequence` still stands as
 the implementation skeleton:
 
-1. Stop sourcing `/etc/bashrc` in the practice subshell rcfile
-   (`shelltutor:342`).
+1. Stop sourcing `/etc/bashrc` in the `practice()` rcfile (the exact
+   `[ -r /etc/bashrc ] && . /etc/bashrc` statement).
 2. Replace inherited rc behavior with explicit shell options.
 3. Scrub high-risk env vars before the practice subshell starts:
    `INPUTRC`, `CDPATH`, `GLOBIGNORE`, `BASH_ENV`,
@@ -126,8 +126,8 @@ should be hardening-only so the comparison is clean.
 
 Per the simulation-design-plan §First Three Slices §Slice 2:
 
-1. Modify `shelltutor:342` (the `[ -r /etc/bashrc ] && . /etc/bashrc`
-   line — already known location from the Slice 1 patcher).
+1. Modify the `[ -r /etc/bashrc ] && . /etc/bashrc` statement in
+   `practice()` (the exact target already used by the Slice 1 patcher).
 2. Add explicit shell-option block in the practice rcfile (e.g.,
    `set -o emacs`, `bind 'set bell-style none'`, etc.).
 3. Add an env-var scrub block in the outer script before the

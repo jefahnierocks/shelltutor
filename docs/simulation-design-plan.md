@@ -2,17 +2,17 @@
 title: shelltutor Simulation Design Plan
 category: planning
 component: simulation-design
-status: draft
+status: active
 version: 0.3.0
-last_updated: 2026-05-23
+last_updated: 2026-07-14
 tags: [simulation, pty, evidence, personas, planning, lesson-flow]
 priority: high
 ---
 
 # shelltutor Simulation Design Plan
 
-This document turns the May 2026 research references into a concrete
-design plan for future `shelltutor` simulation, lesson-flow testing, and
+This adopted document turns the May 2026 research references into a concrete
+design plan for `shelltutor` simulation, lesson-flow testing, and
 practice-shell hardening.
 
 It is a planning artifact, not a runtime contract. Any change that alters
@@ -33,10 +33,9 @@ commands still needs to update `docs/contracts.md`, `CONTRIBUTING.md`,
 
 The core decision is to observe before hardening.
 
-The first implementation slice should be a minimal contributor-side PTY
-harness that drives the current Stage 1 flow and captures baseline
-evidence. Practice-shell hardening follows only after baseline transcripts
-exist, so behavior changes can be reviewed against a known prior run.
+The first implementation slice was a minimal contributor-side PTY harness
+that drives the Stage 1 flow and captures baseline evidence. It landed in
+commit `29dc0d3`; practice-shell hardening follows against that known run.
 
 The Stage 1 baseline must not silently become an artifact of one
 operator's `/etc/bashrc`. Slice 1 therefore captures two back-to-back
@@ -75,6 +74,15 @@ This keeps the production contract intact:
   justifies a second execution contract.
 - Runtime hardening happens after the project has evidence for current
   learner-visible behavior.
+
+## Implementation State
+
+- **Slice 1 — complete**: Stage 1 density audit, stdlib PTY harness, both
+  baselines, and comparison evidence landed on 2026-05-23 (`29dc0d3`).
+- **Slice 2 — next**: practice-shell hardening remains planned in
+  `docs/sim-slice-2-sketch.md`.
+- **Slice 3 — deferred**: confusion events and a second persona have not
+  been implemented.
 
 ## Implementation Ladder
 
@@ -320,11 +328,9 @@ The tutor should keep using concrete "places and names" language for the
 filesystem. Do not add anthropomorphic, adversarial, or prize-like
 framing around permissions or root.
 
-Stage 1 needs a focused density audit before Slice 1 implementation.
-This is now a planning decision, not a hedge. The existing local `notes`
-file is already a seed for this audit; formalize it before writing the
-PTY harness so the harness can label known rough edges rather than
-discovering them as if they were new failures.
+Stage 1 received the required focused density audit before Slice 1
+implementation (`audit/2026-05-23/stage1-density.md`). It labels known rough
+edges so the harness does not present them as newly discovered failures.
 
 The audit should tag each screen with:
 
@@ -399,7 +405,10 @@ Do not let `STATUS.md` become a general backlog.
 
 ## First Three Slices
 
-### Slice 1: Stage 1 PTY Baseline
+### Slice 1: Stage 1 PTY Baseline (complete)
+
+Completed in commit `29dc0d3`; the checklist is retained as implementation
+provenance.
 
 - Add or update `audit/<date>/stage1-density.md` before coding the
   harness.
@@ -417,7 +426,7 @@ Do not let `STATUS.md` become a general backlog.
 - Update `Makefile`, `CONTRIBUTING.md`, and `STATUS.md` in the same
   implementation commit.
 
-### Slice 2: Practice-Shell Hardening
+### Slice 2: Practice-Shell Hardening (next)
 
 - Stop sourcing `/etc/bashrc`.
 - Add explicit practice-shell setup.
@@ -430,7 +439,7 @@ Do not let `STATUS.md` become a general backlog.
   practice-shell environment, shell-option, rcfile, and Readline contract.
 - Compare against Slice 1 evidence.
 
-### Slice 3: Confusion Events And Second Persona
+### Slice 3: Confusion Events And Second Persona (deferred)
 
 - Add mechanical confusion-event triggers.
 - Add intent annotations for synthetic actions.

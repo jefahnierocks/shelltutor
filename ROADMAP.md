@@ -4,17 +4,20 @@ category: planning
 component: roadmap
 status: active
 version: 0.1.0
-last_updated: 2026-05-23
+last_updated: 2026-07-14
 tags: [roadmap, phases, planning]
 priority: medium
 ---
 
 # Roadmap
 
-Phase sequence for `shelltutor`. Each phase closes when its exit criteria
-hold; sequence is intentionally linear so the tutor stays inspectable.
+Phase map for `shelltutor`. Each phase closes when its exit criteria hold;
+independent implementation work may land before an earlier validation phase
+closes, but the status of every phase remains explicit and inspectable.
 
-## Phase 0 — Day-1 Scaffold (current)
+## Phase 0 — Day-1 Scaffold (complete)
+
+**Closed by commits `e402b58` and `f69389e` (2026-05-17).**
 
 Goal: land the project shell with documentation set, imported prior-art
 script, and a published public remote.
@@ -53,7 +56,7 @@ because earlier revisions of `STATUS.md` and this file claimed the
 refactor was still pending. STATUS.md was realigned in the same change
 that marked this phase complete.
 
-## Phase 2 — Portability Validation
+## Phase 2 — Portability Validation (current)
 
 Goal: confirm the tutor runs correctly on macOS and Linux without
 environment assumptions.
@@ -63,17 +66,22 @@ Work:
 - Validate on macOS with stock `/bin/bash` (3.2). The tutor's
   documented floor is bash 3.2; Apple's vendored bash satisfies it
   with no install step required.
-- Validate on a generic Linux distro (Fedora and Debian/Ubuntu families
-  at minimum).
+- Validate on a Debian/Ubuntu-family Linux distro with Bash 5.x.
+- Record a no-TTY negative test. Fedora-family validation is useful but
+  optional for Phase 2 closure.
 - Document any bash version floor.
 - Add a `shellcheck` pass; resolve or annotate findings.
 
 Exit criteria:
 
-- Documented run instructions for macOS and Linux, both validated.
+- Documented run instructions and full five-stage manual walkthroughs on
+  macOS Bash 3.2 and Debian/Ubuntu-family Bash 5.x.
+- No-TTY invocation exits with the documented preflight diagnostic.
 - `shellcheck` clean (or each suppression justified).
 
-## Phase 3 — Curriculum Redesign: Five Mastery-Gated Stages
+## Phase 3 — Curriculum Redesign: Five Mastery-Gated Stages (complete)
+
+**Closed by commit `9f61570` (2026-05-21).**
 
 Goal: restructure the tutor as a **vimtutor prerequisite course**
 delivered as five mastery-gated stages. Each stage closes with a gate
@@ -82,9 +90,9 @@ combining recall (three questions, all correct) and a practical task
 it; the next stage does not open until the gate is cleared. Retries are
 unlimited; no time pressure; no skip.
 
-This phase supersedes the earlier Phase 3 framing ("decide whether the
-initial command set is the right surface"); the curriculum decision
-has been made and the spec below is the work to implement.
+This phase superseded the earlier Phase 3 framing ("decide whether the
+initial command set is the right surface"). The curriculum decision and
+implementation are complete; the spec below remains the durable design record.
 
 ### Framing decision
 
@@ -301,11 +309,11 @@ stages passed":
 
 ### Welcome-screen rewrite (closes audit finding `F-002`)
 
-Current line at `shelltutor:169`:
+Pre-redesign wording:
 
 > Everything happens in `~/.shelltutor`; you cannot break anything.
 
-Proposed:
+Replacement landed in Phase 3:
 
 > Your tutor work happens in `~/.shelltutor`. The practice prompts run
 > as ordinary commands in your account, so usual caution applies. The
@@ -316,24 +324,24 @@ The new wording is accurate to the actual sandboxing (Phase 6 finding
 
 ### Out-of-band content (closes audit finding `F-003`)
 
-The current `lesson 7` (`free -h`, `/proc/cpuinfo`, `/proc/meminfo`,
+The pre-redesign `lesson 7` (`free -h`, `/proc/cpuinfo`, `/proc/meminfo`,
 `ls /proc`) and `lesson 8` (`sudo dnf install cowsay figlet lolcat`)
-violate the project's portability claim because both make Linux-only
-or Fedora-only assumptions. Phase 3 removes them from the gated
+violated the project's portability claim because both made Linux-only
+or Fedora-only assumptions. Phase 3 removed them from the gated
 curriculum entirely. They may return as a separately-invoked appendix
 (e.g., `./shelltutor extras`) in a future cycle if the operator wants
 them, but not as a portability constraint on the main path.
 
 The Phase 1 lesson surface (`whoami`, `pwd`, `date`, `clear`, `echo`,
-`exit`) already covers the portable subset of the current lesson 7's
+`exit`) already covered the portable subset of the old lesson 7's
 identity commands. No information is lost.
 
 ### Acceptance criteria (Phase 3 done)
 
 - All five stages implemented in `shelltutor`, each with a working
   gate.
-- Welcome screen at `shelltutor:169` rewritten per the
-  "Welcome-screen rewrite" section above (audit `F-002` closed).
+- `welcome()` rewritten per the "Welcome-screen rewrite" section above
+  (audit `F-002` closed).
 - The `/proc`, `free`, and `dnf install` lesson content is removed
   from the gated curriculum (audit `F-003` closed).
 - `./shelltutor -h` output enumerates five stages, not nine lessons.
@@ -362,7 +370,7 @@ identity commands. No information is lost.
   independent of Phase 2 portability validation. The harness is
   optional contributor tooling and is not part of `make verify`.
 
-## Phase 4 — Release Posture
+## Phase 4 — Release Posture (pending)
 
 Goal: choose a license, cut a tagged release, decide on distribution.
 

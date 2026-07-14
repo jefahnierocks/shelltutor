@@ -4,7 +4,7 @@ category: process
 component: contributing
 status: active
 version: 0.1.0
-last_updated: 2026-05-23
+last_updated: 2026-07-14
 tags: [contributing, verification, change-discipline]
 priority: medium
 ---
@@ -33,7 +33,7 @@ implying success.
 
 ## Quality Gates
 
-Three checks are wrapped in `Makefile` and run locally without external
+The quality gates are wrapped in `Makefile` and run locally without external
 infrastructure (CI activation is deferred per the GitHub Posture section
 below). The intent is a one-command pre-commit verification for
 contributors.
@@ -47,8 +47,8 @@ make self-test   # exercise the checkers against built-in fixtures
 make lesson-flow # FF-006b PTY harness (optional; Python 3.9+; not in verify)
 ```
 
-Each `make` target maps to a single audit fitness function so that a
-failure points back to a specific rule. The forbidden-pattern lists
+Each enforcement target maps to one or more named audit fitness functions so
+that a failure points back to a specific rule. The forbidden-pattern lists
 live in the scripts themselves (canonical source); the descriptions
 here are deliberately patternless so this document stays consistent
 with the rules it describes.
@@ -74,7 +74,7 @@ The runtime tutor (`shelltutor`) is bash-only and POSIX-userland only,
 per AGENTS.md §Authority Levels. Optional contributor-side tooling
 under `scripts/sim/` (FF-006b PTY harness) requires Python 3.9+ —
 syntax and stdlib use must not exceed that floor so the harness runs
-on stock macOS Python and on ordinary Linux distros without a venv.
+without a venv whenever Python 3.9+ is installed on macOS or Linux.
 Third-party Python dependencies (Pexpect, pytest, etc.) are not
 adopted; the harness is stdlib only by design.
 
@@ -84,9 +84,9 @@ adopted; the harness is stdlib only by design.
 regression if it:
 
 - Requires a specific operator name, hostname, distro, or shell theme.
-- Depends on tools beyond `bash` (4+) and a standard POSIX userland.
-- Writes outside the script's working directory, asks for elevated
-  privileges, or reaches the network.
+- Depends on tools beyond `bash` (3.2+) and a standard POSIX userland.
+- Makes the tutor's own code write outside its configured sandbox, asks for
+  elevated privileges, or reaches the network.
 - Assumes a particular `$HOME` layout, prompt, or pre-existing
   configuration.
 

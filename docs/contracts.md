@@ -4,7 +4,7 @@ category: reference
 component: contracts
 status: active
 version: 0.1.0
-last_updated: 2026-05-21
+last_updated: 2026-07-14
 tags: [contracts, cli, exit-codes, sandbox, environment]
 priority: medium
 ---
@@ -35,13 +35,14 @@ audit's contract IDs (C-001 … C-006).
 
 ## C-001 — CLI arguments
 
-The tutor accepts three argument shapes:
+The tutor accepts four argument shapes:
 
 | Invocation                | Behaviour                                                                            |
 | ---                       | ---                                                                                  |
 | `./shelltutor`            | Resume at the next un-passed stage (or run the finale if all stages are passed).     |
 | `./shelltutor N`          | Enter stage `N` ∈ {1, 2, 3, 4, 5} for re-take or first-time. Bypasses the `.progress` resume; does not regress stored progress. |
 | `./shelltutor -h`         | Print usage to stdout, exit 0. `--help` is an accepted alias.                         |
+| `./shelltutor --info`     | Print an informational environment check and exit 0; does not start lessons.         |
 
 Any other invocation prints an error to stderr and exits 1.
 
@@ -56,8 +57,8 @@ the contract.
 
 ## C-002 — Practice-subshell exit codes
 
-The practice subshell (`practice()`, `shelltutor:104-134`) overrides
-five bash builtins so that the learner's navigation words exit with
+The `practice()` subshell defines six navigation functions so that the
+learner's navigation words exit with
 codes the outer dispatcher interprets:
 
 | Word          | Exit code | Meaning                                       |
@@ -130,7 +131,10 @@ Removing individual files inside `$SANDBOX` self-heals on the next
 | `HOME`               | startup        | Parent of the default sandbox root.                              | shell default                |
 | `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`.        | unset                        |
 | `NO_COLOR`           | startup        | When set (any value), disables ANSI colour output.                | unset                        |
-| `PATH`               | n/a            | Not read by the script; relevant only to the practice subshell.   | inherited                    |
+| `SHELL`              | `--info`       | Reported as the login shell; does not choose the practice shell.   | unset shown explicitly       |
+| `TERM`               | `--info`       | Reported as terminal context.                                      | unset shown explicitly       |
+| `PATH`               | runtime        | Resolves external commands; `--info` reports selected tool paths.  | inherited                    |
+| `BASH_VERSION`, `BASH_VERSINFO` | startup / `--info` | Enforce and report the Bash 3.2 floor.                | set by Bash                  |
 
 Inside the practice subshell only (not the outer script):
 
@@ -142,20 +146,24 @@ Inside the practice subshell only (not the outer script):
 | `PROMPT_COMMAND`     | `'history -a'` — append each command to HISTFILE                                                    |
 | `PS1`                | `'shelltutor> '`                                                                                    |
 
-Stability commitment: the four read-by-script variables are stable.
+At startup, the script sets `BASH_COMPAT=5.0` so current Bash releases use
+the here-document behavior needed by this here-doc-heavy script. This is a
+script-owned compatibility setting, not a caller-provided configuration knob.
+
+Stability commitment: the read-by-script variables above are stable.
 The rcfile-set variables are an implementation detail of the practice
 subshell and may change if the subshell pattern is refactored.
 
-The script reads no other environment. It does not depend on
-`USER`, `LOGNAME`, `LANG`, `LC_*`, `TERM`, `EDITOR`, or any operator-
-private setting.
+Other inherited environment can affect external command behavior and the
+interactive practice shell; it is not interpreted as project identity,
+authorization, or a user-specific configuration contract.
 
 ## C-005 — `-h` / `--help` text
 
-The usage text (`shelltutor:53-74`) is part of the contract because
+The `usage()` text is part of the contract because
 it enumerates C-001 (argv shape), C-004 (env vars), and the five
 stages. Drift between the usage text and either of those is caught by
-`scripts/smoke-test.sh` (FF-006).
+`scripts/smoke-test.sh` (FF-006a).
 
 Stability commitment: structural content (Usage section, Stages
 table, Sandbox folder line, navigation-word list) is stable. Cosmetic
@@ -163,8 +171,8 @@ phrasing is not.
 
 ## C-006 — Lesson heredoc text
 
-The welcome, lesson, and finale heredocs (`shelltutor:152-1380` in
-the current revision) carry user-facing instruction. The audit Phase 8
+The welcome, lesson, and finale heredocs in `shelltutor` carry user-facing
+instruction. The audit Phase 8
 classifies these surfaces `not-a-prompt` — they are CLI UI, not
 model-mediated prompts.
 
@@ -181,7 +189,7 @@ not.
 | C-001 | C-001            | stable for the 5-stage curriculum                    |
 | C-002 | C-002            | extended with `check` (RC=96) in curriculum redesign |
 | C-003 | C-003            | extended with stage{1..5}/ subdirs                   |
-| C-004 | C-004            | unchanged from pre-redesign                          |
+| C-004 | C-004            | extended by `--info`; startup environment documented |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
 | C-006 | C-006            | rewritten in curriculum redesign                     |
 

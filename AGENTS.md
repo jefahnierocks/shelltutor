@@ -4,7 +4,7 @@ category: governance
 component: agents-contract
 status: active
 version: 0.1.0
-last_updated: 2026-05-21
+last_updated: 2026-07-14
 tags: [agents, claude, codex, authority, boundary]
 priority: high
 ---
@@ -81,8 +81,8 @@ When authority is unclear, ask before acting.
   description`).
 - Keep each change focused and inspectable; one coherent change per commit.
 - Preserve linear history; do not rewrite unrelated history.
-- The tutor must not write outside its own working directory, must not
-  request elevated privileges, and must not reach the network.
+- The tutor's own code must not write outside its configured sandbox, must
+  not request elevated privileges, and must not reach the network.
 - Treat anything that requires a specific username, hostname, distro, or
   shell theme as a portability bug.
 - Lessons must be runnable end-to-end on a clean Linux or macOS terminal
@@ -103,14 +103,18 @@ Read these before any substantive change. They are the durable record of
 prior decisions and ongoing direction; not reading them means re-deriving
 context that already exists.
 
+- `STATUS.md` — current status-of-record; `project.yaml` is its
+  machine-readable meta-inventory projection and must not outrun it.
+- `audit/2026-07-14/findings.md` — resolved F-009 portability regression
+  and the Bash 3.2/Bash 5.3 validation boundary.
 - `audit/2026-05-21/SUMMARY.md` — first audit cycle (Agentic Architecture
-  Audit Spec v3.1). Seven active findings (`F-001`–`F-007`) all
-  smoke-tested `confirmed-current` at revision `e6257aa`. Seven proposed
-  fitness functions (`FF-001`–`FF-007`).
+  Audit Spec v3.1). At that snapshot, seven findings (`F-001`–`F-007`) were
+  smoke-tested `confirmed-current` at revision `e6257aa`; follow-on work
+  closed them. The cycle proposed fitness functions `FF-001`–`FF-007`.
 - `profile/2026-05-21/project_profile.yaml` and `profile-discovery.md` —
   first profile snapshot (Project Profile Discovery Directive v1.2).
-- `ROADMAP.md` Phase 3 — curriculum redesign spec: five mastery-gated
-  stages, vimtutor-prerequisite framing, 3/3 recall + task gates.
+- `ROADMAP.md` Phase 3 — completed curriculum redesign spec: five
+  mastery-gated stages, vimtutor-prerequisite framing, 3/3 recall + task gates.
 - `docs/audit/references/` — verified research reference set (six docs,
   v0.2.0; see `README.md` for the index and verification notes).
   `shell-research.md` is the curriculum basis for Phase 3 (12 concepts /

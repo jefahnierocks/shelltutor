@@ -4,7 +4,7 @@ category: reference
 component: project-overview
 status: active
 version: 0.1.0
-last_updated: 2026-05-21
+last_updated: 2026-07-14
 tags: [shell, bash, tutor, education, unix, posix]
 priority: high
 ---
@@ -26,9 +26,9 @@ skip. About 45–60 minutes for a motivated learner.
 
 The tutor is intentionally **user-agnostic**: it does not assume a
 particular operator name, home layout, distro, hostname, prompt theme,
-or pre-existing shell setup. A learner sitting at any Linux or macOS
-terminal should be able to read it, run it, and complete the stages
-without first having to configure their environment.
+or pre-existing shell setup. Its design target is a clean Linux or macOS
+terminal with no prerequisite configuration. The full Phase 2 manual
+walkthrough on both platform families remains pending; see `STATUS.md`.
 
 ## Stages
 
@@ -53,9 +53,10 @@ shelltutor/
 ├── CONTRIBUTING.md   # Change discipline + Quality Gates
 ├── STATUS.md         # Current truth, posture, deferrals
 ├── ROADMAP.md        # Phase sequence; Phase 3 carries the curriculum spec
+├── project.yaml      # Meta-inventory project-intelligence manifest
 ├── shelltutor        # The tutor itself (single bash script, executable)
-├── Makefile          # `make check | lint | smoke | verify | self-test`
-├── scripts/          # check-safety.sh, check-governance.sh, smoke-test.sh
+├── Makefile          # Local quality gates and optional lesson-flow target
+├── scripts/          # Static checkers, smoke test, and optional PTY harness
 ├── docs/
 │   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
 │   ├── audit/        # Audit-spec authority package + reference docs
@@ -84,17 +85,21 @@ The tutor is a single bash script with no installation step:
 
 Requirements:
 
-- A POSIX-ish terminal (any modern Linux or macOS terminal works).
+- A POSIX-ish terminal on the target Linux or macOS surface; cross-platform
+  Phase 2 walkthrough evidence is still pending.
 - `bash` 3.2+ on `PATH`. The stock macOS `/bin/bash` (3.2.57) is fine —
   no install step is required on macOS. Linux distros ship modern bash.
-  The tutor's practice prompts explicitly spawn `bash --rcfile`, so the
-  experience is identical regardless of your login shell (bash, zsh, fish).
+  The tutor's practice prompts explicitly spawn `bash --rcfile`, so lessons
+  run in Bash regardless of your login shell (bash, zsh, fish). Inherited
+  host rc behavior remains a Phase 2/Slice 2 validation and hardening surface.
 - ANSI color support in the terminal (the standard default; set
   `NO_COLOR=1` to disable).
 
-The tutor never writes outside its own working directory
-(`~/.shelltutor` by default; override with `SHELLTUTOR_HOME=/path`),
-never asks for elevated privileges, and never reaches the network.
+The tutor's own setup and progress code never writes outside its configured
+sandbox directory (`~/.shelltutor` by default; override with
+`SHELLTUTOR_HOME=/path`), never asks for elevated privileges, and never
+reaches the network. Commands entered at a practice prompt retain the
+learner's normal account authority.
 
 Inside the practice prompt the learner has five navigation words:
 
