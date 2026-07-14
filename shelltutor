@@ -41,7 +41,7 @@ set -u
 BASH_COMPAT=5.0
 
 # Bash version sanity check. The script uses features present since
-# bash 3.2 (arrays, C-style for, process substitution, [[ =~ ]],
+# bash 3.2 (arrays, C-style for, here-strings, [[ =~ ]],
 # ANSI-C $'\\e[...' quoting). macOS ships bash 3.2 by default and that
 # is sufficient — no install step is required to run the tutor. The
 # check below only catches truly ancient (bash < 3) systems with a
