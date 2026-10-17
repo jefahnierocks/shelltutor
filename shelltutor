@@ -393,6 +393,8 @@ show_screen() {
     echo
 }
 
+# Optional directory argument; built-in lesson calls intentionally use SANDBOX.
+# shellcheck disable=SC2120
 lesson() {
     show_screen
     practice "${1:-$SANDBOX}"
