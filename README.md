@@ -3,8 +3,8 @@ title: shelltutor
 category: reference
 component: project-overview
 status: active
-version: 0.1.0
-last_updated: 2026-07-14
+version: 0.2.0
+last_updated: 2026-10-17
 tags: [shell, bash, tutor, education, unix, posix]
 priority: high
 ---
@@ -53,7 +53,7 @@ shelltutor/
 ├── CONTRIBUTING.md   # Change discipline + Quality Gates
 ├── STATUS.md         # Current truth, posture, deferrals
 ├── ROADMAP.md        # Phase sequence; Phase 3 carries the curriculum spec
-├── project.yaml      # Meta-inventory project-intelligence manifest
+├── project.yaml      # Specification 1 project/workstation declaration
 ├── shelltutor        # The tutor itself (single bash script, executable)
 ├── Makefile          # Local quality gates and optional lesson-flow target
 ├── scripts/          # Static checkers, smoke test, and optional PTY harness
@@ -82,6 +82,12 @@ The tutor is a single bash script with no installation step:
 ./shelltutor 3        # re-take or jump to stage 3
 ./shelltutor -h       # help
 ```
+
+Contributors use `make verify` after preparing Python 3.11+ and Git 2.56+.
+These are validation tools, not learner prerequisites. See
+[project declaration and verification](docs/project-manifest.md) for offline
+release binding, linked-worktree arguments and CI setup. The tutor remains a
+single Bash script with no installation step.
 
 Requirements:
 

@@ -2,9 +2,8 @@
 #
 # Bash-only / POSIX-userland operations per AGENTS.md "Authority Levels".
 # Optional contributor-side tools (shellcheck) are invoked only when
-# present. CI activation is deferred per CONTRIBUTING.md "GitHub Posture";
-# these targets give contributors a one-command pre-commit verification
-# without imposing a CI dependency.
+# present. Contributor manifest verification uses prepared Python 3.11+ and
+# Git 2.56+; the learner-facing tutor still needs only Bash/POSIX tools.
 #
 # Targets:
 #   check        FF-001 + FF-002 + FF-004 + FF-007 static analysis (default)
@@ -14,9 +13,10 @@
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
 
-.PHONY: help check check-safety check-governance check-portability lint smoke lesson-flow verify self-test
+.PHONY: help check check-safety check-governance check-portability lint smoke lesson-flow verify self-test manifest-check manifest-self-test
 
 SCRIPT := shelltutor
+PYTHON ?= python3
 
 # Optional pass-through args for `lesson-flow`, e.g.:
 #   make lesson-flow SIMARGS='--variant current-rc -v'
@@ -28,7 +28,8 @@ help:
 	@printf '  lint         shellcheck $(SCRIPT) (FF-005)\n'
 	@printf '  smoke        FF-006a minimal static smoke test\n'
 	@printf '  lesson-flow  FF-006b PTY harness (optional; Python 3.9+; not in verify)\n'
-	@printf '  verify       check + lint + smoke\n'
+	@printf '  verify       manifest check/tests + check + lint + smoke\n'
+	@printf '  manifest-check      released declaration checks (prepared Python/Git)\n'
 	@printf '  self-test    run checker self-tests\n'
 
 check: check-safety check-governance check-portability
@@ -75,7 +76,13 @@ lesson-flow:
 	    printf 'lesson-flow: python3 not found; skipping (FF-006b; see docs/simulation-design-plan.md)\n'; \
 	fi
 
-verify: check lint smoke
+manifest-check:
+	@"$(PYTHON)" -I -S -B scripts/check-project-manifest.py
+
+manifest-self-test:
+	@"$(PYTHON)" -I -S -B -m unittest discover -s tests -p 'test_project_manifest.py' -v
+
+verify: manifest-check manifest-self-test check lint smoke
 
 self-test:
 	@./scripts/check-safety.sh --self-test

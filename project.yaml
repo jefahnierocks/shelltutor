@@ -1,20 +1,37 @@
-# Meta-inventory interop header; contract:
-#   meta-inventory/docs/decisions/0002-project-intelligence-spec.md §D3
-#   (enum registry: meta-inventory/docs/ontology/dimensions.yaml)
-spec_version: 0.1
+spec_version: "1"
 project:
   id: shelltutor
-  display_name: shelltutor
+  display_name: "shelltutor"
   owner_entity: jefahnierocks
 role: canonical
+canonical: null
 peers: []
 status:
   posture: working-prototype
+  operational_state: unverified
   local_phase: "Pre-release implementation: Phase 3 complete; Phase 2 portability validation and Phase 4 release posture pending"
-  as_of: "2026-07-14"
+  as_of: "2026-10-17"
 authority:
-  status_of_record: STATUS.md
+  status_of_record: "STATUS.md"
 presentation:
   visibility: public-available
   public_alias: null
   link_policy: link-ok
+development:
+  platforms: []
+  commands:
+    setup: null
+    check:
+      runner: script
+      target: "scripts/verify-project.sh"
+    test: null
+    build: null
+    dev: null
+    format_check: null
+    format_write: null
+  environment:
+    owner: none
+    template: null
+    secret_launcher: null
+  stacks: {}
+  host_requirements: []

@@ -1,0 +1,35 @@
+name: verify
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Prepare contributor Python
+        id: python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13.16"
+      - name: Prepare Git build prerequisites
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential zlib1g-dev
+      - name: Prepare checksum-bound Git 2.56
+        id: git
+        env:
+          PREPARED_PYTHON: ${{ steps.python.outputs.python-path }}
+        run: '"$PREPARED_PYTHON" -I -S -B scripts/prepare-ci-git.py'
+      - name: Verify source and revision declaration
+        env:
+          PREPARED_PYTHON: ${{ steps.python.outputs.python-path }}
+          PREPARED_GIT_BIN: ${{ steps.git.outputs.git_bin }}
+          SHELLTUTOR_MANIFEST_REV: ${{ github.sha }}
+        run: |
+          export PATH="$PREPARED_GIT_BIN:$PATH"
+          make verify PYTHON="$PREPARED_PYTHON"

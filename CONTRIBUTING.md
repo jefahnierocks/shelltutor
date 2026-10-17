@@ -3,8 +3,8 @@ title: shelltutor Contributing
 category: process
 component: contributing
 status: active
-version: 0.1.0
-last_updated: 2026-07-14
+version: 0.2.0
+last_updated: 2026-10-17
 tags: [contributing, verification, change-discipline]
 priority: medium
 ---
@@ -33,16 +33,17 @@ implying success.
 
 ## Quality Gates
 
-The quality gates are wrapped in `Makefile` and run locally without external
-infrastructure (CI activation is deferred per the GitHub Posture section
-below). The intent is a one-command pre-commit verification for
-contributors.
+The quality gates are wrapped in `Makefile` and run locally without network
+access or tool installation. Prepare contributor Python 3.11+ and Git 2.56+
+first; `make verify` refuses unavailable declaration prerequisites. CI runs the
+same gate on every push and pull request. The learner runtime remains Bash-only.
 
 ```bash
 make check       # FF-001 + FF-002 + FF-004 + FF-007 static analysis (always runs)
 make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
 make smoke       # FF-006a minimal static smoke test
-make verify      # check + lint + smoke (full gate)
+make verify      # released manifest check/tests + check + lint + smoke
+make manifest-check # declaration only; not a substitute for make verify
 make self-test   # exercise the checkers against built-in fixtures
 make lesson-flow # FF-006b PTY harness (optional; Python 3.9+; not in verify)
 ```
@@ -71,7 +72,15 @@ without being flagged.
 ## Contributor Tooling Floor
 
 The runtime tutor (`shelltutor`) is bash-only and POSIX-userland only,
-per AGENTS.md §Authority Levels. Optional contributor-side tooling
+per AGENTS.md §Authority Levels. Required contributor declaration verification
+uses Python 3.11+ (stdlib only) and Git 2.56+; select an already prepared Python
+with `make verify PYTHON=/absolute/path/to/python3` and put the prepared Git
+first on command-scoped `PATH`. No global tool pin, mise trust, environment
+activation or package installation is performed by the gate. The hosted setup
+uses Python 3.13.16 and checksum-pinned Git 2.56.0; see
+[the preparation and verdict contract](docs/project-manifest.md).
+
+Optional contributor-side tooling
 under `scripts/sim/` (FF-006b PTY harness) requires Python 3.9+ —
 syntax and stdlib use must not exceed that floor so the harness runs
 without a venv whenever Python 3.9+ is installed on macOS or Linux.
@@ -110,7 +119,9 @@ machine.
 
 ## GitHub Posture
 
-Following the Jefahnierocks workspace posture, this repository intentionally
-omits CI workflows, `CODEOWNERS`, PR templates, branch protection, and
-Actions secrets until a real activation trigger exists. Until then, local
-commit discipline is the enforcement layer.
+Owner-directed Specification 1 adoption is the activation trigger for the
+`verify` workflow. It runs on push and pull request without path or branch
+filters, job conditions or allowed failures. Its source preparation is separate
+from actual hosted qualification and branch-protection readback; record those
+results in `STATUS.md` before claiming enforcement. No deployment or secrets
+are needed. `CODEOWNERS`, PR templates and unrelated automation remain deferred.

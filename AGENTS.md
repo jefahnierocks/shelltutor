@@ -3,8 +3,8 @@ title: shelltutor Agents Contract
 category: governance
 component: agents-contract
 status: active
-version: 0.1.0
-last_updated: 2026-07-14
+version: 0.2.0
+last_updated: 2026-10-17
 tags: [agents, claude, codex, authority, boundary]
 priority: high
 ---
@@ -69,7 +69,9 @@ operator-named comments).
   network access, privilege handling, sandbox boundaries) only when the
   user request clearly calls for it.
 - **Restricted work** — Do not introduce dependencies that require
-  installation outside `bash` and a standard POSIX userland; do not access
+  installation outside `bash` and a standard POSIX userland in the learner
+  runtime. Contributor-only declaration validation uses prepared Python 3.11+
+  and Git 2.56+ as documented below. Do not access
   files outside this repository during normal operation; do not perform
   account, billing, or credential changes.
 
@@ -90,6 +92,21 @@ When authority is unclear, ask before acting.
 
 ## Validation
 
+- `make verify` is the contributor source gate. It includes the offline
+  Specification 1 declaration check and its regression tests, followed by the
+  existing static checks, optional ShellCheck and smoke checks. It installs
+  nothing. `scripts/verify-project.sh` is its no-argument manifest entrypoint.
+- Adoption: root `project.yaml` follows Specification 1, with repo-owned
+  immutable Release 1 binding from `jefahnierocks/project-manifest`; see
+  [the binding and contributor workflow](docs/project-manifest.md). No parent
+  release pin or global runtime default is inherited.
+- Keep the vendored release and separate bootstrap byte-exact; never format,
+  patch or import them before the consumer verifies their independent pins.
+- A declaration verdict does not prove tutor portability, native gate success,
+  producer admission or runtime acceptance. Local no-argument validation reads
+  tracked working bytes; CI also selects the exact commit with
+  `SHELLTUTOR_MANIFEST_REV`. That selector does not turn the native gate into
+  a historical-source execution.
 - Run the tutor (`./shelltutor`) and complete at least the lesson surface
   affected by a change.
 - For portability changes, validate on both Linux and macOS when possible,

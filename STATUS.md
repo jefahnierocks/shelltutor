@@ -3,8 +3,8 @@ title: shelltutor Status
 category: status
 component: project-status
 status: active
-version: 0.1.0
-last_updated: 2026-07-14
+version: 0.2.0
+last_updated: 2026-10-17
 tags: [status, posture, deferrals]
 priority: high
 ---
@@ -34,9 +34,16 @@ Current truth for the `shelltutor` repository.
 - Day-1 documentation set (`README.md`, `CLAUDE.md`, `AGENTS.md`,
   `CONTRIBUTING.md`, `STATUS.md`, `ROADMAP.md`) plus `docs/contracts.md`
   is in place.
-- Root `project.yaml` v0.1 projects this file into meta-inventory as a
-  public-available, linkable working prototype. It deliberately carries no
-  deployed-system or operational-state claim.
+- Root `project.yaml` follows Specification 1 and projects this file as a
+  public-available, linkable working prototype. Required operational state is
+  `unverified`; it makes no deployed-system claim. The development check points
+  to `scripts/verify-project.sh`, which delegates to the existing `make verify`.
+- Owner-directed adoption source is prepared with the public immutable Release 1
+  bundle and separate bootstrap. Contributor Python/Git prerequisites are separate
+  from the Bash/POSIX learner runtime. On 2026-10-17, all 23 focused regression
+  tests and the no-argument native gate passed locally with prepared Python 3.13.16
+  and Git 2.56.0. Hosted qualification, adoption acceptance and effective branch
+  enforcement remain pending; local source validation is not runtime acceptance.
 - The tutor script (`shelltutor`) was imported from prior-art at
   `fedora-top:~/Projects/shelltutor` (commit `136f6a3`, 2026-05-17).
 - **ROADMAP Phase 1 — User-Agnostic Refactor — is complete** (commit
@@ -122,7 +129,8 @@ Current truth for the `shelltutor` repository.
 |------------------|--------|--------------------|
 | `LICENSE` file | Not yet chosen; repo is public but default copyright applies | Before inviting outside reuse/contribution or tagging a release |
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release |
-| GitHub-side automation (workflows, `CODEOWNERS`, PR templates, branch protection) | Workspace posture defers these until a real trigger exists | Real activation trigger |
+| `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
+| Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |
 | Cross-platform CI | Same as above; manual validation suffices for now | When manual validation stops scaling |
 | Package distribution (Homebrew tap, AUR, etc.) | Single-file script; install is `clone + run` | If users ask for managed install |
 
