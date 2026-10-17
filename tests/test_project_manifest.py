@@ -143,6 +143,22 @@ class ManifestTests(unittest.TestCase):
         self.assertEqual(result["declaration_checks"], "not_checked")
         self.assertEqual(before, hashlib.sha256((self.root / ".git/config").read_bytes()).hexdigest())
 
+    def test_checkout_auth_include_refuses_revision_observation(self):
+        self.invoke("--rev", self.rev)
+        config = self.root / ".git/config"
+        original = config.read_bytes()
+        included = original + (
+            '\n[includeIf "gitdir:' + str(self.root / ".git") + '"]\n'
+            '    path = ' + str(self.root / "synthetic-auth.config") + '\n'
+        ).encode("utf-8")
+        config.write_bytes(included)
+        result = self.invoke("--rev", self.rev, expected=2)
+        self.assertEqual(result["declaration_checks"], "not_checked")
+        self.assertIsNone(result["commit_oid"])
+        self.assertEqual(config.read_bytes(), included)
+        config.write_bytes(original)
+        self.invoke("--rev", self.rev)
+
     def test_missing_git_is_unavailable(self):
         self.invoke(expected=2, environment={"PATH": str(self.root / "absent")})
 
