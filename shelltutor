@@ -404,7 +404,7 @@ PROMPT_COMMAND='history -a'
 PS1='shelltutor> '
 PS2='> '
 
-# Readline: common-Bash completion behaviour, no bell (see lesson 1.1).
+# Readline: common-Bash completion behaviour, no bell (see lesson 1.2).
 bind 'set show-all-if-ambiguous off'
 bind 'set show-all-if-unmodified off'
 bind 'set completion-ignore-case off'
@@ -630,7 +630,7 @@ stage1_intro() {
     lesson <<EOF
 ${H1}STAGE 1 — Where am I?${RST}
 
-Three short lessons (about 10 minutes) followed by a small task.
+Four short lessons (about 10 minutes) followed by a small task.
 You'll meet the prompt, run a few simple commands, and learn the
 keyboard habits that make the shell easy to live with.
 
@@ -640,56 +640,72 @@ EOF
 }
 
 stage1_lesson_1() {
-    # Vertical budget: ~20 lines of content.
+    # Vertical budget: ~15 lines of content.
     lesson <<EOF
 ${H1}1.1 — running commands${RST}
 
-At the prompt below, try this:
+At the prompt below, type this and press Enter:
 
-  ${CMD}echo hello${RST}        ${DIM}# type those words; press Enter${RST}
+  ${CMD}echo hello${RST}
 
-You'll see ${DIM}hello${RST} printed. Then more:
-  ${CMD}echo I am at the shell${RST}     ${DIM}# spaces separate words${RST}
-  ${CMD}echo "I am at the shell"${RST}   ${DIM}# quotes group them${RST}
+You'll see ${DIM}hello${RST} printed, then the prompt comes back. Now try:
 
-${SUB}Four keys to remember${RST}:
-  ${KEY}Tab${RST}        bash finishes a word. Try ${CMD}echo p${RST}+${KEY}Tab${RST} → ${CMD}echo poem.txt${RST}.
-             Several matches? The first ${KEY}Tab${RST} fills in the shared part;
-             ${KEY}Tab${RST} again lists them. (Other shells and setups differ.)
-  ${KEY}Ctrl+L${RST}     clear screen — then ${CMD}show${RST} brings this back.
-  ${KEY}↑${RST}          recall the last command.
-  ${KEY}Ctrl+C${RST}     escape hatch if anything feels stuck.
+  ${CMD}echo I am at the shell${RST}      ${DIM}# spaces separate words${RST}
+  ${CMD}echo "I am at the shell"${RST}    ${DIM}# quotes group them into one${RST}
 
-${INSTR}▶ Try a few, then type ${CMD}next${INSTR}.${RST}
+${CMD}echo${RST} just repeats its words back. It is the simplest command
+there is, and its shape is the shape of every command you'll meet:
+a name, then the words you hand it.
+
+${INSTR}▶ Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
 
 stage1_lesson_2() {
+    # Vertical budget: ~17 lines of content.
     lesson <<EOF
-${H1}1.2 — where am I, who am I, when is it${RST}
+${H1}1.2 — keyboard habits${RST}
+
+Four keys make the shell comfortable. Try each one now.
+
+  ${KEY}Tab${RST}       bash finishes a word. Type ${CMD}echo p${RST}, press ${KEY}Tab${RST}:
+            it becomes ${CMD}echo poem.txt${RST}. Several matches? The first
+            ${KEY}Tab${RST} fills in the shared part; ${KEY}Tab${RST} again lists them.
+            (Other shells and setups differ.)
+  ${KEY}↑${RST}         brings back the last command. Enter runs it again.
+  ${KEY}Ctrl+L${RST}    clears the screen; the command ${CMD}clear${RST} does the same.
+            Type ${CMD}show${RST} to bring this lesson back afterwards.
+  ${KEY}Ctrl+C${RST}    the escape hatch. If anything feels stuck, press it
+            and you get a fresh prompt.
+
+${INSTR}▶ Try each key, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage1_lesson_3() {
+    # Vertical budget: ~13 lines of content.
+    lesson <<EOF
+${H1}1.3 — where am I, who am I, when is it${RST}
 
 Three commands that ask the system about itself.
 
   ${CMD}whoami${RST}     ${DIM}# the user name you're logged in as${RST}
-  ${CMD}pwd${RST}        ${DIM}# print working directory (the folder you're in)${RST}
+  ${CMD}pwd${RST}        ${DIM}# print working directory — the folder you're in${RST}
   ${CMD}date${RST}       ${DIM}# the current date and time${RST}
 
-In this practice prompt, ${CMD}pwd${RST} reports the tutor sandbox
-folder. That's because the tutor ${CMD}cd${RST}'d here before handing
-you the prompt — see Stage 2.
-
-${SUB}CLEAR THE SCREEN${RST}.  ${KEY}Ctrl+L${RST}, or the command:
-  ${CMD}clear${RST}
+Here ${CMD}pwd${RST} shows the tutor's own folder, because that is where
+this practice prompt starts. Stage 2 is all about folders.
 
 ${INSTR}▶ Run all three, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
 
-stage1_lesson_3() {
+stage1_lesson_4() {
     lesson <<EOF
-${H1}1.3 — what just happened${RST}
+${H1}1.4 — what just happened${RST}
 
 When you type ${CMD}whoami${RST} and press Enter:
 
@@ -889,7 +905,7 @@ EOF
 }
 
 run_stage1() {
-    local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3)
+    local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3 stage1_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         "${lessons[$i]}"
