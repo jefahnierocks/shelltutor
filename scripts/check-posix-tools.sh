@@ -87,7 +87,7 @@ awk_check() {
                 printf "%s:%d: FF-008 GNU sed character class: %s\n", FILENAME, NR, $0
                 violations++
             }
-            if (match($0, /(^|[^A-Za-z0-9_-])sed[[:space:]]+(-[A-Za-z]*)?-i([[:space:]]|$)/)) {
+            if (match($0, /(^|[^A-Za-z0-9_-])sed([[:space:]]+-[A-Za-z]+)*[[:space:]]+-[A-Za-z]*i([^A-Za-z0-9]|$)/)) {
                 printf "%s:%d: FF-008 sed -i: %s\n", FILENAME, NR, $0
                 violations++
             }
@@ -129,6 +129,7 @@ self_test() {
 # sed -i and grep -P are mentioned in this comment only.
 x=$(printf '%s' "$1" | tr -s '[:space:]' ' ' | sed 's/^[[:space:]]*//')
 y=$(printf '%s\n' "$x" | awk '{print toupper(substr($0,1,1))}')
+z=$(sed -n -E 's/^(a)b/\1/p' file | sed -e 's/x/y/')
 cat <<EOF
 Lesson copy may mention: sed -i 's/a/b/' file, grep -P, readlink -f
 EOF
@@ -159,6 +160,10 @@ GNU sed repetition/alternation|x=$(sed 's/a\+/b/' file)
 GNU sed case conversion|x=$(sed 's/.*/\L&/' file)
 GNU sed character class|x=$(sed 's/\s*$//' file)
 sed -i|sed -i 's/a/b/' file
+sed -i|sed -E -i 's/a/b/' file
+sed -i|sed -n -E -i 's/a/b/' file
+sed -i|sed -ni 's/a/b/p' file
+sed -i|sed -i.bak 's/a/b/' file
 grep -P|grep -P 'a\d' file
 readlink -f|p=$(readlink -f "$0")
 date -d|d=$(date -d yesterday +%F)
