@@ -65,7 +65,9 @@ shelltutor/
 ├── docs/
 │   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
 │   ├── design-description.md        # Formal design baseline (four lenses, glossary, tensions)
-│   ├── design-direction-2026-11.md  # Draft: operator direction for a broader course
+│   ├── direction-decisions-2026-11.md  # Directive: decisions D1–D8, Phases A–D, module standard
+│   ├── design-direction-2026-11.md  # Superseded record of the operator's stated direction
+│   ├── walkthrough-notes-template.md   # Phase A observer sheet (one sitting per copy)
 │   ├── workplan/     # Current cycle plan: decisions + worker-executable packages
 │   ├── audit/        # Audit-spec authority package + reference docs
 │   └── audit/references/  # Curriculum reference: shell-research.md

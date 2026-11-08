@@ -3,8 +3,8 @@ title: shelltutor Status
 category: status
 component: project-status
 status: active
-version: 0.3.0
-last_updated: 2026-11-07
+version: 0.4.0
+last_updated: 2026-11-08
 tags: [status, posture, deferrals]
 priority: high
 ---
@@ -15,10 +15,11 @@ Current truth for the `shelltutor` repository.
 
 ## Posture
 
-- **Lifecycle**: pre-release implementation. Curriculum redesign
-  (ROADMAP Phase 3) is complete and the 2026-11 work plan has landed;
-  awaiting the human Phase 2 portability walkthroughs and the Phase 4
-  release steps (CHANGELOG, `v0.1.0`).
+- **Lifecycle**: pre-release implementation. The five-stage core is complete
+  and the 2026-11 work plan has landed. Direction from 2026-11-08:
+  `docs/direction-decisions-2026-11.md` (core plus modules; Phases A–D).
+  Now in Phase A (human walkthroughs), which also closes ROADMAP Phase 2;
+  the Phase 4 release steps (CHANGELOG, `v0.1.0`) follow.
 - **Semantic owner**: Jefahnierocks (personal workspace).
 - **Current host**: local workstation; GitHub remote at
   `github.com/jefahnierocks/shelltutor` (public).
@@ -156,38 +157,40 @@ documents agree with the code.
   game-design, software, user-journey and pedagogy lenses, a glossary, the
   design tensions the framing exposes, and which claims are backed by
   evidence under `audit/`. Descriptive only.
-- `docs/design-direction-2026-11.md` (draft, 2026-11-08) records the
-  operator's stated direction toward a general-purpose, agent-aware shell
-  course and the decisions that must precede any specification. No
-  identity, contract or curriculum change has been made on its account.
+- `docs/direction-decisions-2026-11.md` (directive, 2026-11-08) answers the
+  eight direction decisions (D1–D8), sets Phases A–D and the two evidence
+  tiers (core standard, module standard), and schedules the identity,
+  contract and curriculum edits by phase. `docs/design-direction-2026-11.md`
+  is superseded by it and kept as the record of intent. No tutor or contract
+  change has been made yet on its account; the first are WP-10 to WP-12 in
+  Phase B.
 
 ## Immediate Next Steps
 
-1. **Portability validation (ROADMAP Phase 2)** — the operator walks all five
-   mastery-gated stages by hand on macOS with stock `/bin/bash` 3.2 and on a
-   Debian/Ubuntu-family Linux host with Bash 5.x, runs the no-TTY negative
-   test, and spot-checks the Stage 1 day answer under a non-English locale
-   (for example `LC_ALL=de_DE.UTF-8`). Checklist:
-   `docs/phase2-walkthrough-checklist.md`. Record walkthrough dates and
-   observed results here. The automated evidence supports these walks; it
-   does not replace them.
-2. **WP-06 hosted run** — dispatch the `sim-evidence` workflow, review the
-   artifact by hand and commit it as the Linux evidence bundle
-   (`scripts/sim/README.md`, "Hosted Linux evidence intake").
+1. **Phase A — human walkthroughs (operator).** At least three observed
+   sittings on the post-WP-09 script, one learner each, notes on
+   `docs/walkthrough-notes-template.md`; one sitting on macOS `/bin/bash`
+   3.2 with `echo $BASH_VERSION` recorded at the first prompt (closes the
+   F-014 repeat). Also the Phase 2 items that need a human: the Debian/Ubuntu
+   walk, the no-TTY negative test, and the `LC_ALL=de_DE.UTF-8` Stage 1 day
+   check (`docs/phase2-walkthrough-checklist.md`). Output:
+   `audit/<date>/walkthroughs.md` (findings and observations, no names, no
+   transcripts). Phase B does not start before it exists.
+2. **Phase B — core dead ends (agent).** WP-10 recall navigation and ladder,
+   WP-11 stage-cleared screen and `--info` wording, WP-12 agent-aware beat,
+   written as packages under `docs/workplan/` and run to the core standard.
 3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `CHANGELOG.md` and the
-   `v0.1.0` tag inputs follow the Phase 2 walkthrough results.
-4. **Second profile + audit cycle** — once Phase 2 manual validation lands,
-   run a focused-refresh profile and a focused-diff audit (Phases 1, 6, 8, 10,
-   10.5) per `audit/2026-05-21/SUMMARY.md`. Expected outcomes: F-001 to F-007
-   smoke-test as `struck`; FF-001 to FF-008 promoted from "proposed" to
-   "implemented" (FF-003 remains "deferred"); new dimension scores reflecting
-   the closures.
+   `v0.1.0` tag inputs follow the Phase 2 closure recorded in step 1.
+4. **Phases C and D** — module infrastructure (WP-13) landing with the first
+   module (`shells`, then `env`), per the decisions document.
 
 ## Deferrals
 
 | Deferred surface | Reason | Trigger to revisit |
 |------------------|--------|--------------------|
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release (WP-08 part B) |
+| Second profile and audit cycle | The direction decisions' corollary: no further analytical documents this cycle; the design baseline stands in | After Phase D, or a recurring drift finding |
+| Items deferred by the direction decisions (lessons as source files, `processes`/`permissions` modules, tmux/Emacs concept screens, module progress, timing store) | Each has a stated reopening condition | `ROADMAP.md` Phase 5, deferred table |
 | `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
 | Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |
 | Cross-platform CI | Hosted cross-platform *acceptance* remains deferred; `sim-evidence` captures Linux transcripts only and is non-gating | When manual validation stops scaling |

@@ -11,6 +11,12 @@ priority: high
 
 # Work Plan — 2026-11 cycle
 
+**Cycle status (2026-11-08):** WP-01 to WP-07, WP-09 and WP-08 part A have
+landed; WP-08 part B waits on the Phase 2 results. New work follows
+`docs/direction-decisions-2026-11.md` (Phases A–D); its packages WP-10
+onward are written in this directory in the same form, under the evidence
+tier that document assigns them.
+
 This directory is the executable plan for the current cycle of
 `shelltutor` work. It was prepared on 2026-11-07 at revision `b2fdff7`
 after a full read of the repository, a reproduction of four latent defects

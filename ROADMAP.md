@@ -3,9 +3,9 @@ title: shelltutor Roadmap
 category: planning
 component: roadmap
 status: active
-version: 0.2.0
-last_updated: 2026-11-07
-tags: [roadmap, phases, planning, workplan]
+version: 0.3.0
+last_updated: 2026-11-08
+tags: [roadmap, phases, planning, workplan, direction]
 priority: medium
 ---
 
@@ -15,14 +15,13 @@ Phase map for `shelltutor`. Each phase closes when its exit criteria hold;
 independent implementation work may land before an earlier validation phase
 closes, but the status of every phase remains explicit and inspectable.
 
-**Current cycle (adopted 2026-11-07):** `docs/workplan/README.md` sequences
-the implementation work that serves Phases 2 to 4 as eight worker-executable
-packages (WP-01 to WP-08). Its decision log D-01 to D-18 is binding for the
-cycle; this roadmap records phase status, the work plan records how each
-piece lands. Landings are summarised here under the phase they advance and
-in `STATUS.md`. As of the WP-07 sweep WP-01 to WP-06 (WP-06's hosted run
-still pending with the operator) and WP-08 part A have landed; the human
-Phase 2 walkthroughs and WP-08 part B remain.
+**Governing documents.** The 2026-11 work plan (`docs/workplan/README.md`,
+WP-01 to WP-09) has landed; only WP-08 part B remains and waits on Phase 2.
+From 2026-11-08 the direction is set by `docs/direction-decisions-2026-11.md`
+(decisions D1–D8, Phases A–D, the module standard); Phase 5 below records
+it. `docs/design-description.md` is the baseline description of what
+exists. This roadmap records phase status; new work is written as packages
+under `docs/workplan/`.
 
 ## Phase 0 — Day-1 Scaffold (complete)
 
@@ -446,10 +445,71 @@ Exit criteria:
 - First tagged release.
 - Distribution decision recorded in `STATUS.md`.
 
+## Phase 5 — Course Expansion: Core plus Modules (adopted 2026-11-08)
+
+Directive record: `docs/direction-decisions-2026-11.md`. The project becomes a
+general-purpose shell course whose five-stage core still hands off to
+`vimtutor`, with stand-alone modules entered by name. Two evidence tiers
+apply: the core keeps the current standard; modules ship under the module
+standard (§5 of the decisions). Runs alongside the Phase 2 and Phase 4
+closures; Phase A is also how Phase 2's human walkthroughs are recorded.
+
+Decisions (D1–D8, one line each; the decisions document has the reasons):
+other shells concept-only (D1); personalisation as explain-and-transfer, no
+persistent sandbox rc (D2); agent-awareness as one appended Stage 1 screen
+and two sentences, no integration (D3); core plus modules, `vimtutor` stays
+the core finale, no Stage 0 and no stages 6+ (D4); children first changes
+behaviour not tone (D5); live demos only for base-install programs (D6);
+processes, permissions and environment in as modules, users/groups,
+scripting, sysadmin, networking out (D7); pace observed by a human, no
+timing store (D8).
+
+### Phase A — Human walkthroughs (operator)
+
+At least three observed sittings on the post-WP-09 script using
+`docs/walkthrough-notes-template.md`, one of them on macOS `/bin/bash` 3.2
+(closes the F-014 repeat and counts toward Phase 2). Output:
+`audit/<date>/walkthroughs.md`. Exit: three summarised walks; the list of
+rejected-but-reasonable recall answers; the drop-off risks of
+`docs/design-description.md` §3.4 re-ranked by observation.
+
+### Phase B — Core dead ends (agent; core standard)
+
+WP-10 recall navigation and ladder (`show`/`quit` at recall and follow-ups,
+attempt counter with hint then exit advice, answer lists widened from
+Phase A, symlink-tolerant `pwd`, C-006 amended); WP-11 stage-cleared screen
+plus the `--info` wording fixes; WP-12 the agent-aware beat (lesson 1.5 and
+two sentences). Exit: both personas green on macOS 3.2 and 5.x and hosted
+Linux; bundles committed; `STATUS.md` updated.
+
+### Phase C — Module infrastructure (agent; lands with the first module)
+
+WP-13: C-001 module argument, C-003 `$SANDBOX/<module>/`, modules save
+nothing, persona tables and heading-sentinels in the harness,
+`CONTRIBUTING.md` §Module standard and the lesson-screen template,
+`AGENTS.md` §Identity and `README.md` §Non-Goals reframed.
+
+### Phase D — First modules (agent; module standard)
+
+`shells`, then `env` (order may swap after Phase A). After two human walks
+of both, the operator decides whether `processes` and `permissions` follow.
+
+### Deferred by the decisions, with the reopening condition
+
+| Item | Reopens when |
+| --- | --- |
+| Lessons as source files built into the single script | three or more modules beyond `shells` and `env` are committed to |
+| `processes` and `permissions` modules | two human walks of `shells` and `env` are summarised |
+| Concept screens on tmux and Emacs | the `processes` module and a later editor module are scheduled |
+| Module progress persistence | a module grows past one sitting |
+| Timing store under C-003 | mid-stage resume is observed to matter |
+| Multi-shell practice; Stage 0 | not planned |
+
 ## Out Of Scope
 
 - Shell scripting tutorials (a separate project, if any).
-- Sysadmin curriculum.
+- Sysadmin curriculum; users and groups; networking.
+- Multi-shell practice (other shells are taught as concepts only, D1).
+- Editor internals beyond the concepts of buffer, mode, pane and session.
 - Multi-user / classroom features.
-- Network-aware lessons.
 - Anything that requires the learner to install something beyond `bash`.

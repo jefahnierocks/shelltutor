@@ -129,9 +129,14 @@ context that already exists.
   what the tutor is and does under game-design, software, user-journey
   and pedagogy lenses, with every claim tied to a file or line. Read it
   before any curriculum or UX change.
-- `docs/design-direction-2026-11.md` — draft record of the operator's
-  stated direction (general-purpose, agent-aware shell course) and the
-  decisions pending before a specification; not a spec.
+- `docs/direction-decisions-2026-11.md` — directive (2026-11-08): the
+  eight direction decisions D1–D8, Phases A–D, the two evidence tiers and
+  the module standard. New curriculum work follows it; its §0 corollary
+  rules out further analytical documents this cycle.
+- `docs/design-direction-2026-11.md` — superseded record of the operator's
+  stated intent that the decisions answer; keep for provenance.
+- `docs/walkthrough-notes-template.md` — the Phase A observer sheet;
+  summaries go to `audit/<date>/walkthroughs.md`, never transcripts.
 - `docs/workplan/README.md` — the 2026-11 cycle plan: binding worker
   protocol, decision log D-01 to D-18, and the WP-01 to WP-08 packages. An
   implementation session takes exactly one package.
