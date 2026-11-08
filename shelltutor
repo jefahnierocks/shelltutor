@@ -1014,8 +1014,13 @@ EOF
         'projects/notes' \
         'home/projects/notes' || return $?
 
+    local hist_mark
+    hist_mark=$(history_mark)
+
+    local skip_screen=0
     while true; do
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 2 — GATE TASK${RST}
 
 Inside the practice prompt, do these (in any order):
@@ -1030,11 +1035,21 @@ ${DIM}Hint: ${CMD}mkdir practice${RST}${DIM} creates the folder.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
+        fi
+        skip_screen=0
         setup_stage_dir 2
         practice "$SANDBOX/stage2" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
+                if ! gate_require_history "$hist_mark" \
+                    "cd into it (cd practice)" '^[[:space:]]*cd([[:space:]]|$)'; then
+                    # Helper printed what is missing. Re-enter the practice
+                    # prompt without redisplaying the task screen, so the
+                    # message stays visible (same pattern as Stage 1).
+                    skip_screen=1
+                    continue
+                fi
                 if stage2_verify_task; then
                     printf '\n%b✓ Stage 2 cleared.%b\n\n' "$OK" "$RST"
                     save_progress 2
@@ -1460,8 +1475,13 @@ EOF
     setup_stage_dir 4
     rm -f "$SANDBOX/stage4/count.txt" 2>/dev/null
 
+    local hist_mark
+    hist_mark=$(history_mark)
+
+    local skip_screen=0
     while true; do
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 4 — GATE TASK${RST}
 
 Work inside ${DIR}${SANDBOX}/stage4${RST}.
@@ -1480,10 +1500,19 @@ ${DIM}I will check: count.txt exists and contains 100.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
+        fi
+        skip_screen=0
         practice "$SANDBOX/stage4" gate
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
+                # History records the typed line, not the expansion, so the
+                # literal *.txt is what to look for.
+                if ! gate_require_history "$hist_mark" \
+                    "list the .txt files with a glob (ls *.txt)" '\*\.txt'; then
+                    skip_screen=1
+                    continue
+                fi
                 if stage4_verify_task; then
                     printf '\n%b✓ Stage 4 cleared.%b\n\n' "$OK" "$RST"
                     save_progress 4
