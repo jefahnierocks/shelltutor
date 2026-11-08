@@ -130,6 +130,11 @@ documents agree with the code.
   be repeated with `/bin/bash ./shelltutor` and `echo $BASH_VERSION` recorded;
   the operator re-records it. The like-for-like macOS baseline is
   `audit/2026-11-08/sim/all-current/`.
+- Recall navigation and ladder (WP-10, A1.1-A1.7) is built on `wp/10-recall-ladder`, waiting
+  to rebase behind WP-12 and WP-14: `show`/`quit` at every recall question and Stage 1
+  follow-up, one three-rung ladder with fifteen hints (Stage 1-2 hints provisional until
+  WP-14), FF-009 hint-leak check, F-015 day question, pre-task hints removed at stages 2-4.
+  Evidence: `audit/2026-11-08/sim/wp10-*`.
 - Stage-cleared screens (WP-11, A1.4/A3.5) give stages 1-4 a stopping point after each gate
   (`next` continues, `quit` saves and leaves, `show` redisplays); `--info` no longer promises
   a finale hand-off or demo skips; F-016 (Apple's Bash 3.2 notice) is silenced on the
