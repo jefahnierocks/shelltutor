@@ -72,6 +72,10 @@ while [ "${#SANDBOX}" -gt 1 ] && [ "${SANDBOX%/}" != "$SANDBOX" ]; do
 done
 PROGRESS_FILE="$SANDBOX/.progress"
 TOTAL_STAGES=5
+# Stand-alone modules, entered by name (C-001). Each is one function block
+# below (module_<name>_*, run_module_<name>) and writes only under
+# $SANDBOX/<name>/; none touches .progress.
+MODULES="shells"
 
 # Exit codes propagated from the practice subshell to the outer dispatcher.
 RC_NEXT=0
@@ -140,6 +144,7 @@ shelltutor — a vimtutor prerequisite course (five mastery-gated stages).
 Usage:
   shelltutor            resume where you left off
   shelltutor N          enter stage N (1..5) for re-take or first-time
+  shelltutor MODULE     run a stand-alone module (see Modules; nothing is saved)
   shelltutor -h         this help
   shelltutor --info     environment check (bash, shell, sandbox, vim, ...)
 
@@ -149,6 +154,9 @@ Stages:
   3  Files and operations
   4  Commands, streams, composition
   5  Ready for vimtutor
+
+Modules (stand alone; nothing saved):
+  shells   What a shell is; other shells; your login shell
 
 Each stage closes with a gate: three recall questions (all three must be
 correct) and one practical task (verified by the script). Passing means
@@ -347,6 +355,13 @@ EOF_SEED
     esac
 }
 
+# Module fixtures (C-003): $SANDBOX/<name>/, created on entry and
+# self-healing like the stage folders. `shells` seeds nothing; its gate
+# clears its own output file.
+setup_module_dir() {
+    mkdir -p "$SANDBOX/$1"
+}
+
 save_progress() {
     # Only advance, never regress. .progress = number of stages passed.
     local cur
@@ -386,6 +401,7 @@ read_progress() {
 PANEL_STAGE=''
 PANEL_POS=''
 PANEL_DONE=''
+PANEL_MODULE=''
 PANEL_COLS=80
 
 # panel_rule N  -> sets REPLY to N rule glyphs.
@@ -422,6 +438,18 @@ panel_header() {
     # Left: "<rule> shelltutor <rule> " is 15 columns.
     used=15
     head="${RULE}${G_RULE}${RST} ${INSTR}shelltutor${RST} ${RULE}${G_RULE}${RST} "
+    if [ -n "$PANEL_MODULE" ]; then
+        # A module has no place in the five-stage line, so no dots: the
+        # header names the module and the position within it.
+        head="${head}${DIM}Module ${G_SEP} ${PANEL_MODULE}${RST} "
+        used=$((used + 10 + ${#PANEL_MODULE}))
+        tail=" ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${RST}"
+        n=$((PANEL_COLS - used - 3 - ${#PANEL_POS}))
+        [ "$n" -ge 1 ] || n=1
+        panel_rule "$n"
+        printf '%s%s%s%s%s\n' "$head" "$RULE" "$REPLY" "$RST" "$tail"
+        return 0
+    fi
     if [ -n "$PANEL_STAGE" ]; then
         panel_title "$PANEL_STAGE"
         title="$REPLY"
@@ -464,6 +492,12 @@ footer_bar() {
                 "$(footer_item show 'the task again')" \
                 "$(footer_item quit 'save and leave')"
             ;;
+        module-cleared)
+            printf '%s   %s   %s' \
+                "$(footer_item next 'start this module again')" \
+                "$(footer_item quit 'leave')" \
+                "$(footer_item show 'this screen again')"
+            ;;
         cleared)
             printf '%s   %s   %s' \
                 "$(footer_item next "Stage $((${PANEL_DONE:-0} + 1))")" \
@@ -494,7 +528,11 @@ footer_bar() {
 # recall question, so the text is a single string (C-006).
 farewell_exit() {
     clear 2>/dev/null || true
-    echo "Bye. Run 'shelltutor' again to pick up where you left off."
+    if [ -n "$PANEL_MODULE" ]; then
+        echo "Bye. A module saves nothing; run 'shelltutor $PANEL_MODULE' to start it again."
+    else
+        echo "Bye. Run 'shelltutor' again to pick up where you left off."
+    fi
     exit 0
 }
 
@@ -2437,6 +2475,292 @@ RECAP
 }
 
 # ---------------------------------------------------------------------
+# Modules (stand alone; nothing saved)
+#
+# A module is entered by name (`shelltutor shells`, C-001), keeps its
+# fixtures under $SANDBOX/<name>/ (C-003) and never touches .progress. It
+# follows the stage pattern: intro, lessons, a recall gate, a task, a
+# cleared screen. Headings are the harness sentinels and are binding:
+#   intro     MODULE — <name>: <title>
+#   lessons   <name> <k> — <title>
+#   gate      <name> — gate           (opening screen has no action line)
+#   task      <name> — task
+#   cleared   ✓ <name> cleared.
+# ---------------------------------------------------------------------
+
+module_known() {
+    local m
+    for m in $MODULES; do
+        [ "$m" = "$1" ] && return 0
+    done
+    return 1
+}
+
+# ---- module: shells -------------------------------------------------
+
+module_shells_intro() {
+    lesson "$SANDBOX/shells" <<EOF
+${H1}MODULE — shells: what runs your commands${RST}
+
+Three short lessons, then a gate. This module stands alone and saves
+nothing. Type ${CMD}quit${RST} to leave at any point.
+
+You will look at three things:
+  the shell is a program you can inspect
+  other shells exist, and what they change
+  your login shell and this tutor's shell can differ
+
+Everything is read-only except one small file at the gate, written
+inside ${DIR}${SANDBOX}/shells${RST}.
+
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 1.${RST}
+EOF
+}
+
+module_shells_lesson_1() {
+    lesson "$SANDBOX/shells" <<EOF
+${H1}shells 1 — the shell is a program${RST}
+
+The shell reads the line you type, finds the program you named, runs
+it, and shows what it printed. The shell is itself a program.
+
+  ${CMD}echo \$BASH_VERSION${RST}   ${DIM}# the version of the shell running now${RST}
+  ${CMD}ps${RST}                    ${DIM}# one line is this shell, one is ps itself${RST}
+
+${CMD}\$BASH_VERSION${RST} is a ${SUB}variable${RST}: a name that holds a value. The
+shell swaps ${CMD}\$name${RST} for its value before it runs the line.
+
+Notice that ${CMD}ps${RST} lists the shell next to the command you just ran.
+
+${INSTR}${G_PLAY} Run both commands, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_shells_lesson_2() {
+    lesson "$SANDBOX/shells" <<EOF
+${H1}shells 2 — other shells exist${RST}
+
+Four shells you will meet:
+  ${CMD}bash${RST}   common on Linux; the shell this tutor runs
+  ${CMD}zsh${RST}    the default on current macOS
+  ${CMD}fish${RST}   a shell with its own syntax, installed separately
+  ${CMD}sh${RST}     the minimal standard shell, used by scripts
+
+Ask which of two are installed here:
+  ${CMD}command -v zsh fish${RST}   ${DIM}# one path per shell found${RST}
+
+${SUB}Different${RST}: configuration syntax, prompt, completion.
+${SUB}The same${RST}: the programs (${CMD}ls${RST}, ${CMD}cat${RST}), paths, pipes, redirection.
+
+Notice that no output means that shell is not installed. That is normal.
+
+${INSTR}${G_PLAY} Run the check, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_shells_lesson_3() {
+    lesson "$SANDBOX/shells" <<EOF
+${H1}shells 3 — your login shell and this shell${RST}
+
+Your account has a ${SUB}login shell${RST}: the one a new terminal window
+starts. It can differ from the shell running now.
+
+  ${CMD}echo \$SHELL${RST}          ${DIM}# your login shell${RST}
+  ${CMD}echo \$BASH_VERSION${RST}   ${DIM}# the shell running now${RST}
+
+${CMD}\$SHELL${RST} comes from your account. It does not change when you start
+another shell from inside it.
+
+This tutor runs its lessons in Bash whatever your login shell is, so
+every learner sees the same thing. The programs you practise here
+behave the same under ${CMD}zsh${RST}.
+
+${INSTR}${G_PLAY} Compare the two lines, then type ${CMD}next${INSTR} to take the gate.${RST}
+EOF
+}
+
+# The file must exist and hold exactly what `command -v zsh` prints on this
+# machine (nothing, when zsh is not installed). The tutor's PATH is the
+# practice shell's PATH.
+module_shells_verify_task() {
+    local want
+    want=$(command -v zsh 2>/dev/null || true)
+    [ -f "$SANDBOX/shells/zsh.txt" ] || return 1
+    [ "$(cat "$SANDBOX/shells/zsh.txt")" = "$want" ] || return 1
+    return 0
+}
+
+module_shells_gate() {
+    PANEL_POS=gate
+    show_screen <<EOF
+${H1}shells — gate${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: The shell runs the programs you name. What kind of thing is the shell itself?  (a program, a file, a folder, a window)" \
+        "Lesson 1: it showed up in ps next to the commands you ran." \
+        'a program' \
+        'program' \
+        "it's a program" \
+        'its a program' || return $?
+
+    ask_question \
+        "Q2: What do you type to ask whether zsh is installed?" \
+        "Lesson 2 did it with two names at once; the first word of the line is 'command'." \
+        'command -v zsh' \
+        'command -v' \
+        'which zsh' \
+        'type zsh' || return $?
+
+    ask_question \
+        "Q3: ${CMD}echo \$SHELL${RST} prints which shell?  (the running one, your login shell, the newest one)" \
+        "Lesson 3: it is the one a new terminal window starts, and it can differ from the shell running now." \
+        'login shell' \
+        'your login shell' \
+        'the login shell' \
+        'login' || return $?
+
+    # Clean slate once at task entry; learner state then persists across
+    # in-gate `show` redisplays.
+    setup_module_dir shells
+    rm -f "$SANDBOX/shells/zsh.txt" 2>/dev/null
+
+    local hist_mark
+    hist_mark=$(history_mark)
+
+    PANEL_POS=task
+    local skip_screen=0 attempt=0
+    while true; do
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
+${H1}shells — task${RST}
+
+Find out whether ${CMD}zsh${RST} is installed here, and record the answer in a
+file. You will work inside ${DIR}${SANDBOX}/shells${RST}.
+
+  1. ask the shell where ${CMD}zsh${RST} is
+  2. send what it prints to a file named ${DIR}zsh.txt${RST}
+     ${DIM}(hint: Stage 4's ${CMD}>${RST}${DIM} sends output to a file)${RST}
+
+If zsh is not installed, the shell prints nothing, and the file is
+empty. That is a correct answer.
+
+${DIM}I will check: zsh.txt exists and holds exactly what ${RST}${CMD}command -v zsh${RST}
+${DIM}prints on this machine, and your history shows you asked.${RST}
+
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        fi
+        skip_screen=0
+        practice "$SANDBOX/shells" gate
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if ! gate_require_history "$hist_mark" \
+                    "ask the shell where zsh is: command -v zsh" \
+                    'command[[:space:]]+-v[[:space:]]+zsh'; then
+                    attempt=$((attempt + 1))
+                    gate_escalate "$attempt" \
+                        "command -v zsh prints where zsh is, or nothing; > sends it to a file." \
+                        "command -v zsh > zsh.txt"
+                    skip_screen=1
+                    continue
+                fi
+                if module_shells_verify_task; then
+                    return 0
+                fi
+                attempt=$((attempt + 1))
+                fb_begin
+                if [ -f "$SANDBOX/shells/zsh.txt" ]; then
+                    fb_ok "zsh.txt exists"
+                    fb_todo "zsh.txt content" "it holds: $(head -n 1 "$SANDBOX/shells/zsh.txt" 2>/dev/null | tr -cd '[:print:]' | cut -c1-40)"
+                else
+                    fb_todo "zsh.txt exists" "no zsh.txt in this folder"
+                fi
+                if [ -n "$(command -v zsh 2>/dev/null || true)" ]; then
+                    fb_note "Expected: the path zsh is installed at."
+                else
+                    fb_note "Expected: an empty file (zsh is not installed here)."
+                fi
+                gate_escalate "$attempt" \
+                    "command -v zsh prints where zsh is, or nothing; > sends it to a file." \
+                    "command -v zsh > zsh.txt"
+                skip_screen=1
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+module_shells_cleared() {
+    PANEL_POS=''
+    show_screen <<EOF
+${H1}${G_OK} shells cleared.${RST}
+
+Commands and keys from this module:
+$(recap_line 'echo $BASH_VERSION' 'the shell running now')
+$(recap_line ps 'the shell is one of the running programs')
+$(recap_line 'command -v NAME' 'is NAME installed, and where')
+$(recap_line 'echo $SHELL' 'your login shell')
+
+${INSTR}${G_PLAY} Type ${CMD}quit${INSTR} to leave, or ${CMD}next${INSTR} to start this module again.${RST}
+EOF
+    practice "$SANDBOX/shells" module-cleared
+    return $?
+}
+
+run_module_shells() {
+    PANEL_MODULE=shells
+    setup_module_dir shells
+    local lessons=(module_shells_intro module_shells_lesson_1 module_shells_lesson_2 module_shells_lesson_3)
+    local i rc
+    while true; do
+        i=0
+        while [ "$i" -lt "${#lessons[@]}" ]; do
+            PANEL_POS=''
+            [ "$i" -ge 1 ] && PANEL_POS="$i of $((${#lessons[@]} - 1))"
+            "${lessons[$i]}"
+            rc=$?
+            case "$rc" in
+                "$RC_NEXT")  ((i++)) ;;
+                "$RC_SHOW")  : ;;
+                "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+                "$RC_CHECK")
+                    printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                    sleep 2
+                    ;;
+                *)           return "$rc" ;;
+            esac
+        done
+        module_shells_gate || return $?
+        while true; do
+            module_shells_cleared
+            rc=$?
+            case "$rc" in
+                "$RC_NEXT")  break ;;
+                "$RC_SHOW"|"$RC_PREV") : ;;
+                "$RC_CHECK")
+                    printf '\n%b(check is only for gate tasks. Type next to start again, or quit to leave.)%b\n' "$DIM" "$RST"
+                    sleep 2
+                    ;;
+                *)           return "$rc" ;;
+            esac
+        done
+    done
+}
+
+run_module() {
+    case "$1" in
+        shells) run_module_shells ;;
+        *) return 1 ;;
+    esac
+}
+
+# ---------------------------------------------------------------------
 # Stage dispatcher
 # ---------------------------------------------------------------------
 
@@ -2474,7 +2798,14 @@ main() {
             start=$1
             ;;
         *)
-            echo "shelltutor: argument must be a stage number (1..5)." >&2
+            if module_known "$1"; then
+                # A module is stand-alone: no stage loop, no .progress.
+                preflight || exit 1
+                setup_sandbox
+                run_module "$1"
+                exit 0
+            fi
+            echo "shelltutor: argument must be a stage number (1..5) or a module name ($MODULES)." >&2
             usage >&2
             exit 1
             ;;
