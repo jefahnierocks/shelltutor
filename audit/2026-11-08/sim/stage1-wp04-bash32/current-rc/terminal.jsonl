@@ -1,0 +1,159 @@
+{"ts": 0.022092, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.023959, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSHELLTUTOR\u001b[0m  —  a vimtutor prerequisite course\r\n\r\nWelcome. A short hands-on course in \u001b[1;38;5;244mfive stages\u001b[0m that\r\nprepare you for \u001b[1;38;5;220mvimtutor\u001b[0m. About 45 to 60 minutes total.\r\n\r\nEach stage is a few short lessons followed by a small task. Pass the\r\ntask to advance. Retry as much as you like — no time pressure, no\r\nskip.\r\n\r\nYour work happens in \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-gjzaxtw7\u001b[0m; the tutor never writes\r\noutside that folder.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m for a quick orientation.\u001b[0m\r\n", "len": 609}
+{"ts": 0.024099, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.033663, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.033713, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.033739, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.033774, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.033796, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.036398, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.038294, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mOrientation\u001b[0m\r\n\r\nIn a moment you'll be at the practice prompt below. It looks like:\r\n\r\n    \u001b[2mshelltutor>\u001b[0m\r\n\r\nType a command, press Enter — the shell runs it. The terminal is\r\nkeyboard-only; you can't click mid-line to move the cursor. Resize\r\nyour terminal larger if text wraps (80×24 or bigger).\r\n\r\n\u001b[1;38;5;244mFour words steer the tutor:\u001b[0m\r\n  \u001b[1;38;5;220mnext\u001b[0m  advance        \u001b[1;38;5;220mprev\u001b[0m  go back\r\n  \u001b[1;38;5;220mshow\u001b[0m  redisplay      \u001b[1;38;5;220mquit\u001b[0m  leave (progress saved)\r\n\r\nA fifth word, \u001b[1;38;5;220mcheck\u001b[0m, appears at gate tasks when relevant.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin Stage 1.\u001b[0m\r\n", "len": 684}
+{"ts": 0.038419, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.047484, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.047524, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.047544, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.047569, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.047591, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.04987, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.051723, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — Where am I?\u001b[0m\r\n\r\nFour short lessons (about 10 minutes) followed by a small task.\r\nYou'll meet the prompt, run a few simple commands, and learn the\r\nkeyboard habits that make the shell easy to live with.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to start lesson 1.1.\u001b[0m\r\n", "len": 312}
+{"ts": 0.051848, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.060116, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.06015, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\n", "len": 120}
+{"ts": 0.060167, "dir": "out", "enc": "utf8", "data": "For more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 71}
+{"ts": 0.060177, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.060196, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.060212, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.062526, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.064112, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.1 — running commands\u001b[0m\r\n\r\nAt the prompt below, type this and press Enter:\r\n\r\n  \u001b[1;38;5;220mecho hello\u001b[0m\r\n\r\nYou'll see \u001b[2mhello\u001b[0m printed, then the prompt comes back. Now try:\r\n\r\n  \u001b[1;38;5;220mecho I am at the shell\u001b[0m      \u001b[2m# spaces separate words\u001b[0m\r\n  \u001b[1;38;5;220mecho \"I am at the shell\"\u001b[0m    \u001b[2m# quotes group them into one\u001b[0m\r\n\r\n\u001b[1;38;5;220mecho\u001b[0m just repeats its words back. It is the simplest command\r\nthere is, and its shape is the shape of every command you'll meet:\r\na name, then the words you hand it.\r\n\r\n\u001b[1;38;5;208m▶ Try all three, then type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 635}
+{"ts": 0.06423, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.072711, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.072751, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.07277, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.072793, "dir": "in", "enc": "utf8", "data": "echo hello\n", "len": 11}
+{"ts": 0.072816, "dir": "out", "enc": "utf8", "data": "echo hello\r\n", "len": 12}
+{"ts": 0.072826, "dir": "out", "enc": "utf8", "data": "hello\r\n", "len": 7}
+{"ts": 0.072896, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.072939, "dir": "in", "enc": "utf8", "data": "echo I am at the shell\n", "len": 23}
+{"ts": 0.072955, "dir": "out", "enc": "utf8", "data": "echo I am", "len": 9}
+{"ts": 0.072963, "dir": "out", "enc": "utf8", "data": " at t", "len": 5}
+{"ts": 0.072971, "dir": "out", "enc": "utf8", "data": "he s", "len": 4}
+{"ts": 0.072979, "dir": "out", "enc": "utf8", "data": "hell\r\n", "len": 6}
+{"ts": 0.072993, "dir": "out", "enc": "utf8", "data": "I am at the shell\r\n", "len": 19}
+{"ts": 0.073044, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.073065, "dir": "in", "enc": "utf8", "data": "echo \"I am at the shell\"\n", "len": 25}
+{"ts": 0.07308, "dir": "out", "enc": "utf8", "data": "echo \"I ", "len": 8}
+{"ts": 0.073088, "dir": "out", "enc": "utf8", "data": "am at", "len": 5}
+{"ts": 0.073095, "dir": "out", "enc": "utf8", "data": " the ", "len": 5}
+{"ts": 0.073103, "dir": "out", "enc": "utf8", "data": "shel", "len": 4}
+{"ts": 0.07311, "dir": "out", "enc": "utf8", "data": "l\"\r\n", "len": 4}
+{"ts": 0.073121, "dir": "out", "enc": "utf8", "data": "I am at the shell\r\n", "len": 19}
+{"ts": 0.073164, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.07318, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.073198, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.075478, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.077332, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.2 — keyboard habits\u001b[0m\r\n\r\nFour keys make the shell comfortable. Try each one now.\r\n\r\n  \u001b[38;5;208mTab\u001b[0m       bash finishes a word. Type \u001b[1;38;5;220mecho p\u001b[0m, press \u001b[38;5;208mTab\u001b[0m:\r\n            it becomes \u001b[1;38;5;220mecho poem.txt\u001b[0m. Several matches? The first\r\n            \u001b[38;5;208mTab\u001b[0m fills in the shared part; \u001b[38;5;208mTab\u001b[0m again lists them.\r\n            (Other shells and setups differ.)\r\n  \u001b[38;5;208m↑\u001b[0m         brings back the last command. Enter runs it again.\r\n  \u001b[38;5;208mCtrl+L\u001b[0m    clears the screen; the command \u001b[1;38;5;220mclear\u001b[0m does the same.\r\n            Type \u001b[1;38;5;220mshow\u001b[0m to bring this lesson back afterwards.\r\n  \u001b[38;5;208mCtrl+C\u001b[0m    the escape hatch. If anything feels stuck, press it\r\n            and you get a fresh prompt.\r\n\r\n\u001b[1;38;5;208m▶ Try each key, then type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 891}
+{"ts": 0.077452, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.087666, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.087752, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.087815, "dir": "in", "enc": "utf8", "data": "echo p\t", "len": 7}
+{"ts": 0.087846, "dir": "out", "enc": "utf8", "data": "echo p", "len": 6}
+{"ts": 0.087875, "dir": "out", "enc": "utf8", "data": "oem.txt ", "len": 8}
+{"ts": 0.087895, "dir": "in", "enc": "utf8", "data": "\n", "len": 1}
+{"ts": 0.087913, "dir": "out", "enc": "utf8", "data": "\r\npoem.txt\r\n", "len": 12}
+{"ts": 0.087994, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.088024, "dir": "in", "enc": "utf8", "data": "\f", "len": 1}
+{"ts": 0.088039, "dir": "out", "enc": "utf8", "data": "\u001b[H\u001b[2Jshelltutor> ", "len": 19}
+{"ts": 0.088056, "dir": "in", "enc": "utf8", "data": "\u001b[A", "len": 3}
+{"ts": 0.193123, "dir": "in", "enc": "utf8", "data": "\n", "len": 1}
+{"ts": 0.193211, "dir": "out", "enc": "utf8", "data": "echo poem.txt \r\npoem.txt\r\n", "len": 26}
+{"ts": 0.193317, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.193362, "dir": "in", "enc": "utf8", "data": "\u0003", "len": 1}
+{"ts": 0.19342, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.193452, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.193495, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.193525, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.197465, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.200207, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.3 — where am I, who am I, when is it\u001b[0m\r\n\r\nThree commands that ask the system about itself.\r\n\r\n  \u001b[1;38;5;220mwhoami\u001b[0m     \u001b[2m# the user name you're logged in as\u001b[0m\r\n  \u001b[1;38;5;220mpwd\u001b[0m        \u001b[2m# print working directory — the folder you're in\u001b[0m\r\n  \u001b[1;38;5;220mdate\u001b[0m       \u001b[2m# the current date and time\u001b[0m\r\n\r\nHere \u001b[1;38;5;220mpwd\u001b[0m shows the tutor's own folder, because that is where\r\nthis practice prompt starts. Stage 2 is all about folders.\r\n\r\n\u001b[1;38;5;208m▶ Run all three, then type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 567}
+{"ts": 0.200371, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.210845, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.210896, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.210919, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.21096, "dir": "in", "enc": "utf8", "data": "whoami\n", "len": 7}
+{"ts": 0.21098, "dir": "out", "enc": "utf8", "data": "whoami\r\n", "len": 8}
+{"ts": 0.214313, "dir": "out", "enc": "utf8", "data": "verlyn13\r\n", "len": 10}
+{"ts": 0.214757, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.214797, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.21482, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.214832, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-gjzaxtw7\r\n", "len": 79}
+{"ts": 0.214883, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.214903, "dir": "in", "enc": "utf8", "data": "date\n", "len": 5}
+{"ts": 0.214918, "dir": "out", "enc": "utf8", "data": "date\r\n", "len": 6}
+{"ts": 0.217527, "dir": "out", "enc": "utf8", "data": "Sat Nov  7 17:09:46 AKST 2026\r\n", "len": 31}
+{"ts": 0.217809, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.217833, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.217853, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.22077, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.222808, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.4 — what just happened\u001b[0m\r\n\r\nWhen you type \u001b[1;38;5;220mwhoami\u001b[0m and press Enter:\r\n\r\n  1. The terminal hands your line to \u001b[1;38;5;244mthe shell\u001b[0m.\r\n  2. The shell looks for a program named \u001b[1;38;5;220mwhoami\u001b[0m.\r\n  3. It runs it.\r\n  4. The program prints to \u001b[1;38;5;244mstandard output\u001b[0m — your screen.\r\n  5. The shell shows the prompt again, ready for the next command.\r\n\r\nThe shell is not \"Unix.\" It is a program — a \u001b[1;38;5;244mcommand interpreter\u001b[0m.\r\nThe terminal is a window that lets you talk to the shell. The program\r\n\u001b[1;38;5;220mwhoami\u001b[0m is a third thing — it runs, prints, and exits.\r\n\r\nYou will keep these three apart for the rest of this tutor:\r\n  \u001b[1;38;5;244mterminal\u001b[0m  →  \u001b[1;38;5;244mshell\u001b[0m  →  \u001b[1;38;5;244mprogram\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 1's gate.\u001b[0m\r\n", "len": 871}
+{"ts": 0.222945, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.232889, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.232943, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.232966, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.233007, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.233042, "dir": "out", "enc": "utf8", "data": "n", "len": 1}
+{"ts": 0.233055, "dir": "out", "enc": "utf8", "data": "ex", "len": 2}
+{"ts": 0.233066, "dir": "out", "enc": "utf8", "data": "t\r\n", "len": 3}
+{"ts": 0.236091, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.237971, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\n\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m: run a few commands and tell me what\r\nthey printed. The script verifies your answers.\r\n\r\n\u001b[2mUnlimited retries. No skip.\u001b[0m\r\n", "len": 275}
+{"ts": 0.238115, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.238187, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: Which character usually ends a shell prompt? ($, ;, :, or #)\u001b[0m\r\n", "len": 82}
+{"ts": 0.238209, "dir": "in", "enc": "utf8", "data": "$\n", "len": 2}
+{"ts": 0.23823, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m $\r\n", "len": 35}
+{"ts": 0.245608, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.245661, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: What does \u001b[1;38;5;220mpwd\u001b[0m print?\u001b[0m\r\n", "len": 59}
+{"ts": 0.245688, "dir": "in", "enc": "utf8", "data": "the current working directory\n", "len": 30}
+{"ts": 0.245714, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m the current working directory\r\n", "len": 63}
+{"ts": 0.252841, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.252917, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: After \u001b[1;38;5;220mwhoami\u001b[0m runs, where does its output go?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 115}
+{"ts": 0.25296, "dir": "in", "enc": "utf8", "data": "stdout\n", "len": 7}
+{"ts": 0.252991, "dir": "out", "enc": "utf8", "data": "stdout\r\n", "len": 8}
+{"ts": 0.261175, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.26974, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.271952, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — GATE TASK\u001b[0m\r\n\r\nInside the practice prompt, run each of these once. Read each output.\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n  \u001b[1;38;5;220mwhoami\u001b[0m\r\n  \u001b[1;38;5;220mpwd\u001b[0m\r\n  \u001b[1;38;5;220mdate\u001b[0m\r\n\r\nAfter all three have run, I'll ask you what each one printed.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m only after running all three.\u001b[0m\r\n", "len": 382}
+{"ts": 0.272101, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.282319, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.282385, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.282407, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.282461, "dir": "in", "enc": "utf8", "data": "whoami\n", "len": 7}
+{"ts": 0.282482, "dir": "out", "enc": "utf8", "data": "whoami\r\n", "len": 8}
+{"ts": 0.285157, "dir": "out", "enc": "utf8", "data": "verlyn13\r\n", "len": 10}
+{"ts": 0.285436, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.285456, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.285474, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.285484, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-gjzaxtw7/stage1\r\n", "len": 86}
+{"ts": 0.285537, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.285553, "dir": "in", "enc": "utf8", "data": "date\n", "len": 5}
+{"ts": 0.285575, "dir": "out", "enc": "utf8", "data": "date\r\n", "len": 6}
+{"ts": 0.2877, "dir": "out", "enc": "utf8", "data": "Sat Nov  7 17:09:46 AKST 2026\r\n", "len": 31}
+{"ts": 0.287944, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.287965, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.287981, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 0.30176, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;244mThree short follow-ups based on what you saw.\u001b[0m\r\n\r\n\u001b[1;38;5;39mWhat did \u001b[1;38;5;220mwhoami\u001b[1;38;5;39m print? (just the username)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 183}
+{"ts": 0.301848, "dir": "in", "enc": "utf8", "data": "verlyn13\n", "len": 9}
+{"ts": 0.301878, "dir": "out", "enc": "utf8", "data": "verlyn13\r\n", "len": 10}
+{"ts": 0.305319, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;39mWhat did \u001b[1;38;5;220mpwd\u001b[1;38;5;39m print? (paste the full path)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 118}
+{"ts": 0.305396, "dir": "in", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-gjzaxtw7/stage1\n", "len": 85}
+{"ts": 0.30542, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-gjzaxtw7/stage1\r\n", "len": 86}
+{"ts": 0.308755, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;39mWhat day of the week did \u001b[1;38;5;220mdate\u001b[1;38;5;39m show? (Mon, Tue, … — or exactly as date printed it)\u001b[0m\r\n", "len": 130}
+{"ts": 0.308804, "dir": "in", "enc": "utf8", "data": "Sat\n", "len": 4}
+{"ts": 0.308824, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m Sat\r\n", "len": 37}
+{"ts": 0.330785, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 1 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.334008, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.336049, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 2 — Paths and the filesystem\u001b[0m\r\n\r\nThree lessons, then a gate. The shell is always \u001b[1;38;5;244msomewhere\u001b[0m in\r\nthe filesystem; this stage teaches you to move around and to predict\r\nwhere files land.\r\n\r\nYou'll use:\r\n  \u001b[1;38;5;220mls\u001b[0m    list what's in the current folder\r\n  \u001b[1;38;5;220mcd\u001b[0m    change to another folder\r\n  \u001b[1;38;5;220mpwd\u001b[0m   print where you are now\r\n\r\nAnd the path symbols:\r\n  \u001b[1;38;5;244m.\u001b[0m     this folder\r\n  \u001b[1;38;5;244m..\u001b[0m    the parent folder\r\n  \u001b[1;38;5;244m~\u001b[0m     your home folder\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 2.1.\u001b[0m\r\n", "len": 632}
+{"ts": 0.336205, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.346233, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.34628, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.346305, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.346329, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.346354, "dir": "out", "enc": "utf8", "data": "quit\r\n", "len": 6}
+{"ts": 0.348947, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.349138, "dir": "out", "enc": "utf8", "data": "Bye. Run 'shelltutor' again to pick up where you left off.\r\n", "len": 60}

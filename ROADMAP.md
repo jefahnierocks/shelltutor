@@ -407,6 +407,9 @@ shipped curriculum are listed here, dated, rather than rewritten into it.
   original spec; Stage 4 gate verifies the `*.txt` glob from history as
   specified; all gates escalate feedback on repeated failure (restatement,
   hint, worked example) and never auto-pass.
+- **2026-11 (WP-04).** Stage 1 carries four lessons (1.1 running commands,
+  1.2 keyboard habits, 1.3 where/who/when, 1.4 what just happened). The
+  stage's commands and gate are unchanged.
 
 ## Phase 4 — Release Posture (pending)
 

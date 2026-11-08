@@ -109,6 +109,10 @@ Current truth for the `shelltutor` repository.
   five stages with an empty per-run `HOME`; the pre-fix baseline observes
   F-010 (`S5-L3`) and F-011 (`S2-L2`, `S3-L2`) as `error-signature` events.
   Green on Bash 3.2.57 and 5.3.20; nothing fixed yet (WP-02).
+- **WP-04 landed: Stage 1 density split** (`audit/2026-11-08/stage1-density-followup.md`,
+  `audit/2026-11-08/sim/stage1-wp04*`): Stage 1 has four lessons (1.1 running
+  commands, 1.2 keyboard habits, 1.3 where/who/when, 1.4 what just happened);
+  commands and gate unchanged.
 - **Slice 2 practice-shell hardening landed (C-007)** (WP-03,
   `audit/2026-11-08/sim/all-slice2*`, `audit/2026-11-08/slice2-comparison.md`):
   the practice shell no longer sources the system bashrc, scrubs the
