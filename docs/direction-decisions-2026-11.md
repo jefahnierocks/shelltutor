@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.3.0
+version: 0.4.0
 last_updated: 2026-11-08
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -798,6 +798,19 @@ Defaults apply if unanswered.
   keep it in `README.md` only?
 - **Q8** Pre-task hints removed at stages 2–4 in favour of the ladder:
   yes (default), or keep them?
+
+### A4 — Freeze lifted; Phase B lands before sittings 2 and 3 (2026-11-08)
+
+Operator decision, in session, after A2/A3 were drafted: the changes are
+significant enough that the remaining Phase A sittings should observe the
+updated script rather than the old one. A1.9's freeze is lifted on
+2026-11-08. The five Phase B packages land in the A2.6 order (WP-15,
+WP-11, WP-12, WP-14, WP-10) as each passes review; sittings 2 and 3
+(A2.7) then run on the post-Phase-B script and may open a second round
+of fixes. WP-10's answer-list widening uses only what sitting 1 recorded
+(F-015) and is widened again after sittings 2 and 3. Sitting 1's
+findings remain comparable because they are recorded against the
+revision they observed (`1aea23b`). Everything else in A1–A3 stands.
 
 ## Cross-references
 

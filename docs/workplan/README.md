@@ -15,9 +15,10 @@ priority: high
 landed; WP-08 part B waits on the Phase 2 results. New work follows
 `docs/direction-decisions-2026-11.md` (Phases A–D, amendment A1); its
 packages WP-10 onward are written in this directory in the same form, under
-the evidence tier that document assigns them. Phase B packages are drafted
-during Phase A and may not land (no change to `shelltutor`) until
-`audit/<date>/walkthroughs.md` exists (A1.9).
+the evidence tier that document assigns them. The A1.9 freeze was lifted by
+amendment A4 on 2026-11-08: Phase B packages land in the order WP-15,
+WP-11, WP-12, WP-14, WP-10 as each passes review; sittings 2 and 3 observe
+the updated script.
 
 This directory is the executable plan for the current cycle of
 `shelltutor` work. It was prepared on 2026-11-07 at revision `b2fdff7`

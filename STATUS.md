@@ -167,8 +167,9 @@ documents agree with the code.
 
 ## Immediate Next Steps
 
-1. **Phase A — human walkthroughs (operator).** At least three observed
-   sittings on the post-WP-09 script, one learner each, notes on
+1. **Phase A — human walkthroughs (operator).** Sitting 1 is recorded
+   (`audit/2026-11-08/walkthroughs.md`); sittings 2 and 3 run on the
+   post-Phase-B script (A4), one learner each, notes on
    `docs/walkthrough-notes-template.md`; one sitting on macOS `/bin/bash`
    3.2 with `echo $BASH_VERSION` recorded at the first prompt (closes the
    F-014 repeat). Also the Phase 2 items that need a human: the Debian/Ubuntu
@@ -179,9 +180,10 @@ documents agree with the code.
 2. **Phase B — core changes (agent; drafted, none landed).** WP-15 screen
    chrome, WP-11 stage-cleared screens and `--info` wording, WP-12
    agent-aware beat, WP-14 Stages 1–2 grounding, WP-10 recall navigation
-   and ladder (amendments A1–A3). `shelltutor` is frozen until
-   `audit/2026-11-08/walkthroughs.md` records three sittings (now 1 of 3);
-   landing order WP-15, WP-11, WP-12, WP-14, WP-10. D-19 (host user name
+   and ladder (amendments A1–A3). The freeze was lifted by
+   amendment A4 (2026-11-08): the packages land in the order WP-15, WP-11,
+   WP-12, WP-14, WP-10 as each passes review, and sittings 2 and 3 run on
+   the updated script. D-19 (host user name
    redacted from committed harness artifacts) has landed.
 3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `v0.1.0` follows
    Phase B and precedes Phase C (A1.10); `CHANGELOG.md` and the tag inputs
