@@ -366,13 +366,20 @@ def stage_walk(
 
 
 # Persona tables for stand-alone modules. A module's walk is expanded from
-# a small table, not hand-written. No module exists yet; WP-14 adds the
-# first entry, e.g.
-#   "shells": {"lessons": 4,
-#              "gate": {"recall": ["a", "b", "c"], "task": ["echo hi"]},
-#              "lesson_actions": {2: ["echo $0"]},      # optional
-#              "prompt_after": {2: "shelltutor> "}}     # optional
-MODULE_TABLES: dict = {}
+# a small table, not hand-written (`module_walk`). Keys: `lessons` (count),
+# `gate` ({"recall": [...], "task": [...]}), and optionally `lesson_actions`
+# ({k: [commands typed at lesson k]}) and `prompt_after` ({k: prompt text
+# expected after lesson k's `next`}).
+MODULE_TABLES: dict = {
+    # shells (WP-16): intro + 3 lessons, three recall answers, one task.
+    "shells": {
+        "lessons": 3,
+        "gate": {
+            "recall": ["a program", "command -v zsh", "login shell"],
+            "task": ["command -v zsh > zsh.txt"],
+        },
+    },
+}
 
 
 def module_walk(
