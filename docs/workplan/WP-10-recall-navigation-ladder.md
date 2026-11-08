@@ -176,6 +176,16 @@ failing answer (`890-892`).
 The `pwd` comparison trims surrounding whitespace, then accepts the typed
 path if it equals `$SANDBOX/stage1` or `$(cd "$SANDBOX/stage1" && pwd -P)`.
 
+**F-015 (Phase A sitting 1).** The day question becomes
+"What day of the week did `date` show? Type just the day, for example
+Sat." (the F-013 phrase "or exactly as date printed it" is removed; it
+invited the whole date line). `stage1_day_matches` additionally accepts an
+answer that *contains* the day as a whole word in either locale form, so
+a learner who pastes the entire `date` output still passes: split the
+normalised answer on whitespace and test each word with the existing
+comparison before failing. The harness sentinel `TASK_Q_DAY` matches the
+unchanged prefix.
+
 ## Change 6 — Harness: `second-try` observes the recall rungs (A1.3)
 
 At Stage 2 only, `second-try` answers Q1 wrong twice (`it lists files`,
