@@ -750,7 +750,7 @@ gate_escalate() {
 # ---------------------------------------------------------------------
 
 welcome() {
-    # Vertical budget: ~11 lines.
+    # Vertical budget: ~14 lines.
     lesson <<EOF
 ${H1}SHELLTUTOR${RST}  —  a vimtutor prerequisite course
 
@@ -762,7 +762,8 @@ task to advance. Retry as much as you like — no time pressure, no
 skip.
 
 Your work happens in ${DIR}${SANDBOX}${RST}; the tutor never writes
-outside that folder.
+outside that folder. Commands you run yourself have your full
+authority: this is the real thing, not a simulation.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for a quick orientation.${RST}
 EOF
