@@ -40,6 +40,22 @@ per the findings flow in `docs/simulation-design-plan.md`.
   prompt reported `BASH_VERSION` 5.3.20 before the fix and 3.2.57 after. C-007 and
   the Phase 2 checklist (step 0) say so.
 
+## F-016 — Apple's bash prints a 4-row deprecation banner at every practice prompt
+
+- **Severity**: 3. On macOS with `/bin/bash` 3.2.57 as the interpreter, every
+  practice shell start prints Apple's "The default interactive shell is now
+  zsh" notice (three lines plus a blank) between the footer and the first
+  prompt. Each screen is four rows taller than designed, so a screen written
+  to the budget scrolls its header off a 24-row terminal on the project's
+  own reference platform.
+- **Surfaced by**: the WP-15 screen-height table under Bash 3.2.57
+  (`audit/2026-11-08/wp15-screen-heights.md`), after a6 noticed the +4 offset
+  during WP-12.
+- **Fix**: set `BASH_SILENCE_DEPRECATION_WARNING=1` in the practice shell's
+  environment on the launch line in `practice()`; additive to C-007.
+  Scheduled as the first commit of WP-11.
+- **Status**: open.
+
 ## Observations
 
 - **O-F** The hosted-evidence intake grep for home-directory prefixes hits

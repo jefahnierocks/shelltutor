@@ -51,7 +51,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | **landed** a71ab76 (commits 1–2); hosted run + commit 3 with the operator |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | **landed** eb15e41 (2026-11-07) |
 | [WP-09](WP-09-landing-followups.md) | Landing follow-ups: F-014 practice-shell interpreter, harness provenance, fresh macOS baseline | WP-07 | none | **landed** bd841ae (2026-11-08) |
-| [WP-15](WP-15-screen-chrome.md) | Screen chrome: panel rules, header with stage dots, key-hint footer, `┃` feedback checklist, ASCII fallback (A3) | Phase A summary | none | **drafted**; lands first |
+| [WP-15](WP-15-screen-chrome.md) | Screen chrome: panel rules, header with stage dots, key-hint footer, `┃` feedback checklist, ASCII fallback (A3) | — | none | **landed** 9c4452a (2026-11-08) |
 | [WP-14](WP-14-stages-1-2-grounding.md) | Stages 1–2 grounding: the shell made visible, Stage 2 opens with position, `ls -p` (A2) | Phase A summary, WP-15 | none | **drafted**; lands fourth |
 | [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; lands fifth (after WP-14) |
 | [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land second, after WP-15 |
