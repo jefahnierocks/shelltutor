@@ -1139,14 +1139,14 @@ stage2_intro() {
     lesson <<EOF
 ${H1}STAGE 2 — Paths and the filesystem${RST}
 
-Three lessons, then a gate. The shell is always ${SUB}somewhere${RST} in
-the filesystem; this stage teaches you to move around and to predict
-where files land.
+Four lessons, then a gate. The shell is always ${SUB}somewhere${RST} in
+the filesystem; this stage teaches you to see where, look around,
+move, and predict where files land.
 
 You'll use:
+  ${CMD}pwd${RST}   print where you are now
   ${CMD}ls${RST}    list what's in the current folder
   ${CMD}cd${RST}    change to another folder
-  ${CMD}pwd${RST}   print where you are now
 
 And the path symbols:
   ${SUB}.${RST}     this folder
@@ -1159,27 +1159,49 @@ EOF
 
 stage2_lesson_1() {
     lesson <<EOF
-${H1}2.1 — ls: what's in here${RST}
+${H1}2.1 — where you are${RST}
 
-${CMD}ls${RST} lists files and folders in your current directory.
+A folder can hold files and other folders. You are always standing
+in one folder; the shell calls it the ${SUB}current directory${RST}.
+Your practice folder looks like this:
 
-  ${CMD}ls${RST}            ${DIM}# names only${RST}
-  ${CMD}ls -l${RST}         ${DIM}# long form (permissions, size, date)${RST}
-  ${CMD}ls -a${RST}         ${DIM}# include hidden files (those starting with .)${RST}
+  ${DIR}${SANDBOX}${RST}  ${INSTR}${G_BACK} you are here${RST}
+  ${G_TEE_L}${G_RULE}${G_RULE} poem.txt
+  ${G_TEE_L}${G_RULE}${G_RULE} numbers.txt
+  ${G_TEE_L}${G_RULE}${G_RULE} stage1/
+  ${G_BL}${G_RULE}${G_RULE} stage2/
 
-Try each. Then ${CMD}ls${RST} a folder you don't ${CMD}cd${RST} into:
-  ${CMD}ls /etc${RST}       ${DIM}# system config folder${RST}
-  ${CMD}ls /usr/bin${RST}   ${DIM}# where many commands live${RST}
+${CMD}pwd${RST} prints the name of the current directory.
+Predict what it will print, then run it.
 
-(${DIM}/etc${RST} and ${DIM}/usr/bin${RST} exist on both Linux and macOS.)
-
-${INSTR}${G_PLAY} Try a few, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run ${CMD}pwd${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
 }
 
 stage2_lesson_2() {
     lesson <<EOF
-${H1}2.2 — cd and the home folder${RST}
+${H1}2.2 — ls: what is here${RST}
+
+${CMD}ls${RST} lists the names in the current directory.
+
+  ${CMD}ls${RST}            ${DIM}# names only${RST}
+  ${CMD}ls -p${RST}         ${DIM}# folders end in /${RST}
+  ${CMD}ls -a${RST}         ${DIM}# also hidden names: those starting with .${RST}
+
+Predict which names will end in ${CMD}/${RST}, then run ${CMD}ls -p${RST}. The
+tutor keeps its own hidden files here; ${CMD}ls -a${RST} shows them.
+
+Then ${CMD}ls${RST} a folder you are not in:
+  ${CMD}ls /etc${RST}       ${DIM}# system configuration${RST}
+  ${CMD}ls /usr/bin${RST}   ${DIM}# where many commands live${RST}
+
+${INSTR}${G_PLAY} Try a few, then ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage2_lesson_3() {
+    lesson <<EOF
+${H1}2.3 — cd: moving${RST}
 
 ${CMD}cd${RST} changes your current folder.
 
@@ -1200,29 +1222,24 @@ ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to continue.${RST}
 EOF
 }
 
-stage2_lesson_3() {
+stage2_lesson_4() {
     lesson <<EOF
-${H1}2.3 — paths: relative, absolute, dot, dot-dot${RST}
+${H1}2.4 — names for places${RST}
 
-A ${SUB}path${RST} tells the shell where something is.
+Three short names point at places in the tree you have seen:
+  ${SUB}.${RST}    here, the current directory
+  ${SUB}..${RST}   one level up, the parent
+  ${SUB}~${RST}    your home folder
 
-${SUB}Relative paths${RST} start where you are now:
-  ${DIM}notes.txt${RST}            a file in this folder
+A ${SUB}path${RST} names a place. ${SUB}Relative${RST} paths start where you are:
   ${DIM}practice/notes.txt${RST}   a file inside a subfolder
   ${DIM}../notes.txt${RST}         a file in the parent folder
-  ${DIM}./notes.txt${RST}          same as 'notes.txt' (the . is this folder)
-
-${SUB}Absolute paths${RST} start from the root, with ${KEY}/${RST}:
+${SUB}Absolute${RST} paths start from the root, ${KEY}/${RST}:
   ${DIM}/etc/hosts${RST}
   ${DIM}/usr/bin/vim${RST}
-  ${DIM}/home/alice/notes.txt${RST}
 
-${SUB}~${RST} is short for your home folder. ${DIM}~/notes${RST} means
-${DIM}\$HOME/notes${RST}.
-
-${EM}Predict before you act.${RST}  If you're in ${DIM}~/projects${RST}
-and you type ${CMD}cat notes.txt${RST}, the shell looks for
-${DIM}~/projects/notes.txt${RST}. If you mean a different folder, name it.
+${EM}Predict before you act.${RST}  In ${DIM}~/projects${RST}, ${CMD}cat notes.txt${RST}
+reads ${DIM}~/projects/notes.txt${RST}. For another folder, name it.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 2's gate.${RST}
 EOF
@@ -1333,7 +1350,10 @@ EOF
 }
 
 run_stage2() {
-    local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3)
+    # Lesson 2.1 draws the practice folder; the fixtures are constants (C-003).
+    setup_stage_dir 1
+    setup_stage_dir 2
+    local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3 stage2_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 2 "${lessons[$i]}"
@@ -2268,7 +2288,7 @@ stage_recap() {
             ;;
         2)
             recap_line ls 'list what is here'
-            recap_line 'ls -l' 'list with details'
+            recap_line 'ls -p' 'mark folders with /'
             recap_line 'ls -a' 'include hidden names'
             recap_line cd 'change folder'
             recap_line 'cd ..' 'go up one folder'

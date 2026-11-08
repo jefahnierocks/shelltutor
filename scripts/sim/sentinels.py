@@ -47,9 +47,10 @@ SENTINELS = {
 SENTINELS.update(
     {
         "S2_INTRO": "STAGE 2 — Paths and the filesystem",
-        "S2_L1": "2.1 — ls: what's in here",
-        "S2_L2": "2.2 — cd and the home folder",
-        "S2_L3": "2.3 — paths: relative, absolute, dot, dot-dot",
+        "S2_L1": "2.1 — where you are",
+        "S2_L2": "2.2 — ls: what is here",
+        "S2_L3": "2.3 — cd: moving",
+        "S2_L4": "2.4 — names for places",
         "S2_GATE": "STAGE 2 — GATE",
         "S2_Q1": "Q1: What does cd .. do?",
         "S2_Q2": "Q2: What does ~ mean in a path?",
