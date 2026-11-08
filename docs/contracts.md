@@ -4,7 +4,7 @@ category: reference
 component: contracts
 status: active
 version: 0.1.0
-last_updated: 2026-07-14
+last_updated: 2026-11-07
 tags: [contracts, cli, exit-codes, sandbox, environment]
 priority: medium
 ---
@@ -97,15 +97,22 @@ $SANDBOX/
 ├── stage2/
 │   └── practice/              (created by the learner during the gate task)
 ├── stage3/
+│   ├── hello.txt              (created by the learner in lesson 3.1; not contractual)
+│   ├── notes/                 (created by the learner in lesson 3.1; not contractual)
 │   ├── notes.txt              (created by the learner; renamed to done.txt)
 │   ├── backup.txt             (created by the learner; removed)
 │   └── done.txt               (the gate-task end state)
 ├── stage4/
-│   ├── seed.txt               script-provided so the *.txt glob has a match
+│   ├── poem.txt               copy of the fixture, seeded on stage entry
+│   ├── seed.txt               seeded on stage entry so the *.txt glob has a match
 │   └── count.txt              (created by the learner: `seq 1 100 | wc -l > count.txt`)
 └── stage5/
-    └── practice.txt           seeded by the gate (Phase 1 of the task)
+    └── practice.txt           seeded on stage entry; re-seeded to `before` at gate entry
 ```
+
+Where practice prompts start: stages 1 and 2 start in `$SANDBOX`; stages 3
+to 5 start in their stage folder (`$SANDBOX/stage3` to `$SANDBOX/stage5`) for
+lessons and gates.
 
 Stability commitment:
 
@@ -113,7 +120,7 @@ Stability commitment:
   `poem.txt`, `numbers.txt`) are stable across versions.
 - The five stage subdirs are stable.
 - The names of script-created files inside each stage subdir
-  (`seed.txt`, `practice.txt`) are stable.
+  (`poem.txt` in stage 4, `seed.txt`, `practice.txt`) are stable.
 - Learner-created file names inside stage subdirs are not part of the
   contract — they are taught by the lesson text and reflected in the
   gate verification logic, but a future redesign could rename them.
@@ -129,7 +136,7 @@ Removing individual files inside `$SANDBOX` self-heals on the next
 | Variable             | Read at        | Effect                                                          | Default                      |
 | ---                  | ---            | ---                                                             | ---                          |
 | `HOME`               | startup        | Parent of the default sandbox root.                              | shell default                |
-| `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`.        | unset                        |
+| `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`. Normalised at startup: made absolute against the invoking directory and stripped of trailing slashes; `--info` and all lesson copy show the normalised value. | unset                        |
 | `NO_COLOR`           | startup        | When set (any value), disables ANSI colour output.                | unset                        |
 | `SHELL`              | `--info`       | Reported as the login shell; does not choose the practice shell.   | unset shown explicitly       |
 | `TERM`               | `--info`       | Reported as terminal context.                                      | unset shown explicitly       |
@@ -188,8 +195,8 @@ not.
 | ---   | ---              | ---                                                 |
 | C-001 | C-001            | stable for the 5-stage curriculum                    |
 | C-002 | C-002            | extended with `check` (RC=96) in curriculum redesign |
-| C-003 | C-003            | extended with stage{1..5}/ subdirs                   |
-| C-004 | C-004            | extended by `--info`; startup environment documented |
+| C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02) |
+| C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02) |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
 | C-006 | C-006            | rewritten in curriculum redesign                     |
 
