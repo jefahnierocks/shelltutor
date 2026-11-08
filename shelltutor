@@ -758,7 +758,7 @@ gate_escalate() {
     local attempt="$1" hint="$2"; shift 2
     if [ "$attempt" -ge 2 ]; then
         fb_note "${SUB}Hint:${RST} $hint"
-        if [ "$attempt" -ge 3 ]; then
+        if [ "$attempt" -ge 3 ] && [ "$#" -gt 0 ]; then
             fb_note "${SUB}Worked example — type these yourself:${RST}"
             local line
             for line in "$@"; do
@@ -979,8 +979,15 @@ stage1_verify_whoami() {
 }
 
 stage1_verify_pwd() {
-    # pwd in practice subshell == $SANDBOX/stage1
-    [ "${TASK_S1_PWD:-x}" = "$SANDBOX/stage1" ]
+    # pwd in the practice subshell prints $SANDBOX/stage1 (logical) or, if
+    # the sandbox path crosses a symlink, its pwd -P form; accept either
+    # after trimming surrounding whitespace (A1.7).
+    local typed phys
+    typed=$(printf '%s' "${TASK_S1_PWD:-}" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+    [ -n "$typed" ] || return 1
+    [ "$typed" = "$SANDBOX/stage1" ] && return 0
+    phys=$(cd "$SANDBOX/stage1" 2>/dev/null && pwd -P) || return 1
+    [ "$typed" = "$phys" ]
 }
 
 stage1_verify_task() {
@@ -993,9 +1000,23 @@ stage1_verify_task() {
 # Accept the day as `date` printed it in the learner's locale or as the
 # English form the question lists. Case-insensitive; a trailing period is
 # ignored (de_DE prints "Sa."); a full name also matches by its first three
-# characters ("saturday" -> "sat"). See audit/2026-05-23/findings.md F-008
-# (no GNU sed case modifiers) and audit/2026-11-07/findings.md F-013.
+# characters ("saturday" -> "sat"). A whole `date` line pasted in is also
+# accepted when one of its words is the day (F-015, A2.4). See
+# audit/2026-05-23/findings.md F-008 (no GNU sed case modifiers) and
+# audit/2026-11-07/findings.md F-013.
 stage1_day_matches() {
+    local words w
+    stage1_day_word_matches "$1" && return 0
+    # Bash 3.2: here-string and read -a are fine; a non-empty array here.
+    IFS=' ' read -r -a words <<< "$1"
+    [ "${#words[@]}" -gt 1 ] || return 1
+    for w in "${words[@]}"; do
+        stage1_day_word_matches "$w" && return 0
+    done
+    return 1
+}
+
+stage1_day_word_matches() {
     local given cand norm
     given=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]' \
         | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/\.$//')
@@ -1021,6 +1042,41 @@ stage1_check_commands_run() {
         "whoami" '^[[:space:]]*whoami([[:space:]]|$)' \
         "pwd"    '^[[:space:]]*pwd([[:space:]]|$)' \
         "date"   '^[[:space:]]*date([[:space:]]|$)'
+}
+
+# stage1_followup VAR PROMPT: ask one follow-up (transcription prompt, no
+# ladder). `show` re-prints the follow-up block header and the question;
+# `quit` or `exit` leaves with the farewell. Returns 1 on end of input.
+stage1_followup() {
+    local var="$1" prompt="$2" ans norm
+    while true; do
+        printf '%b%b%b\n' "$Q" "$prompt" "$RST"
+        printf '  %byour answer:%b ' "$CMD" "$RST"
+        IFS= read -r ans < /dev/tty || return 1
+        norm=$(normalize_answer "$ans")
+        case "$norm" in
+            show)
+                printf '\n%bThree short follow-ups based on what you saw.%b\n\n' "$SUB" "$RST"
+                continue
+                ;;
+            quit|exit) farewell_exit ;;
+        esac
+        ans=$(printf '%s' "$ans" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
+        printf -v "$var" '%s' "$ans"
+        return 0
+    done
+}
+
+stage1_ask_whoami() {
+    stage1_followup TASK_S1_WHOAMI "What did ${CMD}whoami${RST}${Q} print? (just the username)"
+}
+
+stage1_ask_pwd() {
+    stage1_followup TASK_S1_PWD "What did ${CMD}pwd${RST}${Q} print? (paste the full path)"
+}
+
+stage1_ask_day() {
+    stage1_followup TASK_S1_DAY "What day of the week did ${CMD}date${RST}${Q} show? Type just the day, for example Sat."
 }
 
 stage1_gate() {
@@ -1095,40 +1151,34 @@ EOF
                     continue
                 fi
                 printf '%bThree short follow-ups based on what you saw.%b\n\n' "$SUB" "$RST"
+                stage1_ask_whoami || return 1
+                printf '\n'
+                stage1_ask_pwd || return 1
+                printf '\n'
+                stage1_ask_day || return 1
 
-                printf '%bWhat did %bwhoami%b print? (just the username)%b\n' "$Q" "$CMD" "$Q" "$RST"
-                printf '  %byour answer:%b ' "$CMD" "$RST"
-                IFS= read -r TASK_S1_WHOAMI < /dev/tty || return 1
-                TASK_S1_WHOAMI=$(printf '%s' "$TASK_S1_WHOAMI" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-
-                printf '\n%bWhat did %bpwd%b print? (paste the full path)%b\n' "$Q" "$CMD" "$Q" "$RST"
-                printf '  %byour answer:%b ' "$CMD" "$RST"
-                IFS= read -r TASK_S1_PWD < /dev/tty || return 1
-                TASK_S1_PWD=$(printf '%s' "$TASK_S1_PWD" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-
-                printf '\n%bWhat day of the week did %bdate%b show? (Mon, Tue, … — or exactly as date printed it)%b\n' "$Q" "$CMD" "$Q" "$RST"
-                printf '  %byour answer:%b ' "$CMD" "$RST"
-                IFS= read -r TASK_S1_DAY < /dev/tty || return 1
-                TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-
-                if stage1_verify_task; then
-                    save_progress 1
-                    return 0
-                fi
-                attempt=$((attempt + 1))
-                # Name which answer failed, never the expected value.
-                fb_begin
-                if stage1_verify_whoami; then fb_ok "whoami answer"
-                else fb_todo "whoami answer" "that is not what whoami printed"; fi
-                if stage1_verify_pwd; then fb_ok "pwd answer"
-                else fb_todo "pwd answer" "that is not what pwd printed"; fi
-                if stage1_day_matches "${TASK_S1_DAY:-}"; then fb_ok "day answer"
-                else fb_todo "day answer" "that is not the day date printed"; fi
-                fb_note "Run the commands again and read what they print, then type ${CMD}check${RST} again."
-                gate_escalate "$attempt" \
-                    "Run the command again and copy its output exactly." \
-                    "whoami" "pwd" "date"
-                skip_screen=1
+                # On a mismatch re-ask only the item(s) that failed (A2.4);
+                # the task restarts only on quit or a failed history check.
+                local fattempt=0
+                until stage1_verify_task; do
+                    fattempt=$((fattempt + 1))
+                    # Name which answer failed, never the expected value.
+                    fb_begin
+                    if stage1_verify_whoami; then fb_ok "whoami answer"
+                    else fb_todo "whoami answer" "that is not what whoami printed"; fi
+                    if stage1_verify_pwd; then fb_ok "pwd answer"
+                    else fb_todo "pwd answer" "that is not what pwd printed"; fi
+                    if stage1_day_matches "${TASK_S1_DAY:-}"; then fb_ok "day answer"
+                    else fb_todo "day answer" "that is not the day date printed"; fi
+                    fb_note "Look back at what each command printed, then answer the ones marked ${G_TODO} again."
+                    gate_escalate "$fattempt" \
+                        "Each answer is exactly what that command printed: your user name, the full folder path, the day."
+                    stage1_verify_whoami || { stage1_ask_whoami || return 1; printf '\n'; }
+                    stage1_verify_pwd || { stage1_ask_pwd || return 1; printf '\n'; }
+                    stage1_day_matches "${TASK_S1_DAY:-}" || { stage1_ask_day || return 1; printf '\n'; }
+                done
+                save_progress 1
+                return 0
                 ;;
             "$RC_QUIT")
                 return $rc
