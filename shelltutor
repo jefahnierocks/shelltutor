@@ -375,19 +375,40 @@ practice() {
 
     # Feed the rcfile on fd 3 instead of process substitution. macOS Bash
     # 3.2 can parse <(...) here but does not reliably load it as --rcfile.
-    bash --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
-[ -r /etc/bashrc ] && . /etc/bashrc
+    # INPUTRC=/dev/null keeps Readline on its defaults so the practice
+    # prompt behaves the same on every host (contract C-007).
+    INPUTRC=/dev/null bash --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
+# shelltutor practice shell — contract C-007 in docs/contracts.md.
+# No system or user rcfile is sourced by this file. Distributions that compile Bash
+# with a system rcfile still read it before this file; the settings
+# below override what matters to the lessons.
+
+# Inherited variables that would change what the lessons show or record.
+unset -v CDPATH GLOBIGNORE HISTIGNORE HISTCONTROL HISTTIMEFORMAT TMOUT BASH_ENV
+unset -v PROMPT_COMMAND
+# Distribution hook that advertises package installs for unknown commands.
+unset -f command_not_found_handle
+
+set -o emacs
+shopt -s histappend
+shopt -u cdspell
 
 cd "$pd"
 
 HISTFILE="$SANDBOX/.shelltutor_history"
 HISTSIZE=2000
 HISTFILESIZE=4000
-shopt -s histappend
 history -r 2>/dev/null || true
 PROMPT_COMMAND='history -a'
 
 PS1='shelltutor> '
+PS2='> '
+
+# Readline: common-Bash completion behaviour, no bell (see lesson 1.1).
+bind 'set show-all-if-ambiguous off'
+bind 'set show-all-if-unmodified off'
+bind 'set completion-ignore-case off'
+bind 'set bell-style none'
 
 # Navigation builtins: functions, not aliases, so alias chains can't
 # recurse. \`exec >/dev/null 2>&1\` immediately before \`builtin exit\`
@@ -590,8 +611,8 @@ You'll see ${DIM}hello${RST} printed. Then more:
 
 ${SUB}Four keys to remember${RST}:
   ${KEY}Tab${RST}        bash finishes a word. Try ${CMD}echo p${RST}+${KEY}Tab${RST} → ${CMD}echo poem.txt${RST}.
-             If several match, bash beeps; ${KEY}Tab${RST} again lists them.
-             (Bash doesn't cycle on repeated ${KEY}Tab${RST} — zsh and fish do.)
+             Several matches? The first ${KEY}Tab${RST} fills in the shared part;
+             ${KEY}Tab${RST} again lists them. (Other shells and setups differ.)
   ${KEY}Ctrl+L${RST}     clear screen — then ${CMD}show${RST} brings this back.
   ${KEY}↑${RST}          recall the last command.
   ${KEY}Ctrl+C${RST}     escape hatch if anything feels stuck.
