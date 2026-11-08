@@ -1366,7 +1366,7 @@ EOF
         'my home directory' \
         'the home folder' \
         'the home directory' \
-        '\$home' \
+        '$home' \
         'home dir' || return $?
 
     # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
@@ -1374,7 +1374,7 @@ EOF
         "Q3: If I'm in ${DIM}~/projects${RST} and I type ${CMD}cd notes${RST}, what folder am I in?" \
         "Lesson 2.4: a relative name starts from the folder you are already in." \
         '~/projects/notes' \
-        '\$home/projects/notes' \
+        '$home/projects/notes' \
         'projects/notes' \
         'home/projects/notes' || return $?
 
