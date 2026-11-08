@@ -136,6 +136,31 @@ def _recall(n: int, answers: List[str]) -> List[Action]:
     return walk
 
 
+def _gate_commands(
+    screen_id: str, first: List[str], rest: List[str], second_try: bool
+) -> List[Action]:
+    """Gate-task commands followed by `check`.
+
+    careful-beginner runs `first + rest` and checks once. `second-try`
+    runs only `first`, checks, observes the gate's "Almost — you still
+    need to" feedback (sentinel ALMOST), then runs `rest` and checks
+    again. It never improvises: the missing step is the one the gate named.
+    """
+    if not second_try:
+        return _cmds(screen_id, first + rest) + [
+            Action(PROMPT, "check", "run-check", screen_id)
+        ]
+    return (
+        _cmds(screen_id, first)
+        + [
+            Action(PROMPT, "check", "run-check-first", screen_id),
+            Action("ALMOST", "", "observe-almost", screen_id),
+        ]
+        + _cmds(screen_id, rest)
+        + [Action(PROMPT, "check", "run-check", screen_id)]
+    )
+
+
 def _vim_edit(screen_id: str, typed: str, quit_cmd: str) -> List[Action]:
     """Open practice.txt, insert text, leave insert mode, quit.
 
@@ -156,8 +181,12 @@ def stage_walk(
     pwd_answer: str = "",
     man_available: bool = True,
     sandbox_root: str = "",
+    second_try: bool = False,
 ) -> List[Action]:
     """Walk for stage `n` (2-5), from its intro to its cleared line.
+
+    `second_try` (stages 2 and 4 only) makes the first `check` of the gate
+    task fail on purpose so the gate's "Almost" feedback is observed once.
 
     Follows the stage-folder lesson copy (F-010, F-011; WP-02): lesson 2.2
     ends with `cd <sandbox_root>` and lesson 3.2 reads `../poem.txt` and
@@ -175,11 +204,10 @@ def stage_walk(
             + _lesson(2, 3, [])
             + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"])
             + [Action("S2_TASK", "", "render-gate-task", "S2-GT")]
-            + _cmds("S2-GT", ["mkdir practice", "cd practice", "pwd"])
-            + [
-                Action(PROMPT, "check", "run-check", "S2-GT"),
-                Action("S2_CLEARED", "", "stage2-cleared", "S2-GT"),
-            ]
+            + _gate_commands(
+                "S2-GT", ["mkdir practice"], ["cd practice", "pwd"], second_try
+            )
+            + [Action("S2_CLEARED", "", "stage2-cleared", "S2-GT")]
         )
     if n == 3:
         return (
@@ -234,11 +262,10 @@ def stage_walk(
             )
             + _recall(4, ["the path to vim", "> overwrites, >> appends", "because of the space"])
             + [Action("S4_TASK", "", "render-gate-task", "S4-GT")]
-            + _cmds("S4-GT", ["seq 1 100 | wc -l > count.txt", "ls *.txt"])
-            + [
-                Action(PROMPT, "check", "run-check", "S4-GT"),
-                Action("S4_CLEARED", "", "stage4-cleared", "S4-GT"),
-            ]
+            + _gate_commands(
+                "S4-GT", ["seq 1 100 | wc -l > count.txt"], ["ls *.txt"], second_try
+            )
+            + [Action("S4_CLEARED", "", "stage4-cleared", "S4-GT")]
         )
     if n == 5:
         l1 = [Action("S5_L1", "", "render-lesson-5-1", "S5-L1")]
@@ -303,14 +330,21 @@ def build_walk(
     day_answer: str,
     man_available: bool = True,
     sandbox_root: str = "",
+    persona: str = "careful-beginner",
 ) -> List[Action]:
     """Compose the walk for `--stage` (`1`..`5` or `all`).
+
+    `persona` is `careful-beginner` (any stage) or `second-try` (stages
+    2 and 4 only; run.py rejects other combinations with exit 2).
 
     Single stage N >= 2 starts at the stage intro and, after the cleared
     line, waits for the next stage's prompt and quits (the tutor
     continues into stage N+1, C-001). Stage 5 and `all` end at the
     finale, after which the child exits on its own.
     """
+    second_try = persona == "second-try"
+    if second_try and stage not in ("2", "4"):
+        raise ValueError("second-try supports stages 2 and 4 only, not %r" % (stage,))
     finale = [Action("FINALE", "", "render-finale", "FIN")]
     if stage == "1":
         return careful_beginner_stage1(whoami_answer, pwd_answer, day_answer)
@@ -322,7 +356,7 @@ def build_walk(
             walk += stage_walk(n, pwd_answer, man_available, sandbox_root)
         return walk + finale
     n = int(stage)
-    walk = stage_walk(n, pwd_answer, man_available, sandbox_root)
+    walk = stage_walk(n, pwd_answer, man_available, sandbox_root, second_try)
     if n == 5:
         return walk + finale
     return walk + [Action(PROMPT, "quit", "quit-tutor", "S%d-GT" % n)]

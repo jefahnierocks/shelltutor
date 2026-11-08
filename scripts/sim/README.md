@@ -67,9 +67,10 @@ C-007), so there is nothing for it to isolate. `--variant no-system-rc-preview`
 and `--variant both` exit 2 with a retirement message. Use `compare.py` for
 before/after comparisons between two bundles.
 
-## Persona scope
+## Personas
 
-One persona, five stages:
+Two personas. `careful-beginner` covers all five stages; `second-try`
+covers the Stage 2 and Stage 4 gates only.
 
 - `careful-beginner` — types the print-and-exit commands each lesson
   lists and drives full-screen programs only where the lesson is about
@@ -78,7 +79,20 @@ One persona, five stages:
   (`skip-man-missing`); if `vim` is absent a Stage 5/`all` run does not
   start (exit 8, `# SKIP` TAP line).
 
-Other personas (`confused-novice`, `second-try`) are deferred per the
+- `second-try` (`--persona second-try --stage 2|4`; any other stage exits
+  2) — walks the stage as `careful-beginner` does, but fails the first
+  `check` of the gate task on purpose to observe the first rung of the
+  gate's escalating feedback (WP-05, decision D-14):
+  - Stage 2 task: `mkdir practice`, `check` → wait for `ALMOST`
+    (`Almost — you still need to`) → `cd practice`, `pwd`, `check` →
+    `S2_CLEARED`.
+  - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `ALMOST` →
+    `ls *.txt`, `check` → `S4_CLEARED`.
+  - Recall answers are the same as `careful-beginner`'s. TAP `ok` requires
+    the stage cleared and exactly one `Almost — you still need to` in the
+    output; zero or two means the gate's feedback changed.
+
+`confused-novice` and confusion events remain deferred (Slice 3) per the
 design plan.
 
 ## Files
@@ -89,7 +103,7 @@ design plan.
 | `driver.py` | PTY driver loop (pty + selectors). |
 | `compare.py` | Unified diff of two bundles' normalized OUT projection. |
 | `project.py` | Shared `terminal.jsonl` OUT projection (run.py, compare.py). |
-| `persona.py` | careful-beginner walks for stages 1–5 and the finale. |
+| `persona.py` | careful-beginner walks for stages 1–5 and the finale; second-try for stages 2 and 4. |
 | `sentinels.py` | Stable substring patterns per screen / question. |
 | `recorder.py` | terminal.jsonl, events.jsonl, summary.md, result.tap writers. |
 | `env.py` | Host snapshot + CRLF/ANSI normalization helpers. |
@@ -114,7 +128,7 @@ design plan.
 | Flag | Default |
 | --- | --- |
 | `--variant current-rc` | `current-rc` (`no-system-rc-preview` and `both` were retired in Slice 2 and exit 2) |
-| `--persona` | `careful-beginner` (only one supported) |
+| `--persona` | `careful-beginner` (or `second-try` with `--stage 2` or `4`) |
 | `--stage {1,2,3,4,5,all}` | `1` |
 | `--out` | `audit/<UTC-date>/sim/stage<N>` or `.../sim/all` |
 | `--timeout` | `30` (per-sentinel, seconds) |

@@ -47,6 +47,7 @@ if _PARENT not in sys.path:
     sys.path.insert(0, _PARENT)
 
 from scripts.sim import driver, env, persona as persona_mod, recorder  # noqa: E402
+from scripts.sim.project import project_terminal_out  # noqa: E402
 from scripts.sim.errors import (  # noqa: E402
     NoTTYError,
     PersonaRejectedError,
@@ -56,6 +57,11 @@ from scripts.sim.errors import (  # noqa: E402
 )
 
 SUPPORTED_STAGES = ("1", "2", "3", "4", "5", "all")
+SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
+# second-try fails the first gate check on purpose; only the Stage 2 and
+# Stage 4 gates have a history check to trip (WP-05, decision D-14).
+SECOND_TRY_STAGES = ("2", "4")
+ALMOST_TEXT = "Almost — you still need to"
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -98,7 +104,10 @@ def _parse_args(argv) -> argparse.Namespace:
     parser.add_argument(
         "--persona",
         default="careful-beginner",
-        help="Only careful-beginner is supported.",
+        help=(
+            "careful-beginner (any stage) or second-try (--stage 2 or 4 "
+            "only; fails the first gate check on purpose)."
+        ),
     )
     parser.add_argument(
         "--stage",
@@ -142,6 +151,7 @@ def _build_actions(
     pwd_answer: str,
     day_answer: str,
     sandbox_root: str,
+    persona_name: str = "careful-beginner",
 ) -> List[persona_mod.Action]:
     return persona_mod.build_walk(
         stage,
@@ -150,6 +160,7 @@ def _build_actions(
         day_answer=day_answer,
         man_available=shutil.which("man") is not None,
         sandbox_root=sandbox_root,
+        persona=persona_name,
     )
 
 
@@ -210,7 +221,7 @@ def _run_variant(
     day_answer = time.strftime("%a")
 
     actions = _build_actions(
-        args.stage, whoami_answer, pwd_answer, day_answer, sandbox_root
+        args.stage, whoami_answer, pwd_answer, day_answer, sandbox_root, persona_name
     )
     p = persona_mod.Persona(persona_name, actions)
 
@@ -311,6 +322,18 @@ def _run_variant(
         )
         error_signatures = result["error_signatures"]
         run_ok = result["gate_passed"] and outcome["progress_ok"]
+        if persona_name == "second-try":
+            # The deliberate first failure must show the gate's "Almost"
+            # feedback exactly once; zero or two means the gate changed.
+            almost = "".join(
+                project_terminal_out(os.path.join(variant_out, "terminal.jsonl"))
+            ).count(ALMOST_TEXT)
+            outcome["almost_count"] = almost
+            if almost != 1:
+                run_ok = False
+                outcome["notes"] = (
+                    "second-try expected exactly one %r, saw %d." % (ALMOST_TEXT, almost)
+                )
         outcome["harness_exit_code"] = 0 if run_ok else 4
         if result["wall_clock_capped"]:
             outcome["notes"] = "Run hit the 5-minute wall-clock cap."
@@ -331,12 +354,17 @@ def _run_variant(
         controlled_inputs=controlled_inputs,
         error_signatures=error_signatures,
     )
-    outcome["ok"] = bool(outcome["gate_passed"] and outcome["progress_ok"])
+    outcome["ok"] = bool(
+        outcome["gate_passed"]
+        and outcome["progress_ok"]
+        and outcome.get("almost_count", 1) == 1
+    )
     rec.write_tap(
         ok=outcome["ok"],
-        description="%s careful-beginner — variant=%s"
+        description="%s %s — variant=%s"
         % (
             "all-stages" if args.stage == "all" else "stage" + args.stage,
+            persona_name,
             variant,
         ),
     )
@@ -410,10 +438,17 @@ def _exit_code_for(exc: BaseException) -> int:
 def main(argv=None) -> int:
     args = _parse_args(argv if argv is not None else sys.argv[1:])
 
-    if args.persona != "careful-beginner":
+    if args.persona not in SUPPORTED_PERSONAS:
         print(
-            "scripts/sim/run.py: --persona %r unsupported; only "
-            "careful-beginner is available." % args.persona,
+            "scripts/sim/run.py: --persona %r unsupported; choose from %s."
+            % (args.persona, ", ".join(SUPPORTED_PERSONAS)),
+            file=sys.stderr,
+        )
+        return 2
+    if args.persona == "second-try" and args.stage not in SECOND_TRY_STAGES:
+        print(
+            "scripts/sim/run.py: --persona second-try supports --stage 2 or 4 "
+            "only (got %r)." % args.stage,
             file=sys.stderr,
         )
         return 2
