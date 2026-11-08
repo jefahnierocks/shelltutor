@@ -79,11 +79,13 @@ This keeps the production contract intact:
 
 - **Slice 1 — complete**: Stage 1 density audit, stdlib PTY harness, both
   baselines, and comparison evidence landed on 2026-05-23 (`29dc0d3`).
-- **FF-006c rung 1 — scheduled** as `docs/workplan/WP-01-five-stage-harness.md`
-  (2026-11-07): `careful-beginner` across all five stages, `make sim`,
-  mechanical `error-signature` events, `.progress` assertion, and a
-  `compare.py` for before/after bundles. Decisions D-02 and D-03 fix the
-  coverage model and the harness's controlled inputs.
+- **FF-006c rung 1 — complete**
+  (`docs/workplan/WP-01-five-stage-harness.md`): one persona
+  (`careful-beginner`), five stages; second persona still deferred.
+  `make sim`, mechanical `error-signature` events, the `.progress`
+  assertion and `scripts/sim/compare.py` landed. Decisions D-02 and D-03
+  fix the coverage model and the harness's controlled inputs (including
+  an empty per-run `HOME`).
 - **Slice 2 — scheduled** as `docs/workplan/WP-03-practice-shell-hardening.md`.
   Decisions D-09 to D-12 refine this plan: the exact rcfile and contract
   C-007; the lesson 1.1 Tab/bell line lands with the hardening (D-10); the

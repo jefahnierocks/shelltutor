@@ -46,6 +46,7 @@ make verify      # released manifest check/tests + check + lint + smoke
 make manifest-check # declaration only; not a substitute for make verify
 make self-test   # exercise the checkers against built-in fixtures
 make lesson-flow # FF-006b PTY harness (optional; Python 3.9+; not in verify)
+make sim         # FF-006c five-stage PTY harness (optional; Python 3.9+; not in verify)
 ```
 
 Each enforcement target maps to one or more named audit fitness functions so
@@ -63,6 +64,7 @@ with the rules it describes.
 | `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
 | `smoke`              | FF-006a         | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
 | `lesson-flow`        | FF-006b         | Optional contributor target. Drives the `scripts/sim/` Python 3.9+ stdlib PTY harness through a persona walkthrough of Stage 1 and emits a v1 evidence bundle (project-local `terminal.jsonl`, `events.jsonl`, `summary.md`, `result.tap`). Skips with a clear message when `python3` is missing or `<3.9`. Not part of `make verify`. Governed by `docs/simulation-design-plan.md`. |
+| `sim`                | FF-006c rung 1  | Optional contributor target. Runs `scripts/sim/run.py --stage all`: the `careful-beginner` persona drives all five stages in one PTY run per variant and writes the same v1 evidence bundle, plus mechanical `error-signature` events and a `.progress` assertion. `SIMARGS` passes extra flags. Same Python guard as `lesson-flow`; needs a real pseudo-terminal; not part of `make verify`. |
 
 The checkers use `# nofitness:` line annotations for legitimate
 exceptions in the script. The Markdown checker skips fenced (` ``` `)
@@ -81,7 +83,7 @@ uses Python 3.13.16 and checksum-pinned Git 2.56.0; see
 [the preparation and verdict contract](docs/project-manifest.md).
 
 Optional contributor-side tooling
-under `scripts/sim/` (FF-006b PTY harness) requires Python 3.9+ —
+under `scripts/sim/` (FF-006b/FF-006c PTY harness) requires Python 3.9+ —
 syntax and stdlib use must not exceed that floor so the harness runs
 without a venv whenever Python 3.9+ is installed on macOS or Linux.
 Third-party Python dependencies (Pexpect, pytest, etc.) are not

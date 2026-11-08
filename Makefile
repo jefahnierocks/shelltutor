@@ -13,13 +13,14 @@
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
 
-.PHONY: help check check-safety check-governance check-portability lint smoke lesson-flow verify self-test manifest-check manifest-self-test
+.PHONY: help check check-safety check-governance check-portability lint smoke lesson-flow sim verify self-test manifest-check manifest-self-test
 
 SCRIPT := shelltutor
 PYTHON ?= python3
 
-# Optional pass-through args for `lesson-flow`, e.g.:
+# Optional pass-through args for `lesson-flow` and `sim`, e.g.:
 #   make lesson-flow SIMARGS='--variant current-rc -v'
+#   make sim SIMARGS='--variant current-rc -v'
 SIMARGS ?=
 
 help:
@@ -28,6 +29,7 @@ help:
 	@printf '  lint         shellcheck $(SCRIPT) (FF-005)\n'
 	@printf '  smoke        FF-006a minimal static smoke test\n'
 	@printf '  lesson-flow  FF-006b PTY harness (optional; Python 3.9+; not in verify)\n'
+	@printf '  sim          FF-006c rung 1 five-stage PTY harness (optional; Python 3.9+; not in verify)\n'
 	@printf '  verify       manifest check/tests + check + lint + smoke\n'
 	@printf '  manifest-check      released declaration checks (prepared Python/Git)\n'
 	@printf '  self-test    run checker self-tests\n'
@@ -74,6 +76,23 @@ lesson-flow:
 	    fi; \
 	else \
 	    printf 'lesson-flow: python3 not found; skipping (FF-006b; see docs/simulation-design-plan.md)\n'; \
+	fi
+
+# FF-006c rung 1 — five-stage careful-beginner PTY harness. Same
+# Python-availability guard as `lesson-flow`; NOT part of `make verify`.
+sim:
+	@if command -v python3 >/dev/null 2>&1; then \
+	    if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3,9) else 1)' 2>/dev/null; then \
+	        if [ -f ./scripts/sim/run.py ]; then \
+	            python3 ./scripts/sim/run.py --stage all $(SIMARGS); \
+	        else \
+	            printf 'sim: scripts/sim/run.py not present (FF-006c)\n'; \
+	        fi; \
+	    else \
+	        printf 'sim: python3 too old (need 3.9+); skipping (FF-006c)\n'; \
+	    fi; \
+	else \
+	    printf 'sim: python3 not found; skipping (FF-006c; see docs/simulation-design-plan.md)\n'; \
 	fi
 
 manifest-check:
