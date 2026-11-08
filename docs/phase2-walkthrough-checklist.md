@@ -71,9 +71,10 @@ template).
 
 ## The five stages
 
-Stage 1 has four lessons (1.1 running commands, 1.2 keyboard habits,
-1.3 where/who/when, 1.4 what just happened); the others have three or
-four as their intro screens say.
+Stage 1 has five lessons (1.1 running commands, 1.2 keyboard habits,
+1.3 where/who/when, 1.4 the shell caught in the act, 1.5 who else types
+here); Stage 2 has four; the others have three or four as their intro
+screens say.
 
 | # | Stage | Gate-task surface |
 | --- | --- | --- |

@@ -37,7 +37,7 @@ walkthrough on both platform families remains pending; see `STATUS.md`.
 | # | Title | Commands introduced |
 | --- | --- | --- |
 | 1 | Where am I? | `echo`, `pwd`, `whoami`, `date`, `clear`, `exit` |
-| 2 | Paths and the filesystem | `ls`, `ls -l`, `ls -a`, `cd`, `cd ..`, `cd ~` |
+| 2 | Paths and the filesystem | `pwd`, `ls`, `ls -p`, `ls -a`, `cd`, `cd ..`, `cd ~` |
 | 3 | Files and operations | `touch`, `mkdir`, `rmdir`, `cat`, `less`, `cp`, `mv`, `rm` |
 | 4 | Commands, streams, composition | `command -v`, `wc`, `seq`, `head`, `sort`, `grep`, `\|`, `>`, `>>`, `<`, `*` |
 | 5 | Ready for `vimtutor` | `man`, `less` (full-screen), `vim`, `:q!`, `:wq`, `vimtutor` |

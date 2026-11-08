@@ -1,0 +1,395 @@
+{"ts": 0.0, "kind": "session-start", "intent": "", "screen_id": "", "payload": {"shelltutor_path": "shelltutor"}}
+{"ts": 0.035668, "kind": "sentinel-matched", "intent": "render-welcome", "screen_id": "S1-W", "payload": {"sentinel": "WELCOME", "pattern": "SHELLTUTOR  —  a vimtutor prerequisite course", "cursor_after": 127}}
+{"ts": 0.055192, "kind": "screen-height", "intent": "", "screen_id": "S1-W", "payload": {"lines": 18, "budget": 22, "over": false}}
+{"ts": 0.055211, "kind": "sentinel-matched", "intent": "leave-welcome", "screen_id": "S1-W", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 828}}
+{"ts": 0.055246, "kind": "persona-input", "intent": "leave-welcome", "screen_id": "S1-W", "payload": {"data": "next"}}
+{"ts": 0.061683, "kind": "sentinel-matched", "intent": "render-orientation", "screen_id": "S1-O", "payload": {"sentinel": "ORIENTATION", "pattern": "Orientation", "cursor_after": 927}}
+{"ts": 0.081008, "kind": "screen-height", "intent": "", "screen_id": "S1-O", "payload": {"lines": 21, "budget": 22, "over": false}}
+{"ts": 0.081029, "kind": "sentinel-matched", "intent": "leave-orientation", "screen_id": "S1-O", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 1579}}
+{"ts": 0.08106, "kind": "persona-input", "intent": "leave-orientation", "screen_id": "S1-O", "payload": {"data": "next"}}
+{"ts": 0.088022, "kind": "sentinel-matched", "intent": "render-stage1-intro", "screen_id": "S1-I", "payload": {"sentinel": "STAGE1_INTRO", "pattern": "STAGE 1 — Where am I?", "cursor_after": 1688}}
+{"ts": 0.108041, "kind": "screen-height", "intent": "", "screen_id": "S1-I", "payload": {"lines": 11, "budget": 22, "over": false}}
+{"ts": 0.108063, "kind": "sentinel-matched", "intent": "leave-stage1-intro", "screen_id": "S1-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2079}}
+{"ts": 0.10809, "kind": "persona-input", "intent": "leave-stage1-intro", "screen_id": "S1-I", "payload": {"data": "next"}}
+{"ts": 0.115092, "kind": "sentinel-matched", "intent": "render-lesson-1-1", "screen_id": "S1-L1", "payload": {"sentinel": "LESSON_1_1", "pattern": "1.1 — running commands", "cursor_after": 2189}}
+{"ts": 0.133447, "kind": "screen-height", "intent": "", "screen_id": "S1-L1", "payload": {"lines": 20, "budget": 22, "over": false}}
+{"ts": 0.133471, "kind": "sentinel-matched", "intent": "run-echo", "screen_id": "S1-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2801}}
+{"ts": 0.133501, "kind": "persona-input", "intent": "run-echo", "screen_id": "S1-L1", "payload": {"data": "echo hello"}}
+{"ts": 0.133737, "kind": "sentinel-matched", "intent": "run-echo-words", "screen_id": "S1-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2831}}
+{"ts": 0.133762, "kind": "persona-input", "intent": "run-echo-words", "screen_id": "S1-L1", "payload": {"data": "echo I am at the shell"}}
+{"ts": 0.133925, "kind": "sentinel-matched", "intent": "run-echo-quoted", "screen_id": "S1-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2885}}
+{"ts": 0.133948, "kind": "persona-input", "intent": "run-echo-quoted", "screen_id": "S1-L1", "payload": {"data": "echo \"I am at the shell\""}}
+{"ts": 0.134091, "kind": "sentinel-matched", "intent": "leave-lesson-1-1", "screen_id": "S1-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2941}}
+{"ts": 0.134109, "kind": "persona-input", "intent": "leave-lesson-1-1", "screen_id": "S1-L1", "payload": {"data": "next"}}
+{"ts": 0.141976, "kind": "sentinel-matched", "intent": "render-lesson-1-2", "screen_id": "S1-L2", "payload": {"sentinel": "LESSON_1_2", "pattern": "1.2 — keyboard habits", "cursor_after": 3050}}
+{"ts": 0.160262, "kind": "screen-height", "intent": "", "screen_id": "S1-L2", "payload": {"lines": 18, "budget": 22, "over": false}}
+{"ts": 0.160285, "kind": "sentinel-matched", "intent": "tab-complete-echo", "screen_id": "S1-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 3785}}
+{"ts": 0.160324, "kind": "persona-input", "intent": "tab-complete-echo", "screen_id": "S1-L2", "payload": {"data": "echo p\t", "raw": true}}
+{"ts": 0.160934, "kind": "sentinel-matched", "intent": "run-completed-echo", "screen_id": "S1-L2", "payload": {"sentinel": "echo poem.txt", "pattern": "echo poem.txt", "cursor_after": 3798}}
+{"ts": 0.160957, "kind": "persona-input", "intent": "run-completed-echo", "screen_id": "S1-L2", "payload": {"data": "\n", "raw": true}}
+{"ts": 0.161115, "kind": "sentinel-matched", "intent": "ctrl-l-clear", "screen_id": "S1-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 3822}}
+{"ts": 0.161131, "kind": "persona-input", "intent": "ctrl-l-clear", "screen_id": "S1-L2", "payload": {"data": "\f", "raw": true}}
+{"ts": 0.161155, "kind": "screen-height", "intent": "", "screen_id": "S1-L2", "payload": {"lines": 0, "budget": 22, "over": false}}
+{"ts": 0.161164, "kind": "sentinel-matched", "intent": "up-arrow-recall", "screen_id": "S1-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 3834}}
+{"ts": 0.161179, "kind": "persona-input", "intent": "up-arrow-recall", "screen_id": "S1-L2", "payload": {"data": "\u001b[A", "raw": true}}
+{"ts": 0.161186, "kind": "sentinel-matched", "intent": "run-recalled-echo", "screen_id": "S1-L2", "payload": {"sentinel": "", "pattern": "", "cursor_after": 3834}}
+{"ts": 0.266347, "kind": "persona-input", "intent": "run-recalled-echo", "screen_id": "S1-L2", "payload": {"data": "\n", "raw": true}}
+{"ts": 0.266699, "kind": "sentinel-matched", "intent": "ctrl-c-fresh-prompt", "screen_id": "S1-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 3871}}
+{"ts": 0.266731, "kind": "persona-input", "intent": "ctrl-c-fresh-prompt", "screen_id": "S1-L2", "payload": {"data": "\u0003", "raw": true}}
+{"ts": 0.266893, "kind": "sentinel-matched", "intent": "leave-lesson-1-2", "screen_id": "S1-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 3888}}
+{"ts": 0.266912, "kind": "persona-input", "intent": "leave-lesson-1-2", "screen_id": "S1-L2", "payload": {"data": "next"}}
+{"ts": 0.274577, "kind": "sentinel-matched", "intent": "render-lesson-1-3", "screen_id": "S1-L3", "payload": {"sentinel": "LESSON_1_3", "pattern": "1.3 — where am I, who am I, when is it", "cursor_after": 4014}}
+{"ts": 0.293291, "kind": "screen-height", "intent": "", "screen_id": "S1-L3", "payload": {"lines": 16, "budget": 22, "over": false}}
+{"ts": 0.293308, "kind": "sentinel-matched", "intent": "run-whoami", "screen_id": "S1-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 4544}}
+{"ts": 0.293334, "kind": "persona-input", "intent": "run-whoami", "screen_id": "S1-L3", "payload": {"data": "whoami"}}
+{"ts": 0.297581, "kind": "sentinel-matched", "intent": "run-pwd", "screen_id": "S1-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 4573}}
+{"ts": 0.297605, "kind": "persona-input", "intent": "run-pwd", "screen_id": "S1-L3", "payload": {"data": "pwd"}}
+{"ts": 0.29773, "kind": "sentinel-matched", "intent": "run-date", "screen_id": "S1-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 4668}}
+{"ts": 0.297751, "kind": "persona-input", "intent": "run-date", "screen_id": "S1-L3", "payload": {"data": "date"}}
+{"ts": 0.300777, "kind": "sentinel-matched", "intent": "leave-lesson-1-3", "screen_id": "S1-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 4716}}
+{"ts": 0.30081, "kind": "persona-input", "intent": "leave-lesson-1-3", "screen_id": "S1-L3", "payload": {"data": "next"}}
+{"ts": 0.308253, "kind": "sentinel-matched", "intent": "render-lesson-1-4", "screen_id": "S1-L4", "payload": {"sentinel": "LESSON_1_4", "pattern": "1.4 — the shell, caught in the act", "cursor_after": 4838}}
+{"ts": 0.326382, "kind": "screen-height", "intent": "", "screen_id": "S1-L4", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.326408, "kind": "sentinel-matched", "intent": "run-date", "screen_id": "S1-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 5554}}
+{"ts": 0.326436, "kind": "persona-input", "intent": "run-date", "screen_id": "S1-L4", "payload": {"data": "date"}}
+{"ts": 0.329084, "kind": "sentinel-matched", "intent": "run-dtae-mistyped", "screen_id": "S1-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 5602}}
+{"ts": 0.329108, "kind": "persona-input", "intent": "run-dtae-mistyped", "screen_id": "S1-L4", "payload": {"data": "dtae"}}
+{"ts": 0.330154, "kind": "expected-error", "intent": "run-dtae-mistyped", "screen_id": "S1-L4", "payload": {"text": "bash: dtae: command not found"}}
+{"ts": 0.330185, "kind": "sentinel-matched", "intent": "leave-lesson-1-4", "screen_id": "S1-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 5650}}
+{"ts": 0.330211, "kind": "persona-input", "intent": "leave-lesson-1-4", "screen_id": "S1-L4", "payload": {"data": "next"}}
+{"ts": 0.336607, "kind": "sentinel-matched", "intent": "render-lesson-1-5", "screen_id": "S1-L5", "payload": {"sentinel": "LESSON_1_5", "pattern": "1.5 — who else types here", "cursor_after": 5763}}
+{"ts": 0.355015, "kind": "screen-height", "intent": "", "screen_id": "S1-L5", "payload": {"lines": 20, "budget": 22, "over": false}}
+{"ts": 0.355032, "kind": "sentinel-matched", "intent": "leave-lesson-1-5", "screen_id": "S1-L5", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 6533}}
+{"ts": 0.35506, "kind": "persona-input", "intent": "leave-lesson-1-5", "screen_id": "S1-L5", "payload": {"data": "next"}}
+{"ts": 0.362043, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S1-G", "payload": {"sentinel": "GATE_HEADER", "pattern": "STAGE 1 — GATE", "cursor_after": 6635}}
+{"ts": 0.362512, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S1-G", "payload": {"sentinel": "GATE_Q1", "pattern": "Q1: Which character usually ends a shell prompt", "cursor_after": 6955}}
+{"ts": 0.362543, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S1-G", "payload": {"data": "$"}}
+{"ts": 0.371003, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S1-G", "payload": {"sentinel": "GATE_Q2", "pattern": "Q2: What does pwd print?", "cursor_after": 7019}}
+{"ts": 0.371034, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S1-G", "payload": {"data": "the current working directory"}}
+{"ts": 0.378449, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S1-G", "payload": {"sentinel": "GATE_Q3", "pattern": "Q3: After whoami runs, where does its output go?", "cursor_after": 7118}}
+{"ts": 0.378484, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S1-G", "payload": {"data": "stdout"}}
+{"ts": 0.397106, "kind": "sentinel-matched", "intent": "render-gate-task", "screen_id": "S1-GT", "payload": {"sentinel": "GATE_TASK_HEADER", "pattern": "STAGE 1 — GATE TASK", "cursor_after": 7247}}
+{"ts": 0.41571, "kind": "screen-height", "intent": "", "screen_id": "S1-GT", "payload": {"lines": 16, "budget": 22, "over": false}}
+{"ts": 0.415726, "kind": "sentinel-matched", "intent": "run-whoami", "screen_id": "S1-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 7630}}
+{"ts": 0.415751, "kind": "persona-input", "intent": "run-whoami", "screen_id": "S1-GT", "payload": {"data": "whoami"}}
+{"ts": 0.419649, "kind": "sentinel-matched", "intent": "run-pwd", "screen_id": "S1-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 7659}}
+{"ts": 0.419682, "kind": "persona-input", "intent": "run-pwd", "screen_id": "S1-GT", "payload": {"data": "pwd"}}
+{"ts": 0.419824, "kind": "sentinel-matched", "intent": "run-date", "screen_id": "S1-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 7761}}
+{"ts": 0.41985, "kind": "persona-input", "intent": "run-date", "screen_id": "S1-GT", "payload": {"data": "date"}}
+{"ts": 0.422553, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S1-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 7809}}
+{"ts": 0.422589, "kind": "persona-input", "intent": "run-check", "screen_id": "S1-GT", "payload": {"data": "check"}}
+{"ts": 0.437986, "kind": "sentinel-matched", "intent": "answer-task-whoami", "screen_id": "S1-FQ", "payload": {"sentinel": "TASK_Q_WHOAMI", "pattern": "What did whoami print? (just the username)", "cursor_after": 7905}}
+{"ts": 0.438022, "kind": "persona-input", "intent": "answer-task-whoami", "screen_id": "S1-FQ", "payload": {"data": "[user]"}}
+{"ts": 0.441518, "kind": "sentinel-matched", "intent": "answer-task-pwd", "screen_id": "S1-FQ", "payload": {"sentinel": "TASK_Q_PWD", "pattern": "What did pwd print? (paste the full path)", "cursor_after": 7972}}
+{"ts": 0.441554, "kind": "persona-input", "intent": "answer-task-pwd", "screen_id": "S1-FQ", "payload": {"data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-904s3wpw/stage1"}}
+{"ts": 0.44474, "kind": "sentinel-matched", "intent": "answer-task-day", "screen_id": "S1-FQ", "payload": {"sentinel": "TASK_Q_DAY", "pattern": "What day of the week did date show?", "cursor_after": 8109}}
+{"ts": 0.444768, "kind": "persona-input", "intent": "answer-task-day", "screen_id": "S1-FQ", "payload": {"data": "Sat"}}
+{"ts": 0.475733, "kind": "sentinel-matched", "intent": "stage1-cleared", "screen_id": "S1-FQ", "payload": {"sentinel": "STAGE_CLEARED", "pattern": "Stage 1 cleared.", "cursor_after": 8275}}
+{"ts": 0.475751, "kind": "gate-pass", "intent": "stage1-cleared", "screen_id": "S1-FQ", "payload": {"final": false}}
+{"ts": 0.492985, "kind": "screen-height", "intent": "", "screen_id": "S1-C", "payload": {"lines": 19, "budget": 22, "over": false}}
+{"ts": 0.493001, "kind": "sentinel-matched", "intent": "leave-stage1-cleared", "screen_id": "S1-C", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 8896}}
+{"ts": 0.493024, "kind": "persona-input", "intent": "leave-stage1-cleared", "screen_id": "S1-C", "payload": {"data": "next"}}
+{"ts": 0.503947, "kind": "sentinel-matched", "intent": "render-stage2-intro", "screen_id": "S2-I", "payload": {"sentinel": "S2_INTRO", "pattern": "STAGE 2 — Paths and the filesystem", "cursor_after": 9018}}
+{"ts": 0.521871, "kind": "screen-height", "intent": "", "screen_id": "S2-I", "payload": {"lines": 21, "budget": 22, "over": false}}
+{"ts": 0.521887, "kind": "sentinel-matched", "intent": "leave-stage2-intro", "screen_id": "S2-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 9601}}
+{"ts": 0.521908, "kind": "persona-input", "intent": "leave-stage2-intro", "screen_id": "S2-I", "payload": {"data": "next"}}
+{"ts": 0.528162, "kind": "sentinel-matched", "intent": "render-lesson-2-1", "screen_id": "S2-L1", "payload": {"sentinel": "S2_L1", "pattern": "2.1 — where you are", "cursor_after": 9708}}
+{"ts": 0.545495, "kind": "screen-height", "intent": "", "screen_id": "S2-L1", "payload": {"lines": 20, "budget": 22, "over": false}}
+{"ts": 0.545516, "kind": "sentinel-matched", "intent": "run-pwd", "screen_id": "S2-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 10317}}
+{"ts": 0.54554, "kind": "persona-input", "intent": "run-pwd", "screen_id": "S2-L1", "payload": {"data": "pwd"}}
+{"ts": 0.545703, "kind": "sentinel-matched", "intent": "leave-lesson-2-1", "screen_id": "S2-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 10412}}
+{"ts": 0.545722, "kind": "persona-input", "intent": "leave-lesson-2-1", "screen_id": "S2-L1", "payload": {"data": "next"}}
+{"ts": 0.553064, "kind": "sentinel-matched", "intent": "render-lesson-2-2", "screen_id": "S2-L2", "payload": {"sentinel": "S2_L2", "pattern": "2.2 — ls: what is here", "cursor_after": 10522}}
+{"ts": 0.574541, "kind": "screen-height", "intent": "", "screen_id": "S2-L2", "payload": {"lines": 20, "budget": 22, "over": false}}
+{"ts": 0.574561, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11118}}
+{"ts": 0.574604, "kind": "persona-input", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"data": "ls"}}
+{"ts": 0.577773, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11170}}
+{"ts": 0.577812, "kind": "persona-input", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"data": "ls -p"}}
+{"ts": 0.580745, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11227}}
+{"ts": 0.58078, "kind": "persona-input", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"data": "ls -a"}}
+{"ts": 0.583697, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11322}}
+{"ts": 0.583723, "kind": "persona-input", "intent": "run-ls", "screen_id": "S2-L2", "payload": {"data": "ls /etc"}}
+{"ts": 0.586782, "kind": "sentinel-matched", "intent": "leave-lesson-2-2", "screen_id": "S2-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 12303}}
+{"ts": 0.586813, "kind": "persona-input", "intent": "leave-lesson-2-2", "screen_id": "S2-L2", "payload": {"data": "next"}}
+{"ts": 0.594349, "kind": "sentinel-matched", "intent": "render-lesson-2-3", "screen_id": "S2-L3", "payload": {"sentinel": "S2_L3", "pattern": "2.3 — cd: moving", "cursor_after": 12407}}
+{"ts": 0.613742, "kind": "screen-height", "intent": "", "screen_id": "S2-L3", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.613759, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13223}}
+{"ts": 0.613783, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"data": "cd /tmp"}}
+{"ts": 0.613954, "kind": "sentinel-matched", "intent": "run-pwd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13244}}
+{"ts": 0.613974, "kind": "persona-input", "intent": "run-pwd", "screen_id": "S2-L3", "payload": {"data": "pwd"}}
+{"ts": 0.614086, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13266}}
+{"ts": 0.614103, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"data": "cd"}}
+{"ts": 0.614214, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13282}}
+{"ts": 0.61423, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"data": "cd -"}}
+{"ts": 0.614338, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13305}}
+{"ts": 0.614354, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"data": "cd .."}}
+{"ts": 0.614449, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13324}}
+{"ts": 0.614469, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-L3", "payload": {"data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-904s3wpw"}}
+{"ts": 0.614678, "kind": "sentinel-matched", "intent": "leave-lesson-2-3", "screen_id": "S2-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13420}}
+{"ts": 0.614694, "kind": "persona-input", "intent": "leave-lesson-2-3", "screen_id": "S2-L3", "payload": {"data": "next"}}
+{"ts": 0.622459, "kind": "sentinel-matched", "intent": "render-lesson-2-4", "screen_id": "S2-L4", "payload": {"sentinel": "S2_L4", "pattern": "2.4 — names for places", "cursor_after": 13530}}
+{"ts": 0.642311, "kind": "screen-height", "intent": "", "screen_id": "S2-L4", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.64234, "kind": "sentinel-matched", "intent": "leave-lesson-2-4", "screen_id": "S2-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 14230}}
+{"ts": 0.642365, "kind": "persona-input", "intent": "leave-lesson-2-4", "screen_id": "S2-L4", "payload": {"data": "next"}}
+{"ts": 0.649936, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S2-G", "payload": {"sentinel": "S2_GATE", "pattern": "STAGE 2 — GATE", "cursor_after": 14332}}
+{"ts": 0.65042, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S2-G", "payload": {"sentinel": "S2_Q1", "pattern": "Q1: What does cd .. do?", "cursor_after": 14514}}
+{"ts": 0.650448, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S2-G", "payload": {"data": "goes up one folder"}}
+{"ts": 0.658124, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S2-G", "payload": {"sentinel": "S2_Q2", "pattern": "Q2: What does ~ mean in a path?", "cursor_after": 14585}}
+{"ts": 0.658154, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S2-G", "payload": {"data": "home folder"}}
+{"ts": 0.668696, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S2-G", "payload": {"sentinel": "S2_Q3", "pattern": "Q3: If I'm in ~/projects and I type cd notes", "cursor_after": 14662}}
+{"ts": 0.668722, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S2-G", "payload": {"data": "~/projects/notes"}}
+{"ts": 0.684387, "kind": "sentinel-matched", "intent": "render-gate-task", "screen_id": "S2-GT", "payload": {"sentinel": "S2_TASK", "pattern": "STAGE 2 — GATE TASK", "cursor_after": 14823}}
+{"ts": 0.702905, "kind": "screen-height", "intent": "", "screen_id": "S2-GT", "payload": {"lines": 17, "budget": 22, "over": false}}
+{"ts": 0.70292, "kind": "sentinel-matched", "intent": "run-mkdir", "screen_id": "S2-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 15279}}
+{"ts": 0.70294, "kind": "persona-input", "intent": "run-mkdir", "screen_id": "S2-GT", "payload": {"data": "mkdir practice"}}
+{"ts": 0.705346, "kind": "sentinel-matched", "intent": "run-cd", "screen_id": "S2-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 15307}}
+{"ts": 0.705366, "kind": "persona-input", "intent": "run-cd", "screen_id": "S2-GT", "payload": {"data": "cd practice"}}
+{"ts": 0.705504, "kind": "sentinel-matched", "intent": "run-pwd", "screen_id": "S2-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 15332}}
+{"ts": 0.705519, "kind": "persona-input", "intent": "run-pwd", "screen_id": "S2-GT", "payload": {"data": "pwd"}}
+{"ts": 0.705617, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S2-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 15443}}
+{"ts": 0.705632, "kind": "persona-input", "intent": "run-check", "screen_id": "S2-GT", "payload": {"data": "check"}}
+{"ts": 0.723369, "kind": "sentinel-matched", "intent": "stage2-cleared", "screen_id": "S2-GT", "payload": {"sentinel": "S2_CLEARED", "pattern": "Stage 2 cleared.", "cursor_after": 15550}}
+{"ts": 0.723385, "kind": "gate-pass", "intent": "stage2-cleared", "screen_id": "S2-GT", "payload": {"final": false}}
+{"ts": 0.741456, "kind": "screen-height", "intent": "", "screen_id": "S2-C", "payload": {"lines": 19, "budget": 22, "over": false}}
+{"ts": 0.741471, "kind": "sentinel-matched", "intent": "leave-stage2-cleared", "screen_id": "S2-C", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 16134}}
+{"ts": 0.741491, "kind": "persona-input", "intent": "leave-stage2-cleared", "screen_id": "S2-C", "payload": {"data": "next"}}
+{"ts": 0.750763, "kind": "sentinel-matched", "intent": "render-stage3-intro", "screen_id": "S3-I", "payload": {"sentinel": "S3_INTRO", "pattern": "STAGE 3 — Files and operations", "cursor_after": 16252}}
+{"ts": 0.768956, "kind": "screen-height", "intent": "", "screen_id": "S3-I", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.768982, "kind": "sentinel-matched", "intent": "leave-stage3-intro", "screen_id": "S3-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17037}}
+{"ts": 0.769008, "kind": "persona-input", "intent": "leave-stage3-intro", "screen_id": "S3-I", "payload": {"data": "next"}}
+{"ts": 0.775662, "kind": "sentinel-matched", "intent": "render-lesson-3-1", "screen_id": "S3-L1", "payload": {"sentinel": "S3_L1", "pattern": "3.1 — creating: touch, mkdir", "cursor_after": 17153}}
+{"ts": 0.793766, "kind": "screen-height", "intent": "", "screen_id": "S3-L1", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.793788, "kind": "sentinel-matched", "intent": "run-touch", "screen_id": "S3-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17719}}
+{"ts": 0.793813, "kind": "persona-input", "intent": "run-touch", "screen_id": "S3-L1", "payload": {"data": "touch hello.txt"}}
+{"ts": 0.79611, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S3-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17748}}
+{"ts": 0.796129, "kind": "persona-input", "intent": "run-ls", "screen_id": "S3-L1", "payload": {"data": "ls"}}
+{"ts": 0.798297, "kind": "sentinel-matched", "intent": "run-mkdir", "screen_id": "S3-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17774}}
+{"ts": 0.798317, "kind": "persona-input", "intent": "run-mkdir", "screen_id": "S3-L1", "payload": {"data": "mkdir notes"}}
+{"ts": 0.800917, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S3-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17799}}
+{"ts": 0.800935, "kind": "persona-input", "intent": "run-ls", "screen_id": "S3-L1", "payload": {"data": "ls"}}
+{"ts": 0.803288, "kind": "sentinel-matched", "intent": "leave-lesson-3-1", "screen_id": "S3-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17831}}
+{"ts": 0.803307, "kind": "persona-input", "intent": "leave-lesson-3-1", "screen_id": "S3-L1", "payload": {"data": "next"}}
+{"ts": 0.809794, "kind": "sentinel-matched", "intent": "render-lesson-3-2", "screen_id": "S3-L2", "payload": {"sentinel": "S3_L2", "pattern": "3.2 — reading: cat, less", "cursor_after": 17943}}
+{"ts": 0.827682, "kind": "screen-height", "intent": "", "screen_id": "S3-L2", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.827699, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S3-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 18661}}
+{"ts": 0.827723, "kind": "persona-input", "intent": "run-cat", "screen_id": "S3-L2", "payload": {"data": "cat hello.txt"}}
+{"ts": 0.830294, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S3-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 18688}}
+{"ts": 0.830319, "kind": "persona-input", "intent": "run-cat", "screen_id": "S3-L2", "payload": {"data": "cat ../poem.txt"}}
+{"ts": 0.832547, "kind": "sentinel-matched", "intent": "run-less", "screen_id": "S3-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 18864}}
+{"ts": 0.832571, "kind": "persona-input", "intent": "run-less", "screen_id": "S3-L2", "payload": {"data": "less ../numbers.txt"}}
+{"ts": 0.836898, "kind": "sentinel-matched", "intent": "leave-less-pager", "screen_id": "S3-L2", "payload": {"sentinel": "LESS_NUMBERS", "pattern": "1\n2\n3\n4\n5", "cursor_after": 18895}}
+{"ts": 0.836925, "kind": "persona-input", "intent": "leave-less-pager", "screen_id": "S3-L2", "payload": {"data": "q", "raw": true}}
+{"ts": 0.837304, "kind": "sentinel-matched", "intent": "leave-lesson-3-2", "screen_id": "S3-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 18973}}
+{"ts": 0.837324, "kind": "persona-input", "intent": "leave-lesson-3-2", "screen_id": "S3-L2", "payload": {"data": "next"}}
+{"ts": 0.843746, "kind": "sentinel-matched", "intent": "render-lesson-3-3", "screen_id": "S3-L3", "payload": {"sentinel": "S3_L3", "pattern": "3.3 — copy, move, delete", "cursor_after": 19085}}
+{"ts": 0.86152, "kind": "screen-height", "intent": "", "screen_id": "S3-L3", "payload": {"lines": 25, "budget": 22, "over": true}}
+{"ts": 0.861537, "kind": "sentinel-matched", "intent": "run-cp", "screen_id": "S3-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19779}}
+{"ts": 0.86156, "kind": "persona-input", "intent": "run-cp", "screen_id": "S3-L3", "payload": {"data": "cp hello.txt backup.txt"}}
+{"ts": 0.864189, "kind": "sentinel-matched", "intent": "run-mv", "screen_id": "S3-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19816}}
+{"ts": 0.86421, "kind": "persona-input", "intent": "run-mv", "screen_id": "S3-L3", "payload": {"data": "mv hello.txt hi.txt"}}
+{"ts": 0.866362, "kind": "sentinel-matched", "intent": "run-mv", "screen_id": "S3-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19849}}
+{"ts": 0.86638, "kind": "persona-input", "intent": "run-mv", "screen_id": "S3-L3", "payload": {"data": "mv hi.txt notes/"}}
+{"ts": 0.868443, "kind": "sentinel-matched", "intent": "run-rm", "screen_id": "S3-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19879}}
+{"ts": 0.86846, "kind": "persona-input", "intent": "run-rm", "screen_id": "S3-L3", "payload": {"data": "rm backup.txt"}}
+{"ts": 0.870843, "kind": "sentinel-matched", "intent": "leave-lesson-3-3", "screen_id": "S3-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19906}}
+{"ts": 0.870864, "kind": "persona-input", "intent": "leave-lesson-3-3", "screen_id": "S3-L3", "payload": {"data": "next"}}
+{"ts": 0.876974, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S3-G", "payload": {"sentinel": "S3_GATE", "pattern": "STAGE 3 — GATE", "cursor_after": 20008}}
+{"ts": 0.87744, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S3-G", "payload": {"sentinel": "S3_Q1", "pattern": "Q1: Which command creates an empty file?", "cursor_after": 20207}}
+{"ts": 0.877463, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S3-G", "payload": {"data": "touch"}}
+{"ts": 0.885268, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S3-G", "payload": {"sentinel": "S3_Q2", "pattern": "Q2: After rm important.txt, where is the file?", "cursor_after": 20306}}
+{"ts": 0.885294, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S3-G", "payload": {"data": "gone"}}
+{"ts": 0.892162, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S3-G", "payload": {"sentinel": "S3_Q3", "pattern": "Q3: What single command renames old.txt to new.txt?", "cursor_after": 20419}}
+{"ts": 0.89219, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S3-G", "payload": {"data": "mv"}}
+{"ts": 0.909309, "kind": "sentinel-matched", "intent": "render-gate-task", "screen_id": "S3-GT", "payload": {"sentinel": "S3_TASK", "pattern": "STAGE 3 — GATE TASK", "cursor_after": 20544}}
+{"ts": 0.926777, "kind": "screen-height", "intent": "", "screen_id": "S3-GT", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.926795, "kind": "sentinel-matched", "intent": "run-echo", "screen_id": "S3-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 21186}}
+{"ts": 0.926819, "kind": "persona-input", "intent": "run-echo", "screen_id": "S3-GT", "payload": {"data": "echo hello > notes.txt"}}
+{"ts": 0.927085, "kind": "sentinel-matched", "intent": "run-cp", "screen_id": "S3-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 21222}}
+{"ts": 0.92711, "kind": "persona-input", "intent": "run-cp", "screen_id": "S3-GT", "payload": {"data": "cp notes.txt backup.txt"}}
+{"ts": 0.929968, "kind": "sentinel-matched", "intent": "run-mv", "screen_id": "S3-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 21259}}
+{"ts": 0.930008, "kind": "persona-input", "intent": "run-mv", "screen_id": "S3-GT", "payload": {"data": "mv notes.txt done.txt"}}
+{"ts": 0.93278, "kind": "sentinel-matched", "intent": "run-rm", "screen_id": "S3-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 21294}}
+{"ts": 0.932801, "kind": "persona-input", "intent": "run-rm", "screen_id": "S3-GT", "payload": {"data": "rm backup.txt"}}
+{"ts": 0.935229, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S3-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 21321}}
+{"ts": 0.935246, "kind": "persona-input", "intent": "run-check", "screen_id": "S3-GT", "payload": {"data": "check"}}
+{"ts": 0.946422, "kind": "sentinel-matched", "intent": "stage3-cleared", "screen_id": "S3-GT", "payload": {"sentinel": "S3_CLEARED", "pattern": "Stage 3 cleared.", "cursor_after": 21428}}
+{"ts": 0.946439, "kind": "gate-pass", "intent": "stage3-cleared", "screen_id": "S3-GT", "payload": {"final": false}}
+{"ts": 0.963053, "kind": "screen-height", "intent": "", "screen_id": "S3-C", "payload": {"lines": 19, "budget": 22, "over": false}}
+{"ts": 0.963069, "kind": "sentinel-matched", "intent": "leave-stage3-cleared", "screen_id": "S3-C", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 22021}}
+{"ts": 0.963092, "kind": "persona-input", "intent": "leave-stage3-cleared", "screen_id": "S3-C", "payload": {"data": "next"}}
+{"ts": 0.976535, "kind": "sentinel-matched", "intent": "render-stage4-intro", "screen_id": "S4-I", "payload": {"sentinel": "S4_INTRO", "pattern": "STAGE 4 — Commands, streams, composition", "cursor_after": 22149}}
+{"ts": 0.994283, "kind": "screen-height", "intent": "", "screen_id": "S4-I", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 0.994302, "kind": "sentinel-matched", "intent": "leave-stage4-intro", "screen_id": "S4-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 23081}}
+{"ts": 0.994326, "kind": "persona-input", "intent": "leave-stage4-intro", "screen_id": "S4-I", "payload": {"data": "next"}}
+{"ts": 1.000656, "kind": "sentinel-matched", "intent": "render-lesson-4-1", "screen_id": "S4-L1", "payload": {"sentinel": "S4_L1", "pattern": "4.1 — reading a command", "cursor_after": 23192}}
+{"ts": 1.018687, "kind": "screen-height", "intent": "", "screen_id": "S4-L1", "payload": {"lines": 29, "budget": 22, "over": true}}
+{"ts": 1.018703, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24144}}
+{"ts": 1.018726, "kind": "persona-input", "intent": "run-ls", "screen_id": "S4-L1", "payload": {"data": "ls -l"}}
+{"ts": 1.022293, "kind": "sentinel-matched", "intent": "run-wc", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24286}}
+{"ts": 1.022316, "kind": "persona-input", "intent": "run-wc", "screen_id": "S4-L1", "payload": {"data": "wc -l poem.txt"}}
+{"ts": 1.024668, "kind": "sentinel-matched", "intent": "run-echo", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24332}}
+{"ts": 1.024697, "kind": "persona-input", "intent": "run-echo", "screen_id": "S4-L1", "payload": {"data": "echo \"hello world\""}}
+{"ts": 1.024855, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24376}}
+{"ts": 1.024886, "kind": "persona-input", "intent": "run-command", "screen_id": "S4-L1", "payload": {"data": "command -v ls"}}
+{"ts": 1.025006, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24411}}
+{"ts": 1.025024, "kind": "persona-input", "intent": "run-command", "screen_id": "S4-L1", "payload": {"data": "command -v vim"}}
+{"ts": 1.025208, "kind": "sentinel-matched", "intent": "leave-lesson-4-1", "screen_id": "S4-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 24452}}
+{"ts": 1.025232, "kind": "persona-input", "intent": "leave-lesson-4-1", "screen_id": "S4-L1", "payload": {"data": "next"}}
+{"ts": 1.031579, "kind": "sentinel-matched", "intent": "render-lesson-4-2", "screen_id": "S4-L2", "payload": {"sentinel": "S4_L2", "pattern": "4.2 — the pipe", "cursor_after": 24554}}
+{"ts": 1.049638, "kind": "screen-height", "intent": "", "screen_id": "S4-L2", "payload": {"lines": 28, "budget": 22, "over": true}}
+{"ts": 1.049657, "kind": "sentinel-matched", "intent": "run-seq", "screen_id": "S4-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 25471}}
+{"ts": 1.049683, "kind": "persona-input", "intent": "run-seq", "screen_id": "S4-L2", "payload": {"data": "seq 1 100 | wc -l"}}
+{"ts": 1.052643, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S4-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 25511}}
+{"ts": 1.052665, "kind": "persona-input", "intent": "run-ls", "screen_id": "S4-L2", "payload": {"data": "ls /usr/bin | sort | head"}}
+{"ts": 1.05871, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S4-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 25701}}
+{"ts": 1.05874, "kind": "persona-input", "intent": "run-ls", "screen_id": "S4-L2", "payload": {"data": "ls /usr/bin | grep ^a | wc -l"}}
+{"ts": 1.064181, "kind": "sentinel-matched", "intent": "leave-lesson-4-2", "screen_id": "S4-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 25753}}
+{"ts": 1.064206, "kind": "persona-input", "intent": "leave-lesson-4-2", "screen_id": "S4-L2", "payload": {"data": "next"}}
+{"ts": 1.070988, "kind": "sentinel-matched", "intent": "render-lesson-4-3", "screen_id": "S4-L3", "payload": {"sentinel": "S4_L3", "pattern": "4.3 — redirection and globs", "cursor_after": 25868}}
+{"ts": 1.088577, "kind": "screen-height", "intent": "", "screen_id": "S4-L3", "payload": {"lines": 34, "budget": 22, "over": true}}
+{"ts": 1.088592, "kind": "sentinel-matched", "intent": "run-echo", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 26996}}
+{"ts": 1.088613, "kind": "persona-input", "intent": "run-echo", "screen_id": "S4-L3", "payload": {"data": "echo first > greeting.txt"}}
+{"ts": 1.088916, "kind": "sentinel-matched", "intent": "run-echo", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 27035}}
+{"ts": 1.088938, "kind": "persona-input", "intent": "run-echo", "screen_id": "S4-L3", "payload": {"data": "echo second >> greeting.txt"}}
+{"ts": 1.089101, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 27076}}
+{"ts": 1.089119, "kind": "persona-input", "intent": "run-cat", "screen_id": "S4-L3", "payload": {"data": "cat greeting.txt"}}
+{"ts": 1.091663, "kind": "sentinel-matched", "intent": "run-wc", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 27119}}
+{"ts": 1.091688, "kind": "persona-input", "intent": "run-wc", "screen_id": "S4-L3", "payload": {"data": "wc -w < poem.txt"}}
+{"ts": 1.094206, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 27158}}
+{"ts": 1.094225, "kind": "persona-input", "intent": "run-ls", "screen_id": "S4-L3", "payload": {"data": "ls *.txt"}}
+{"ts": 1.096988, "kind": "sentinel-matched", "intent": "leave-lesson-4-3", "screen_id": "S4-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 27211}}
+{"ts": 1.097007, "kind": "persona-input", "intent": "leave-lesson-4-3", "screen_id": "S4-L3", "payload": {"data": "next"}}
+{"ts": 1.103604, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S4-G", "payload": {"sentinel": "S4_GATE", "pattern": "STAGE 4 — GATE", "cursor_after": 27313}}
+{"ts": 1.104093, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S4-G", "payload": {"sentinel": "S4_Q1", "pattern": "Q1: What does command -v vim print, if Vim is installed?", "cursor_after": 27528}}
+{"ts": 1.104115, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S4-G", "payload": {"data": "the path to vim"}}
+{"ts": 1.111687, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S4-G", "payload": {"sentinel": "S4_Q2", "pattern": "Q2: What is the difference between > and >>?", "cursor_after": 27609}}
+{"ts": 1.111716, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S4-G", "payload": {"data": "> overwrites, >> appends"}}
+{"ts": 1.118568, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S4-G", "payload": {"sentinel": "S4_Q3", "pattern": "Q3: Why does vim my notes.txt open two files instead of one?", "cursor_after": 27715}}
+{"ts": 1.118594, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S4-G", "payload": {"data": "because of the space"}}
+{"ts": 1.138535, "kind": "sentinel-matched", "intent": "render-gate-task", "screen_id": "S4-GT", "payload": {"sentinel": "S4_TASK", "pattern": "STAGE 4 — GATE TASK", "cursor_after": 27858}}
+{"ts": 1.155372, "kind": "screen-height", "intent": "", "screen_id": "S4-GT", "payload": {"lines": 21, "budget": 22, "over": false}}
+{"ts": 1.155393, "kind": "sentinel-matched", "intent": "run-seq", "screen_id": "S4-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 28413}}
+{"ts": 1.15542, "kind": "persona-input", "intent": "run-seq", "screen_id": "S4-GT", "payload": {"data": "seq 1 100 | wc -l > count.txt"}}
+{"ts": 1.158849, "kind": "sentinel-matched", "intent": "run-ls", "screen_id": "S4-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 28456}}
+{"ts": 1.158881, "kind": "persona-input", "intent": "run-ls", "screen_id": "S4-GT", "payload": {"data": "ls *.txt"}}
+{"ts": 1.161715, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S4-GT", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 28519}}
+{"ts": 1.161741, "kind": "persona-input", "intent": "run-check", "screen_id": "S4-GT", "payload": {"data": "check"}}
+{"ts": 1.182039, "kind": "sentinel-matched", "intent": "stage4-cleared", "screen_id": "S4-GT", "payload": {"sentinel": "S4_CLEARED", "pattern": "Stage 4 cleared.", "cursor_after": 28626}}
+{"ts": 1.182056, "kind": "gate-pass", "intent": "stage4-cleared", "screen_id": "S4-GT", "payload": {"final": false}}
+{"ts": 1.199738, "kind": "screen-height", "intent": "", "screen_id": "S4-C", "payload": {"lines": 19, "budget": 22, "over": false}}
+{"ts": 1.199752, "kind": "sentinel-matched", "intent": "leave-stage4-cleared", "screen_id": "S4-C", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 29265}}
+{"ts": 1.199772, "kind": "persona-input", "intent": "leave-stage4-cleared", "screen_id": "S4-C", "payload": {"data": "next"}}
+{"ts": 1.208977, "kind": "sentinel-matched", "intent": "render-stage5-intro", "screen_id": "S5-I", "payload": {"sentinel": "S5_INTRO", "pattern": "STAGE 5 — Ready for vimtutor", "cursor_after": 29381}}
+{"ts": 1.226966, "kind": "screen-height", "intent": "", "screen_id": "S5-I", "payload": {"lines": 15, "budget": 22, "over": false}}
+{"ts": 1.226981, "kind": "sentinel-matched", "intent": "leave-stage5-intro", "screen_id": "S5-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 29943}}
+{"ts": 1.227001, "kind": "persona-input", "intent": "leave-stage5-intro", "screen_id": "S5-I", "payload": {"data": "next"}}
+{"ts": 1.233367, "kind": "sentinel-matched", "intent": "render-lesson-5-1", "screen_id": "S5-L1", "payload": {"sentinel": "S5_L1", "pattern": "5.1 — print-and-exit vs full-screen", "cursor_after": 30066}}
+{"ts": 1.25133, "kind": "screen-height", "intent": "", "screen_id": "S5-L1", "payload": {"lines": 27, "budget": 22, "over": true}}
+{"ts": 1.251347, "kind": "sentinel-matched", "intent": "run-man", "screen_id": "S5-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 30893}}
+{"ts": 1.25138, "kind": "persona-input", "intent": "run-man", "screen_id": "S5-L1", "payload": {"data": "man ls"}}
+{"ts": 1.44946, "kind": "sentinel-matched", "intent": "leave-man-pager", "screen_id": "S5-L1", "payload": {"sentinel": "MAN_LS", "pattern": "LS(1)", "cursor_after": 30907}}
+{"ts": 1.449495, "kind": "persona-input", "intent": "leave-man-pager", "screen_id": "S5-L1", "payload": {"data": "q", "raw": true}}
+{"ts": 1.450724, "kind": "sentinel-matched", "intent": "leave-lesson-5-1", "screen_id": "S5-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 31804}}
+{"ts": 1.450748, "kind": "persona-input", "intent": "leave-lesson-5-1", "screen_id": "S5-L1", "payload": {"data": "next"}}
+{"ts": 1.457872, "kind": "sentinel-matched", "intent": "render-lesson-5-2", "screen_id": "S5-L2", "payload": {"sentinel": "S5_L2", "pattern": "5.2 — entering and leaving Vim", "cursor_after": 31922}}
+{"ts": 1.478156, "kind": "screen-height", "intent": "", "screen_id": "S5-L2", "payload": {"lines": 31, "budget": 22, "over": true}}
+{"ts": 1.478183, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 32730}}
+{"ts": 1.478211, "kind": "persona-input", "intent": "run-command", "screen_id": "S5-L2", "payload": {"data": "command -v vim"}}
+{"ts": 1.47846, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 32771}}
+{"ts": 1.478486, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"data": "vim --version"}}
+{"ts": 1.483267, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 35779}}
+{"ts": 1.483302, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"data": "vim"}}
+{"ts": 1.494951, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L2", "payload": {"sentinel": "VIM_INTRO", "pattern": "VIM - Vi IMproved", "cursor_after": 37581}}
+{"ts": 1.494974, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L2", "payload": {"data": ":q"}}
+{"ts": 1.597124, "kind": "screen-height", "intent": "", "screen_id": "S5-L2", "payload": {"lines": 1, "budget": 22, "over": false}}
+{"ts": 1.597159, "kind": "sentinel-matched", "intent": "leave-lesson-5-2", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 37892}}
+{"ts": 1.597192, "kind": "persona-input", "intent": "leave-lesson-5-2", "screen_id": "S5-L2", "payload": {"data": "next"}}
+{"ts": 1.606685, "kind": "sentinel-matched", "intent": "render-lesson-5-3", "screen_id": "S5-L3", "payload": {"sentinel": "S5_L3", "pattern": "5.3 — buffer vs file", "cursor_after": 38000}}
+{"ts": 1.631467, "kind": "screen-height", "intent": "", "screen_id": "S5-L3", "payload": {"lines": 39, "budget": 22, "over": true}}
+{"ts": 1.631488, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 39192}}
+{"ts": 1.631513, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 1.635525, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 39229}}
+{"ts": 1.635567, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"data": "vim practice.txt"}}
+{"ts": 1.650933, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 39261}}
+{"ts": 1.650971, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"data": "i", "raw": true}}
+{"ts": 1.651309, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 41069}}
+{"ts": 1.651335, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"data": "abc", "raw": true}}
+{"ts": 1.651347, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 41069}}
+{"ts": 1.755559, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 1.755595, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 41069}}
+{"ts": 2.059309, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"data": ":q!"}}
+{"ts": 2.17611, "kind": "screen-height", "intent": "", "screen_id": "S5-L3", "payload": {"lines": 3, "budget": 22, "over": false}}
+{"ts": 2.176164, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 41103}}
+{"ts": 2.176222, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 2.182364, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 41140}}
+{"ts": 2.182438, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"data": "vim practice.txt"}}
+{"ts": 2.211621, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 41172}}
+{"ts": 2.211683, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"data": "i", "raw": true}}
+{"ts": 2.212221, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 42980}}
+{"ts": 2.212255, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"data": "abc", "raw": true}}
+{"ts": 2.21227, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 42980}}
+{"ts": 2.315922, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 2.316024, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 42980}}
+{"ts": 2.619838, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"data": ":wq"}}
+{"ts": 2.739126, "kind": "screen-height", "intent": "", "screen_id": "S5-L3", "payload": {"lines": 6, "budget": 22, "over": false}}
+{"ts": 2.739216, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 43047}}
+{"ts": 2.739292, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 2.753248, "kind": "sentinel-matched", "intent": "leave-lesson-5-3", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 43087}}
+{"ts": 2.753362, "kind": "persona-input", "intent": "leave-lesson-5-3", "screen_id": "S5-L3", "payload": {"data": "next"}}
+{"ts": 2.779318, "kind": "sentinel-matched", "intent": "render-lesson-5-4", "screen_id": "S5-L4", "payload": {"sentinel": "S5_L4", "pattern": "5.4 — calling vimtutor", "cursor_after": 43197}}
+{"ts": 2.81627, "kind": "screen-height", "intent": "", "screen_id": "S5-L4", "payload": {"lines": 26, "budget": 22, "over": true}}
+{"ts": 2.816296, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S5-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 43984}}
+{"ts": 2.816334, "kind": "persona-input", "intent": "run-command", "screen_id": "S5-L4", "payload": {"data": "command -v vimtutor"}}
+{"ts": 2.816816, "kind": "sentinel-matched", "intent": "leave-lesson-5-4", "screen_id": "S5-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 44035}}
+{"ts": 2.816888, "kind": "persona-input", "intent": "leave-lesson-5-4", "screen_id": "S5-L4", "payload": {"data": "next"}}
+{"ts": 2.828479, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S5-G", "payload": {"sentinel": "S5_GATE", "pattern": "STAGE 5 — GATE", "cursor_after": 44137}}
+{"ts": 2.829208, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q1", "pattern": "Q1: How do you exit man ls?", "cursor_after": 44333}}
+{"ts": 2.829252, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S5-G", "payload": {"data": "q"}}
+{"ts": 2.842879, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q2", "pattern": "Q2: After vim notes.txt, what makes Vim write your edit to the file?", "cursor_after": 44424}}
+{"ts": 2.84293, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S5-G", "payload": {"data": ":w"}}
+{"ts": 2.857706, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q3", "pattern": "Q3: If you open notes.txt in vim, type some letters, and quit with :q!", "cursor_after": 44518}}
+{"ts": 2.857746, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S5-G", "payload": {"data": "no"}}
+{"ts": 2.886505, "kind": "sentinel-matched", "intent": "render-gate-task-1", "screen_id": "S5-GT1", "payload": {"sentinel": "S5_TASK1", "pattern": "STAGE 5 — GATE TASK (phase 1 of 2)", "cursor_after": 44689}}
+{"ts": 2.913618, "kind": "screen-height", "intent": "", "screen_id": "S5-GT1", "payload": {"lines": 22, "budget": 22, "over": false}}
+{"ts": 2.913641, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 45276}}
+{"ts": 2.913672, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"data": "cat practice.txt"}}
+{"ts": 2.917551, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 45313}}
+{"ts": 2.917593, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-GT1", "payload": {"data": "vim practice.txt"}}
+{"ts": 2.932315, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-GT1", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 45345}}
+{"ts": 2.932345, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-GT1", "payload": {"data": "i", "raw": true}}
+{"ts": 2.932784, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-GT1", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 47153}}
+{"ts": 2.932813, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-GT1", "payload": {"data": "xyz", "raw": true}}
+{"ts": 2.932825, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-GT1", "payload": {"sentinel": "", "pattern": "", "cursor_after": 47153}}
+{"ts": 3.038206, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-GT1", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 3.038238, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-GT1", "payload": {"sentinel": "", "pattern": "", "cursor_after": 47153}}
+{"ts": 3.343446, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-GT1", "payload": {"data": ":q!"}}
+{"ts": 3.447528, "kind": "screen-height", "intent": "", "screen_id": "S5-GT1", "payload": {"lines": 3, "budget": 22, "over": false}}
+{"ts": 3.447552, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 47187}}
+{"ts": 3.447584, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"data": "cat practice.txt"}}
+{"ts": 3.451332, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 47224}}
+{"ts": 3.451418, "kind": "persona-input", "intent": "run-check", "screen_id": "S5-GT1", "payload": {"data": "check"}}
+{"ts": 3.457515, "kind": "sentinel-matched", "intent": "phase1-verified", "screen_id": "S5-GT1", "payload": {"sentinel": "S5_PHASE1_OK", "pattern": "Phase 1 verified — the file was unchanged.", "cursor_after": 47276}}
+{"ts": 3.467562, "kind": "sentinel-matched", "intent": "render-gate-task-2", "screen_id": "S5-GT2", "payload": {"sentinel": "S5_TASK2", "pattern": "STAGE 5 — GATE TASK (phase 2 of 2)", "cursor_after": 47394}}
+{"ts": 3.49243, "kind": "screen-height", "intent": "", "screen_id": "S5-GT2", "payload": {"lines": 18, "budget": 22, "over": false}}
+{"ts": 3.492454, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 47840}}
+{"ts": 3.492484, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-GT2", "payload": {"data": "vim practice.txt"}}
+{"ts": 3.506523, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-GT2", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 47872}}
+{"ts": 3.50656, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-GT2", "payload": {"data": "i", "raw": true}}
+{"ts": 3.506966, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-GT2", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 49680}}
+{"ts": 3.506991, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-GT2", "payload": {"data": "after ", "raw": true}}
+{"ts": 3.507003, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-GT2", "payload": {"sentinel": "", "pattern": "", "cursor_after": 49680}}
+{"ts": 3.612175, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-GT2", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 3.612383, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-GT2", "payload": {"sentinel": "", "pattern": "", "cursor_after": 49680}}
+{"ts": 3.91722, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-GT2", "payload": {"data": ":wq"}}
+{"ts": 4.02712, "kind": "screen-height", "intent": "", "screen_id": "S5-GT2", "payload": {"lines": 5, "budget": 22, "over": false}}
+{"ts": 4.02718, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 49752}}
+{"ts": 4.027247, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT2", "payload": {"data": "cat practice.txt"}}
+{"ts": 4.036789, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 49795}}
+{"ts": 4.036867, "kind": "persona-input", "intent": "run-check", "screen_id": "S5-GT2", "payload": {"data": "check"}}
+{"ts": 4.043396, "kind": "sentinel-matched", "intent": "stage5-cleared", "screen_id": "S5-GT2", "payload": {"sentinel": "S5_CLEARED", "pattern": "Stage 5 cleared.", "cursor_after": 49865}}
+{"ts": 4.043447, "kind": "gate-pass", "intent": "stage5-cleared", "screen_id": "S5-GT2", "payload": {"final": true}}
+{"ts": 4.05203, "kind": "sentinel-matched", "intent": "render-finale", "screen_id": "FIN", "payload": {"sentinel": "FINALE", "pattern": "You're ready for vimtutor.", "cursor_after": 49893}}
+{"ts": 4.056464, "kind": "screen-height", "intent": "", "screen_id": "FIN", "payload": {"lines": 31, "budget": 22, "over": true}}
+{"ts": 4.056596, "kind": "child-exit", "intent": "", "screen_id": "", "payload": {"exit_code": 0}}
+{"ts": 4.056596, "kind": "session-end", "intent": "", "screen_id": "", "payload": {"gate_passed": true, "wall_clock_capped": false}}
+{"ts": 4.056596, "kind": "persona-end", "intent": "", "screen_id": "", "payload": {}}

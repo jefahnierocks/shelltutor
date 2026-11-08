@@ -36,10 +36,10 @@ lines (the vertical budget is 24 rows minus the practice prompt; none above
 | --- | ---: | --- | ---: | --- |
 | S1-I `stage1_intro` | 7 | stage scope (five lessons + a small task; WP-12) | 1 | keep |
 | S1-L1 `1.1 running commands` | 16 | `echo`; spaces separate words vs quotes group them; a command is a name plus words | 3 (the three `echo` forms) | **keep** — one concept family, three variations of one action |
-| S1-L2 `1.2 keyboard habits` | 15 | Tab completion (shared part, second Tab lists); Up-arrow recall; Ctrl+L and `clear`; Ctrl+C | 4 (one keypress each) | **keep with watch** — four keys exceed the literal rule, but they are one family and each is a single keystroke; splitting again would fragment the card |
+| S1-L2 `1.2 keyboard habits` | 14 | Tab completion (shared part, second Tab lists); Up-arrow recall; Ctrl+L and `clear`; Ctrl+C | 4 (one keypress each) | **keep with watch** — four keys exceed the literal rule, but they are one family and each is a single keystroke; splitting again would fragment the card |
 | S1-L3 `1.3 where / who / when` | 12 | `whoami`; `pwd`; `date`; why `pwd` shows the tutor folder | 3 | **keep** — trimmed |
-| S1-L4 `1.4 what just happened` | 18 | terminal → shell → program; five-step pipeline | 0 (read) | **keep with watch** — footer now `▶ Type next.` |
-| S1-L5 `1.5 who else types here` | 19 | agent → shell → program; three habits (read the line, know the folder, read the output) | 0 (read) | **keep with watch** — WP-12; two read-only screens, 1.4 and 1.5, now precede the gate (A1.5) |
+| S1-L4 `1.4 the shell, caught in the act` | 18 | the shell speaks (`bash: dtae: command not found`); terminal → shell → program, anchored | 2 (`date`, `dtae`) | **keep** — WP-14 replaced the five-step list; the model now rests on something the learner sees. Footer `▶ Type next.` |
+| S1-L5 `1.5 who else types here` | 16 | agent → shell → program; three habits (read the line, know the folder, read the output) | 0 (read) | **keep with watch** — WP-12; two read-only screens, 1.4 and 1.5, now precede the gate (A1.5) |
 
 ## Evidence
 
@@ -59,3 +59,14 @@ The harness is deterministic and has no human pauses, so it cannot supply the
 "long pause before `next`" signal the original audit asked for on S1-L4 (now
 1.4) or the orientation card. Those two stay under watch until a human
 Phase 2 walkthrough (`docs/phase2-walkthrough-checklist.md`) reports on them.
+
+## WP-14 amendment (2026-11-08)
+
+1.4 is replaced (O-L): the learner types `date`, then the mistyped `dtae`,
+and reads `bash:` as the shell speaking. The harness records the error as
+`expected-error` on S1-L4 only. Lesson 1.2's Ctrl+L and `show` sentences
+are one line (O-K, A2.5; `clear` is kept in the same line). Heredoc lines
+above are measured on the WP-14 revision; the S1-L5 row corrects the 19
+recorded by WP-12 (the closing paragraph was cut for the chrome). Rendered
+heights on Bash 5.3.20 and 3.2.57 (identical): S1-L1 20, S1-L2 18,
+S1-L3 16, S1-L4 22, S1-L5 20. Stage 2 is in `stage2-density.md`.
