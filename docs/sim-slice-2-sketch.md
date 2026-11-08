@@ -4,12 +4,18 @@ category: planning
 component: sim-slice-2
 status: draft
 version: 0.1.0
-last_updated: 2026-07-14
+last_updated: 2026-11-07
 tags: [simulation, slice-2, hardening, pty, planning]
 priority: medium
 ---
 
 # Simulation Slice 2 Sketch
+
+**Status (2026-11-07):** scheduled as `docs/workplan/WP-03-practice-shell-hardening.md`,
+which carries the exact rcfile and the C-007 contract text. Two
+recommendations below are overridden by the work plan's decision log: the
+lesson 1.1 Tab copy change lands in the hardening commit (D-10), and the
+hardening does not wait for a Linux baseline (D-12). The rest stands.
 
 Refinement of `docs/simulation-design-plan.md` §First Three Slices
 §Slice 2 ("Practice-Shell Hardening") in light of the Slice 1

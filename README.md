@@ -4,7 +4,7 @@ category: reference
 component: project-overview
 status: active
 version: 0.2.0
-last_updated: 2026-10-17
+last_updated: 2026-11-07
 tags: [shell, bash, tutor, education, unix, posix]
 priority: high
 ---
@@ -59,6 +59,7 @@ shelltutor/
 ├── scripts/          # Static checkers, smoke test, and optional PTY harness
 ├── docs/
 │   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
+│   ├── workplan/     # Current cycle plan: decisions + worker-executable packages
 │   ├── audit/        # Audit-spec authority package + reference docs
 │   └── audit/references/  # Curriculum reference: shell-research.md
 ├── .claude/          # Claude Code agentic context (settings.json)

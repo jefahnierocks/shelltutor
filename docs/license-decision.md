@@ -4,7 +4,7 @@ category: planning
 component: license-decision
 status: draft
 version: 0.1.0
-last_updated: 2026-05-23
+last_updated: 2026-11-07
 tags: [license, phase4, planning, decision-pending]
 priority: medium
 ---
@@ -142,6 +142,9 @@ Steps 5 and 6 are the explicit Phase 4 exit per `ROADMAP.md`.
 
 ## Cross-references
 
+- `docs/workplan/WP-08-release-prep.md` — parameterised execution
+  package once the decision is made (operator fills in the license,
+  copyright line and Phase 2 results; the worker never tags).
 - `ROADMAP.md` Phase 4 — exit criteria.
 - `STATUS.md` "Deferrals" — current state.
 - `README.md` "License Posture" — current wording.

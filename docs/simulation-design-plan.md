@@ -4,7 +4,7 @@ category: planning
 component: simulation-design
 status: active
 version: 0.3.0
-last_updated: 2026-07-14
+last_updated: 2026-11-07
 tags: [simulation, pty, evidence, personas, planning, lesson-flow]
 priority: high
 ---
@@ -79,10 +79,20 @@ This keeps the production contract intact:
 
 - **Slice 1 — complete**: Stage 1 density audit, stdlib PTY harness, both
   baselines, and comparison evidence landed on 2026-05-23 (`29dc0d3`).
-- **Slice 2 — next**: practice-shell hardening remains planned in
-  `docs/sim-slice-2-sketch.md`.
-- **Slice 3 — deferred**: confusion events and a second persona have not
-  been implemented.
+- **FF-006c rung 1 — scheduled** as `docs/workplan/WP-01-five-stage-harness.md`
+  (2026-11-07): `careful-beginner` across all five stages, `make sim`,
+  mechanical `error-signature` events, `.progress` assertion, and a
+  `compare.py` for before/after bundles. Decisions D-02 and D-03 fix the
+  coverage model and the harness's controlled inputs.
+- **Slice 2 — scheduled** as `docs/workplan/WP-03-practice-shell-hardening.md`.
+  Decisions D-09 to D-12 refine this plan: the exact rcfile and contract
+  C-007; the lesson 1.1 Tab/bell line lands with the hardening (D-10); the
+  `no-system-rc-preview` variant is retired afterwards (D-11); the Linux
+  baseline is captured when available and is not a prerequisite (D-12).
+- **Slice 3 — partially scheduled**: the mechanical error-signature scan
+  (`WP-01`) and a deliberate-failure `second-try` persona for stages 2 and 4
+  (`WP-05`) land in this cycle; `confused-novice` and the full confusion-
+  event set remain deferred.
 
 ## Implementation Ladder
 
@@ -92,7 +102,7 @@ Treat FF-006 as a ladder, not one binary state.
 | --- | --- | --- | --- |
 | FF-006a | Static smoke | Current syntax/help/structure/bad-arg checks | `make smoke` |
 | FF-006b | Minimal lesson flow | `careful-beginner` through Stage 1 lessons and gate via PTY | `make lesson-flow` |
-| FF-006c | Simulation depth | all stages, then multiple personas | `make sim` |
+| FF-006c | Simulation depth | all stages (rung 1, `WP-01`), then multiple personas | `make sim` |
 
 FF-006b is the release-readiness milestone for automated lesson-flow
 coverage. FF-006c is depth and regression confidence, not a prerequisite

@@ -4,7 +4,7 @@ category: status
 component: project-status
 status: active
 version: 0.2.0
-last_updated: 2026-10-17
+last_updated: 2026-11-07
 tags: [status, posture, deferrals]
 priority: high
 ---
@@ -97,20 +97,45 @@ Current truth for the `shelltutor` repository.
 - `.claude/settings.json` carries a PostToolUse shellcheck hook so
   Claude Code sessions get the FF-005 warning immediately on script
   edits.
+- **2026-11 work plan adopted** (`docs/workplan/README.md`, 2026-11-07,
+  prepared at `b2fdff7`): eight worker-executable packages WP-01 to WP-08
+  with a binding decision log (D-01 to D-18). Sequence: five-stage harness
+  baseline → tutor correctness fixes → practice-shell hardening (Slice 2,
+  C-007) → Stage 1 density split → gate feedback alignment → doc sweep.
+  Hosted Linux evidence capture and release preparation are operator-gated.
+- **F-010 to F-013 surfaced by static review** (`audit/2026-11-07/findings.md`,
+  2026-11-07; all open, fixes scheduled in WP-02 after the WP-01 baseline):
+  lesson 5.3 promises a `practice.txt` fixture that does not exist at lesson
+  time (F-010, sev 3); lesson copy hardcodes `~/.shelltutor` and fails under
+  `SHELLTUTOR_HOME` (F-011, sev 3); `ask_question` uses GNU-sed `\+`, a no-op
+  on macOS (F-012, sev 2); the Stage 1 day-of-week check assumes an English
+  locale and cannot pass under e.g. `de_DE` (F-013, sev 3). FF-008 (POSIX
+  text-tool portability in script code) is proposed there.
+- On 2026-11-07 `make verify` (24 declaration tests plus the static, lint and
+  smoke checks), `make self-test`, and the Stage 1 PTY harness passed locally
+  under Bash 3.2.57 and 5.3.20; the hosted `verify` run on `b2fdff7`
+  succeeded. Inside an agent session the manifest check refuses inherited
+  `GIT_CONFIG_*` overrides and reports NOT_CHECKED; the work plan's worker
+  protocol gives the environment-clearing command that restores the verdict.
 - The companion `wyn-setup/` directory from prior-art is intentionally
   not carried forward.
 - No `LICENSE` or `CHANGELOG.md` file yet (see Deferrals).
 
 ## Immediate Next Steps
 
-1. **Portability validation (ROADMAP Phase 2)** — manually walk all
+1. **Execute the 2026-11 work plan** (`docs/workplan/README.md`) —
+   WP-01 → WP-02 → WP-03 → WP-04 in order, WP-05 after WP-02, WP-06 after
+   operator approval, WP-07 last; WP-08 once the operator supplies the
+   license choice and the Phase 2 walkthrough results. Each package names
+   its commits, validation and evidence; `STATUS.md` records each landing.
+2. **Portability validation (ROADMAP Phase 2)** — manually walk all
    five mastery-gated stages on macOS with stock `/bin/bash` 3.2 and
    on a Debian/Ubuntu-family Linux host with Bash 5.x. The no-TTY negative
    test is recorded above; Fedora-family validation is optional. Record the
    walkthrough dates + observed results here. The
    static checks (`make verify`) confirm the script's invariants; the
    manual walkthrough confirms the human-facing experience.
-2. **Second profile + audit cycle** — once Phase 2 manual validation
+3. **Second profile + audit cycle** — once Phase 2 manual validation
    lands, run a focused-refresh profile and a focused-diff audit
    (Phases 1, 6, 8, 10, 10.5) per the cadence recommended in
    `audit/2026-05-21/SUMMARY.md`. Expected outcomes:
@@ -119,9 +144,10 @@ Current truth for the `shelltutor` repository.
    - FF-001..FF-007 promoted from "proposed" to "implemented"
      (FF-003 remains "deferred")
    - new dimension scores per §11 reflecting the closures
-3. **License decision (ROADMAP Phase 4 trigger)** — pick a posture
+4. **License decision (ROADMAP Phase 4 trigger)** — pick a posture
    before inviting outside reuse or contribution and before a tagged release.
-   Triggers `CHANGELOG.md` creation and `v0.1.0` tag.
+   Triggers `CHANGELOG.md` creation and `v0.1.0` tag. `docs/workplan/WP-08-release-prep.md`
+   is the parameterised execution package once the choice is made.
 
 ## Deferrals
 

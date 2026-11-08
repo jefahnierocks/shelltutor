@@ -3,9 +3,9 @@ title: shelltutor Roadmap
 category: planning
 component: roadmap
 status: active
-version: 0.1.0
-last_updated: 2026-07-14
-tags: [roadmap, phases, planning]
+version: 0.2.0
+last_updated: 2026-11-07
+tags: [roadmap, phases, planning, workplan]
 priority: medium
 ---
 
@@ -14,6 +14,13 @@ priority: medium
 Phase map for `shelltutor`. Each phase closes when its exit criteria hold;
 independent implementation work may land before an earlier validation phase
 closes, but the status of every phase remains explicit and inspectable.
+
+**Current cycle (adopted 2026-11-07):** `docs/workplan/README.md` sequences
+the implementation work that serves Phases 2 to 4 as eight worker-executable
+packages (WP-01 to WP-08). Its decision log D-01 to D-18 is binding for the
+cycle; this roadmap records phase status, the work plan records how each
+piece lands. Landings are summarised here under the phase they advance and
+in `STATUS.md`.
 
 ## Phase 0 — Day-1 Scaffold (complete)
 
@@ -69,8 +76,19 @@ Work:
 - Validate on a Debian/Ubuntu-family Linux distro with Bash 5.x.
 - Record a no-TTY negative test. Fedora-family validation is useful but
   optional for Phase 2 closure.
-- Document any bash version floor.
-- Add a `shellcheck` pass; resolve or annotate findings.
+- Document any bash version floor. **Done**: the Bash 3.2 floor is
+  documented in `README.md` and `STATUS.md`; F-009 (2026-07-14) fixed the
+  cross-generation startup behaviour.
+- Add a `shellcheck` pass; resolve or annotate findings. **Done**:
+  `make lint` runs ShellCheck clean and the hosted `verify` workflow repeats
+  it on every push (2026-10-17).
+- Automated support (2026-11 work plan): the five-stage PTY baseline
+  (`WP-01`, FF-006c rung 1) and hosted Linux transcript capture (`WP-06`,
+  operator-gated) de-risk the human walkthroughs; they do not replace them.
+  Four defects found by static review on 2026-11-07 (F-010 to F-013,
+  `audit/2026-11-07/findings.md`) are fixed by `WP-02` before the human
+  walks, because two of them (F-010, F-013) would fail a walk on a clean
+  host.
 
 Exit criteria:
 
@@ -370,13 +388,30 @@ identity commands. No information is lost.
   independent of Phase 2 portability validation. The harness is
   optional contributor tooling and is not part of `make verify`.
 
+### Amendments
+
+The spec above is the durable record of the Phase 3 design. Changes to the
+shipped curriculum are listed here, dated, rather than rewritten into it.
+
+- **2026-11-07 (plan adopted).** Scheduled through `docs/workplan/`:
+  stage-folder model (decision D-04; stages 3 to 5 run lessons and gates in
+  `$SANDBOX/stageN`, fixtures seeded on stage entry) and lesson-copy
+  corrections F-010/F-011 (`WP-02`); locale-tolerant Stage 1 day check
+  F-013 (`WP-02`, D-06); Stage 1 renumbered to four lessons (`WP-04`,
+  D-13); Stage 2 gate requires at least one `cd` in practice history and
+  Stage 4 verifies the `*.txt` glob from history, with escalating retry
+  feedback on every gate and no auto-pass (`WP-05`, D-14). Each landing
+  adds a dated line here.
+
 ## Phase 4 — Release Posture (pending)
 
 Goal: choose a license, cut a tagged release, decide on distribution.
 
 Work:
 
-- License decision (see `STATUS.md` deferral).
+- License decision (see `STATUS.md` deferral and `docs/license-decision.md`).
+  Execution package: `docs/workplan/WP-08-release-prep.md`, operator-gated on
+  the license choice, the copyright line, and the Phase 2 walkthrough results.
 - Create `CHANGELOG.md` and tag `v0.1.0`.
 - Decide whether managed distribution (Homebrew tap, AUR, etc.) is worth
   the maintenance cost or whether `clone + run` stays the install story.

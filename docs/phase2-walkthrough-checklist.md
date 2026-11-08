@@ -4,7 +4,7 @@ category: planning
 component: phase2-checklist
 status: active
 version: 0.1.0
-last_updated: 2026-07-14
+last_updated: 2026-11-07
 tags: [phase2, portability, walkthrough, manual-validation]
 priority: medium
 ---
@@ -66,7 +66,7 @@ walkthrough.
 | # | Stage | Gate-task surface |
 | --- | --- | --- |
 | 1 | Where am I? | run `whoami`, `pwd`, `date`; answer three follow-ups (verified via filesystem + `$(date +%a)`). |
-| 2 | Paths and the filesystem | create `$SANDBOX/practice/`, navigate between it and `$HOME`. |
+| 2 | Paths and the filesystem | create `$SANDBOX/stage2/practice/`, `cd` into it, confirm with `pwd`. |
 | 3 | Files and operations | inside `$SANDBOX/stage3/`, create `notes.txt` containing "hello", copy → `backup.txt`, rename `notes.txt` → `done.txt`, remove `backup.txt`. |
 | 4 | Commands, streams, composition | inside `$SANDBOX/stage4/`, `seq 1 100 \| wc -l > count.txt`; list `*.txt` glob. |
 | 5 | Ready for vimtutor | inside `$SANDBOX/stage5/`, edit `practice.txt`: first phase quits without saving (`:q!`); second phase saves (`:wq`). |

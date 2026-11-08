@@ -4,7 +4,7 @@ category: governance
 component: agents-contract
 status: active
 version: 0.2.0
-last_updated: 2026-10-17
+last_updated: 2026-11-07
 tags: [agents, claude, codex, authority, boundary]
 priority: high
 ---
@@ -122,6 +122,12 @@ context that already exists.
 
 - `STATUS.md` — current status-of-record; `project.yaml` is its
   machine-readable meta-inventory projection and must not outrun it.
+- `docs/workplan/README.md` — the 2026-11 cycle plan: binding worker
+  protocol, decision log D-01 to D-18, and the WP-01 to WP-08 packages. An
+  implementation session takes exactly one package.
+- `audit/2026-11-07/findings.md` — F-010 to F-013 (lesson fixture,
+  hardcoded sandbox path, GNU-sed `\+`, locale-dependent gate) and the
+  FF-008 proposal; closed by WP-02.
 - `audit/2026-07-14/findings.md` — resolved F-009 portability regression
   and the Bash 3.2/Bash 5.3 validation boundary.
 - `audit/2026-05-21/SUMMARY.md` — first audit cycle (Agentic Architecture
