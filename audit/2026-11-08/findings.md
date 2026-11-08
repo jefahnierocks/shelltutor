@@ -5,7 +5,7 @@ component: findings
 status: active
 version: 0.1.0
 last_updated: 2026-11-08
-tags: [audit, findings, portability, practice-shell, bash-floor]
+tags: [audit, findings, portability, practice-shell, bash-floor, resolved]
 priority: high
 ---
 
@@ -35,22 +35,29 @@ per the findings flow in `docs/simulation-design-plan.md`.
   the practice shell are always the same binary. Document in C-007; the
   Phase 2 checklist asks the walker to run `echo $BASH_VERSION` at the
   first practice prompt and record it.
-- **Status**: open; fix scheduled in `WP-09`.
+- **Status**: resolved in `8d2c7bf` (`WP-09`): `practice()` launches `"$BASH"`. With
+  `/bin/bash` as the outer script and Homebrew Bash first on `PATH`, a practice
+  prompt reported `BASH_VERSION` 5.3.20 before the fix and 3.2.57 after. C-007 and
+  the Phase 2 checklist (step 0) say so.
 
 ## Observations
 
 - **O-F** The hosted-evidence intake grep for home-directory prefixes hits
   lesson 2.3's absolute-path example (a notes file under a fictional
   user's home) on every intake. The intake text should exclude that known
-  string. (`WP-09`)
+  string. (`WP-09`) **Done** (`b4457c9`): the intake grep pipes through `grep -v`
+  for that path.
 - **O-G** `summary.md` does not record the Bash version that ran the
   tutor; the workflow log does. The harness should capture
   `bash --version` (first line) of the `bash` it will resolve, in run
-  metadata. (`WP-09`)
+  metadata. (`WP-09`) **Done** (`b4457c9`): `bash_path` and `bash_version` are in
+  run metadata and `summary.md`.
 - **O-H** No macOS `--stage all` bundle exists after WP-04/WP-05; the
   `all-slice2` baseline predates the Stage 1 split, so Linux intakes
   compare against stale Stage 1 content. A fresh macOS bundle is needed
-  as the like-for-like baseline. (`WP-09`)
+  as the like-for-like baseline. (`WP-09`) **Done**: `sim/all-current/current-rc`
+  (macOS, Bash 5.3.20); its Stage 1 text matches `all-linux/current-rc` apart from
+  the user name, date and day-of-week answer.
 - **O-I** `sim-evidence` runs on every push to `main` (about 13 s each)
   and produces an artifact per commit; only reviewed bundles are intaken.
   Acceptable as designed (D-17); the operator may narrow the trigger to

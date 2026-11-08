@@ -118,6 +118,14 @@ documents agree with the code.
 - F-010 to F-013 (stage-5 fixture, hardcoded sandbox path, GNU-sed `\+`,
   English-only day check) surfaced by static review on 2026-11-07 and are
   resolved by WP-02 (`audit/2026-11-07/findings.md`).
+- F-014 (the practice shell was whichever `bash` was first on `PATH`, not the
+  interpreter running the script) surfaced on 2026-11-08 and is resolved by
+  WP-09 (`audit/2026-11-08/findings.md`): `practice()` launches `"$BASH"`, and
+  run metadata records `bash_path` and `bash_version`. The 2026-11-08 macOS
+  Phase 2 walk did not confirm the practice shell's Bash version, so it should
+  be repeated with `/bin/bash ./shelltutor` and `echo $BASH_VERSION` recorded;
+  the operator re-records it. The like-for-like macOS baseline is
+  `audit/2026-11-08/sim/all-current/`.
 - The Stage 1 density audit (`audit/2026-05-23/stage1-density.md`) preceded
   the first baseline as required; its follow-up
   (`audit/2026-11-08/stage1-density-followup.md`) records the WP-04 split.
