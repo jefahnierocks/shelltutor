@@ -902,9 +902,9 @@ Two more useful ones:
   ${CMD}cd -${RST}          ${DIM}# go back to the previous folder${RST}
   ${CMD}cd ..${RST}         ${DIM}# go up one level (to the parent folder)${RST}
 
-${EM}This tutor's sandbox is the practice subshell's starting folder${RST},
-so you'll always start at ${DIR}${SANDBOX}${RST} when a lesson opens.
-If you wander, ${CMD}cd ~/.shelltutor${RST} brings you back.
+${EM}Stages 1 and 2 start every practice prompt in${RST} ${DIR}${SANDBOX}${RST}${EM}.${RST}
+Later stages start in a stage folder inside it. If you wander off,
+${CMD}cd ${SANDBOX}${RST} brings you back.
 
 ${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
 EOF
@@ -1100,11 +1100,11 @@ ${H1}3.2 — reading: cat, less${RST}
 
 ${CMD}cat${RST} prints the entire file at once.
   ${CMD}cat hello.txt${RST}                ${DIM}# probably empty${RST}
-  ${CMD}cat ~/.shelltutor/poem.txt${RST}   ${DIM}# the tutor's poem fixture${RST}
+  ${CMD}cat ../poem.txt${RST}        ${DIM}# the tutor's poem, one folder up${RST}
 
 For a long file, ${CMD}cat${RST} floods the screen. Use ${CMD}less${RST}
 to page through it:
-  ${CMD}less ~/.shelltutor/poem.txt${RST}
+  ${CMD}less ../numbers.txt${RST}    ${DIM}# 50 lines — more than one screen${RST}
 
 Inside ${CMD}less${RST}, the screen takes over. Press ${KEY}Space${RST}
 or ${KEY}f${RST} to page down, ${KEY}b${RST} to page back, and
