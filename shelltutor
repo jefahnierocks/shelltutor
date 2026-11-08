@@ -1083,7 +1083,7 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if ! gate_require_history "$hist_mark" \
-                    "cd into it (cd practice)" '^[[:space:]]*cd([[:space:]]|$)'; then
+                    "cd into it (cd practice)" '(^|[;&|])[[:space:]]*cd([[:space:]]|$)'; then
                     # Helper printed what is missing. Re-enter the practice
                     # prompt without redisplaying the task screen, so the
                     # message stays visible (same pattern as Stage 1).
@@ -1312,7 +1312,7 @@ EOF
                 attempt=$((attempt + 1))
                 printf '\n%bThe folder state doesn'\''t match yet.%b\n' "$EM" "$RST"
                 printf '%bWhat I expected:%b\n' "$SUB" "$RST"
-                printf '  done.txt exists and contains the word ''hello''\n'
+                printf '  done.txt exists and contains the word '\''hello'\''\n'
                 printf '  notes.txt is gone\n'
                 printf '  backup.txt is gone\n\n'
                 printf '%bWhat I see in %s:%b\n' "$SUB" "$SANDBOX/stage3" "$RST"
