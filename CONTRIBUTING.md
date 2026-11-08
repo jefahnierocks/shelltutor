@@ -109,6 +109,21 @@ If a lesson genuinely requires a non-portable surface, gate it on a runtime
 check and degrade gracefully — do not couple the script's default path to
 the non-portable surface.
 
+## Screen Chrome
+
+Every tutor screen is a panel between two rules (A3, `docs/direction-decisions-2026-11.md`):
+a header rule with the stage dots and position, a blank, the heredoc content,
+a lower rule, then the practice shell's footer bar and prompt. `show_screen`
+draws the header and lower rule; the runners set `PANEL_STAGE` and `PANEL_POS`
+first. The chrome costs two rows over a bare screen, so heredoc content is at
+most 19 rows and authored to 18 (22 rendered rows before the prompt). Rules
+are built by a loop at a fixed 80 columns; never `tr` on a multibyte glyph or
+`${s:0:n}`, and never `tput`. Use the glyph variables (`${G_PLAY}`, `${G_OK}`, ...),
+not literal `▶` or `✓`; ASCII substitutes are selected by the plain-text path or
+`SHELLTUTOR_ASCII=1`, never by locale. Gate feedback goes through `fb_ok`,
+`fb_todo` and `fb_note`.
+The full lesson-screen template lands with WP-13 (commit D).
+
 ## Evidence Rules
 
 - When importing or porting material from prior-art (e.g.,

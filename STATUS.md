@@ -128,6 +128,10 @@ documents agree with the code.
   be repeated with `/bin/bash ./shelltutor` and `echo $BASH_VERSION` recorded;
   the operator re-records it. The like-for-like macOS baseline is
   `audit/2026-11-08/sim/all-current/`.
+- Screen chrome (WP-15, amendment A3) is built on `wp/15-screen-chrome`: panel header and
+  lower rule, key-hint footer bar, `┃` feedback checklist, ASCII glyph fallback
+  (`SHELLTUTOR_ASCII`). Evidence: `audit/2026-11-08/wp15-screen-heights.md` and
+  `audit/2026-11-08/sim/wp15-*`.
 - The Stage 1 density audit (`audit/2026-05-23/stage1-density.md`) preceded
   the first baseline as required; its follow-up
   (`audit/2026-11-08/stage1-density-followup.md`) records the WP-04 split.

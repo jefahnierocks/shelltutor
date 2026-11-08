@@ -708,6 +708,8 @@ before the course and a pointer during it; for 4 to 6 it offers text.
 | Farewell | "Bye. Run 'shelltutor' again to pick up where you left off." | `shelltutor:434` | makes resume discoverable |
 | Environment check | ok / not ok / info marks | `shelltutor:203-282` | self-diagnosis before the first screen |
 
+*Amended 2026-11 (WP-15, A3).* The table above describes the baseline and stays as written. Screens now carry three further cues: a header rule with five stage dots (`●` passed, `◉` current, `○` not reached) and the position (`N.k` or `task`), which show position rather than score and stay inside §1.11; a footer bar (`next ▸ go on   show ▸ …`) that replaces the parenthesised mode footer; and a `┃` checklist (`✓` / `○` with `not yet: …`) that replaces the "Almost — you still need to" list and the expected/seen listing. The glyphs fall back to ASCII on the plain path or under `SHELLTUTOR_ASCII=1`.
+
 ### 4.3 Sequencing logic
 
 **Within a stage**, each stage moves from recognition to action to model:

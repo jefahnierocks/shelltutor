@@ -137,7 +137,8 @@ Removing individual files inside `$SANDBOX` self-heals on the next
 | ---                  | ---            | ---                                                             | ---                          |
 | `HOME`               | startup        | Parent of the default sandbox root.                              | shell default                |
 | `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`. Normalised at startup: made absolute against the invoking directory and stripped of trailing slashes; `--info` and all lesson copy show the normalised value. | unset                        |
-| `NO_COLOR`           | startup        | When set (any value), disables ANSI colour output.                | unset                        |
+| `NO_COLOR`           | startup        | When set and non-empty, disables ANSI colour output and selects the ASCII glyph set. | unset                        |
+| `SHELLTUTOR_ASCII`   | startup        | When `1`, selects the ASCII glyph set (A3.7) while colours stay on. The ASCII set is also used when stdout is not a terminal. Never selected by locale (A3.7). | unset                        |
 | `SHELL`              | `--info`       | Reported as the login shell; does not choose the practice shell.   | unset shown explicitly       |
 | `TERM`               | `--info`       | Reported as terminal context.                                      | unset shown explicitly       |
 | `PATH`               | runtime        | Resolves external commands; `--info` reports selected tool paths.  | inherited                    |
@@ -182,6 +183,12 @@ not. Gate feedback wording is likewise not contractual, but the escalation
 order on repeated gate failure (restatement, then hint, then worked example,
 with no auto-pass) is part of the curriculum design.
 
+Gate feedback is a `┃` checklist (A3.4): each line of the block starts with
+the bar, a `✓` line marks what the gate saw done, a `○` line marks what it did
+not with `not yet: <what it sees>`, and one closing line names the action and
+`check`. The `not yet:` text is the harness's feedback sentinel `NOT_YET`; the
+shape is recorded here, the words after it are not contractual.
+
 ## C-007 — Practice-shell environment and Readline behaviour
 
 The practice prompt is a real interactive Bash started by `practice()` as
@@ -223,9 +230,9 @@ table, which this section now owns.
 | C-001 | C-001            | stable for the 5-stage curriculum                    |
 | C-002 | C-002            | extended with `check` (RC=96) in curriculum redesign |
 | C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02) |
-| C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02) |
+| C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02, WP-15) |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
-| C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05) |
+| C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05, WP-15) |
 | C-007 | —                | added 2026-11 (WP-03, Slice 2): practice-shell environment and Readline behaviour; owns what C-004 listed for the practice subshell |
 
 The current revision passes the audit's Phase 4 exit checks: no
