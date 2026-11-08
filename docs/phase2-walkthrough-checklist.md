@@ -37,6 +37,12 @@ identification (OS/version/arch), and the observed outcome.
 
 For each platform, in a fresh terminal:
 
+0. Invoke the tutor with the Bash under test explicitly: for Bash 3.2 on
+   macOS run `/bin/bash ./shelltutor`. A bare `./shelltutor` resolves its
+   `#!/usr/bin/env bash` shebang through `PATH`, so it runs whichever
+   `bash` is first there. The practice shell is always the same binary as
+   the outer script (`$BASH`, C-007), so at the first practice prompt run
+   `echo $BASH_VERSION` and record the value in the STATUS line.
 1. Run `./shelltutor --info` first and note any `not ok` line (bash
    version, writable sandbox, `/dev/tty`, `vim`/`vimtutor`). It prints the
    environment check before any lesson screen renders.

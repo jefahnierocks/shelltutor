@@ -379,7 +379,9 @@ practice() {
     # 3.2 can parse <(...) here but does not reliably load it as --rcfile.
     # INPUTRC=/dev/null keeps Readline on its defaults so the practice
     # prompt behaves the same on every host (contract C-007).
-    INPUTRC=/dev/null bash --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
+    # The practice shell is the same binary as the outer script ($BASH),
+    # never whatever `bash` happens to be first on PATH (F-014).
+    INPUTRC=/dev/null "$BASH" --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
 # shelltutor practice shell — contract C-007 in docs/contracts.md.
 # No system or user rcfile is sourced by this file. Distributions that compile Bash
 # with a system rcfile still read it before this file; the settings
