@@ -565,7 +565,7 @@ recovery.
 | Missing `vim` | lesson 5.2 says "install it before continuing"; `--info` warns; the Stage 5 gate has no alternative path | `shelltutor:1704-1707`, `268-271` |
 | Missing `man` or `less` | `--info` says lesson 5.1 / 3.2 "will skip" the demo; the lessons contain no such conditional | `shelltutor:261`, `266` versus `1669-1695`, `1212-1233` |
 | Login shell is zsh or fish | irrelevant: the practice shell is Bash by construction | `shelltutor:384`; `--info` note at `217` |
-| Narrow terminal | orientation asks for 80×24; screens are written to a 20-line budget | `shelltutor:612-614`, `576-580` |
+| Narrow terminal | orientation asks for 80×24; the script states a 20-line budget per screen, but ten screens in stages 2–5 and the finale exceed it (4.3 is 30 lines, 5.3 is 35; `audit/2026-11-08/findings.md` O-J), so their headings scroll off before the prompt on 24 rows | `shelltutor:612-614`, `576-580` |
 | Ctrl+C at the outer script | the script dies; nothing between gates is lost because only passed stages are saved | `shelltutor:105-108` |
 
 ### 3.4 Highest drop-off risks
@@ -637,7 +637,9 @@ before the course and a pointer during it; for 4 to 6 it offers text.
   literal rule, but they are one family",
   `audit/2026-11-08/stage1-density-followup.md`). The 20-line vertical
   budget (`shelltutor:576-580`) is an extraneous-load control: a screen must
-  fit a 24-row terminal with the prompt visible. Intrinsic load is managed
+  fit a 24-row terminal with the prompt visible. It is met by every Stage 1
+  screen and missed by ten others (O-J in `audit/2026-11-08/findings.md`),
+  so as a course-wide control it is stated, not enforced. Intrinsic load is managed
   by stage order (§4.3); germane load is served by the "what just happened"
   model (`shelltutor:710-732`).
 - **Retrieval practice.** The three recall questions per gate are retrieval
@@ -844,6 +846,11 @@ the formal framing makes visible, not proposals.
     depend on a pause signal the harness cannot produce
     (`audit/2026-11-08/stage1-density-followup.md` §Watch items); the
     tutor records no timing. (`audit/`, `shelltutor`.)
+15. **The screen budget is a Stage 1 fact.** The convention at
+    `shelltutor:576-580` is honoured by every Stage 1 screen (maximum 18)
+    and by no stage-3-to-5 lesson except the intros; `stage4_lesson_3` is
+    30 lines and `stage5_lesson_3` is 35 (`audit/2026-11-08/findings.md`
+    O-J). The density audits that enforce the rule covered Stage 1 only.
 14. **A learner must install Vim to finish.** Stage 5 requires `vim`
     (`shelltutor:1707`) while the project's rule is no installation beyond
     Bash (`AGENTS.md` §Work Rules). The course is a `vimtutor`
@@ -910,7 +917,7 @@ the formal framing makes visible, not proposals.
 
 ### 7.3 Confirmed by code reading in this document, not by evidence
 
-The discrepancies in §6 items 3, 4, 5 and 6, and the drop-off risks in
+The discrepancies in §6 items 3, 4, 5, 6 and 15, and the drop-off risks in
 §3.4, are established by reading the script at the cited lines. They are
 not observed behaviours of learners and should be treated as design facts
 awaiting a human check.

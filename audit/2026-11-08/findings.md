@@ -58,6 +58,22 @@ per the findings flow in `docs/simulation-design-plan.md`.
   as the like-for-like baseline. (`WP-09`) **Done**: `sim/all-current/current-rc`
   (macOS, Bash 5.3.20); its Stage 1 text matches `all-linux/current-rc` apart from
   the user name, date and day-of-week answer.
+- **O-J** Ten screens exceed the 20-line vertical budget the script
+  states for itself (`shelltutor:576-580`: 24 rows minus the practice
+  prelude). Measured on 2026-11-08 at `469046b` by counting here-document
+  content lines per screen function (blank lines included):
+  `stage2_lesson_3` 23, `stage3_lesson_3` 21, `stage4_lesson_1` 25,
+  `stage4_lesson_2` 24, `stage4_lesson_3` 30, `stage5_lesson_1` 23,
+  `stage5_lesson_2` 27, `stage5_lesson_3` 35, `stage5_lesson_4` 22,
+  `finale` 31; `stage4_intro` is exactly 20. All Stage 1 screens and all
+  other intros fit. On an 80×24 terminal the heading and first lines of an
+  over-budget screen scroll off before the prompt appears; the `▶` line
+  stays visible. The density audits covered Stage 1 only, which is why
+  this went unmeasured; `docs/design-description.md` §3.3 and §4.1
+  described the budget as a course-wide property and are corrected to
+  cite this observation. Not a Phase B package by itself; recorded for
+  the operator's decision (the WP-12 sentences are added net-zero so
+  neither 3.3 nor 4.3 grows).
 - **O-I** `sim-evidence` runs on every push to `main` (about 13 s each)
   and produces an artifact per commit; only reviewed bundles are intaken.
   Acceptable as designed (D-17); the operator may narrow the trigger to
