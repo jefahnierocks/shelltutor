@@ -51,7 +51,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | **landed** eb15e41 (2026-11-07) |
 | [WP-09](WP-09-landing-followups.md) | Landing follow-ups: F-014 practice-shell interpreter, harness provenance, fresh macOS baseline | WP-07 | none | **landed** bd841ae (2026-11-08) |
 | [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; frozen until `audit/<date>/walkthroughs.md`; lands third |
-| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; lands first |
+| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land first after Phase A |
 | [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands second |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
