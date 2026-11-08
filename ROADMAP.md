@@ -402,6 +402,11 @@ shipped curriculum are listed here, dated, rather than rewritten into it.
   Stage 4 verifies the `*.txt` glob from history, with escalating retry
   feedback on every gate and no auto-pass (`WP-05`, D-14). Each landing
   adds a dated line here.
+- **2026-11 (WP-05).** Stage 2 gate requires at least one `cd` in the
+  practice history (the task as taught), not the four-step trace in the
+  original spec; Stage 4 gate verifies the `*.txt` glob from history as
+  specified; all gates escalate feedback on repeated failure (restatement,
+  hint, worked example) and never auto-pass.
 
 ## Phase 4 — Release Posture (pending)
 

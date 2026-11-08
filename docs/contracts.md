@@ -178,7 +178,9 @@ Stability commitment: no specific wording is contractual. Lesson
 **content** (commands taught, gate questions, gate task requirements)
 follows the curriculum spec in `ROADMAP.md` Phase 3. A redesign of the
 curriculum is a major-version event after v0.1.0; a wording rewrite is
-not.
+not. Gate feedback wording is likewise not contractual, but the escalation
+order on repeated gate failure (restatement, then hint, then worked example,
+with no auto-pass) is part of the curriculum design.
 
 ## C-007 — Practice-shell environment and Readline behaviour
 
@@ -222,7 +224,7 @@ table, which this section now owns.
 | C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02) |
 | C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02) |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
-| C-006 | C-006            | rewritten in curriculum redesign                     |
+| C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05) |
 | C-007 | —                | added 2026-11 (WP-03, Slice 2): practice-shell environment and Readline behaviour; owns what C-004 listed for the practice subshell |
 
 The current revision passes the audit's Phase 4 exit checks: no

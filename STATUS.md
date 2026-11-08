@@ -124,6 +124,14 @@ Current truth for the `shelltutor` repository.
   FF-008 (`scripts/check-posix-tools.sh`, in `make check`). The five-stage
   harness is green on Bash 3.2.57 and 5.3.20 with no `error-signature` events.
   The interactive `de_DE` gate walk remains an operator spot-check.
+- **WP-05 landed: gate alignment and escalating feedback** (decision D-14).
+  The Stage 2 gate now requires a `cd` and the Stage 4 gate the `*.txt` glob
+  in practice history, through one shared `gate_require_history` helper; every
+  gate escalates on repeated failure (hint on the second miss, worked example
+  on the third) and never auto-passes. New `second-try` persona (`--persona
+  second-try --stage 2|4`); evidence under
+  `audit/2026-11-08/sim/second-try-stage{2,4}/`. `careful-beginner --stage
+  all` is still green on Bash 3.2.57 and 5.3.20.
 - **F-010 to F-013 surfaced by static review** (`audit/2026-11-07/findings.md`,
   2026-11-07; all four resolved by WP-02, see the landing line above):
   lesson 5.3 promises a `practice.txt` fixture that does not exist at lesson
