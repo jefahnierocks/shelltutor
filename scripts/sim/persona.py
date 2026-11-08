@@ -116,8 +116,12 @@ def careful_beginner_stage1(
         Action("TASK_Q_DAY", day_answer, "answer-task-day", "S1-FQ"),
         Action("STAGE_CLEARED", "", "stage1-cleared", "S1-FQ"),
     ]
+    # The tutor now stops at the Stage 1 cleared screen (A1.4): `next`
+    # continues into Stage 2, `quit` stops here with .progress = 1.
     if with_quit:
-        walk.append(Action(PROMPT, "quit", "quit-tutor", "S1-FQ"))
+        walk.append(Action(PROMPT, "quit", "quit-tutor", "S1-C"))
+    else:
+        walk.append(Action(PROMPT, "next", "leave-stage1-cleared", "S1-C"))
     return walk
 
 
@@ -429,9 +433,10 @@ def build_walk(
     2 and 4 only; run.py rejects other combinations with exit 2).
 
     Single stage N >= 2 starts at the stage intro and, after the cleared
-    line, waits for the next stage's prompt and quits (the tutor
-    continues into stage N+1, C-001). Stage 5 and `all` end at the
-    finale, after which the child exits on its own.
+    screen (stages 1-4), waits for its prompt and quits there. In `all`
+    mode each of stages 1-4 sends `next` at the cleared screen instead.
+    Stage 5 and `all` end at the finale, after which the child exits on
+    its own.
     """
     second_try = persona == "second-try"
     if second_try and stage not in ("2", "4"):
@@ -445,12 +450,16 @@ def build_walk(
         )
         for n in (2, 3, 4, 5):
             walk += stage_walk(n, pwd_answer, man_available, sandbox_root)
+            if n < 5:
+                walk.append(
+                    Action(PROMPT, "next", "leave-stage%d-cleared" % n, "S%d-C" % n)
+                )
         return walk + finale
     n = int(stage)
     walk = stage_walk(n, pwd_answer, man_available, sandbox_root, second_try)
     if n == 5:
         return walk + finale
-    return walk + [Action(PROMPT, "quit", "quit-tutor", "S%d-GT" % n)]
+    return walk + [Action(PROMPT, "quit", "quit-tutor", "S%d-C" % n)]
 
 
 class Persona:

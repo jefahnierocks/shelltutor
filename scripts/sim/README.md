@@ -90,7 +90,8 @@ covers the Stage 2 and Stage 4 gates only.
   gate's escalating feedback (WP-05, decision D-14):
   - Stage 2 task: `mkdir practice`, `check` → wait for `NOT_YET`
     (`not yet:`) → `cd practice`, `pwd`, `check` →
-    `S2_CLEARED`.
+    `S2_CLEARED`, then `next` at the cleared screen's prompt (single-stage
+    runs send `quit` there instead).
   - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `NOT_YET` →
     `ls *.txt`, `check` → `S4_CLEARED`.
   - Recall answers are the same as `careful-beginner`'s. TAP `ok` requires

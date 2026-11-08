@@ -128,6 +128,11 @@ documents agree with the code.
   be repeated with `/bin/bash ./shelltutor` and `echo $BASH_VERSION` recorded;
   the operator re-records it. The like-for-like macOS baseline is
   `audit/2026-11-08/sim/all-current/`.
+- Stage-cleared screens (WP-11, A1.4/A3.5) give stages 1-4 a stopping point after each gate
+  (`next` continues, `quit` saves and leaves, `show` redisplays); `--info` no longer promises
+  a finale hand-off or demo skips; F-016 (Apple's Bash 3.2 notice) is silenced on the
+  practice launch line, so Bash 3.2 and 5.x screen heights now match
+  (`audit/2026-11-08/wp11-screen-heights.md`, `audit/2026-11-08/sim/wp11-*`).
 - Screen chrome (WP-15, amendment A3) is built on `wp/15-screen-chrome`: panel header and
   lower rule, key-hint footer bar, `┃` feedback checklist, ASCII glyph fallback
   (`SHELLTUTOR_ASCII`). Evidence: `audit/2026-11-08/wp15-screen-heights.md` and

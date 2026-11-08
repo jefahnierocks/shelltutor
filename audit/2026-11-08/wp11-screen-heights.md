@@ -59,3 +59,47 @@ One implementation note: Apple's bash checks the variable after it has run
 the rcfile (the banner prints after the footer the rcfile emits), so an
 `unset` in the rcfile defeats it. The first attempt did exactly that and the
 table did not move; the variable therefore stays set in the practice shell.
+
+## Full table with the cleared screens (commit 3)
+
+`careful-beginner --stage all`, budget 22. 3.2.57 and 5.3.20 now agree on
+every row. The new cleared screens (S1-C to S4-C) render at 19 rows with
+15 lines of content; the Stage 1-4 gate screens are unchanged.
+
+| Screen | WP-15 (5.x) | WP-11 (5.x) | WP-11 (3.2) | Over (5.x) |
+| --- | ---: | ---: | ---: | --- |
+| S1-W | 18 | 18 | 18 | no |
+| S1-O | 21 | 21 | 21 | no |
+| S1-I | 11 | 11 | 11 | no |
+| S1-L1 | 20 | 20 | 20 | no |
+| S1-L2 | 19 | 19 | 19 | no |
+| S1-L3 | 16 | 16 | 16 | no |
+| S1-L4 | 22 | 22 | 22 | no |
+| S1-GT | 16 | 16 | 16 | no |
+| S1-C | — | 19 | 19 | no |
+| S2-I | 21 | 21 | 21 | no |
+| S2-L1 | 19 | 19 | 19 | no |
+| S2-L2 | 22 | 22 | 22 | no |
+| S2-L3 | 27 | 27 | 27 | yes |
+| S2-GT | 17 | 17 | 17 | no |
+| S2-C | — | 19 | 19 | no |
+| S3-I | 22 | 22 | 22 | no |
+| S3-L1 | 22 | 22 | 22 | no |
+| S3-L2 | 22 | 22 | 22 | no |
+| S3-L3 | 25 | 25 | 25 | yes |
+| S3-GT | 22 | 22 | 22 | no |
+| S3-C | — | 19 | 19 | no |
+| S4-I | 22 | 22 | 22 | no |
+| S4-L1 | 29 | 29 | 29 | yes |
+| S4-L2 | 28 | 28 | 28 | yes |
+| S4-L3 | 34 | 34 | 34 | yes |
+| S4-GT | 21 | 21 | 21 | no |
+| S4-C | — | 19 | 19 | no |
+| S5-I | 15 | 15 | 15 | no |
+| S5-L1 | 27 | 27 | 27 | yes |
+| S5-L2 | 31 | 31 | 31 | yes |
+| S5-L3 | 39 | 39 | 39 | yes |
+| S5-L4 | 26 | 26 | 26 | yes |
+| S5-GT1 | 22 | 22 | 22 | no |
+| S5-GT2 | 18 | 18 | 18 | no |
+| FIN | 31 | 31 | 31 | yes |
