@@ -2,10 +2,10 @@
 title: shelltutor LICENSE Decision Options
 category: planning
 component: license-decision
-status: draft
+status: decided
 version: 0.1.0
 last_updated: 2026-11-07
-tags: [license, phase4, planning, decision-pending]
+tags: [license, phase4, planning, decided]
 priority: medium
 ---
 
@@ -17,10 +17,14 @@ priority: medium
 granted until a license is chosen. This document surfaces the
 options and tradeoffs so the operator can decide deliberately.
 
-**Status: decision pending.** This document does not pick a
-license. It is an input to Phase 4 of `ROADMAP.md`, which gates
-the first tagged release (`v0.1.0`) and the creation of
-`CHANGELOG.md`.
+**Decision (2026-11-07): MIT.** Chosen by the operator on the basis of
+the tradeoffs below. The copyright line is confirmed in
+`docs/workplan/WP-08-release-prep.md`, whose part A lands the `LICENSE`
+file, the script header and the README/STATUS wording; part B
+(`CHANGELOG.md`, `v0.1.0` inputs) waits for the Phase 2 walkthrough
+results. Until the file lands, default copyright applies and external
+reuse is not granted. The sections below are the record of the options
+as weighed before the decision.
 
 ## Constraints to honor
 
@@ -117,8 +121,8 @@ worse for a project that wants to be unambiguously safe to copy.
 GPL is misaligned with the "borrow ideas" educational intent for
 a one-file shell script.
 
-This document is not making the decision; it just records the
-tradeoffs.
+This section recorded the tradeoffs before the decision; the decision
+itself is stated at the top of this document.
 
 ## What changes when a license is chosen
 

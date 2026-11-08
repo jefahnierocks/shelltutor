@@ -84,7 +84,7 @@ Work:
   it on every push (2026-10-17).
 - Automated support (2026-11 work plan): the five-stage PTY baseline
   (`WP-01`, FF-006c rung 1) and hosted Linux transcript capture (`WP-06`,
-  operator-gated) de-risk the human walkthroughs; they do not replace them.
+  approved 2026-11-07) de-risk the human walkthroughs; they do not replace them.
   Four defects found by static review on 2026-11-07 (F-010 to F-013,
   `audit/2026-11-07/findings.md`) are fixed by `WP-02` before the human
   walks, because two of them (F-010, F-013) would fail a walk on a clean
@@ -409,9 +409,11 @@ Goal: choose a license, cut a tagged release, decide on distribution.
 
 Work:
 
-- License decision (see `STATUS.md` deferral and `docs/license-decision.md`).
-  Execution package: `docs/workplan/WP-08-release-prep.md`, operator-gated on
-  the license choice, the copyright line, and the Phase 2 walkthrough results.
+- License decision: **MIT, decided 2026-11-07** (`docs/license-decision.md`).
+  Execution package `docs/workplan/WP-08-release-prep.md`: part A (LICENSE,
+  script header, README/STATUS wording) once the copyright line is
+  confirmed; part B (CHANGELOG, `v0.1.0` inputs) after the Phase 2
+  walkthrough results.
 - Create `CHANGELOG.md` and tag `v0.1.0`.
 - Decide whether managed distribution (Homebrew tap, AUR, etc.) is worth
   the maintenance cost or whether `clone + run` stays the install story.

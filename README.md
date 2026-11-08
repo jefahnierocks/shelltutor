@@ -158,6 +158,7 @@ project profile and first audit cycle (snapshot 2026-05-21) live under
 
 ## License Posture
 
-A license has not yet been chosen. Until one is added, default copyright
-applies and external reuse is not granted. See `STATUS.md` for the
-deferral entry.
+MIT was chosen on 2026-11-07 (`docs/license-decision.md`). The `LICENSE`
+file lands with the release-preparation package; until it is present,
+default copyright applies and external reuse is not granted. See
+`STATUS.md` for the deferral entry.

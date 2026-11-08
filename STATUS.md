@@ -117,6 +117,10 @@ Current truth for the `shelltutor` repository.
   succeeded. Inside an agent session the manifest check refuses inherited
   `GIT_CONFIG_*` overrides and reports NOT_CHECKED; the work plan's worker
   protocol gives the environment-clearing command that restores the verdict.
+- **Operator decisions of 2026-11-07**: license **MIT** (file lands via
+  WP-08 part A once the copyright line is confirmed; default copyright
+  applies until then); WP-06 (non-gating hosted Linux evidence workflow)
+  **approved**, to start after WP-01.
 - The companion `wyn-setup/` directory from prior-art is intentionally
   not carried forward.
 - No `LICENSE` or `CHANGELOG.md` file yet (see Deferrals).
@@ -144,16 +148,17 @@ Current truth for the `shelltutor` repository.
    - FF-001..FF-007 promoted from "proposed" to "implemented"
      (FF-003 remains "deferred")
    - new dimension scores per §11 reflecting the closures
-4. **License decision (ROADMAP Phase 4 trigger)** — pick a posture
-   before inviting outside reuse or contribution and before a tagged release.
-   Triggers `CHANGELOG.md` creation and `v0.1.0` tag. `docs/workplan/WP-08-release-prep.md`
-   is the parameterised execution package once the choice is made.
+4. **License adoption (ROADMAP Phase 4)** — MIT was chosen on 2026-11-07.
+   Confirm the copyright line in `docs/workplan/WP-08-release-prep.md` and
+   run its part A (LICENSE, script header, README/STATUS wording).
+   `CHANGELOG.md` and the `v0.1.0` tag inputs (part B) follow the Phase 2
+   walkthrough closure.
 
 ## Deferrals
 
 | Deferred surface | Reason | Trigger to revisit |
 |------------------|--------|--------------------|
-| `LICENSE` file | Not yet chosen; repo is public but default copyright applies | Before inviting outside reuse/contribution or tagging a release |
+| `LICENSE` file | MIT chosen 2026-11-07; the file has not landed yet, so default copyright still applies | WP-08 part A, once the copyright line is confirmed |
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release |
 | `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
 | Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |

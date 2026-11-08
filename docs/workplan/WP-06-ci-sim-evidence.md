@@ -2,7 +2,7 @@
 title: WP-06 — Hosted Linux evidence capture (non-gating sim workflow)
 category: planning
 component: workplan
-status: blocked-operator
+status: ready
 version: 0.1.0
 last_updated: 2026-11-07
 tags: [workplan, ci, simulation, linux, evidence]
@@ -14,10 +14,10 @@ priority: medium
 **Depends on**: WP-01. **Blocks**: the Linux before/after comparison in
 WP-03. **Touches `shelltutor`**: no. **Operator gate**: **yes** — adding a
 workflow is "sensitive work" (deployment configuration) under `AGENTS.md`.
-Do not start until the operator has written `Approved: <date>` in the
-Decision line below.
+The operator approved this package on 2026-11-07 (Decision line below);
+it may start as soon as WP-01 has landed on `main`.
 
-**Decision**: _pending_.
+**Decision**: Approved: 2026-11-07 (operator, in session).
 
 ## Goal
 

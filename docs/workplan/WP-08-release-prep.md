@@ -2,7 +2,7 @@
 title: WP-08 — Release preparation (LICENSE, CHANGELOG, v0.1.0 inputs)
 category: planning
 component: workplan
-status: blocked-operator
+status: part-a-ready-after-copyright-line
 version: 0.1.0
 last_updated: 2026-11-07
 tags: [workplan, release, license, changelog, phase4]
@@ -11,14 +11,17 @@ priority: medium
 
 # WP-08 — Release preparation (LICENSE, CHANGELOG, v0.1.0 inputs)
 
-**Depends on**: operator inputs below; WP-07 recommended first.
+**Depends on**: operator inputs below; WP-07 recommended before part B.
 **Touches `shelltutor`**: one header comment line. **Operator gate**:
-**yes** — three inputs only the operator can supply. Do not start until
-all three lines are filled in.
+**yes** — the inputs below. Part A (steps 1–5) may start once the
+copyright line is confirmed; part B (steps 6–8) waits for the Phase 2
+results.
 
-- **License**: _pending_ (lean per `docs/license-decision.md`: MIT;
-  alternative: Apache-2.0).
-- **Copyright line**: _pending_ (holder name and year as it should appear).
+- **License**: **MIT** — decided by the operator on 2026-11-07
+  (`docs/license-decision.md`). SPDX id `MIT`.
+- **Copyright line**: _pending confirmation_. Proposed default from
+  `docs/license-decision.md`: `Copyright (c) 2026 Jefahnierocks`. The
+  operator confirms or replaces it here before part A starts.
 - **Phase 2 walkthrough results**: _pending_ (the `STATUS.md` lines for
   macOS Bash 3.2 and a Debian/Ubuntu Bash 5.x host, per
   `docs/phase2-walkthrough-checklist.md`; these come from a human walk,
@@ -39,12 +42,12 @@ operator can review and tag. The worker never creates or pushes a tag.
 
 ## Steps
 
-1. `LICENSE` at the repo root with the canonical text of the chosen
-   license and the operator's copyright line. Use the exact upstream text
-   (for MIT, the OSI text; for Apache-2.0, the full license text plus the
-   short header form in step 2).
+**Part A — license adoption** (steps 1–5; commit 1):
+
+1. `LICENSE` at the repo root with the exact OSI MIT text and the
+   operator's confirmed copyright line as its first line.
 2. `shelltutor` header: one comment line after the title line:
-   `# SPDX-License-Identifier: <id>  — see LICENSE`. Nothing else in the
+   `# SPDX-License-Identifier: MIT  — see LICENSE`. Nothing else in the
    script changes; `make smoke` structural checks must still pass.
 3. `README.md` §License Posture: replace the deferral paragraph with the
    choice, the SPDX id and a link to `LICENSE`.
@@ -55,6 +58,9 @@ operator can review and tag. The worker never creates or pushes a tag.
    otherwise).
 5. `docs/license-decision.md`: frontmatter `status: decided`; a dated
    "Decision" section at the top naming the choice.
+**Part B — release inputs** (steps 6–8; commit 2; after the Phase 2
+results are in):
+
 6. `CHANGELOG.md` (Keep a Changelog shape) with an `Unreleased` heading
    and a `v0.1.0 — <date>` section listing: five-stage curriculum
    (Phase 3), portability fixes F-008/F-009/F-010–F-013, practice-shell
@@ -77,8 +83,8 @@ operator can review and tag. The worker never creates or pushes a tag.
 
 ## Commits (in order)
 
-1. `chore(license): adopt <SPDX id>; LICENSE file and script header`
-2. `docs(release): CHANGELOG v0.1.0 section; STATUS and ROADMAP Phase 2/4 closure`
+1. `chore(license): adopt MIT — LICENSE, script header, README/STATUS/decision record` (part A)
+2. `docs(release): CHANGELOG v0.1.0 section; STATUS and ROADMAP Phase 2/4 closure` (part B)
 
 ## Handoff to the operator
 

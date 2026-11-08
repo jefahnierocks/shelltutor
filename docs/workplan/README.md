@@ -39,14 +39,15 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-03](WP-03-practice-shell-hardening.md) | Practice-shell hardening (Slice 2, C-007) | WP-01, WP-02 | none | ready |
 | [WP-04](WP-04-stage1-density.md) | Stage 1 density split (lessons 1.1–1.4) | WP-03 | none | ready |
 | [WP-05](WP-05-gate-feedback.md) | Gate verification alignment; escalating feedback; `second-try` persona | WP-01, WP-02 | none | ready |
-| [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** | blocked on operator |
+| [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | ready after WP-01 |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | after WP-05 |
-| [WP-08](WP-08-release-prep.md) | LICENSE, CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | blocked on operator |
+| [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A ready once the copyright line is confirmed; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
 (it is independent of WP-03/WP-04 and may run in parallel on its own
-branch), WP-06 any time after WP-01 once approved, WP-07 last, WP-08 when
-the operator has supplied its inputs. One worker session per package.
+branch), WP-06 any time after WP-01 (approved), WP-07 last, WP-08 part A
+once the copyright line is confirmed and part B after the Phase 2 results.
+One worker session per package.
 
 Not in this cycle: the human five-stage Phase 2 walkthroughs (operator;
 `docs/phase2-walkthrough-checklist.md`), the second profile and audit
@@ -233,22 +234,26 @@ deviate must say so in its report and get operator approval first.
   record the tutor path relative to the repository root; sandbox roots are
   temporary directories. FF-007's rule covers governance files; its intent
   covers committed evidence too.
-- **D-16 License is the operator's decision.** WP-08 is parameterised on
-  the choice (lean: MIT per `docs/license-decision.md`), the copyright
-  line, and the human Phase 2 results. No worker executes it before those
+- **D-16 License is the operator's decision.** Decided 2026-11-07: MIT.
+  WP-08 remains parameterised on the copyright line and the human Phase 2
+  results. No worker executes it before those
   lines are filled in; no worker tags.
 - **D-17 Hosted Linux evidence is capture, not acceptance.** A separate
   non-gating workflow uploads a harness bundle as an artifact; the
-  operator reviews and commits by hand. `verify` is untouched. Requires
-  operator approval because it changes CI configuration.
+  operator reviews and commits by hand. `verify` is untouched. Required
+  operator approval because it changes CI configuration; approved
+  2026-11-07.
 - **D-18 One package, one worker, one branch; the operator merges.**
   Linear history is preserved by fast-forwarding reviewed branches onto
   `main`. Workers never push.
 
-## Operator decisions pending
+## Operator decisions
 
-- **O-1 License** (D-16): fill in WP-08's three input lines.
-- **O-2 WP-06 approval** (D-17): write `Approved: <date>` in WP-06.
+- **O-1 License** (D-16): **decided 2026-11-07 — MIT.** The copyright
+  line is still to be confirmed in WP-08 (proposed default
+  `Copyright (c) 2026 Jefahnierocks`, from `docs/license-decision.md`).
+- **O-2 WP-06 approval** (D-17): **approved 2026-11-07**, recorded in
+  WP-06.
 - **O-3 Welcome/orientation safety sentence.** The welcome screen states
   the tutor never writes outside `${SANDBOX}`; the sentence that practice
   prompts run with the learner's ordinary account authority (the F-002
