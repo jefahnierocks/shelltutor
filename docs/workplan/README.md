@@ -41,7 +41,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-05](WP-05-gate-feedback.md) | Gate verification alignment; escalating feedback; `second-try` persona | WP-01, WP-02 | none | ready |
 | [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | ready after WP-01 |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | after WP-05 |
-| [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A ready once the copyright line is confirmed; part B blocked on Phase 2 results |
+| [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A ready (copyright line confirmed 2026-11-07); part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
 (it is independent of WP-03/WP-04 and may run in parallel on its own
@@ -249,9 +249,9 @@ deviate must say so in its report and get operator approval first.
 
 ## Operator decisions
 
-- **O-1 License** (D-16): **decided 2026-11-07 — MIT.** The copyright
-  line is still to be confirmed in WP-08 (proposed default
-  `Copyright (c) 2026 Jefahnierocks`, from `docs/license-decision.md`).
+- **O-1 License** (D-16): **decided 2026-11-07 — MIT**, copyright line
+  `Copyright (c) 2026 Jefahnierocks` confirmed the same day. WP-08 part A
+  is ready.
 - **O-2 WP-06 approval** (D-17): **approved 2026-11-07**, recorded in
   WP-06.
 - **O-3 Welcome/orientation safety sentence.** The welcome screen states

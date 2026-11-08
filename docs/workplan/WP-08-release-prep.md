@@ -2,7 +2,7 @@
 title: WP-08 — Release preparation (LICENSE, CHANGELOG, v0.1.0 inputs)
 category: planning
 component: workplan
-status: part-a-ready-after-copyright-line
+status: part-a-ready
 version: 0.1.0
 last_updated: 2026-11-07
 tags: [workplan, release, license, changelog, phase4]
@@ -19,9 +19,8 @@ results.
 
 - **License**: **MIT** — decided by the operator on 2026-11-07
   (`docs/license-decision.md`). SPDX id `MIT`.
-- **Copyright line**: _pending confirmation_. Proposed default from
-  `docs/license-decision.md`: `Copyright (c) 2026 Jefahnierocks`. The
-  operator confirms or replaces it here before part A starts.
+- **Copyright line**: **`Copyright (c) 2026 Jefahnierocks`** — confirmed by
+  the operator on 2026-11-07. Part A may start.
 - **Phase 2 walkthrough results**: _pending_ (the `STATUS.md` lines for
   macOS Bash 3.2 and a Debian/Ubuntu Bash 5.x host, per
   `docs/phase2-walkthrough-checklist.md`; these come from a human walk,

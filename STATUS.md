@@ -158,7 +158,7 @@ Current truth for the `shelltutor` repository.
 
 | Deferred surface | Reason | Trigger to revisit |
 |------------------|--------|--------------------|
-| `LICENSE` file | MIT chosen 2026-11-07; the file has not landed yet, so default copyright still applies | WP-08 part A, once the copyright line is confirmed |
+| `LICENSE` file | MIT chosen 2026-11-07; the file has not landed yet, so default copyright still applies | WP-08 part A (copyright line confirmed 2026-11-07) |
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release |
 | `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
 | Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |
