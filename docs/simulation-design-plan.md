@@ -86,11 +86,13 @@ This keeps the production contract intact:
   assertion and `scripts/sim/compare.py` landed. Decisions D-02 and D-03
   fix the coverage model and the harness's controlled inputs (including
   an empty per-run `HOME`).
-- **Slice 2 — scheduled** as `docs/workplan/WP-03-practice-shell-hardening.md`.
-  Decisions D-09 to D-12 refine this plan: the exact rcfile and contract
-  C-007; the lesson 1.1 Tab/bell line lands with the hardening (D-10); the
-  `no-system-rc-preview` variant is retired afterwards (D-11); the Linux
-  baseline is captured when available and is not a prerequisite (D-12).
+- **Slice 2 — complete** (2026-11-08, `6fa53d2`) as
+  `docs/workplan/WP-03-practice-shell-hardening.md`. Decisions D-09 to D-12:
+  the exact rcfile and contract C-007; the lesson 1.1 Tab/bell line landed
+  with the hardening (D-10); the `no-system-rc-preview` variant is retired
+  (D-11); the Linux baseline is captured when available and was not a
+  prerequisite (D-12). Evidence: `audit/2026-11-08/sim/all-slice2*` and
+  `audit/2026-11-08/slice2-comparison.md`.
 - **Slice 3 — partially scheduled**: the mechanical error-signature scan
   (`WP-01`) and a deliberate-failure `second-try` persona for stages 2 and 4
   (`WP-05`) land in this cycle; `confused-novice` and the full confusion-

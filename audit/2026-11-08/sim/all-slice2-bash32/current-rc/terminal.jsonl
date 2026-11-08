@@ -1,0 +1,750 @@
+{"ts": 0.021729, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.02395, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSHELLTUTOR\u001b[0m  —  a vimtutor prerequisite course\r\n\r\nWelcome. A short hands-on course in \u001b[1;38;5;244mfive stages\u001b[0m that\r\nprepare you for \u001b[1;38;5;220mvimtutor\u001b[0m. About 45 to 60 minutes total.\r\n\r\nEach stage is a few short lessons followed by a small task. Pass the\r\ntask to advance. Retry as much as you like — no time pressure, no\r\nskip.\r\n\r\nYour work happens in \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz\u001b[0m; the tutor never writes\r\noutside that folder.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m for a quick orientation.\u001b[0m\r\n", "len": 609}
+{"ts": 0.02407, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.034378, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.034447, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.034494, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.034517, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.037401, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.03944, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mOrientation\u001b[0m\r\n\r\nIn a moment you'll be at the practice prompt below. It looks like:\r\n\r\n    \u001b[2mshelltutor>\u001b[0m\r\n\r\nType a command, press Enter — the shell runs it. The terminal is\r\nkeyboard-only; you can't click mid-line to move the cursor. Resize\r\nyour terminal larger if text wraps (80×24 or bigger).\r\n\r\n\u001b[1;38;5;244mFour words steer the tutor:\u001b[0m\r\n  \u001b[1;38;5;220mnext\u001b[0m  advance        \u001b[1;38;5;220mprev\u001b[0m  go back\r\n  \u001b[1;38;5;220mshow\u001b[0m  redisplay      \u001b[1;38;5;220mquit\u001b[0m  leave (progress saved)\r\n\r\nA fifth word, \u001b[1;38;5;220mcheck\u001b[0m, appears at gate tasks when relevant.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin Stage 1.\u001b[0m\r\n", "len": 684}
+{"ts": 0.039587, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.048931, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.048972, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.048994, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.04902, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.049038, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.051359, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.053282, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — Where am I?\u001b[0m\r\n\r\nThree short lessons (about 10 minutes) followed by a small task.\r\nYou'll meet the prompt, run a few simple commands, and learn the\r\nkeyboard habits that make the shell easy to live with.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to start lesson 1.1.\u001b[0m\r\n", "len": 313}
+{"ts": 0.053423, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.063858, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.063918, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.06395, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.06397, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.066705, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.068951, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.1 — running commands\u001b[0m\r\n\r\nAt the prompt below, try this:\r\n\r\n  \u001b[1;38;5;220mecho hello\u001b[0m        \u001b[2m# type those words; press Enter\u001b[0m\r\n\r\nYou'll see \u001b[2mhello\u001b[0m printed. Then more:\r\n  \u001b[1;38;5;220mecho I am at the shell\u001b[0m     \u001b[2m# spaces separate words\u001b[0m\r\n  \u001b[1;38;5;220mecho \"I am at the shell\"\u001b[0m   \u001b[2m# quotes group them\u001b[0m\r\n\r\n\u001b[1;38;5;244mFour keys to remember\u001b[0m:\r\n  \u001b[38;5;208mTab\u001b[0m        bash finishes a word. Try \u001b[1;38;5;220mecho p\u001b[0m+\u001b[38;5;208mTab\u001b[0m → \u001b[1;38;5;220mecho poem.txt\u001b[0m.\r\n             Several matches? The first \u001b[38;5;208mTab\u001b[0m fills in the shared part;\r\n             \u001b[38;5;208mTab\u001b[0m again lists them. (Other shells and setups differ.)\r\n  \u001b[38;5;208mCtrl+L\u001b[0m     clear screen — then \u001b[1;38;5;220mshow\u001b[0m brings this back.\r\n  \u001b[38;5;208m↑\u001b[0m          recall the last command.\r\n  \u001b[38;5;208mCtrl+C\u001b[0m     escape hatch if anything feels stuck.\r\n\r\n\u001b[1;38;5;208m▶ Try a few, then type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 998}
+{"ts": 0.069122, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.080471, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.080536, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.08057, "dir": "in", "enc": "utf8", "data": "echo p\t", "len": 7}
+{"ts": 0.080598, "dir": "out", "enc": "utf8", "data": "echo p", "len": 6}
+{"ts": 0.080622, "dir": "out", "enc": "utf8", "data": "oem.txt ", "len": 8}
+{"ts": 0.080642, "dir": "in", "enc": "utf8", "data": "\n", "len": 1}
+{"ts": 0.080661, "dir": "out", "enc": "utf8", "data": "\r\npoem.txt\r\n", "len": 12}
+{"ts": 0.080764, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.080784, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.0808, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.083538, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.085996, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.2 — where am I, who am I, when is it\u001b[0m\r\n\r\nThree commands that ask the system about itself.\r\n\r\n  \u001b[1;38;5;220mwhoami\u001b[0m     \u001b[2m# the user name you're logged in as\u001b[0m\r\n  \u001b[1;38;5;220mpwd\u001b[0m        \u001b[2m# print working directory (the folder you're in)\u001b[0m\r\n  \u001b[1;38;5;220mdate\u001b[0m       \u001b[2m# the current date and time\u001b[0m\r\n\r\nIn this practice prompt, \u001b[1;38;5;220mpwd\u001b[0m reports the tutor sandbox\r\nfolder. That's because the tutor \u001b[1;38;5;220mcd\u001b[0m'd here before handing\r\nyou the prompt — see Stage 2.\r\n\r\n\u001b[1;38;5;244mCLEAR THE SCREEN\u001b[0m.  \u001b[38;5;208mCtrl+L\u001b[0m, or the command:\r\n  \u001b[1;38;5;220mclear\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Run all three, then type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 712}
+{"ts": 0.086176, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.096346, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.096398, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.096415, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.096471, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.096491, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.099198, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.101004, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m1.3 — what just happened\u001b[0m\r\n\r\nWhen you type \u001b[1;38;5;220mwhoami\u001b[0m and press Enter:\r\n\r\n  1. The terminal hands your line to \u001b[1;38;5;244mthe shell\u001b[0m.\r\n  2. The shell looks for a program named \u001b[1;38;5;220mwhoami\u001b[0m.\r\n  3. It runs it.\r\n  4. The program prints to \u001b[1;38;5;244mstandard output\u001b[0m — your screen.\r\n  5. The shell shows the prompt again, ready for the next command.\r\n\r\nThe shell is not \"Unix.\" It is a program — a \u001b[1;38;5;244mcommand interpreter\u001b[0m.\r\nThe terminal is a window that lets you talk to the shell. The program\r\n\u001b[1;38;5;220mwhoami\u001b[0m is a third thing — it runs, prints, and exits.\r\n\r\nYou will keep these three apart for the rest of this tutor:\r\n  \u001b[1;38;5;244mterminal\u001b[0m  →  \u001b[1;38;5;244mshell\u001b[0m  →  \u001b[1;38;5;244mprogram\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 1's gate.\u001b[0m\r\n", "len": 871}
+{"ts": 0.101133, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.111175, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.111236, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.111288, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.111311, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.113844, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.115561, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\n\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m: run a few commands and tell me what\r\nthey printed. The script verifies your answers.\r\n\r\n\u001b[2mUnlimited retries. No skip.\u001b[0m\r\n", "len": 275}
+{"ts": 0.115689, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.115741, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: Which character usually ends a shell prompt? ($, ;, :, or #)\u001b[0m\r\n", "len": 82}
+{"ts": 0.115776, "dir": "in", "enc": "utf8", "data": "$\n", "len": 2}
+{"ts": 0.115801, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m $\r\n", "len": 35}
+{"ts": 0.122248, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.122307, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: What does \u001b[1;38;5;220mpwd\u001b[0m print?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 91}
+{"ts": 0.122333, "dir": "in", "enc": "utf8", "data": "the current working directory\n", "len": 30}
+{"ts": 0.12235, "dir": "out", "enc": "utf8", "data": "the current working directory\r\n", "len": 31}
+{"ts": 0.129215, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.129267, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: After \u001b[1;38;5;220mwhoami\u001b[0m runs, where does its output go?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 115}
+{"ts": 0.129296, "dir": "in", "enc": "utf8", "data": "stdout\n", "len": 7}
+{"ts": 0.129315, "dir": "out", "enc": "utf8", "data": "stdout\r\n", "len": 8}
+{"ts": 0.135185, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.141496, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.143323, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 1 — GATE TASK\u001b[0m\r\n\r\nInside the practice prompt, run each of these once. Read each output.\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n  \u001b[1;38;5;220mwhoami\u001b[0m\r\n  \u001b[1;38;5;220mpwd\u001b[0m\r\n  \u001b[1;38;5;220mdate\u001b[0m\r\n\r\nAfter all three have run, I'll ask you what each one printed.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m only after running all three.\u001b[0m\r\n", "len": 382}
+{"ts": 0.143462, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.152904, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.152956, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.152973, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.153016, "dir": "in", "enc": "utf8", "data": "whoami\n", "len": 7}
+{"ts": 0.153034, "dir": "out", "enc": "utf8", "data": "whoami\r\n", "len": 8}
+{"ts": 0.155825, "dir": "out", "enc": "utf8", "data": "verlyn13\r\n", "len": 10}
+{"ts": 0.156091, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156117, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.156136, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.156145, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage1\r\n", "len": 86}
+{"ts": 0.156202, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156219, "dir": "in", "enc": "utf8", "data": "date\n", "len": 5}
+{"ts": 0.156234, "dir": "out", "enc": "utf8", "data": "date\r\n", "len": 6}
+{"ts": 0.158224, "dir": "out", "enc": "utf8", "data": "Sat Nov  7 17:05:08 AKST 2026\r\n", "len": 31}
+{"ts": 0.158449, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.158469, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.158485, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 0.170396, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;244mThree short follow-ups based on what you saw.\u001b[0m\r\n\r\n\u001b[1;38;5;39mWhat did \u001b[1;38;5;220mwhoami\u001b[1;38;5;39m print? (just the username)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 183}
+{"ts": 0.170464, "dir": "in", "enc": "utf8", "data": "verlyn13\n", "len": 9}
+{"ts": 0.170488, "dir": "out", "enc": "utf8", "data": "verlyn13\r\n", "len": 10}
+{"ts": 0.173147, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;39mWhat did \u001b[1;38;5;220mpwd\u001b[1;38;5;39m print? (paste the full path)\u001b[0m\r\n", "len": 86}
+{"ts": 0.173189, "dir": "in", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage1\n", "len": 85}
+{"ts": 0.173207, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage1\r\n", "len": 118}
+{"ts": 0.175785, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;39mWhat day of the week did \u001b[1;38;5;220mdate\u001b[1;38;5;39m show? (Mon, Tue, … — or exactly as date printed it)\u001b[0m\r\n", "len": 130}
+{"ts": 0.175822, "dir": "in", "enc": "utf8", "data": "Sat\n", "len": 4}
+{"ts": 0.175838, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m Sat\r\n", "len": 37}
+{"ts": 0.197641, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 1 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.203236, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.205096, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 2 — Paths and the filesystem\u001b[0m\r\n\r\nThree lessons, then a gate. The shell is always \u001b[1;38;5;244msomewhere\u001b[0m in\r\nthe filesystem; this stage teaches you to move around and to predict\r\nwhere files land.\r\n\r\nYou'll use:\r\n  \u001b[1;38;5;220mls\u001b[0m    list what's in the current folder\r\n  \u001b[1;38;5;220mcd\u001b[0m    change to another folder\r\n  \u001b[1;38;5;220mpwd\u001b[0m   print where you are now\r\n\r\nAnd the path symbols:\r\n  \u001b[1;38;5;244m.\u001b[0m     this folder\r\n  \u001b[1;38;5;244m..\u001b[0m    the parent folder\r\n  \u001b[1;38;5;244m~\u001b[0m     your home folder\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 2.1.\u001b[0m\r\n", "len": 632}
+{"ts": 0.205294, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.214992, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.215035, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.215049, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.21507, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.215092, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.217437, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.219468, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m2.1 — ls: what's in here\u001b[0m\r\n\r\n\u001b[1;38;5;220mls\u001b[0m lists files and folders in your current directory.\r\n\r\n  \u001b[1;38;5;220mls\u001b[0m            \u001b[2m# names only\u001b[0m\r\n  \u001b[1;38;5;220mls -l\u001b[0m         \u001b[2m# long form (permissions, size, date)\u001b[0m\r\n  \u001b[1;38;5;220mls -a\u001b[0m         \u001b[2m# include hidden files (those starting with .)\u001b[0m\r\n\r\nTry each. Then \u001b[1;38;5;220mls\u001b[0m a folder you don't \u001b[1;38;5;220mcd\u001b[0m into:\r\n  \u001b[1;38;5;220mls /etc\u001b[0m       \u001b[2m# system config folder\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin\u001b[0m   \u001b[2m# where many commands live\u001b[0m\r\n\r\n(\u001b[2m/etc\u001b[0m and \u001b[2m/usr/bin\u001b[0m exist on both Linux and macOS.)\r\n\r\n\u001b[1;38;5;208m▶ Try a few, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 704}
+{"ts": 0.219623, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.228974, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.22904, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.229075, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.229092, "dir": "out", "enc": "utf8", "data": "ls\r\n", "len": 4}
+{"ts": 0.230943, "dir": "out", "enc": "utf8", "data": "numbers.txt\tpoem.txt\tstage1\r\n", "len": 29}
+{"ts": 0.231188, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.231232, "dir": "in", "enc": "utf8", "data": "ls -l\n", "len": 6}
+{"ts": 0.231255, "dir": "out", "enc": "utf8", "data": "ls -l\r\n", "len": 7}
+{"ts": 0.234034, "dir": "out", "enc": "utf8", "data": "total 16\r\n", "len": 10}
+{"ts": 0.234173, "dir": "out", "enc": "utf8", "data": "-rw-r--r--@ 1 verlyn13  staff  141 Nov  7 17:05 numbers.txt\r\n-rw-r--r--@ 1 verlyn13  staff  147 Nov  7 17:05 poem.txt\r\n", "len": 119}
+{"ts": 0.234186, "dir": "out", "enc": "utf8", "data": "drwxr-xr-x@ 2 verlyn13  staff   64 Nov  7 17:05 stage1\r\n", "len": 56}
+{"ts": 0.234437, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.234469, "dir": "in", "enc": "utf8", "data": "ls -a\n", "len": 6}
+{"ts": 0.234486, "dir": "out", "enc": "utf8", "data": "ls -a\r\n", "len": 7}
+{"ts": 0.236151, "dir": "out", "enc": "utf8", "data": ".\t\t\t.shelltutor_history\tstage1\r\n..\t\t\tnumbers.txt\r\n.progress\t\tpoem.txt\r\n", "len": 71}
+{"ts": 0.236349, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.236374, "dir": "in", "enc": "utf8", "data": "ls /etc\n", "len": 8}
+{"ts": 0.236391, "dir": "out", "enc": "utf8", "data": "ls /etc\r\n", "len": 9}
+{"ts": 0.2384, "dir": "out", "enc": "utf8", "data": "afpovertcp.cfg\t\t\t\tnotify.conf\r\naliases\t\t\t\t\tntp.conf\r\naliases.db\t\t\t\tntp_opendirectory.conf\r\napache2\t\t\t\t\topenldap\r\nasl\t\t\t\t\tpam.d\r\nasl.conf\t\t\t\tpasswd\r\nauto_home\t\t\t\tpaths\r\nauto_master\t\t\t\tpaths.d\r\n", "len": 192}
+{"ts": 0.238429, "dir": "out", "enc": "utf8", "data": "autofs.conf\t\t\t\tpf.anchors\r\nbashrc\t\t\t\t\tpf.conf\r\nbashrc_Apple_Terminal\t\t\tpf.os\r\ncom.apple.mis.rtadvd.conf\t\tpostfix\r\ncom.apple.screensharing.agent.launchd\tppp\r\ncsh.cshrc\t\t\t\tprofile\r\ncsh.login\t\t\t\tprotocols\r\ncsh.logout\t\t\t\tracoon\r\ncups\t\t\t\t\trc.common\r\nfind.codes\t\t\t\trc.netboot\r\nftpusers\t\t\t\tresolv.conf\r\ngettytab\t\t\t\tresolver\r\ngroup\t\t\t\t\trmtab\r\nhosts\t\t\t\t\trpc\r\nhosts.backup.20250808-093632\t\trtadvd.conf\r\nhosts.bak\t\t\t\tsecurity\r\nhosts.bak.20260522-110256\t\tservices\r\nhosts.equiv\t\t\t\tshells\r\nirbrc\t\t\t\t\tsnmp\r\nkern_loader.conf\t\t\tssh\r\nkrb5.keytab\t\t\t\tssl\r\n", "len": 536}
+{"ts": 0.23846, "dir": "out", "enc": "utf8", "data": "launchd.conf\t\t\t\tsudo_lecture\r\nlocaltime\t\t\t\tsudoers\r\nlocate.rc\t\t\t\tsudoers.d\r\nmail.rc\t\t\t\t\tsyslog.conf\r\nman.conf\t\t\t\tttys\r\nmanpaths\t\t\t\tuucp\r\nmanpaths.d\t\t\t\twfs\r\nmaster.passwd\t\t\t\txtab\r\nnetworks\t\t\t\tzprofile\r\nnewsyslog.conf\t\t\t\tzshrc\r\nnewsyslog.d\t\t\t\tzshrc_Apple_Terminal\r\nnfs.conf\r\n", "len": 273}
+{"ts": 0.23865, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.238694, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.238717, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.241138, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.242912, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m2.2 — cd and the home folder\u001b[0m\r\n\r\n\u001b[1;38;5;220mcd\u001b[0m changes your current folder.\r\n\r\n  \u001b[1;38;5;220mcd /tmp\u001b[0m       \u001b[2m# go to /tmp\u001b[0m\r\n  \u001b[1;38;5;220mpwd\u001b[0m           \u001b[2m# confirm you got there\u001b[0m\r\n  \u001b[1;38;5;220mcd\u001b[0m            \u001b[2m# go home (just 'cd' by itself)\u001b[0m\r\n  \u001b[1;38;5;220mcd ~\u001b[0m          \u001b[2m# also go home — ~ means $HOME\u001b[0m\r\n\r\nTwo more useful ones:\r\n  \u001b[1;38;5;220mcd -\u001b[0m          \u001b[2m# go back to the previous folder\u001b[0m\r\n  \u001b[1;38;5;220mcd ..\u001b[0m         \u001b[2m# go up one level (to the parent folder)\u001b[0m\r\n\r\n\u001b[1;38;5;196mStages 1 and 2 start every practice prompt in\u001b[0m \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz\u001b[0m\u001b[1;38;5;196m.\u001b[0m\r\nLater stages start in a stage folder inside it. If you wander off,\r\n\u001b[1;38;5;220mcd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz\u001b[0m brings you back.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to continue.\u001b[0m\r\n", "len": 990}
+{"ts": 0.243037, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.252223, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.252272, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.252291, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.25233, "dir": "in", "enc": "utf8", "data": "cd /tmp\n", "len": 8}
+{"ts": 0.252349, "dir": "out", "enc": "utf8", "data": "cd /tmp\r\n", "len": 9}
+{"ts": 0.252435, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.252452, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.252467, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.252476, "dir": "out", "enc": "utf8", "data": "/tmp\r\n", "len": 6}
+{"ts": 0.252533, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.25255, "dir": "in", "enc": "utf8", "data": "cd\n", "len": 3}
+{"ts": 0.252563, "dir": "out", "enc": "utf8", "data": "cd\r\n", "len": 4}
+{"ts": 0.252623, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.252638, "dir": "in", "enc": "utf8", "data": "cd -\n", "len": 5}
+{"ts": 0.252651, "dir": "out", "enc": "utf8", "data": "cd -\r\n", "len": 6}
+{"ts": 0.252663, "dir": "out", "enc": "utf8", "data": "/tmp\r\n", "len": 6}
+{"ts": 0.252705, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.252721, "dir": "in", "enc": "utf8", "data": "cd ..\n", "len": 6}
+{"ts": 0.252734, "dir": "out", "enc": "utf8", "data": "cd ..", "len": 5}
+{"ts": 0.252742, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.252807, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.252826, "dir": "in", "enc": "utf8", "data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz\n", "len": 81}
+{"ts": 0.25284, "dir": "out", "enc": "utf8", "data": "cd /var", "len": 7}
+{"ts": 0.252848, "dir": "out", "enc": "utf8", "data": "/fold", "len": 5}
+{"ts": 0.252855, "dir": "out", "enc": "utf8", "data": "ers/j", "len": 5}
+{"ts": 0.252863, "dir": "out", "enc": "utf8", "data": "x/f_4", "len": 5}
+{"ts": 0.252871, "dir": "out", "enc": "utf8", "data": "n", "len": 1}
+{"ts": 0.25288, "dir": "out", "enc": "utf8", "data": "05597", "len": 5}
+{"ts": 0.252888, "dir": "out", "enc": "utf8", "data": "3x5c", "len": 4}
+{"ts": 0.2529, "dir": "out", "enc": "utf8", "data": "wnyh_", "len": 5}
+{"ts": 0.25291, "dir": "out", "enc": "utf8", "data": "mhlw", "len": 4}
+{"ts": 0.252919, "dir": "out", "enc": "utf8", "data": "9h000", "len": 5}
+{"ts": 0.252928, "dir": "out", "enc": "utf8", "data": "0gn/", "len": 4}
+{"ts": 0.252936, "dir": "out", "enc": "utf8", "data": "T/she", "len": 5}
+{"ts": 0.252945, "dir": "out", "enc": "utf8", "data": "lltu", "len": 4}
+{"ts": 0.252953, "dir": "out", "enc": "utf8", "data": "tor-", "len": 4}
+{"ts": 0.252967, "dir": "out", "enc": "utf8", "data": "sim-h \rom", "len": 9}
+{"ts": 0.252975, "dir": "out", "enc": "utf8", "data": "e-fi", "len": 4}
+{"ts": 0.252984, "dir": "out", "enc": "utf8", "data": "xaz5", "len": 4}
+{"ts": 0.252992, "dir": "out", "enc": "utf8", "data": "jz\r\n", "len": 4}
+{"ts": 0.253059, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.253077, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.253091, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.255566, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.257398, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m2.3 — paths: relative, absolute, dot, dot-dot\u001b[0m\r\n\r\nA \u001b[1;38;5;244mpath\u001b[0m tells the shell where something is.\r\n\r\n\u001b[1;38;5;244mRelative paths\u001b[0m start where you are now:\r\n  \u001b[2mnotes.txt\u001b[0m            a file in this folder\r\n  \u001b[2mpractice/notes.txt\u001b[0m   a file inside a subfolder\r\n  \u001b[2m../notes.txt\u001b[0m         a file in the parent folder\r\n  \u001b[2m./notes.txt\u001b[0m          same as 'notes.txt' (the . is this folder)\r\n\r\n\u001b[1;38;5;244mAbsolute paths\u001b[0m start from the root, with \u001b[38;5;208m/\u001b[0m:\r\n  \u001b[2m/etc/hosts\u001b[0m\r\n  \u001b[2m/usr/bin/vim\u001b[0m\r\n  \u001b[2m/home/alice/notes.txt\u001b[0m\r\n\r\n\u001b[1;38;5;244m~\u001b[0m is short for your home folder. \u001b[2m~/notes\u001b[0m means\r\n\u001b[2m$HOME/notes\u001b[0m.\r\n\r\n\u001b[1;38;5;196mPredict before you act.\u001b[0m  If you're in \u001b[2m~/projects\u001b[0m\r\nand you type \u001b[1;38;5;220mcat notes.txt\u001b[0m, the shell looks for\r\n\u001b[2m~/projects/notes.txt\u001b[0m. If you mean a different folder, name it.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 2's gate.\u001b[0m\r\n", "len": 990}
+{"ts": 0.257529, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.267364, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.267416, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.26743, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.267469, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.267487, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.270402, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.272327, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 2 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m.\r\n", "len": 149}
+{"ts": 0.272463, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.272522, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: What does \u001b[1;38;5;220mcd ..\u001b[0m do?\u001b[0m\r\n", "len": 58}
+{"ts": 0.272544, "dir": "in", "enc": "utf8", "data": "goes up one folder\n", "len": 19}
+{"ts": 0.27256, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m goes up one folder\r\n", "len": 52}
+{"ts": 0.279385, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.279431, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: What does \u001b[1;38;5;220m~\u001b[0m mean in a path?\u001b[0m\r\n", "len": 66}
+{"ts": 0.279456, "dir": "in", "enc": "utf8", "data": "home folder\n", "len": 12}
+{"ts": 0.279473, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m home folder\r\n", "len": 45}
+{"ts": 0.289149, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.289198, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: If I'm in \u001b[2m~/projects\u001b[0m and I type \u001b[1;38;5;220mcd notes\u001b[0m, what folder am I in?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 141}
+{"ts": 0.289228, "dir": "in", "enc": "utf8", "data": "~/projects/notes\n", "len": 17}
+{"ts": 0.28925, "dir": "out", "enc": "utf8", "data": "~/projects/notes\r\n", "len": 18}
+{"ts": 0.296133, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.298677, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.300943, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 2 — GATE TASK\u001b[0m\r\n\r\nInside the practice prompt, do these (in any order):\r\n\r\n  1. make a folder called \u001b[38;5;109mpractice\u001b[0m (inside this stage's folder)\r\n  2. cd into it\r\n  3. confirm you're inside it with \u001b[1;38;5;220mpwd\u001b[0m\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m. I'll look for \u001b[38;5;109mpractice\u001b[0m on disk.\r\n\r\n\u001b[2mHint: \u001b[1;38;5;220mmkdir practice\u001b[0m\u001b[2m creates the folder.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 481}
+{"ts": 0.301091, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.315305, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.315387, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.315421, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.315474, "dir": "in", "enc": "utf8", "data": "mkdir practice\n", "len": 15}
+{"ts": 0.315496, "dir": "out", "enc": "utf8", "data": "mkdir p", "len": 7}
+{"ts": 0.315507, "dir": "out", "enc": "utf8", "data": "ractice", "len": 7}
+{"ts": 0.315517, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.318387, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.31846, "dir": "in", "enc": "utf8", "data": "cd practice\n", "len": 12}
+{"ts": 0.318487, "dir": "out", "enc": "utf8", "data": "cd practice\r\n", "len": 13}
+{"ts": 0.318573, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.318594, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.318613, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.318623, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage2/practice\r\n", "len": 95}
+{"ts": 0.318666, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.318682, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.318696, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 0.319232, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 2 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.325018, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.32704, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — Files and operations\u001b[0m\r\n\r\nThree lessons, then a gate. You'll create, read, copy, move, and remove\r\nfiles. \u001b[1;38;5;196mrm is immediate.\u001b[0m It does not move things to a trash.\r\nWe'll do everything inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage3\u001b[0m so practice is\r\ncontained.\r\n\r\nCommands this stage:\r\n  \u001b[1;38;5;220mtouch\u001b[0m   create an empty file (or update its timestamp)\r\n  \u001b[1;38;5;220mmkdir\u001b[0m   create a folder\r\n  \u001b[1;38;5;220mrmdir\u001b[0m   remove an EMPTY folder\r\n  \u001b[1;38;5;220mcat\u001b[0m     print a text file\r\n  \u001b[1;38;5;220mless\u001b[0m    page through a long file (exit with \u001b[38;5;208mq\u001b[0m)\r\n  \u001b[1;38;5;220mcp\u001b[0m      copy\r\n  \u001b[1;38;5;220mmv\u001b[0m      move (or rename — same command)\r\n  \u001b[1;38;5;220mrm\u001b[0m      remove a file (\u001b[1;38;5;196mimmediate\u001b[0m)\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 3.1.\u001b[0m\r\n", "len": 928}
+{"ts": 0.327202, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.337666, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.337749, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.337792, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.337828, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.340999, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.342922, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.1 — creating: touch, mkdir\u001b[0m\r\n\r\n\u001b[1;38;5;220mtouch\u001b[0m creates an empty file (or updates the timestamp of\r\nan existing one).\r\n  \u001b[1;38;5;220mtouch hello.txt\u001b[0m\r\n  \u001b[1;38;5;220mls\u001b[0m              \u001b[2m# you should see hello.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mmkdir\u001b[0m creates a folder.\r\n  \u001b[1;38;5;220mmkdir notes\u001b[0m\r\n  \u001b[1;38;5;220mls\u001b[0m              \u001b[2m# notes/ is now there\u001b[0m\r\n\r\nTo create a file \u001b[1;38;5;244mwith content\u001b[0m, use redirection (Stage 4):\r\n  \u001b[1;38;5;220mecho \"first line\" > greeting.txt\u001b[0m\r\n\r\nBut for now, \u001b[1;38;5;220mtouch\u001b[0m for empty files, \u001b[1;38;5;220mmkdir\u001b[0m for\r\nfolders.\r\n\r\n\u001b[1;38;5;208m▶ Make a few, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 691}
+{"ts": 0.34308, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.353747, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.353798, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.353831, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.353864, "dir": "in", "enc": "utf8", "data": "touch hello.txt\n", "len": 16}
+{"ts": 0.353883, "dir": "out", "enc": "utf8", "data": "touch he", "len": 8}
+{"ts": 0.353894, "dir": "out", "enc": "utf8", "data": "llo.t", "len": 5}
+{"ts": 0.353904, "dir": "out", "enc": "utf8", "data": "xt\r\n", "len": 4}
+{"ts": 0.356253, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.356281, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.356297, "dir": "out", "enc": "utf8", "data": "ls\r\n", "len": 4}
+{"ts": 0.358085, "dir": "out", "enc": "utf8", "data": "hello.txt\r\n", "len": 11}
+{"ts": 0.358312, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.358333, "dir": "in", "enc": "utf8", "data": "mkdir notes\n", "len": 12}
+{"ts": 0.358349, "dir": "out", "enc": "utf8", "data": "mkdir no", "len": 8}
+{"ts": 0.358358, "dir": "out", "enc": "utf8", "data": "tes\r\n", "len": 5}
+{"ts": 0.360444, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.3605, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.360528, "dir": "out", "enc": "utf8", "data": "ls\r\n", "len": 4}
+{"ts": 0.362735, "dir": "out", "enc": "utf8", "data": "hello.txt\tnotes\r\n", "len": 17}
+{"ts": 0.362957, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.362986, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.363006, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.365997, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.367974, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.2 — reading: cat, less\u001b[0m\r\n\r\n\u001b[1;38;5;220mcat\u001b[0m prints the entire file at once.\r\n  \u001b[1;38;5;220mcat hello.txt\u001b[0m                \u001b[2m# probably empty\u001b[0m\r\n  \u001b[1;38;5;220mcat ../poem.txt\u001b[0m        \u001b[2m# the tutor's poem, one folder up\u001b[0m\r\n\r\nFor a long file, \u001b[1;38;5;220mcat\u001b[0m floods the screen. Use \u001b[1;38;5;220mless\u001b[0m\r\nto page through it:\r\n  \u001b[1;38;5;220mless ../numbers.txt\u001b[0m    \u001b[2m# 50 lines — more than one screen\u001b[0m\r\n\r\nInside \u001b[1;38;5;220mless\u001b[0m, the screen takes over. Press \u001b[38;5;208mSpace\u001b[0m\r\nor \u001b[38;5;208mf\u001b[0m to page down, \u001b[38;5;208mb\u001b[0m to page back, and\r\n\u001b[38;5;208mq\u001b[0m to exit. (More on full-screen programs in Stage 5.)\r\n\r\n\u001b[1;38;5;196mImportant:\u001b[0m when \u001b[1;38;5;220mless\u001b[0m takes over, the prompt is\r\ngone. You're inside a program. \u001b[38;5;208mq\u001b[0m returns you to the shell.\r\n\r\n\u001b[1;38;5;208m▶ Try both, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 907}
+{"ts": 0.368116, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.378389, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.378444, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.378464, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.378502, "dir": "in", "enc": "utf8", "data": "cat hello.txt\n", "len": 14}
+{"ts": 0.378522, "dir": "out", "enc": "utf8", "data": "cat hello", "len": 9}
+{"ts": 0.378532, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 0.380768, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.380793, "dir": "in", "enc": "utf8", "data": "cat ../poem.txt\n", "len": 16}
+{"ts": 0.380809, "dir": "out", "enc": "utf8", "data": "cat ../", "len": 7}
+{"ts": 0.380819, "dir": "out", "enc": "utf8", "data": "poem.", "len": 5}
+{"ts": 0.380828, "dir": "out", "enc": "utf8", "data": "txt\r\n", "len": 5}
+{"ts": 0.382537, "dir": "out", "enc": "utf8", "data": "The terminal is a quiet room.\r\nYou speak to it, it answers back.\r\nWords have shapes here, and shapes have weight.\r\nA pipe is a doorway between rooms.\r\n", "len": 151}
+{"ts": 0.382785, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.38281, "dir": "in", "enc": "utf8", "data": "less ../numbers.txt\n", "len": 20}
+{"ts": 0.382827, "dir": "out", "enc": "utf8", "data": "less ", "len": 5}
+{"ts": 0.382837, "dir": "out", "enc": "utf8", "data": "../nu", "len": 5}
+{"ts": 0.382846, "dir": "out", "enc": "utf8", "data": "mbers", "len": 5}
+{"ts": 0.382855, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 0.387096, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[24;1H\u001b[?1h\u001b=\r", "len": 23}
+{"ts": 0.387116, "dir": "out", "enc": "utf8", "data": "1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8\r\n9\r\n10\r\n11\r\n12\r\n13\r\n14\r\n15\r\n16\r\n17\r\n18\r\n19\r\n20\r\n21\r\n22\r\n23\r\n\u001b[7m../numbers.txt\u001b[27m\u001b[K", "len": 109}
+{"ts": 0.387143, "dir": "in", "enc": "utf8", "data": "q", "len": 1}
+{"ts": 0.387159, "dir": "out", "enc": "utf8", "data": "\r\u001b[K\u001b[?1l\u001b>\u001b[?1049l", "len": 19}
+{"ts": 0.387459, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.387488, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.387504, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.390124, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.392217, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.3 — copy, move, delete\u001b[0m\r\n\r\n\u001b[1;38;5;220mcp\u001b[0m copies. The original stays.\r\n  \u001b[1;38;5;220mcp hello.txt backup.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mmv\u001b[0m moves. The original moves to the new name or folder.\r\nThe same command is used for \u001b[1;38;5;244mrename\u001b[0m:\r\n  \u001b[1;38;5;220mmv hello.txt hi.txt\u001b[0m            \u001b[2m# rename\u001b[0m\r\n  \u001b[1;38;5;220mmv hi.txt notes/\u001b[0m               \u001b[2m# move into a folder\u001b[0m\r\n\r\n\u001b[1;38;5;220mrm\u001b[0m deletes. \u001b[1;38;5;196mImmediately and permanently.\u001b[0m\r\n  \u001b[1;38;5;220mrm backup.txt\u001b[0m\r\n\r\nThere is no Trash to recover from. There is no undo. \u001b[1;38;5;196mType\r\ncarefully and look before you press Enter.\u001b[0m\r\n\r\n\u001b[1;38;5;244mA safety habit\u001b[0m: list before you remove.\r\n  \u001b[1;38;5;220mls\u001b[0m\r\n  \u001b[1;38;5;220mrm <only-now-that-you-are-sure>\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 3's gate.\u001b[0m\r\n", "len": 872}
+{"ts": 0.392353, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.402327, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.402375, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.402402, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.402443, "dir": "in", "enc": "utf8", "data": "cp hello.txt backup.txt\n", "len": 24}
+{"ts": 0.402459, "dir": "out", "enc": "utf8", "data": "cp he", "len": 5}
+{"ts": 0.402469, "dir": "out", "enc": "utf8", "data": "llo.t", "len": 5}
+{"ts": 0.402479, "dir": "out", "enc": "utf8", "data": "xt bac", "len": 6}
+{"ts": 0.402488, "dir": "out", "enc": "utf8", "data": "kup.t", "len": 5}
+{"ts": 0.402497, "dir": "out", "enc": "utf8", "data": "xt\r\n", "len": 4}
+{"ts": 0.405019, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.405048, "dir": "in", "enc": "utf8", "data": "mv hello.txt hi.txt\n", "len": 20}
+{"ts": 0.405066, "dir": "out", "enc": "utf8", "data": "mv hello", "len": 8}
+{"ts": 0.405076, "dir": "out", "enc": "utf8", "data": ".txt ", "len": 5}
+{"ts": 0.405086, "dir": "out", "enc": "utf8", "data": "hi.txt", "len": 6}
+{"ts": 0.405095, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.407544, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.407595, "dir": "in", "enc": "utf8", "data": "mv hi.txt notes/\n", "len": 17}
+{"ts": 0.407618, "dir": "out", "enc": "utf8", "data": "mv hi.txt n", "len": 11}
+{"ts": 0.407629, "dir": "out", "enc": "utf8", "data": "otes/\r\n", "len": 7}
+{"ts": 0.410324, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.410378, "dir": "in", "enc": "utf8", "data": "rm backup.txt\n", "len": 14}
+{"ts": 0.410402, "dir": "out", "enc": "utf8", "data": "rm backup", "len": 9}
+{"ts": 0.410415, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 0.412976, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.413027, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.413052, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.416093, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.418239, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m.\r\n", "len": 149}
+{"ts": 0.418418, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.418482, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: Which command creates an empty file?  (touch, mkdir, new, cat)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 116}
+{"ts": 0.418509, "dir": "in", "enc": "utf8", "data": "touch\n", "len": 6}
+{"ts": 0.418529, "dir": "out", "enc": "utf8", "data": "touch\r\n", "len": 7}
+{"ts": 0.425492, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.425565, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: After \u001b[1;38;5;220mrm important.txt\u001b[0m, where is the file?  (~/.Trash, on disk, gone, depends)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 149}
+{"ts": 0.425604, "dir": "in", "enc": "utf8", "data": "gone\n", "len": 5}
+{"ts": 0.425623, "dir": "out", "enc": "utf8", "data": "gone\r\n", "len": 6}
+{"ts": 0.432755, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.432818, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: What single command renames \u001b[38;5;109mold.txt\u001b[0m to \u001b[38;5;109mnew.txt\u001b[0m?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 131}
+{"ts": 0.432848, "dir": "in", "enc": "utf8", "data": "mv\n", "len": 3}
+{"ts": 0.432868, "dir": "out", "enc": "utf8", "data": "mv\r\n", "len": 4}
+{"ts": 0.439715, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.446523, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.448707, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — GATE TASK\u001b[0m\r\n\r\nYou will work inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage3\u001b[0m.\r\n\r\nDo these, in order:\r\n\r\n  1. create a file \u001b[38;5;109mnotes.txt\u001b[0m containing the word \u001b[1;38;5;244mhello\u001b[0m\r\n     \u001b[2m(hint: \u001b[1;38;5;220mecho hello > notes.txt\u001b[0m\u001b[2m)\u001b[0m\r\n  2. copy \u001b[38;5;109mnotes.txt\u001b[0m to \u001b[38;5;109mbackup.txt\u001b[0m\r\n  3. rename \u001b[38;5;109mnotes.txt\u001b[0m to \u001b[38;5;109mdone.txt\u001b[0m\r\n  4. remove \u001b[38;5;109mbackup.txt\u001b[0m\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m. The script will look at the folder.\r\n\r\n\u001b[2mI will check: done.txt exists with 'hello' in it; notes.txt and\u001b[0m\r\n\u001b[2mbackup.txt are gone.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 763}
+{"ts": 0.448842, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.458914, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.458984, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.459043, "dir": "in", "enc": "utf8", "data": "echo hello > notes.txt\n", "len": 23}
+{"ts": 0.459063, "dir": "out", "enc": "utf8", "data": "echo hell", "len": 9}
+{"ts": 0.459075, "dir": "out", "enc": "utf8", "data": "o > no", "len": 6}
+{"ts": 0.459094, "dir": "out", "enc": "utf8", "data": "tes.txt\r\n", "len": 9}
+{"ts": 0.459331, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.45935, "dir": "in", "enc": "utf8", "data": "cp notes.txt backup.txt\n", "len": 24}
+{"ts": 0.459366, "dir": "out", "enc": "utf8", "data": "cp notes", "len": 8}
+{"ts": 0.459375, "dir": "out", "enc": "utf8", "data": ".txt ", "len": 5}
+{"ts": 0.459389, "dir": "out", "enc": "utf8", "data": "backu", "len": 5}
+{"ts": 0.459399, "dir": "out", "enc": "utf8", "data": "p.txt\r\n", "len": 7}
+{"ts": 0.462143, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.462166, "dir": "in", "enc": "utf8", "data": "mv notes.txt done.txt\n", "len": 22}
+{"ts": 0.462182, "dir": "out", "enc": "utf8", "data": "mv note", "len": 7}
+{"ts": 0.462192, "dir": "out", "enc": "utf8", "data": "s.", "len": 2}
+{"ts": 0.462203, "dir": "out", "enc": "utf8", "data": "txt do", "len": 6}
+{"ts": 0.462212, "dir": "out", "enc": "utf8", "data": "ne.tx", "len": 5}
+{"ts": 0.462221, "dir": "out", "enc": "utf8", "data": "t\r\n", "len": 3}
+{"ts": 0.464266, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.464305, "dir": "in", "enc": "utf8", "data": "rm backup.txt\n", "len": 14}
+{"ts": 0.464327, "dir": "out", "enc": "utf8", "data": "rm back", "len": 7}
+{"ts": 0.46434, "dir": "out", "enc": "utf8", "data": "up.txt\r\n", "len": 8}
+{"ts": 0.466329, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.466352, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.466368, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 0.469104, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 3 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.479422, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.481405, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — Commands, streams, composition\u001b[0m\r\n\r\nThree lessons, then a gate. You'll read a command's structure, check\r\nwhether a command exists, and chain commands together with pipes,\r\nredirects, and globs.\r\n\r\nCommands this stage:\r\n  \u001b[1;38;5;220mcommand -v\u001b[0m   ask the shell if a program is installed\r\n  \u001b[1;38;5;220mwc\u001b[0m           word, line, and character count\r\n  \u001b[1;38;5;220mseq\u001b[0m           generate number sequences\r\n  \u001b[1;38;5;220mhead\u001b[0m          first N lines of input\r\n  \u001b[1;38;5;220msort\u001b[0m          sort lines\r\n  \u001b[1;38;5;220mgrep\u001b[0m          select lines matching a pattern\r\n  \u001b[1;38;5;220m|\u001b[0m             \u001b[1;38;5;244mpipe\u001b[0m: send one command's output into the next\r\n  \u001b[1;38;5;220m>\u001b[0m             \u001b[1;38;5;244mredirect\u001b[0m: write output to a file (overwrites)\r\n  \u001b[1;38;5;220m>>\u001b[0m            \u001b[1;38;5;244mappend\u001b[0m: add output to the end of a file\r\n  \u001b[1;38;5;220m<\u001b[0m             \u001b[1;38;5;244minput redirect\u001b[0m: read a file into a command\r\n  \u001b[1;38;5;220m*\u001b[0m            ", "len": 1024}
+{"ts": 0.481477, "dir": "out", "enc": "utf8", "data": " \u001b[1;38;5;244mglob\u001b[0m: match many filenames at once\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 4.1.\u001b[0m\r\n", "len": 135}
+{"ts": 0.481555, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.49154, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.491597, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.491618, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.491648, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.491667, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.494776, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.496371, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.1 — reading a command\u001b[0m\r\n\r\nA shell command has a small grammar:\r\n\r\n  \u001b[1;38;5;244mcommand  options  arguments\u001b[0m\r\n\r\nExamples:\r\n  \u001b[1;38;5;220mls\u001b[0m\r\n  \u001b[1;38;5;220mls -l\u001b[0m                    \u001b[2m# one option, no argument\u001b[0m\r\n  \u001b[1;38;5;220mls -l /etc\u001b[0m               \u001b[2m# option + argument\u001b[0m\r\n  \u001b[1;38;5;220mwc -l poem.txt\u001b[0m           \u001b[2m# count lines in a file\u001b[0m\r\n  \u001b[1;38;5;220mecho \"hello world\"\u001b[0m       \u001b[2m# argument with a space — quoted\u001b[0m\r\n\r\n\u001b[1;38;5;196mSpaces matter.\u001b[0m  The shell splits on spaces. If a filename\r\nhas a space, \u001b[1;38;5;244mquote it\u001b[0m or the shell will see two arguments:\r\n\r\n  \u001b[1;38;5;220mvim \"my notes.txt\"\u001b[0m       \u001b[2m# opens one file\u001b[0m\r\n  \u001b[1;38;5;220mvim my notes.txt\u001b[0m         \u001b[2m# opens TWO files: 'my' and 'notes.txt'\u001b[0m\r\n\r\n\u001b[1;38;5;244mcommand -v\u001b[0m asks the shell whether a command exists.\r\n  \u001b[1;38;5;220mcommand -v ls\u001b[0m            \u001b[2m# prints the path; exits 0\u001b[0m\r\n  \u001b[1;38;5;220mcommand -v vim\u001b[0m           \u001b[2m# does Vim exist ", "len": 1024}
+{"ts": 0.49643, "dir": "out", "enc": "utf8", "data": "on this system?\u001b[0m\r\n  \u001b[1;38;5;220mcommand -v vimtutor\u001b[0m      \u001b[2m# does vimtutor?\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Try a few \u001b[1;38;5;220mcommand -v\u001b[1;38;5;208m probes, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 207}
+{"ts": 0.49653, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.506143, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.506182, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.506211, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.506232, "dir": "in", "enc": "utf8", "data": "ls -l\n", "len": 6}
+{"ts": 0.506249, "dir": "out", "enc": "utf8", "data": "ls -l\r\n", "len": 7}
+{"ts": 0.508928, "dir": "out", "enc": "utf8", "data": "total 16\r\n", "len": 10}
+{"ts": 0.50907, "dir": "out", "enc": "utf8", "data": "-rw-r--r--@ 1 verlyn13  staff  147 Nov  7 17:05 poem.txt\r\n-rw-r--r--@ 1 verlyn13  staff   54 Nov  7 17:05 seed.txt\r\n", "len": 116}
+{"ts": 0.509361, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.509391, "dir": "in", "enc": "utf8", "data": "wc -l poem.txt\n", "len": 15}
+{"ts": 0.50941, "dir": "out", "enc": "utf8", "data": "wc -l poe", "len": 9}
+{"ts": 0.50942, "dir": "out", "enc": "utf8", "data": "m.txt\r\n", "len": 7}
+{"ts": 0.511616, "dir": "out", "enc": "utf8", "data": "       4 poem.txt\r\n", "len": 19}
+{"ts": 0.511849, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.511882, "dir": "in", "enc": "utf8", "data": "echo \"hello world\"\n", "len": 19}
+{"ts": 0.511904, "dir": "out", "enc": "utf8", "data": "echo \"he", "len": 8}
+{"ts": 0.511917, "dir": "out", "enc": "utf8", "data": "llo worl", "len": 8}
+{"ts": 0.511927, "dir": "out", "enc": "utf8", "data": "d\"\r\n", "len": 4}
+{"ts": 0.511941, "dir": "out", "enc": "utf8", "data": "hello world\r\n", "len": 13}
+{"ts": 0.512001, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.512021, "dir": "in", "enc": "utf8", "data": "command -v ls\n", "len": 14}
+{"ts": 0.512043, "dir": "out", "enc": "utf8", "data": "command -v ", "len": 11}
+{"ts": 0.512052, "dir": "out", "enc": "utf8", "data": "ls\r\n", "len": 4}
+{"ts": 0.512064, "dir": "out", "enc": "utf8", "data": "/bin/ls\r\n", "len": 9}
+{"ts": 0.512112, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.51213, "dir": "in", "enc": "utf8", "data": "command -v vim\n", "len": 15}
+{"ts": 0.512145, "dir": "out", "enc": "utf8", "data": "command", "len": 7}
+{"ts": 0.512154, "dir": "out", "enc": "utf8", "data": " -v v", "len": 5}
+{"ts": 0.512163, "dir": "out", "enc": "utf8", "data": "im\r\n", "len": 4}
+{"ts": 0.512227, "dir": "out", "enc": "utf8", "data": "/usr/bin/vim\r\n", "len": 14}
+{"ts": 0.512274, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.512291, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.512306, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.514886, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.516707, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.2 — the pipe\u001b[0m\r\n\r\nA \u001b[1;38;5;244mpipe\u001b[0m ( \u001b[1;38;5;220m|\u001b[0m ) sends the standard output of one\r\ncommand into the standard input of the next. \u001b[1;38;5;196mMost important idea\r\nin the shell.\u001b[0m\r\n\r\n\u001b[1;38;5;220mwc\u001b[0m alone counts:\r\n  \u001b[1;38;5;220mwc -l poem.txt\u001b[0m          \u001b[2m# lines in poem.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mwc\u001b[0m via pipe counts \u001b[1;38;5;244mwhatever you piped in\u001b[0m:\r\n  \u001b[1;38;5;220mseq 1 100 | wc -l\u001b[0m       \u001b[2m# 100\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | wc -l\u001b[0m     \u001b[2m# how many programs are installed\u001b[0m\r\n\r\nPipes stack:\r\n  \u001b[1;38;5;220mls /usr/bin | sort | head\u001b[0m        \u001b[2m# list → sort → first 10\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | grep ^a\u001b[0m            \u001b[2m# names starting with 'a'\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | grep ^a | wc -l\u001b[0m    \u001b[2m# …and count them\u001b[0m\r\n\r\nThings to notice while you try these:\r\n  - \u001b[1;38;5;220m|\u001b[0m is Shift+Backslash on most keyboards.\r\n  - Each piece is a normal command; only the connector is new.\r\n  - The pipeline runs left-to-right", "len": 1024}
+{"ts": 0.51675, "dir": "out", "enc": "utf8", "data": "; output flows.\r\n\r\n\u001b[1;38;5;208m▶ Try a few pipelines, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 99}
+{"ts": 0.516855, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.526256, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.526304, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.526337, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.526381, "dir": "in", "enc": "utf8", "data": "seq 1 100 | wc -l\n", "len": 18}
+{"ts": 0.5264, "dir": "out", "enc": "utf8", "data": "seq 1 10", "len": 8}
+{"ts": 0.52641, "dir": "out", "enc": "utf8", "data": "0 | wc", "len": 6}
+{"ts": 0.526421, "dir": "out", "enc": "utf8", "data": " -l\r\n", "len": 5}
+{"ts": 0.528923, "dir": "out", "enc": "utf8", "data": "     100\r\n", "len": 10}
+{"ts": 0.529201, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.529226, "dir": "in", "enc": "utf8", "data": "ls /usr/bin | sort | head\n", "len": 26}
+{"ts": 0.529244, "dir": "out", "enc": "utf8", "data": "ls /usr/", "len": 8}
+{"ts": 0.529254, "dir": "out", "enc": "utf8", "data": "bin |", "len": 5}
+{"ts": 0.529264, "dir": "out", "enc": "utf8", "data": " sort ", "len": 6}
+{"ts": 0.52928, "dir": "out", "enc": "utf8", "data": "| head\r\n", "len": 8}
+{"ts": 0.535231, "dir": "out", "enc": "utf8", "data": "AssetCacheLocatorUtil\r\nAssetCacheManagerUtil\r\nAssetCacheTetheratorUtil\r\nDeRez\r\nGetFileInfo\r\nIOAccelMemory\r\nIOMFBDiagnose\r\nIOMFB_FDR_Loader\r\nIOSDebug\r\nResMerger\r\n", "len": 161}
+{"ts": 0.535545, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.535577, "dir": "in", "enc": "utf8", "data": "ls /usr/bin | grep ^a | wc -l\n", "len": 30}
+{"ts": 0.535596, "dir": "out", "enc": "utf8", "data": "ls /usr/", "len": 8}
+{"ts": 0.535605, "dir": "out", "enc": "utf8", "data": "bin | ", "len": 6}
+{"ts": 0.535615, "dir": "out", "enc": "utf8", "data": "grep ", "len": 5}
+{"ts": 0.535625, "dir": "out", "enc": "utf8", "data": "^a | w", "len": 6}
+{"ts": 0.535634, "dir": "out", "enc": "utf8", "data": "c -l", "len": 4}
+{"ts": 0.535643, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.540603, "dir": "out", "enc": "utf8", "data": "      41\r\n", "len": 10}
+{"ts": 0.540859, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.540882, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.5409, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.543566, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.545565, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.3 — redirection and globs\u001b[0m\r\n\r\nA pipe sends output to \u001b[1;38;5;244manother program\u001b[0m. A redirect sends it\r\nto \u001b[1;38;5;244ma file\u001b[0m.\r\n\r\n  \u001b[1;38;5;220m>\u001b[0m    write to a file (\u001b[1;38;5;196moverwrites\u001b[0m if it exists)\r\n  \u001b[1;38;5;220m>>\u001b[0m   append to a file (creates if missing)\r\n  \u001b[1;38;5;220m<\u001b[0m    read a file \u001b[1;38;5;244minto\u001b[0m a command\r\n\r\nExamples:\r\n  \u001b[1;38;5;220mecho first > greeting.txt\u001b[0m        \u001b[2m# overwrite\u001b[0m\r\n  \u001b[1;38;5;220mecho second >> greeting.txt\u001b[0m      \u001b[2m# append\u001b[0m\r\n  \u001b[1;38;5;220mcat greeting.txt\u001b[0m                 \u001b[2m# two lines\u001b[0m\r\n  \u001b[1;38;5;220mwc -w < poem.txt\u001b[0m                 \u001b[2m# count words read from poem.txt\u001b[0m\r\n\r\nCombine with pipes:\r\n  \u001b[1;38;5;220mls /usr/bin | sort > programs.txt\u001b[0m\r\n  \u001b[1;38;5;220mwc -l programs.txt\u001b[0m\r\n\r\n\u001b[1;38;5;244mGlobs\u001b[0m match many filenames at once. The shell expands them\r\n\u001b[1;38;5;244mbefore\u001b[0m the command sees them.\r\n\r\n  \u001b[1;38;5;220mls *.txt\u001b[0m              \u001b[2m# every .txt file in this folder\u001b[0m", "len": 1024}
+{"ts": 0.545643, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[1;38;5;220mwc -l *.txt\u001b[0m           \u001b[2m# count lines in each .txt file\u001b[0m\r\n  \u001b[1;38;5;220mcat *.txt\u001b[0m             \u001b[2m# print them all back-to-back\u001b[0m\r\n\r\n\u001b[1;38;5;196mPredict before you act.\u001b[0m  \u001b[1;38;5;220mrm *\u001b[0m removes everything\r\nin the current folder. \u001b[1;38;5;220mrm *.tmp\u001b[0m removes only .tmp files.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 4's gate.\u001b[0m\r\n", "len": 409}
+{"ts": 0.545703, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.55519, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.55524, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.555267, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.555312, "dir": "in", "enc": "utf8", "data": "echo first > greeting.txt\n", "len": 26}
+{"ts": 0.555338, "dir": "out", "enc": "utf8", "data": "echo first >", "len": 12}
+{"ts": 0.555348, "dir": "out", "enc": "utf8", "data": " greet", "len": 6}
+{"ts": 0.555358, "dir": "out", "enc": "utf8", "data": "ing.t", "len": 5}
+{"ts": 0.555367, "dir": "out", "enc": "utf8", "data": "xt\r\n", "len": 4}
+{"ts": 0.555525, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.555544, "dir": "in", "enc": "utf8", "data": "echo second >> greeting.txt\n", "len": 28}
+{"ts": 0.555559, "dir": "out", "enc": "utf8", "data": "echo sec", "len": 8}
+{"ts": 0.555568, "dir": "out", "enc": "utf8", "data": "ond ", "len": 4}
+{"ts": 0.555576, "dir": "out", "enc": "utf8", "data": ">> gr", "len": 5}
+{"ts": 0.555584, "dir": "out", "enc": "utf8", "data": "eetin", "len": 5}
+{"ts": 0.555592, "dir": "out", "enc": "utf8", "data": "g.txt", "len": 5}
+{"ts": 0.5556, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.555675, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.555691, "dir": "in", "enc": "utf8", "data": "cat greeting.txt\n", "len": 17}
+{"ts": 0.555705, "dir": "out", "enc": "utf8", "data": "cat gre", "len": 7}
+{"ts": 0.555714, "dir": "out", "enc": "utf8", "data": "eting", "len": 5}
+{"ts": 0.555725, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 0.557465, "dir": "out", "enc": "utf8", "data": "first\r\nsecond\r\n", "len": 15}
+{"ts": 0.557677, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.557697, "dir": "in", "enc": "utf8", "data": "wc -w < poem.txt\n", "len": 17}
+{"ts": 0.557713, "dir": "out", "enc": "utf8", "data": "wc -w <", "len": 7}
+{"ts": 0.557722, "dir": "out", "enc": "utf8", "data": " poem", "len": 5}
+{"ts": 0.557732, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 0.559491, "dir": "out", "enc": "utf8", "data": "      28\r\n", "len": 10}
+{"ts": 0.559723, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.559755, "dir": "in", "enc": "utf8", "data": "ls *.txt\n", "len": 9}
+{"ts": 0.559775, "dir": "out", "enc": "utf8", "data": "ls *.txt\r\n", "len": 10}
+{"ts": 0.561761, "dir": "out", "enc": "utf8", "data": "greeting.txt\tpoem.txt\tseed.txt\r\n", "len": 32}
+{"ts": 0.561962, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.561985, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.562001, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.564696, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.56652, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m.\r\n", "len": 149}
+{"ts": 0.566665, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.56673, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: What does \u001b[1;38;5;220mcommand -v vim\u001b[0m print, if Vim is installed?\u001b[0m\r\n", "len": 91}
+{"ts": 0.566757, "dir": "in", "enc": "utf8", "data": "the path to vim\n", "len": 16}
+{"ts": 0.566776, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m the path to vim\r\n", "len": 49}
+{"ts": 0.573114, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.573159, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: What is the difference between \u001b[1;38;5;220m>\u001b[0m and \u001b[1;38;5;220m>>\u001b[0m?\u001b[0m\r\n", "len": 96}
+{"ts": 0.573191, "dir": "in", "enc": "utf8", "data": "> overwrites, >> appends\n", "len": 25}
+{"ts": 0.573209, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m > overwrites, >> appends\r\n", "len": 58}
+{"ts": 0.579649, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.579695, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: Why does \u001b[1;38;5;220mvim my notes.txt\u001b[0m open two files instead of one?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 127}
+{"ts": 0.579731, "dir": "in", "enc": "utf8", "data": "because of the space\n", "len": 21}
+{"ts": 0.57975, "dir": "out", "enc": "utf8", "data": "because of the space\r\n", "len": 22}
+{"ts": 0.585783, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.591503, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.593574, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — GATE TASK\u001b[0m\r\n\r\nWork inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz/stage4\u001b[0m.\r\n\r\nDo these:\r\n\r\n  1. Use \u001b[1;38;5;220mseq\u001b[0m and a pipe to count from 1 to 100 and save\r\n     the count to \u001b[38;5;109mcount.txt\u001b[0m.\r\n     \u001b[2m(hint: \u001b[1;38;5;220mseq 1 100 | wc -l > count.txt\u001b[0m\u001b[2m)\u001b[0m\r\n\r\n  2. Use a glob to list every \u001b[38;5;109m*.txt\u001b[0m file in this folder.\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n\u001b[2mI will check: count.txt exists and contains 100.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 607}
+{"ts": 0.593706, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.602899, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.602945, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.602966, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.603008, "dir": "in", "enc": "utf8", "data": "seq 1 100 | wc -l > count.txt\n", "len": 30}
+{"ts": 0.603026, "dir": "out", "enc": "utf8", "data": "seq 1 100 ", "len": 10}
+{"ts": 0.603036, "dir": "out", "enc": "utf8", "data": "| wc -", "len": 6}
+{"ts": 0.603045, "dir": "out", "enc": "utf8", "data": "l > c", "len": 5}
+{"ts": 0.603054, "dir": "out", "enc": "utf8", "data": "ount.", "len": 5}
+{"ts": 0.603062, "dir": "out", "enc": "utf8", "data": "txt\r\n", "len": 5}
+{"ts": 0.605958, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.605987, "dir": "in", "enc": "utf8", "data": "ls *.txt\n", "len": 9}
+{"ts": 0.606004, "dir": "out", "enc": "utf8", "data": "ls *.txt", "len": 8}
+{"ts": 0.606014, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.608091, "dir": "out", "enc": "utf8", "data": "count.txt\tgreeting.txt\tpoem.txt\tseed.txt\r\n", "len": 42}
+{"ts": 0.608332, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.608353, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.60838, "dir": "out", "enc": "utf8", "data": "chec", "len": 4}
+{"ts": 0.60839, "dir": "out", "enc": "utf8", "data": "k\r\n", "len": 3}
+{"ts": 0.611748, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 4 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.617268, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.619403, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 5 — Ready for vimtutor\u001b[0m\r\n\r\nFour lessons, then a gate. By the end, you'll know the difference\r\nbetween a command that prints-and-exits and one that takes over the\r\nterminal; you'll be able to leave any of them deliberately; and you'll\r\nunderstand why Vim has \u001b[1;38;5;220m:w\u001b[0m, \u001b[1;38;5;220m:q\u001b[0m, and \u001b[1;38;5;220m:q!\u001b[0m.\r\n\r\nAfter the gate, this tutor hands you to \u001b[1;38;5;220mvimtutor\u001b[0m (if it's\r\ninstalled on your system) — that is the next step.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 5.1.\u001b[0m\r\n", "len": 564}
+{"ts": 0.619546, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.629324, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.629381, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.629399, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.629424, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.629444, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.632201, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.634421, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m5.1 — print-and-exit vs full-screen\u001b[0m\r\n\r\nMost of the commands you've used print output and return immediately:\r\n  \u001b[1;38;5;220mls\u001b[0m          \u001b[1;38;5;220mdate\u001b[0m          \u001b[1;38;5;220mwc -l file\u001b[0m\r\n\r\nOther commands \u001b[1;38;5;196mtake over the screen\u001b[0m until you exit them:\r\n  \u001b[1;38;5;220mman ls\u001b[0m              \u001b[2m# the manual page for ls\u001b[0m\r\n  \u001b[1;38;5;220mless long-file.txt\u001b[0m  \u001b[2m# page through a long file\u001b[0m\r\n  \u001b[1;38;5;220mvim file\u001b[0m            \u001b[2m# the Vim editor\u001b[0m\r\n\r\nWhile a full-screen program is running, the shell prompt is \u001b[1;38;5;244mgone\u001b[0m.\r\nYou're inside a program. The same keys may do different things there.\r\n\r\n\u001b[1;38;5;244mExit keys\u001b[0m:\r\n  \u001b[1;38;5;220mman\u001b[0m   →  press \u001b[38;5;208mq\u001b[0m\r\n  \u001b[1;38;5;220mless\u001b[0m  →  press \u001b[38;5;208mq\u001b[0m\r\n  \u001b[1;38;5;220mvim\u001b[0m   →  type \u001b[1;38;5;220m:q\u001b[0m then Enter (and friends — Lesson 5.3)\r\n\r\nTry one:\r\n  \u001b[1;38;5;220mman ls\u001b[0m\r\n  \u001b[2m(read a few lines; press \u001b[38;5;208mq\u001b[2m to come back here.)\u001b[0m\r\n\r\n\u001b[1;38;5", "len": 1024}
+{"ts": 0.634497, "dir": "out", "enc": "utf8", "data": ";208m▶ When back at \u001b[2mshelltutor>\u001b[1;38;5;208m, type \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 94}
+{"ts": 0.634578, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.644189, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.644241, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\n", "len": 53}
+{"ts": 0.644257, "dir": "out", "enc": "utf8", "data": "To update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 138}
+{"ts": 0.644285, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.644311, "dir": "in", "enc": "utf8", "data": "man ls\n", "len": 7}
+{"ts": 0.644331, "dir": "out", "enc": "utf8", "data": "man ls\r\n", "len": 8}
+{"ts": 0.804036, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[24;1H\u001b[?1h\u001b=\r", "len": 23}
+{"ts": 0.804117, "dir": "out", "enc": "utf8", "data": "LS(1)                       General Commands Manual                      LS(1)\r\n\r\n\u001b[1mNAME\u001b[0m\r\n     \u001b[1mls\u001b[0m - list directory contents\r\n\r\n\u001b[1mSYNOPSIS\u001b[0m\r\n     \u001b[1mls\u001b[0m [\u001b[1m-@ABCFGHILOPRSTUWabcdefghiklmnopqrstuvwxy1%,\u001b[0m] [\u001b[1m--color\u001b[0m=\u001b[4mwhen\u001b[24m]\r\n        [\u001b[1m-D\u001b[0m \u001b[4mformat\u001b[24m] [\u001b[4mfile\u001b[24m \u001b[4m...\u001b[24m]\r\n\r\n\u001b[1mDESCRIPTION\u001b[0m\r\n     For each operand that names a \u001b[4mfile\u001b[24m of a type other than directory, \u001b[1mls\u001b[0m\r\n     displays its name as well as any requested, associated information.  For\r\n     each operand that names a \u001b[4mfile\u001b[24m of type directory, \u001b[1mls\u001b[0m displays the names\r\n     of files contained within that directory, as well as any requested,\r\n     associated information.\r\n\r\n     If no operands are given, the contents of the current directory are\r\n     displayed.  If more than one operand is given, non-directory operands are\r\n     displayed first; directory and non-directory operands are sorted\r\n     separately and in lexicographical order.\r\n\r\n     The following optio", "len": 1024}
+{"ts": 0.804184, "dir": "in", "enc": "utf8", "data": "q", "len": 1}
+{"ts": 0.80421, "dir": "out", "enc": "utf8", "data": "ns are available:\r\n\r\n:\u001b[K\r\u001b[K\u001b[?1l\u001b>\u001b[?1049l", "len": 44}
+{"ts": 0.805213, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.805273, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.805301, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.808215, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.810375, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m5.2 — entering and leaving Vim\u001b[0m\r\n\r\n\u001b[1;38;5;220mvim\u001b[0m is a text editor. Before you \u001b[1;38;5;244medit\u001b[0m anything,\r\nlet's learn how to \u001b[1;38;5;244mleave\u001b[0m.\r\n\r\nFirst, see if Vim is installed:\r\n  \u001b[1;38;5;220mcommand -v vim\u001b[0m\r\n\r\nIf you got a path, Vim is there. If not, install it before continuing.\r\n\r\nA safe entrance:\r\n  \u001b[1;38;5;220mvim --version\u001b[0m     \u001b[2m# prints version info and exits\u001b[0m\r\n\r\nA full Vim session:\r\n  \u001b[1;38;5;220mvim\u001b[0m\r\n\r\nThis drops you into Vim with no file. To leave without doing anything,\r\ntype:\r\n  \u001b[1;38;5;220m:q\u001b[0m then Enter\r\n\r\nIf Vim refuses (because you typed something by accident and now there\r\nare unsaved changes), use the \u001b[1;38;5;196mdiscard\u001b[0m form:\r\n  \u001b[1;38;5;220m:q!\u001b[0m then Enter\r\n\r\n\u001b[1;38;5;196mYou will need :q!\u001b[0m the first few times you use Vim. Memorize it.\r\n\r\n\u001b[1;38;5;208m▶ Try \u001b[1;38;5;220mvim --version\u001b[1;38;5;208m and \u001b[1;38;5;220mvim\u001b[1;38;5;208m (then \u001b[1;38;5;220m:q\u001b[1;38;5;208m). Then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 1014}
+{"ts": 0.810526, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.820353, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.820414, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 0.820433, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.820479, "dir": "in", "enc": "utf8", "data": "command -v vim\n", "len": 15}
+{"ts": 0.8205, "dir": "out", "enc": "utf8", "data": "command ", "len": 8}
+{"ts": 0.820512, "dir": "out", "enc": "utf8", "data": "-v vim", "len": 6}
+{"ts": 0.820522, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.820625, "dir": "out", "enc": "utf8", "data": "/usr/bin/vim\r\n", "len": 14}
+{"ts": 0.820706, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.820727, "dir": "in", "enc": "utf8", "data": "vim --version\n", "len": 14}
+{"ts": 0.820742, "dir": "out", "enc": "utf8", "data": "vim --", "len": 6}
+{"ts": 0.820751, "dir": "out", "enc": "utf8", "data": "versi", "len": 5}
+{"ts": 0.82076, "dir": "out", "enc": "utf8", "data": "on\r\n", "len": 4}
+{"ts": 0.82439, "dir": "out", "enc": "utf8", "data": "VIM - Vi IMproved 9.1 (2024 Jan 02, compiled Aug  8 2026 16:52:02)\r\nmacOS version - arm64\r\nIncluded patches: 1-1752\r\nCompiled by root@apple.com\r\nNormal version without GUI.  Features included (+) or not (-):\r\n", "len": 209}
+{"ts": 0.82443, "dir": "out", "enc": "utf8", "data": "+acl               +find_in_path      +multi_byte        -tcl\r\n-arabic            +float             +multi_lang        +termguicolors\r\n+autocmd           +folding           -mzscheme          +terminal\r\n+autochdir         -footer            +netbeans_intg     +terminfo\r\n-autoservername    +fork()            +num64             +termresponse\r\n-balloon_eval      -gettext           +packages          +textobjects\r\n-balloon_eval_term -hangul_input      +path_extra        +textprop\r\n-browse            +iconv             -perl              +timers\r\n++builtin_terms    +insert_expand     +persistent_undo   +title\r\n+byte_offset       +ipv6              +popupwin          -toolbar\r\n+channel           +job               +postscript        +user_commands\r\n+cindent           +jumplist          +printer           -vartabs\r\n-clientserver      -keymap            -profile           +vertsplit\r\n+clipboard         +lambda            -python            +vim9script\r\n+cmdline_compl     -langmap           -python3           +viminf", "len": 1024}
+{"ts": 0.824458, "dir": "out", "enc": "utf8", "data": "o\r\n+cmdline_hist      +libcall           +quickfix          +virtualedit\r\n+cmdline_info      +linebreak         +reltime           +visual\r\n+comments          +lispindent        -rightleft         +visualextra\r\n+conceal           +listcmds          -ruby              +vreplace\r\n+cryptv            +localmap          +scrollbind        -wayland\r\n+cscope            -lua               +signs             -wayland_clipboard\r\n+cursorbind        +menu              +smartindent       +wildignore\r\n", "len": 493}
+{"ts": 0.824477, "dir": "out", "enc": "utf8", "data": "+cursorshape       +mksession         -socketserver      +wildmenu\r\n+dialog_con        +modify_fname      -sodium            +windows\r\n+diff              +mouse             -sound             +writebackup\r\n+digraphs          -mouseshape        +spell             -X11\r\n-dnd               +mouse_dec         +startuptime       -xattr\r\n-ebcdic            -mouse_gpm         +statusline        -xfontset\r\n-emacs_tags        -mouse_jsbterm     -sun_workshop      -xim\r\n", "len": 465}
+{"ts": 0.824492, "dir": "out", "enc": "utf8", "data": "+eval              +mouse_netterm     +syntax            -xpm\r\n+ex_extra          +mouse_sgr         -tabpanel          -xsmp\r\n+extra_search      -mouse_sysmouse    +tag_binary        -xterm_clipboard\r\n-farsi             +mouse_urxvt       -tag_old_static    -xterm_save\r\n+file_in_path      +mouse_xterm       -tag_any_white     \r\n   system vimrc file: \"$VIM/vimrc\"\r\n     user vimrc file: \"$HOME/.vimrc\"\r\n", "len": 405}
+{"ts": 0.824507, "dir": "out", "enc": "utf8", "data": " 2nd user vimrc file: \"~/.vim/vimrc\"\r\n 3rd user vimrc file: \"$XDG_CONFIG_HOME/vim/vimrc\"\r\n      user exrc file: \"$HOME/.exrc\"\r\n       defaults file: \"$VIMRUNTIME/defaults.vim\"\r\n  fall-back for $VIM: \"/usr/share/vim\"\r\nCompilation: gcc -c -I. -Iproto -DHAVE_CONFIG_H   -DMACOS_X_UNIX  -g -O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1      \r\nLinking: gcc   -L/usr/local/lib -o vim        -lm -lncurses  -liconv -framework Cocoa           \r\n", "len": 433}
+{"ts": 0.824827, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.824883, "dir": "in", "enc": "utf8", "data": "vim\n", "len": 4}
+{"ts": 0.824903, "dir": "out", "enc": "utf8", "data": "vim\r\n", "len": 5}
+{"ts": 0.833484, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[>4;2m\u001b[?1h\u001b=\u001b[?2004h\u001b[?1004h\u001b[1;24r\u001b[?12h\u001b[?12l\u001b[22;2t\u001b[22;1t", "len": 71}
+{"ts": 0.834191, "dir": "out", "enc": "b64", "data": "G1syN20bWzIzbRtbMjltG1ttG1tIG1syShtbMjsxSL0bWzZuG1syOzFIICAbWzM7MUgbUHp6G1wbWzAlbRtbNm4bWzM7MUggICAgICAgICAgIBtbMTsxSBtbPmM=", "len": 92}
+{"ts": 0.834275, "dir": "out", "enc": "utf8", "data": "\u001b]11;?\u0007\u001b]10;?\u0007", "len": 14}
+{"ts": 0.834413, "dir": "out", "enc": "utf8", "data": "\u001b[?25l\u001b[2;1H\u001b[94m~                                                                               \u001b[3;1H~                                                                               \u001b[4;1H~                                                                               \u001b[5;1H~                                                                               \u001b[6;1H~                                                                               \u001b[7;1H~                                                                               \u001b[8;1H~                                                                               \u001b[9;1H~                                                                               \u001b[10;1H~                                                                               \u001b[11;1H~                                                                               \u001b[12;1H~                                                                               \u001b[13;1H~                                                        ", "len": 1024}
+{"ts": 0.834438, "dir": "out", "enc": "utf8", "data": "                       \u001b[14;1H~                                                                               \u001b[15;1H~                                                                               \u001b[16;1H~                                                                               \u001b[17;1H~                                                                               \u001b[18;1H~                                                                               \u001b[19;1H~                                                                               \u001b[20;1H~                                                                               \u001b[21;1H~                                                                               \u001b[22;1H~                                                                               \u001b[23;1H~                                                                               \u001b[m\u001b[7;32HVIM - Vi IMproved\u001b[9;33Hversion 9.1.1752\u001b[10;29Hby Bram Moolenaar et al.\u001b[11;19HVim is open source and freely distributab", "len": 1024}
+{"ts": 0.834474, "dir": "in", "enc": "utf8", "data": ":q\n", "len": 3}
+{"ts": 0.834494, "dir": "out", "enc": "utf8", "data": "le\u001b[13;26HBecome a registered Vim user!\u001b[14;18Htype  :help register\u001b[38;5;81m<Enter>\u001b[m   for information \u001b[16;18Htype  :q\u001b[38;5;81m<Enter>\u001b[m               to exit         \u001b[17;18Htype  :help\u001b[38;5;81m<Enter>\u001b[m  or  \u001b[38;5;81m<F1>\u001b[m  for on-line help\u001b[18;18Htype  :help version9\u001b[38;5;81m<Enter>\u001b[m   for version info\u001b[1;1H\u001b[?25h\u001b[?4m", "len": 337}
+{"ts": 0.83451, "dir": "out", "enc": "utf8", "data": "\u001b[?25l\u001b[24;1H:q\r", "len": 16}
+{"ts": 0.834657, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\u001b[>4;m\u001b[23;2t", "len": 21}
+{"ts": 0.834685, "dir": "out", "enc": "utf8", "data": "\u001b[23;1t", "len": 7}
+{"ts": 0.935795, "dir": "out", "enc": "utf8", "data": "\u001b[24;1H\u001b[K\u001b[24;1H\u001b[?1004l\u001b[?2004l\u001b[?1l\u001b>\u001b[?1049l\u001b[?25h\u001b[>4;m", "len": 60}
+{"ts": 0.936846, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.936918, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.936956, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.942584, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.945741, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m5.3 — buffer vs file\u001b[0m\r\n\r\nThis is the most important idea in this stage.\r\n\r\nWhen you open a file in Vim, Vim \u001b[1;38;5;244mreads it into a buffer\u001b[0m —\r\na copy in memory. Your keystrokes change the \u001b[1;38;5;244mbuffer\u001b[0m, not\r\nthe file. The file on disk only changes when you \u001b[1;38;5;244mwrite\u001b[0m the\r\nbuffer back.\r\n\r\n  \u001b[1;38;5;244mfile on disk\u001b[0m  →  \u001b[1;38;5;244mbuffer in memory\u001b[0m  →  \u001b[1;38;5;244mfile on disk\u001b[0m\r\n       (read)                  (edit)                     (write)\r\n\r\nThat's why Vim has separate commands for save and quit:\r\n\r\n  \u001b[1;38;5;220m:w\u001b[0m    write the buffer to the file\r\n  \u001b[1;38;5;220m:q\u001b[0m    quit (only if there are no unsaved changes)\r\n  \u001b[1;38;5;220m:q!\u001b[0m   quit and discard unsaved changes\r\n  \u001b[1;38;5;220m:wq\u001b[0m   write, then quit\r\n\r\n\u001b[1;38;5;196mPractice this on a file you don't mind editing.\u001b[0m  A\r\n\u001b[38;5;109mpractice.txt\u001b[0m fixture is in this stage's folder. Try:\r\n\r\n  \u001b[1;38;5;220mvim practice.txt\u001b[0m\r\n     type \u001b[1;38;5;220mi\u001b[0m to enter inse", "len": 1024}
+{"ts": 0.945836, "dir": "out", "enc": "utf8", "data": "rt mode (vimtutor will teach modes)\r\n     type a few letters\r\n     press \u001b[38;5;208mEsc\u001b[0m\r\n     type \u001b[1;38;5;220m:q!\u001b[0m then Enter\r\n     \u001b[1;38;5;220mcat practice.txt\u001b[0m   \u001b[2m# the file is unchanged\u001b[0m\r\n\r\n  \u001b[1;38;5;220mvim practice.txt\u001b[0m\r\n     type \u001b[1;38;5;220mi\u001b[0m, then a few letters, \u001b[38;5;208mEsc\u001b[0m\r\n     type \u001b[1;38;5;220m:wq\u001b[0m, Enter\r\n     \u001b[1;38;5;220mcat practice.txt\u001b[0m   \u001b[2m# now the file has changed\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Try both, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 506}
+{"ts": 0.945987, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.962066, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.962226, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 0.962335, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 0.962366, "dir": "out", "enc": "utf8", "data": "cat pract", "len": 9}
+{"ts": 0.962381, "dir": "out", "enc": "utf8", "data": "ice.txt", "len": 7}
+{"ts": 0.962394, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.966112, "dir": "out", "enc": "utf8", "data": "before\r\n", "len": 8}
+{"ts": 0.966613, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.96668, "dir": "in", "enc": "utf8", "data": "vim practice.txt\n", "len": 17}
+{"ts": 0.966714, "dir": "out", "enc": "utf8", "data": "vim prac", "len": 8}
+{"ts": 0.966731, "dir": "out", "enc": "utf8", "data": "tice.tx", "len": 7}
+{"ts": 0.966747, "dir": "out", "enc": "utf8", "data": "t\r\n", "len": 3}
+{"ts": 0.981509, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[>4;2m\u001b[?1h\u001b=\u001b[?2004h\u001b[?1004h\u001b[1;24r\u001b[?12h\u001b[?12l\u001b[22;2t\u001b[22;1t", "len": 71}
+{"ts": 0.984116, "dir": "out", "enc": "utf8", "data": "\u001b[27m\u001b[23m\u001b[29m\u001b[m\u001b[H\u001b[2J\u001b[?25l\u001b[24;1H\"practice.txt\"", "len": 52}
+{"ts": 0.984218, "dir": "in", "enc": "utf8", "data": "i", "len": 1}
+{"ts": 0.984255, "dir": "out", "enc": "b64", "data": "IDFMLCA3QhtbMjsxSL0bWzZuG1syOzFIICAbWzM7MUgbUHp6G1wbWzAlbRtbNm4bWzM7MUggICAgICAgICAgIBtbMTsxSBtbPmM=", "len": 74}
+{"ts": 0.984308, "dir": "out", "enc": "utf8", "data": "\u001b]11;?\u0007\u001b]10;?\u0007", "len": 14}
+{"ts": 0.98456, "dir": "out", "enc": "utf8", "data": "\u001b[1;1Hbefore\r\n\u001b[94m~                                                                               \u001b[3;1H~                                                                               \u001b[4;1H~                                                                               \u001b[5;1H~                                                                               \u001b[6;1H~                                                                               \u001b[7;1H~                                                                               \u001b[8;1H~                                                                               \u001b[9;1H~                                                                               \u001b[10;1H~                                                                               \u001b[11;1H~                                                                               \u001b[12;1H~                                                                               \u001b[13;1H~                                                      ", "len": 1024}
+{"ts": 0.984621, "dir": "out", "enc": "utf8", "data": "                         \u001b[14;1H~                                                                               \u001b[15;1H~                                                                               \u001b[16;1H~                                                                               \u001b[17;1H~                                                                               \u001b[18;1H~                                                                               \u001b[19;1H~                                                                               \u001b[20;1H~                                                                               \u001b[21;1H~                                                                               \u001b[22;1H~                                                                               \u001b[23;1H~                                                                               \u001b[1;1H\u001b[?25h\u001b[?25l\u001b[m\u001b[24;70Hi\u001b[1;1H", "len": 931}
+{"ts": 0.98465, "dir": "out", "enc": "utf8", "data": "\u001b[24;70H \u001b[1;1H\u001b[24;1H\u001b[1m-- INSERT --\u001b[m\u001b[24;13H\u001b[K\u001b[1;1H\u001b[?4m", "len": 63}
+{"ts": 0.984684, "dir": "in", "enc": "utf8", "data": "abc", "len": 3}
+{"ts": 1.089818, "dir": "in", "enc": "utf8", "data": "\u001b", "len": 1}
+{"ts": 1.395175, "dir": "in", "enc": "utf8", "data": ":q!\n", "len": 4}
+{"ts": 1.395496, "dir": "out", "enc": "utf8", "data": "\u001b[?25h\u001b[?25labcbefore\rabc\u001b[?25h\u001b[24;1H\u001b[K\u001b[1;3H\u001b[?25l\u001b[24;70H^[\u001b[1;3H\u001b[?25h\u001b[?25l\u001b[24;70H  \u001b[1;4H", "len": 97}
+{"ts": 1.395654, "dir": "out", "enc": "utf8", "data": "\b\u001b[?25h\u001b[?25l\u001b[24;1H:q!\r", "len": 24}
+{"ts": 1.396929, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\u001b[>4;m\u001b[23;2t\u001b[23;1t", "len": 28}
+{"ts": 1.497838, "dir": "out", "enc": "utf8", "data": "\u001b[24;1H\u001b[K\u001b[24;1H\u001b[?1004l\u001b[?2004l\u001b[?1l\u001b>\u001b[?1049l\u001b[?25h\u001b[>4;m", "len": 60}
+{"ts": 1.500223, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 1.500424, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 1.5005, "dir": "out", "enc": "utf8", "data": "cat pr", "len": 6}
+{"ts": 1.50054, "dir": "out", "enc": "utf8", "data": "actic", "len": 5}
+{"ts": 1.500571, "dir": "out", "enc": "utf8", "data": "e.t", "len": 3}
+{"ts": 1.500601, "dir": "out", "enc": "utf8", "data": "xt\r\n", "len": 4}
+{"ts": 1.507492, "dir": "out", "enc": "utf8", "data": "before\r\n", "len": 8}
+{"ts": 1.508032, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 1.508102, "dir": "in", "enc": "utf8", "data": "vim practice.txt\n", "len": 17}
+{"ts": 1.508142, "dir": "out", "enc": "utf8", "data": "vim practic", "len": 11}
+{"ts": 1.50816, "dir": "out", "enc": "utf8", "data": "e.txt", "len": 5}
+{"ts": 1.508175, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 1.523837, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[>4;2m\u001b[?1h\u001b=\u001b[?2004h\u001b[?1004h\u001b[1;24r\u001b[?12h\u001b[?12l\u001b[22;2t\u001b[22;1t", "len": 71}
+{"ts": 1.52579, "dir": "out", "enc": "utf8", "data": "\u001b[27m\u001b[23m\u001b[29m\u001b[m\u001b[H\u001b[2J\u001b[?25l\u001b[24;1H\"practice.txt\"", "len": 52}
+{"ts": 1.525878, "dir": "in", "enc": "utf8", "data": "i", "len": 1}
+{"ts": 1.525919, "dir": "out", "enc": "b64", "data": "IDFMLCA3QhtbMjsxSL0bWzZu", "len": 18}
+{"ts": 1.525956, "dir": "out", "enc": "utf8", "data": "\u001b[2;1H  \u001b[3;1H\u001bPzz\u001b\\\u001b[0%m\u001b[6n\u001b[3;1H           \u001b[1;1H\u001b[>c\u001b]11;?\u0007\u001b]10;?\u0007", "len": 70}
+{"ts": 1.526465, "dir": "out", "enc": "utf8", "data": "\u001b[1;1Hbefore\r\n\u001b[94m~                                                                               \u001b[3;1H~                                                                               \u001b[4;1H~                                                                               \u001b[5;1H~                                                                               \u001b[6;1H~                                                                               \u001b[7;1H~                                                                               \u001b[8;1H~                                                                               \u001b[9;1H~                                                                               \u001b[10;1H~                                                                               \u001b[11;1H~                                                                               \u001b[12;1H~                                                                               \u001b[13;1H~                                                      ", "len": 1024}
+{"ts": 1.526513, "dir": "out", "enc": "utf8", "data": "                         \u001b[14;1H~                                                                               \u001b[15;1H~                                                                               \u001b[16;1H~                                                                               \u001b[17;1H~                                                                               \u001b[18;1H~                                                                               \u001b[19;1H~                                                                               \u001b[20;1H~                                                                               \u001b[21;1H~                                                                               \u001b[22;1H~                                                                               \u001b[23;1H~                                                                               \u001b[1;1H\u001b[?25h\u001b[?25l\u001b[m\u001b[24;70Hi\u001b[1;1H", "len": 931}
+{"ts": 1.526559, "dir": "out", "enc": "utf8", "data": "\u001b[24;70H \u001b[1;1H\u001b[24;1H\u001b[1m-- INSERT --\u001b[m\u001b[24;13H\u001b[K\u001b[1;1H\u001b[?4m\u001b[?25h", "len": 69}
+{"ts": 1.526598, "dir": "in", "enc": "utf8", "data": "abc", "len": 3}
+{"ts": 1.630261, "dir": "in", "enc": "utf8", "data": "\u001b", "len": 1}
+{"ts": 1.935058, "dir": "in", "enc": "utf8", "data": ":wq\n", "len": 4}
+{"ts": 1.935256, "dir": "out", "enc": "utf8", "data": "\u001b[?25labcbefore\rabc\u001b[?25h\u001b[24;1H\u001b[K\u001b[1;3H\u001b[?25l\u001b[24;70H^[\u001b[1;3H\u001b[?25h\u001b[?25l\u001b[24;70H  \u001b[1;4H", "len": 91}
+{"ts": 1.935355, "dir": "out", "enc": "utf8", "data": "\b\u001b[?25h\u001b[?25l\u001b[24;1H:wq\r", "len": 24}
+{"ts": 1.935445, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\u001b[>4;m", "len": 14}
+{"ts": 1.935544, "dir": "out", "enc": "utf8", "data": "\"practice.txt\"", "len": 14}
+{"ts": 1.942882, "dir": "out", "enc": "utf8", "data": " 1L, 10B written", "len": 16}
+{"ts": 1.943913, "dir": "out", "enc": "utf8", "data": "\r\u001b[23;2t\u001b[23;1t", "len": 15}
+{"ts": 2.045024, "dir": "out", "enc": "utf8", "data": "\r\r\n\u001b[?1004l\u001b[?2004l\u001b[?1l\u001b>\u001b[?1049l\u001b[?25h\u001b[>4;m", "len": 46}
+{"ts": 2.046261, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.04633, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 2.046358, "dir": "out", "enc": "utf8", "data": "cat pra", "len": 7}
+{"ts": 2.046372, "dir": "out", "enc": "utf8", "data": "ctice.", "len": 6}
+{"ts": 2.046384, "dir": "out", "enc": "utf8", "data": "txt\r\n", "len": 5}
+{"ts": 2.0497, "dir": "out", "enc": "utf8", "data": "abcbefore\r\n", "len": 11}
+{"ts": 2.049981, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.050039, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 2.050069, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 2.054405, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 2.057327, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m5.4 — calling vimtutor\u001b[0m\r\n\r\n\u001b[1;38;5;220mvimtutor\u001b[0m is itself a shell command. It launches Vim on a\r\n\u001b[1;38;5;244mcopy\u001b[0m of a tutorial file so you can practice without\r\ndamaging the original.\r\n\r\nCheck whether it's installed:\r\n  \u001b[1;38;5;220mcommand -v vimtutor\u001b[0m\r\n\r\nIf it prints a path, you're set.\r\n\r\nIf not, you can install it:\r\n  - on Linux: install your distro's full \u001b[1;38;5;244mvim\u001b[0m package (often\r\n    a \u001b[1;38;5;244mvim-enhanced\u001b[0m or \u001b[1;38;5;244mvim\u001b[0m (not \u001b[1;38;5;244mvim-minimal\u001b[0m)\r\n    package).\r\n  - on macOS: Vim ships in macOS, but \u001b[1;38;5;220mvimtutor\u001b[0m may not be\r\n    on PATH. \u001b[1;38;5;220mbrew install vim\u001b[0m via Homebrew adds it.\r\n\r\nThis stage's gate runs through the file-vs-buffer exercise from 5.3\r\nonce more, then you'll be done.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 5's gate.\u001b[0m\r\n", "len": 877}
+{"ts": 2.057498, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.070978, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 2.071034, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n", "len": 191}
+{"ts": 2.071055, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.071098, "dir": "in", "enc": "utf8", "data": "command -v vimtutor\n", "len": 20}
+{"ts": 2.071118, "dir": "out", "enc": "utf8", "data": "command ", "len": 8}
+{"ts": 2.071128, "dir": "out", "enc": "utf8", "data": "-v vi", "len": 5}
+{"ts": 2.071138, "dir": "out", "enc": "utf8", "data": "mtutor", "len": 6}
+{"ts": 2.071148, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.071243, "dir": "out", "enc": "utf8", "data": "/usr/bin/vimtutor\r\n", "len": 19}
+{"ts": 2.071334, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.071353, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 2.07137, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 2.074431, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 2.077149, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 5 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mtwo-phase practical task\u001b[0m.\r\n", "len": 159}
+{"ts": 2.077294, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.077363, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: How do you exit \u001b[1;38;5;220mman ls\u001b[0m?\u001b[0m\r\n", "len": 62}
+{"ts": 2.077395, "dir": "in", "enc": "utf8", "data": "q\n", "len": 2}
+{"ts": 2.077416, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m q\r\n", "len": 35}
+{"ts": 2.085922, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 2.086008, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: After \u001b[1;38;5;220mvim notes.txt\u001b[0m, what makes Vim write your edit to the file?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 135}
+{"ts": 2.086049, "dir": "in", "enc": "utf8", "data": ":w\n", "len": 3}
+{"ts": 2.086074, "dir": "out", "enc": "utf8", "data": ":w\r\n", "len": 4}
+{"ts": 2.09415, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 2.094241, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: If you open \u001b[38;5;109mnotes.txt\u001b[0m in \u001b[1;38;5;220mvim\u001b[0m, type some letters, and quit with \u001b[1;38;5;220m:q!\u001b[0m — did the file on disk change?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 202}
+{"ts": 2.094289, "dir": "in", "enc": "utf8", "data": "no\n", "len": 3}
+{"ts": 2.094319, "dir": "out", "enc": "utf8", "data": "no\r\n", "len": 4}
+{"ts": 2.101125, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 2.105855, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 2.107848, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 5 — GATE TASK (phase 1 of 2)\u001b[0m\r\n\r\nI've reset \u001b[38;5;109mpractice.txt\u001b[0m to contain just the word \u001b[1;38;5;244mbefore\u001b[0m.\r\n\r\nAt the practice prompt:\r\n\r\n  1. \u001b[1;38;5;220mcat practice.txt\u001b[0m        \u001b[2m# confirm it says 'before'\u001b[0m\r\n  2. \u001b[1;38;5;220mvim practice.txt\u001b[0m\r\n       \u001b[1;38;5;220mi\u001b[0m  \u001b[2m# enter insert mode\u001b[0m\r\n       type a few letters\r\n       \u001b[38;5;208mEsc\u001b[0m\r\n       \u001b[1;38;5;220m:q!\u001b[0m  Enter   \u001b[2m# discard your changes\u001b[0m\r\n  3. \u001b[1;38;5;220mcat practice.txt\u001b[0m        \u001b[2m# should still say 'before'\u001b[0m\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n\u001b[2mI will verify the file is still exactly 'before'.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 730}
+{"ts": 2.107991, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.120961, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 2.121051, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 2.121113, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 2.121135, "dir": "out", "enc": "utf8", "data": "cat p", "len": 5}
+{"ts": 2.121147, "dir": "out", "enc": "utf8", "data": "ractice", "len": 7}
+{"ts": 2.121159, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 2.123354, "dir": "out", "enc": "utf8", "data": "before\r\n", "len": 8}
+{"ts": 2.123627, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.123657, "dir": "in", "enc": "utf8", "data": "vim practice.txt\n", "len": 17}
+{"ts": 2.123676, "dir": "out", "enc": "utf8", "data": "vim pract", "len": 9}
+{"ts": 2.123688, "dir": "out", "enc": "utf8", "data": "ice.txt", "len": 7}
+{"ts": 2.123699, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.133502, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[>4;2m\u001b[?1h\u001b=\u001b[?2004h\u001b[?1004h\u001b[1;24r\u001b[?12h\u001b[?12l\u001b[22;2t\u001b[22;1t", "len": 71}
+{"ts": 2.134604, "dir": "out", "enc": "utf8", "data": "\u001b[27m\u001b[23m\u001b[29m\u001b[m\u001b[H\u001b[2J\u001b[?25l\u001b[24;1H\"practice.txt\"", "len": 52}
+{"ts": 2.134671, "dir": "in", "enc": "utf8", "data": "i", "len": 1}
+{"ts": 2.134699, "dir": "out", "enc": "utf8", "data": " 1L, 7B", "len": 7}
+{"ts": 2.134713, "dir": "out", "enc": "b64", "data": "G1syOzFIvRtbNm4bWzI7MUggIBtbMzsxSBtQenobXBtbMCVtG1s2bhtbMzsxSCAgICAgICAgICAgG1sxOzFI", "len": 63}
+{"ts": 2.134737, "dir": "out", "enc": "utf8", "data": "\u001b[>c\u001b]11;?\u0007\u001b]10;?\u0007", "len": 18}
+{"ts": 2.134932, "dir": "out", "enc": "utf8", "data": "\u001b[1;1Hbefore\r\n\u001b[94m~                                                                               \u001b[3;1H~                                                                               \u001b[4;1H~                                                                               \u001b[5;1H~                                                                               \u001b[6;1H~                                                                               \u001b[7;1H~                                                                               \u001b[8;1H~                                                                               \u001b[9;1H~                                                                               \u001b[10;1H~                                                                               \u001b[11;1H~                                                                               \u001b[12;1H~                                                                               \u001b[13;1H~                                                      ", "len": 1024}
+{"ts": 2.134956, "dir": "out", "enc": "utf8", "data": "                         \u001b[14;1H~                                                                               \u001b[15;1H~                                                                               \u001b[16;1H~                                                                               \u001b[17;1H~                                                                               \u001b[18;1H~                                                                               \u001b[19;1H~                                                                               \u001b[20;1H~                                                                               \u001b[21;1H~                                                                               \u001b[22;1H~                                                                               \u001b[23;1H~                                                                               \u001b[1;1H\u001b[?25h\u001b[?25l\u001b[m\u001b[24;70Hi\u001b[1;1H", "len": 931}
+{"ts": 2.134986, "dir": "out", "enc": "utf8", "data": "\u001b[24;70H \u001b[1;1H\u001b[24;1H\u001b[1m-- INSERT --\u001b[m\u001b[24;13H\u001b[K\u001b[1;1H\u001b[?4m\u001b[?25h", "len": 69}
+{"ts": 2.135015, "dir": "in", "enc": "utf8", "data": "xyz", "len": 3}
+{"ts": 2.240093, "dir": "in", "enc": "utf8", "data": "\u001b", "len": 1}
+{"ts": 2.541262, "dir": "in", "enc": "utf8", "data": ":q!\n", "len": 4}
+{"ts": 2.54171, "dir": "out", "enc": "utf8", "data": "\u001b[?25lxyzbefore\rxyz\u001b[?25h\u001b[24;1H\u001b[K\u001b[1;3H\u001b[?25l\u001b[24;70H^[\u001b[1;3H\u001b[?25h\u001b[?25l\u001b[24;70H  \u001b[1;4H", "len": 91}
+{"ts": 2.541786, "dir": "out", "enc": "utf8", "data": "\b\u001b[?25h\u001b[?25l\u001b[24;1H:q!\r", "len": 24}
+{"ts": 2.543231, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\u001b[>4;m", "len": 14}
+{"ts": 2.543384, "dir": "out", "enc": "utf8", "data": "\u001b[23;2t\u001b[23;1t", "len": 14}
+{"ts": 2.644579, "dir": "out", "enc": "utf8", "data": "\u001b[24;1H\u001b[K\u001b[24;1H\u001b[?1004l\u001b[?2004l\u001b[?1l\u001b>\u001b[?1049l\u001b[?25h\u001b[>4;m", "len": 60}
+{"ts": 2.647949, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.648197, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 2.648272, "dir": "out", "enc": "utf8", "data": "cat practice", "len": 12}
+{"ts": 2.648308, "dir": "out", "enc": "utf8", "data": ".txt\r\n", "len": 6}
+{"ts": 2.65512, "dir": "out", "enc": "utf8", "data": "before\r\n", "len": 8}
+{"ts": 2.656566, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 2.656749, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 2.656817, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 2.665311, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Phase 1 verified — the file was unchanged.\u001b[0m\r\n\r\n", "len": 70}
+{"ts": 2.67044, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 2.674319, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 5 — GATE TASK (phase 2 of 2)\u001b[0m\r\n\r\nNow save a real edit.\r\n\r\n  1. \u001b[1;38;5;220mvim practice.txt\u001b[0m\r\n       \u001b[1;38;5;220mi\u001b[0m, type at least one letter, \u001b[38;5;208mEsc\u001b[0m\r\n       \u001b[1;38;5;220m:wq\u001b[0m  Enter   \u001b[2m# write and quit\u001b[0m\r\n  2. \u001b[1;38;5;220mcat practice.txt\u001b[0m        \u001b[2m# now it differs from 'before'\u001b[0m\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n\u001b[2mI will verify the file is no longer exactly 'before'.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 518}
+{"ts": 2.674597, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 2.691729, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 2.69189, "dir": "out", "enc": "utf8", "data": "\u001b[?1034h\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\nshelltutor> ", "len": 203}
+{"ts": 2.691951, "dir": "in", "enc": "utf8", "data": "vim practice.txt\n", "len": 17}
+{"ts": 2.691988, "dir": "out", "enc": "utf8", "data": "vim practice.", "len": 13}
+{"ts": 2.692021, "dir": "out", "enc": "utf8", "data": "txt\r\n", "len": 5}
+{"ts": 2.707044, "dir": "out", "enc": "utf8", "data": "\u001b[?1049h\u001b[>4;2m\u001b[?1h\u001b=\u001b[?2004h\u001b[?1004h\u001b[1;24r\u001b[?12h\u001b[?12l\u001b[22;2t\u001b[22;1t", "len": 71}
+{"ts": 2.709077, "dir": "out", "enc": "utf8", "data": "\u001b[27m\u001b[23m\u001b[29m\u001b[m\u001b[H\u001b[2J\u001b[?25l\u001b[24;1H\"practice.txt\"", "len": 52}
+{"ts": 2.70917, "dir": "in", "enc": "utf8", "data": "i", "len": 1}
+{"ts": 2.709205, "dir": "out", "enc": "utf8", "data": " 1L, 7B", "len": 7}
+{"ts": 2.709231, "dir": "out", "enc": "b64", "data": "G1syOzFIvRtbNm4bWzI7MUggIBtbMzsxSBtQenobXBtbMCVtG1s2bhtbMzsxSCAgICAgICAgICAgG1sxOzFI", "len": 63}
+{"ts": 2.709268, "dir": "out", "enc": "utf8", "data": "\u001b[>c\u001b]11;?\u0007\u001b]10;?\u0007", "len": 18}
+{"ts": 2.70972, "dir": "out", "enc": "utf8", "data": "\u001b[1;1Hbefore\r\n\u001b[94m~                                                                               \u001b[3;1H~                                                                               \u001b[4;1H~                                                                               \u001b[5;1H~                                                                               \u001b[6;1H~                                                                               \u001b[7;1H~                                                                               \u001b[8;1H~                                                                               \u001b[9;1H~                                                                               \u001b[10;1H~                                                                               \u001b[11;1H~                                                                               \u001b[12;1H~                                                                               \u001b[13;1H~                                                      ", "len": 1024}
+{"ts": 2.709777, "dir": "out", "enc": "utf8", "data": "                         \u001b[14;1H~                                                                               \u001b[15;1H~                                                                               \u001b[16;1H~                                                                               \u001b[17;1H~                                                                               \u001b[18;1H~                                                                               \u001b[19;1H~                                                                               \u001b[20;1H~                                                                               \u001b[21;1H~                                                                               \u001b[22;1H~                                                                               \u001b[23;1H~                                                                               \u001b[1;1H\u001b[?25h\u001b[?25l\u001b[m\u001b[24;70Hi\u001b[1;1H", "len": 931}
+{"ts": 2.709816, "dir": "out", "enc": "utf8", "data": "\u001b[24;70H \u001b[1;1H\u001b[24;1H\u001b[1m-- INSERT --\u001b[m\u001b[24;13H\u001b[K\u001b[1;1H\u001b[?4m\u001b[?25h", "len": 69}
+{"ts": 2.709849, "dir": "in", "enc": "utf8", "data": "after ", "len": 6}
+{"ts": 2.814926, "dir": "in", "enc": "utf8", "data": "\u001b", "len": 1}
+{"ts": 3.117806, "dir": "in", "enc": "utf8", "data": ":wq\n", "len": 4}
+{"ts": 3.118026, "dir": "out", "enc": "utf8", "data": "\u001b[?25lafter before\b\b\b\b\b\b\u001b[?25h\u001b[24;1H\u001b[K\u001b[1;6H\u001b[?25l\u001b[24;70H^[\u001b[1;6H\u001b[?25h\u001b[?25l\u001b[24;70H  \u001b[1;7H", "len": 96}
+{"ts": 3.118114, "dir": "out", "enc": "utf8", "data": "\b\u001b[?25h\u001b[?25l\u001b[24;1H:wq\r", "len": 24}
+{"ts": 3.118184, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\u001b[>4;m", "len": 14}
+{"ts": 3.118277, "dir": "out", "enc": "utf8", "data": "\"practice.txt\"", "len": 14}
+{"ts": 3.124334, "dir": "out", "enc": "utf8", "data": " 1L, 13B written", "len": 16}
+{"ts": 3.124827, "dir": "out", "enc": "utf8", "data": "\r\u001b[23;2t\u001b[23;1t", "len": 15}
+{"ts": 3.226014, "dir": "out", "enc": "utf8", "data": "\r\r\n\u001b[?1004l\u001b[?2004l\u001b[?1l\u001b>\u001b[?1049l\u001b[?25h\u001b[>4;m", "len": 46}
+{"ts": 3.228007, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 3.228073, "dir": "in", "enc": "utf8", "data": "cat practice.txt\n", "len": 17}
+{"ts": 3.228106, "dir": "out", "enc": "utf8", "data": "cat pract", "len": 9}
+{"ts": 3.228124, "dir": "out", "enc": "utf8", "data": "ice.txt\r\n", "len": 9}
+{"ts": 3.231622, "dir": "out", "enc": "utf8", "data": "after before\r\n", "len": 14}
+{"ts": 3.231936, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 3.231974, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 3.232002, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 3.237435, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Phase 2 verified — the file was written.\u001b[0m\r\n\r\n\u001b[1;38;5;46m✓ Stage 5 cleared.\u001b[0m\r\n\r\n", "len": 108}
+{"ts": 3.242101, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 3.245301, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mYou're ready for vimtutor.\u001b[0m\r\n\r\nAcross five stages you have met:\r\n\r\n  \u001b[1;38;5;244mcommands\u001b[0m    echo, pwd, whoami, date, clear, exit,\r\n                ls, cd, ~, .., touch, mkdir, rmdir,\r\n                cat, less, cp, mv, rm,\r\n                command -v, wc, seq, head, sort, grep,\r\n                man, vim, vim --version, vimtutor\r\n  \u001b[1;38;5;244mkeys\u001b[0m        Tab, Up Arrow, Ctrl+C, Ctrl+L, q, Esc\r\n  \u001b[1;38;5;244moperators\u001b[0m   \u001b[1;38;5;220m|\u001b[0m (pipe)  \u001b[1;38;5;220m>\u001b[0m (redirect)  \u001b[1;38;5;220m>>\u001b[0m (append)\r\n                \u001b[1;38;5;220m<\u001b[0m (input)  \u001b[1;38;5;220m*\u001b[0m (glob)\r\n  \u001b[1;38;5;244mideas\u001b[0m       prompt vs program  ·  buffer vs file\r\n                relative vs absolute paths\r\n                file is not changed until the buffer is written\r\n\r\n\u001b[1;38;5;244mWhat's next\u001b[0m:\r\n\r\n  \u001b[1;38;5;220mvimtutor\u001b[0m\r\n    \u001b[2m# the Vim tutor itself; about 30 minutes, hands-on\u001b[0m\r\n\r\nIf \u001b[1;38;5;220mvimtutor\u001b[0m isn't installed:\r\n  - Linux: install your distro's full vim package\r\n    ", "len": 1024}
+{"ts": 3.245418, "dir": "out", "enc": "utf8", "data": "(Fedora: \u001b[1;38;5;220msudo dnf install vim-enhanced\u001b[0m; Debian/Ubuntu: \u001b[1;38;5;220msudo apt install vim\u001b[0m)\r\n  - macOS:  \u001b[1;38;5;220mbrew install vim\u001b[0m\r\n\r\nRe-take any stage at any time:\r\n  \u001b[1;38;5;220mshelltutor 1\u001b[0m   \u001b[2m# replay Stage 1\u001b[0m\r\n\r\nSandbox stays at \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-fixaz5jz\u001b[0m if you want to keep playing.\r\n\r\n", "len": 397}

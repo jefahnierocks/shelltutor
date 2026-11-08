@@ -2,7 +2,7 @@
 title: shelltutor Simulation Slice 2 Sketch
 category: planning
 component: sim-slice-2
-status: draft
+status: implemented
 version: 0.1.0
 last_updated: 2026-11-07
 tags: [simulation, slice-2, hardening, pty, planning]
@@ -10,6 +10,11 @@ priority: medium
 ---
 
 # Simulation Slice 2 Sketch
+
+**Implemented (2026-11-08):** WP-03, commits `08013cf` (practice shell, C-007),
+`c1b41c7` (contract) and `6fa53d2` (preview variant retired). The two
+recommendations the work plan overrode are recorded in D-10 and D-12 of
+`docs/workplan/README.md`.
 
 **Status (2026-11-07):** scheduled as `docs/workplan/WP-03-practice-shell-hardening.md`,
 which carries the exact rcfile and the C-007 contract text. Two

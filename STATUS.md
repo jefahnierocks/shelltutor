@@ -109,6 +109,12 @@ Current truth for the `shelltutor` repository.
   five stages with an empty per-run `HOME`; the pre-fix baseline observes
   F-010 (`S5-L3`) and F-011 (`S2-L2`, `S3-L2`) as `error-signature` events.
   Green on Bash 3.2.57 and 5.3.20; nothing fixed yet (WP-02).
+- **Slice 2 practice-shell hardening landed (C-007)** (WP-03,
+  `audit/2026-11-08/sim/all-slice2*`, `audit/2026-11-08/slice2-comparison.md`):
+  the practice shell no longer sources the system bashrc, scrubs the
+  environment and fixes the Readline defaults; the preview variant is
+  retired. The Linux before/after comparison remains pending until WP-06 or
+  the operator's Phase 2 Linux session.
 - **WP-02 landed: tutor correctness fixes** (F-010 to F-013 resolved; post-fix
   evidence `audit/2026-11-08/sim/all-postfix/`). Stage 3–5 lessons now run in
   their stage folder with fixtures seeded on stage entry (C-003); lesson copy
