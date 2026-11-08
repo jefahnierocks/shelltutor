@@ -205,15 +205,14 @@ WP-14's screens before this package lands.
 
 ## Change 6 — Harness: `second-try` observes the recall rungs (A1.3)
 
-At Stage 2 only, `second-try` answers Q1 wrong twice (`it lists files`,
-then `it lists files again`), waits for the sentinel `RECALL_HINT`
-(`Hint:` on the recall path) after miss 2 and `RECALL_NAV`
-(`Passed stages are saved.`) after miss 3, then answers correctly. The
-oracle in `run.py` asserts each of those two sentinels exactly once in a
-`second-try` run, the same way it asserts `ALMOST`. Because `second-try`'s
-task misses once, no task `Hint:` is printed, so the count of `Hint:` in
-the whole transcript is also exactly one; assert that too. Stage 4
-`second-try` is unchanged.
+At Stage 2 only, `second-try` answers Q1 wrong three times, then
+correctly. Under A1.1 the hint prints at miss 2 and again at miss 3 with
+the navigation facts, so the oracle asserts `Hint:` exactly twice and the
+first navigation fact (`Passed stages are saved.`) exactly once in a Stage
+2 `second-try` run; Stage 4 `second-try` asserts zero of each (its task
+misses once and prints no hint). *Corrected 2026-11-08 at review: the
+earlier text asked for one `Hint:` over two misses, which cannot reach
+the navigation rung.*
 
 ## Change 7 — Drift to close (A1.7)
 
