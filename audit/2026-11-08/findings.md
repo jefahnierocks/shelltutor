@@ -54,7 +54,9 @@ per the findings flow in `docs/simulation-design-plan.md`.
 - **Fix**: set `BASH_SILENCE_DEPRECATION_WARNING=1` in the practice shell's
   environment on the launch line in `practice()`; additive to C-007.
   Scheduled as the first commit of WP-11.
-- **Status**: open.
+- **Status**: resolved in `SHA0` (WP-11): the launch line sets the variable (it must
+  stay set: Apple's bash checks it after the rcfile runs). Bash 3.2.57 screen heights drop by four rows
+  (`audit/2026-11-08/wp11-screen-heights.md`).
 
 ## Observations
 

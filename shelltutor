@@ -508,7 +508,11 @@ practice() {
     # prompt behaves the same on every host (contract C-007).
     # The practice shell is the same binary as the outer script ($BASH),
     # never whatever `bash` happens to be first on PATH (F-014).
-    INPUTRC=/dev/null "$BASH" --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
+    # BASH_SILENCE_DEPRECATION_WARNING=1 stops Apple's /bin/bash 3.2 from
+    # printing a four-row "default shell is now zsh" notice before the
+    # first prompt (F-016). Apple's bash checks the variable after the
+    # rcfile has run, so the rcfile must not unset it.
+    INPUTRC=/dev/null BASH_SILENCE_DEPRECATION_WARNING=1 "$BASH" --rcfile /dev/fd/3 -i 3<<RCFILE < /dev/tty
 # shelltutor practice shell — contract C-007 in docs/contracts.md.
 # No system or user rcfile is sourced by this file. Distributions that compile Bash
 # with a system rcfile still read it before this file; the settings
