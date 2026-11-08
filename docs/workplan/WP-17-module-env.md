@@ -1,5 +1,5 @@
 ---
-title: WP-15 — Module `env` (variables, export, PATH, the prompt, where they live)
+title: WP-17 — Module `env` (variables, export, PATH, the prompt, where they live)
 category: planning
 component: workplan
 status: drafted-frozen
@@ -9,13 +9,13 @@ tags: [workplan, phase-d, modules, env, d2, d6, module-standard]
 priority: medium
 ---
 
-# WP-15 — Module `env`
+# WP-17 — Module `env`
 
 **Governing text**: `docs/direction-decisions-2026-11.md` D2, D4, D6, §5
 (module standard), §6 (template and the `env` outline), A1.1 (recall
 ladder). **Tier**: module standard. **Depends on**: WP-13 (module entry,
 heading convention, persona tables, `screen-height` events), WP-10
-(`ask_question` signature with a hint; `gate_escalate`) and WP-14 (the
+(`ask_question` signature with a hint; `gate_escalate`) and WP-16 (the
 first module block; `env` copies its shape and its cleared screen).
 **Script freeze**: nothing here lands before the Phase A summary exists
 (A1.9). **Touches `shelltutor`**: yes, one module block, and
@@ -36,7 +36,7 @@ writes those files (D2; FF-002; `AGENTS.md` §Work Rules).
 - `AGENTS.md`; `CONTRIBUTING.md` §Module standard and the lesson-screen
   template (WP-13 Commit D).
 - `stage3_*` in `shelltutor` as the stage model, and the `module_shells_*`
-  block from WP-14 as the module model. Do not read the rest of the script.
+  block from WP-16 as the module model. Do not read the rest of the script.
 - The practice rcfile in `practice()` only for two facts: it sets
   `PS1='shelltutor> '` once, at shell start, and every screen starts a new
   practice shell (C-007). Both are why the prompt reverts, and the module
@@ -44,7 +44,7 @@ writes those files (D2; FF-002; `AGENTS.md` §Work Rules).
 
 ## Writing rules for the copy
 
-Same as WP-14: escape every literal `$` as `\$` in the unquoted heredocs
+Same as WP-16: escape every literal `$` as `\$` in the unquoted heredocs
 (`$HOME`, `$PATH`, `$pet`, `$TOPIC`, `$SHELL`); no backticks; colour roles
 as in `stage3_*`; ≤ 20 lines per heredoc; each ends in `▶`; one idea per
 screen; concise, concrete, no praise, no mascots. Every command
@@ -443,7 +443,7 @@ Coordinator decisions: 1 seed nothing; 2 keep the sentence; 3 one screen
 lesson 5; six lessons would exceed §5); 4 keep the `DIM` aside; 5 accepted
 as a module-standard limit; 6 yes, the prompt-revert observation goes into
 the persona table (WP-13 Commit B gains `lesson_actions` and a post-`next`
-prompt assertion); 7 and 8 as in WP-14.
+prompt assertion); 7 and 8 as in WP-16.
 
 Original points:
 
@@ -455,6 +455,6 @@ Original points:
 - **[decision] 5** Accept that the task proves the steps were typed, not
   the pipeline end to end.
 - **[decision] 6** Add the prompt-revert observation to the persona table.
-- **[decision] 8** Same as WP-14 [decision] 7: the opening gate screen has no `▶` line.
-- **[decision] 7** Same as WP-14 [decision] 5: the task screen heading
+- **[decision] 8** Same as WP-16 [decision] 7: the opening gate screen has no `▶` line.
+- **[decision] 7** Same as WP-16 [decision] 5: the task screen heading
   `env — task` is not in WP-13's convention.

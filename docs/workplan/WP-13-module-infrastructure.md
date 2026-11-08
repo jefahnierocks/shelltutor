@@ -15,7 +15,7 @@ priority: high
 §6, §7 and Q5. **Tier**: core standard for the script changes (they touch
 `main`, C-001, C-003); module standard for everything a module brings.
 **Depends on**: WP-10 (module gates use the recall ladder) and the first
-module (WP-14 `shells`), since Phase C lands in the same commit series as
+module (WP-16 `shells`), since Phase C lands in the same commit series as
 the first module. **Harness-only commits A and B may land during the
 Phase A freeze.** **Touches `shelltutor`**: yes, after Phase B.
 
@@ -51,13 +51,13 @@ wait for the heading `"<name> <k> — "` (prefix match, no title text),
 `lesson_actions={k: [commands]}` typed at lesson `k`'s prompt, and an
 optional `prompt_after={k: "text"}` asserting the prompt text seen after
 that lesson's `next` (the `env` module uses both to observe the prompt
-reverting, WP-15 [decision] 6). Sentinels are
+reverting, WP-17 [decision] 6). Sentinels are
 derived from the convention below, so `sentinels.py` gains no per-module
 entries. `run.py`: `--module <name>` is accepted when `--stage` is absent;
 `--stage` and `--module` together exit 2. Until a module exists, a unit
 check with a fake transcript proves the expansion; no bundle.
 
-## Commit C — module entry in the script (after Phase B, with WP-14)
+## Commit C — module entry in the script (after Phase B, with WP-16)
 
 - `MODULES="shells env"` next to `TOTAL_STAGES`; `main`'s `case` gains
   `shells|env) preflight || exit 1; setup_sandbox; run_module "$1"; exit 0 ;;`

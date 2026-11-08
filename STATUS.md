@@ -176,12 +176,13 @@ documents agree with the code.
    check (`docs/phase2-walkthrough-checklist.md`). Output:
    `audit/<date>/walkthroughs.md` (findings and observations, no names, no
    transcripts). Phase B does not start before it exists.
-2. **Phase B — core dead ends (agent; drafted, none landed).** WP-10 recall
-   navigation and ladder, WP-11 stage-cleared screens and `--info` wording,
-   WP-12 agent-aware beat, as refined by amendment A1 of the decisions
-   document. `shelltutor` is frozen until `audit/<date>/walkthroughs.md`
-   exists; landing order WP-11, WP-12, WP-10. D9 (host user name redacted
-   from committed harness artifacts) lands before the first new bundle.
+2. **Phase B — core changes (agent; drafted, none landed).** WP-15 screen
+   chrome, WP-11 stage-cleared screens and `--info` wording, WP-12
+   agent-aware beat, WP-14 Stages 1–2 grounding, WP-10 recall navigation
+   and ladder (amendments A1–A3). `shelltutor` is frozen until
+   `audit/2026-11-08/walkthroughs.md` records three sittings (now 1 of 3);
+   landing order WP-15, WP-11, WP-12, WP-14, WP-10. D-19 (host user name
+   redacted from committed harness artifacts) has landed.
 3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `v0.1.0` follows
    Phase B and precedes Phase C (A1.10); `CHANGELOG.md` and the tag inputs
    follow the Phase 2 closure recorded in step 1.

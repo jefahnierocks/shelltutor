@@ -14,8 +14,12 @@ priority: high
 **Governing text**: `docs/direction-decisions-2026-11.md` §2 Phase B and
 amendment A1 (A1.4, A1.8, A1.9). **Tier**: core standard. **Depends on**:
 the Phase A summary for the script change; the D-19 harness commit touches
-only `scripts/sim/` and may land during Phase A. **Landing order**: first
-of the three Phase B packages. **Touches `shelltutor`**: yes (frozen until
+only `scripts/sim/` and may land during Phase A. **Landing order**: second, after
+WP-15 (A2.6); the screen is authored against the chrome and follows A3.5:
+title `✓ Stage N cleared` (OK tick, H1 text), "You can now:", commands in
+CMD aligned in a column each with a DIM gloss (≤ 8 lines), "Next: Stage
+N+1 · <title>" in DIM, and the `▶` line ending "Your place is saved.";
+footer bar in `cleared` mode. **Touches `shelltutor`**: yes (frozen until
 `audit/<date>/walkthroughs.md` exists).
 
 ## Goal

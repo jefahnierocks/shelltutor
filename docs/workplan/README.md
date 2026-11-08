@@ -50,9 +50,13 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | **landed** a71ab76 (commits 1–2); hosted run + commit 3 with the operator |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | **landed** eb15e41 (2026-11-07) |
 | [WP-09](WP-09-landing-followups.md) | Landing follow-ups: F-014 practice-shell interpreter, harness provenance, fresh macOS baseline | WP-07 | none | **landed** bd841ae (2026-11-08) |
-| [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; frozen until `audit/<date>/walkthroughs.md`; lands third |
-| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land first after Phase A |
-| [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands second |
+| [WP-15](WP-15-screen-chrome.md) | Screen chrome: panel rules, header with stage dots, key-hint footer, `┃` feedback checklist, ASCII fallback (A3) | Phase A summary | none | **drafted**; lands first |
+| [WP-14](WP-14-stages-1-2-grounding.md) | Stages 1–2 grounding: the shell made visible, Stage 2 opens with position, `ls -p` (A2) | Phase A summary, WP-15 | none | **drafted**; lands fourth |
+| [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; lands fifth (after WP-14) |
+| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land second, after WP-15 |
+| [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands third |
+| [WP-16](WP-16-module-shells.md) | Module `shells` (D1): three lessons, recall gate, zsh-lookup task | WP-13, WP-10 | none | **drafted** (renumbered from WP-14) |
+| [WP-17](WP-17-module-env.md) | Module `env` (D2): five lessons, recall gate, export-and-child task | WP-13, WP-16 | none | **drafted** (renumbered from WP-15) |
 | [WP-13](WP-13-module-infrastructure.md) | Module entry by name, module standard, harness tables and screen-height check | WP-10, WP-14 | none | **drafted**; harness commits A–B **landed** f47fa01 (screen-height check reproduces O-J; module tables ready); C–D wait for Phase B |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
@@ -281,8 +285,9 @@ deviate must say so in its report and get operator approval first.
   the tutor never writes outside `${SANDBOX}`; the sentence that practice
   prompts run with the learner's ordinary account authority (the F-002
   closure wording in ROADMAP Phase 3) now lives only in `README.md`.
-  Restoring one such line to the orientation screen is a safety-claim
-  change under `AGENTS.md`, so it is the operator's call. Not scheduled.
+  **Resolved 2026-11-08 (A3.8): yes.** The welcome carries the sentence
+  "Commands you run yourself have your full authority: this is the real
+  thing, not a simulation"; lands in WP-15.
 - **O-4 Linux host for Phase 2.** The human Debian/Ubuntu walkthrough is
   still the Phase 2 closure gate; WP-06 only supplies transcripts.
 

@@ -1,5 +1,5 @@
 ---
-title: WP-14 — Module `shells` (what a shell is, other shells, login shell)
+title: WP-16 — Module `shells` (what a shell is, other shells, login shell)
 category: planning
 component: workplan
 status: drafted-frozen
@@ -9,7 +9,7 @@ tags: [workplan, phase-d, modules, shells, d1, d6, module-standard]
 priority: medium
 ---
 
-# WP-14 — Module `shells`
+# WP-16 — Module `shells`
 
 **Governing text**: `docs/direction-decisions-2026-11.md` D1, D4, D6, §5
 (module standard), §6 (template and the `shells` outline), A1.1 (recall

@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.2.0
+version: 0.3.0
 last_updated: 2026-11-08
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -236,6 +236,10 @@ All are core-standard changes; all are small.
 - One sentence each in 3.3 and 4.3; headings unchanged, so no sentinel
   change.
 
+**WP-14 Stages 1–2 grounding** (A2) and **WP-15 screen chrome** (A3) were
+added on 2026-11-08; landing order after Phase A is WP-15, WP-11, WP-12,
+WP-14, WP-10 (A2.6). All five are drafted during Phase A.
+
 Exit: `careful-beginner` and `second-try` green on macOS (3.2 and 5.x)
 and hosted Linux; bundles committed; `STATUS.md` updated. Phase A
 findings that are defects are fixed here or filed.
@@ -277,6 +281,9 @@ by at least two humans, the operator decides whether `processes` and
 
 - The five stages' content, except WP-11's new screen, WP-12's lesson
   1.5 and two sentences, and WP-10's widened answer lists and hints.
+  *Qualified by A2 (2026-11-08): Stages 1 and 2 are reopened for sequencing
+  and grounding (WP-14); Stages 3 to 5 are not. A3 adds screen chrome
+  (WP-15), rendering only.*
 - The `vimtutor` finale and its handoff-by-pointer (baseline §1.7).
 - Stage 5's dependence on Vim (baseline §6 item 14): intrinsic to a
   `vimtutor` preparer; modules do not depend on Vim.
@@ -414,7 +421,9 @@ Defaults apply if unanswered.
 - **Q4** Observer protocol in Phase A: the two-minute rule above, or
   another? Default as written.
 - **Q5** Rendered-height check in the harness: add it in WP-13 if under
-  a day's work, otherwise the author counts? Default: yes if cheap.
+  a day's work, otherwise the author counts? Default: yes if cheap. **Resolved: landed as WP-13 commit A (f973eb0), informational,
+  budget 22 rendered rows.**
+- **Q6**–**Q8** see amendment A3 ("Open questions added"); defaults apply.
 
 ## 9. First actions on commit
 
@@ -556,6 +565,239 @@ core with human evidence behind it. Modules are 0.2.
 | `docs/contracts.md` C-006 | Recall ladder: three rungs and the three facts of A1.6 are contractual; wording is not | WP-10 |
 | `scripts/sim/persona.py`, `run.py` | `second-try` recall misses and oracle (A1.3) | WP-10 |
 | `scripts/sim/` bundle writer | Host user name redaction (D9) | Before WP-11's bundle |
+
+### A2 — Stages 1–2 reopened: the grounding package (2026-11-08)
+
+Recorded after Phase A sitting 1 (`audit/2026-11-08/walkthroughs.md`,
+`1aea23b`). A2 revises §3's line that the five stages' content is fixed
+apart from WP-10 to WP-12: Stages 1 and 2 are reopened for sequencing
+and grounding. Stages 3 to 5 are not. The baseline's design intent
+(mastery gates, minimalism, no praise, transfer-first) is unchanged.
+
+#### A2.1 How sitting 1 is read
+
+- The learner data (adult with some shell; Bash 5.3 via the shebang;
+  quit at 2.1 after eight minutes) is one non-target data point,
+  confounded by known material and by friction (F-015, O-K). It says
+  little about a beginner.
+- The observer notes O-L, O-M, O-N are design review by a teacher and
+  stand without further sittings. They share one root: Stages 1–2 give
+  verbs before the thing the verbs act on. Baseline §4.3's order within
+  a stage (recognition → action → model) is reversed for a novice in
+  these two stages.
+- O-M is read-ahead: the learner stopped at 2.1 and never met 2.3. Label
+  it observer review, not learner observation, in the findings.
+
+#### A2.2 Decision: a grounding package, core standard
+
+A new package, WP-14 (WP-13 is module infrastructure; the module
+packages drafted earlier as WP-14/WP-15 are renumbered WP-16 `shells` and
+WP-17 `env`), re-sequences
+Stages 1 and 2 on one principle: **model before verbs, every model
+anchored in something visible on screen.** Core standard: sentinels,
+personas, density rows, full bundle. Drafted during Phase A; landed
+after it (A1.9).
+
+Not chosen: leaving the core alone and letting the `shells` module carry
+O-L. A learner who quits at 2.1 never reaches a module.
+
+#### A2.3 Scope of WP-14
+
+- *Stage 1, the shell made visible.* Replace the abstract 1.4 with
+  something the learner does. Candidates, agent to pick one after an
+  FF-004/FF-008 check: type `date`, then `dtae`; the shell reports it
+  could not find a program by that name, so the shell is the thing that
+  finds and runs programs (the harness's error-signature scan must
+  expect the deliberate error on that screen). Or `echo $BASH_VERSION`:
+  the thing you are typing into is a program called bash, with a
+  version like any program.
+- *Stage 2 opens with position.* A new first screen draws the sandbox as
+  a tree (fixtures are constants, C-003, so the drawing is exact) with
+  "you are here", names the current directory, and introduces `pwd` as
+  "where am I". Then `ls`, then `cd`; `.`, `..`, `~` arrive after the
+  tree as names for here, up one, home.
+- *File versus folder.* `ls -p` (or `-F`) marks directories with a
+  trailing `/`. `ls -l` is removed from 2.1; it belongs with permissions
+  (D7). Grep for downstream dependence first; the baseline says
+  file-versus-directory is never measured (§4.4).
+- *In-lesson checks* take the course's existing form, predict then run
+  (`shelltutor:1024`, `1494`). No typed-answer prompts inside lessons.
+- Stage 1 and 2 gate criteria are unchanged. Recall questions may be
+  reworded to match the new screens.
+- Watch item for the second walkthrough round: two concept screens back
+  to back before the Stage 1 gate (the new 1.4 and WP-12's 1.5).
+
+#### A2.4 F-015 and the follow-up prompts (WP-10)
+
+The WP-10 draft's fix stands: the question asks for the day alone, with
+an example, and the verifier accepts any answer containing the day as a
+word. Add: on a mismatch at the Stage 1 follow-ups, re-ask only the
+mismatched item; do not restart the task. "Had to run check several
+times" was the restart compounding the wording defect.
+
+#### A2.5 O-K, Ctrl+L
+
+Check whether lesson 1.2 teaches Ctrl+L. Either way, one sentence in 1.2
+is the fix: "Ctrl+L clears the screen; type show to bring the lesson
+back." The `bind -x` rebind stays a candidate requiring harness proof on
+3.2 and 5.x, not a default: Ctrl+L clearing the screen is real Bash
+behaviour and the practice shell is meant to behave like real Bash.
+
+#### A2.6 Landing order after Phase A
+
+WP-15 (A3), WP-11, WP-12, WP-14, WP-10. WP-10 last because its hint copy
+for Stages 1–2 depends on WP-14's final screens and its answer lists
+depend on Phase A. All five are drafted during Phase A; none lands
+before `walkthroughs.md` records three sittings.
+
+#### A2.7 Sittings 2 and 3
+
+At least one is a child (D5). The 3.2 sitting is invoked as
+`/bin/bash ./shelltutor`; the template's invocation and `--info` fields
+carry the actual command and the pasted `--info` output. Sitting 1
+recorded `/bin/zsh` and `./shelltutor` there, which is how the 5.3 run
+went unnoticed until the Bash line was read.
+
+### A3 — Screen layout direction (2026-11-08)
+
+Recorded from the design canvas "shelltutor terminal UI — screen
+layouts" (eight boards; the operator holds the link). The agent works
+from this text; the canvas is the operator's visual reference. Lands as
+its own package, WP-15 "screen chrome", rendering only: no lesson-body
+changes, so one comparison reads "the look changed, nothing else". It
+precedes WP-11 so every later screen is authored and evidenced against
+the final chrome once.
+
+#### A3.1 The panel model
+
+Every tutor screen is a panel between two rules. Everything below the
+lower rule is the real shell and is never coloured by the tutor. Rows,
+top to bottom: header rule; blank; title (H1); body; `▶` line (INSTR);
+rule; footer. The whole panel, header through footer, is ≤ 20 rows. The
+chrome costs two rows over today's screens (header, lower rule); Stage
+1's current maximum is 18 (`audit/2026-11-08/stage1-density-followup.md`),
+so screens at 19–20 lose a blank line, and the density check counts the
+chrome.
+
+Rationale: the panel is the tutor, one program; the prompt beneath it is
+the shell. Terminal → shell → program becomes visible on every screen,
+which is the substance O-L said lesson 1.4 lacked.
+
+#### A3.2 Header rule
+
+`─ shelltutor ─ Stage N · <stage title> ───────── ●◉○○○  N.k ─`. The
+name is INSTR, the stage title DIM, the rule RULE. Dots: `●` OK for
+stages passed, `◉` INSTR for the current stage, `○` DIM for stages not
+reached. At a gate the lesson number reads `task`; on the cleared screen
+there is no current stage (`●●○○○`). The dots are position, not score,
+and stay inside baseline §1.11.
+
+Fixed 80 columns. No `tput cols` or `COLUMNS` probing: the welcome
+already asks for 80×24, the harness fixes geometry, and a wider terminal
+simply shows a shorter rule.
+
+#### A3.3 Footer as a key-hint bar
+
+One row, DIM with the words in KEY, the mode's verb first:
+
+- lessons: `next ▸ go on   show ▸ this screen again   prev ▸ back   quit ▸ save and leave`
+- gates: `check ▸ test your work   show ▸ the task again   quit ▸ save and leave`
+- cleared: `next ▸ Stage N+1   quit ▸ stop here, place saved   show ▸ this screen again`
+
+Same content as today's footer (`shelltutor:368-376`), read faster. The
+welcome shows the bar before screen 2 teaches the words; intended.
+
+#### A3.4 Tutor speech inside the shell stream
+
+Gate feedback keeps today's non-clearing behaviour (`skip_screen`) and
+is marked by a `┃` bar in INSTR at column 1 on every line of the block.
+The delta is a checklist: `✓` OK for what the gate saw done, `○` DIM for
+what it did not, with a short `not yet: <what it sees instead>` in
+EM/DIM on the undone line, then one line saying what to do and to type
+`check` again. This replaces the prose list under "Almost — you still
+need to:" (`shelltutor:542-546`); the `second-try` oracle's sentinel
+moves with the new wording.
+
+#### A3.5 Stage-cleared screen (WP-11; refines A1.4)
+
+Title `✓ Stage N cleared` (OK tick, H1 text); "You can now:"; the
+stage's commands in CMD, aligned in a column, each with a DIM gloss
+(≤ 8 lines); "Next: Stage N+1 · <title>" in DIM;
+`▶ Type next for Stage N+1, or quit to stop here. Your place is saved.`
+
+#### A3.6 Colour roles → ANSI
+
+The script's existing roles (`shelltutor:88-99`) plus one. The tutor
+emits codes; the learner's terminal chooses the colours; the canvas's
+hexes are one dark theme's rendering.
+
+| Role | ANSI | Marks |
+| --- | --- | --- |
+| H1 | 1;97 | screen title |
+| SUB | 36 | a concept being named |
+| CMD | 92 | something you can type |
+| KEY | 95 | a key or chord; the navigation words |
+| DIR | 94 | a path or folder |
+| EM | 91 | a warning; something irreversible |
+| INSTR | 93 | the `▶` line, the header name, the `┃` bar |
+| DIM | 90 | asides, footer hints, unreached dots, stage titles |
+| OK | 92 | `✓` passed, `●` stage done |
+| Q | 96 | a recall question |
+| RULE (new) | 90 | box drawing only, never text |
+
+#### A3.7 Glyphs and the plain path
+
+UTF-8 glyphs: `▶ ✓ ● ◉ ○ ▸ ◀ ─ │ ┃ ├ └ ╭ ╮ ╰ ╯ ┌ ┐ ┘`. ASCII
+substitutes: `> ok # * - > < - | | | |` and `+` for every corner. The
+substitution is tied to the existing plain-text path (`NO_COLOR` or
+non-TTY, `shelltutor:100-103`) and to an explicit `SHELLTUTOR_ASCII=1`,
+not to locale detection: the harness runs under `LC_ALL=C` and its
+sentinels already contain `▶` and `✓`, so a locale-triggered fallback
+would break every green run. Board 08 says "non-UTF-8 locale"; this
+paragraph corrects it.
+
+#### A3.8 Content proposals carried by the boards
+
+These are content decisions, not chrome. Each lands in the package
+named, and each is a default the operator can overrule (Q7, Q8).
+
+- The welcome carries the authority sentence on screen ("Commands you
+  run yourself have your full authority: this is the real thing, not a
+  simulation"), resolving operator question O-3 as yes. WP-15.
+- Gate task screens at stages 2–4 drop the pre-task hint line and say
+  what the gate checks instead ("that the folder exists, and how you
+  got there"). The ladder's rung-2 hint takes the pre-hint's place, so
+  fading runs forward (baseline §6 item 7). WP-10.
+- `ls -p` in place of `ls -l` (A2.3). WP-14.
+- Stage titles on the boards ("First commands", "Where things are",
+  "Making and changing files") and the path `~/shelltutor-sandbox` are
+  illustrative; the script's titles and `$SANDBOX` are used.
+
+#### A2/A3 — edits implied
+
+| Document | Edit | When |
+| --- | --- | --- |
+| This document §3 | "five stages' content unchanged" qualified: Stages 1–2 reopened per A2 | On commit |
+| This document §2 Phase B | WP-14 and WP-15 added; landing order per A2.6 | On commit |
+| This document §8 | Q6–Q8 added (below) | On commit |
+| `ROADMAP.md` Phase 5 | WP-14, WP-15; landing order; O-3 resolved | On commit |
+| `STATUS.md` | Drafting WP-10, 11, 12, 14, 15; none landed; Phase A at sitting 1 of 3 | On commit |
+| `docs/workplan/README.md` | WP-14, WP-15 listed as drafted; O-3 closed | On commit |
+| `audit/2026-11-08/walkthroughs.md` | O-M marked observer review | On commit |
+| `CONTRIBUTING.md` | Lesson-screen template gains the chrome rows and the chrome's two-row cost | WP-15 |
+| `scripts/sim/sentinels.py`, `run.py` | Feedback sentinel follows A3.4; `second-try` oracle updated | WP-15 |
+| `shelltutor` plain-text path (`100-103`) | ASCII glyph substitution; `SHELLTUTOR_ASCII` | WP-15 |
+
+#### Open questions added
+
+Defaults apply if unanswered.
+
+- **Q6** Chrome as its own package before WP-11 (default), or folded
+  into WP-11?
+- **Q7** Authority sentence on the welcome screen: yes (default), or
+  keep it in `README.md` only?
+- **Q8** Pre-task hints removed at stages 2–4 in favour of the ladder:
+  yes (default), or keep them?
 
 ## Cross-references
 

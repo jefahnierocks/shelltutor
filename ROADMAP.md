@@ -492,6 +492,17 @@ green on macOS 3.2 and 5.x and hosted Linux; bundles committed; `STATUS.md`
 updated. **Release**: `v0.1.0` follows Phase B and precedes Phase C (the
 five-stage core with human evidence); modules are 0.2.
 
+Amendments A2 and A3 (2026-11-08, after Phase A sitting 1): Stages 1 and 2
+are reopened for grounding as **WP-14** (model before verbs, every model
+anchored on screen: the shell made visible in 1.4, Stage 2 opens with a
+drawn tree and `pwd`, `ls -p` marks folders, `ls -l` moves to permissions);
+**WP-15** adds the screen chrome (panel between two rules, header with
+stage dots, key-hint footer, `┃` feedback checklist, ASCII fallback on the
+existing plain path and `SHELLTUTOR_ASCII=1`; rendering only). Operator
+question O-3 is resolved: the welcome carries the authority sentence.
+Landing order after three summarised sittings: WP-15, WP-11, WP-12, WP-14,
+WP-10. The module packages are WP-16 `shells` and WP-17 `env`.
+
 ### Phase C — Module infrastructure (agent; lands with the first module)
 
 WP-13: C-001 module argument, C-003 `$SANDBOX/<module>/`, modules save

@@ -15,8 +15,8 @@ priority: high
 amendment A1 (A1.1, A1.2, A1.3, A1.6, A1.7). Where this package and A1
 differ, A1 governs. **Tier**: core standard. **Depends on**: Phase A
 summary (`audit/<date>/walkthroughs.md`) for the answer-list widening only;
-everything else may be built now. **Landing order**: third, after WP-11 and
-WP-12. **Script freeze**: nothing here lands on `main` before the Phase A
+everything else may be built now. **Landing order**: fifth and last (A2.6), after WP-15, WP-11, WP-12 and
+WP-14, because the Stage 1–2 hints depend on WP-14's final screens. **Script freeze**: nothing here lands on `main` before the Phase A
 summary exists (A1.9). **Touches `shelltutor`**: yes.
 
 ## Goal
@@ -185,6 +185,23 @@ a learner who pastes the entire `date` output still passes: split the
 normalised answer on whitespace and test each word with the existing
 comparison before failing. The harness sentinel `TASK_Q_DAY` matches the
 unchanged prefix.
+
+## Change 5b — Follow-ups re-ask only the mismatched item (A2.4)
+
+On a Stage 1 follow-up mismatch, re-ask only the item(s) that failed
+(`stage1_verify_whoami`, `stage1_verify_pwd`, `stage1_day_matches`), not
+the whole task; the task restarts only if the learner types `quit` or if
+the history check fails. Sitting 1's "had to run check several times" was
+the restart compounding F-015.
+
+## Change 5c — Pre-task hints removed at stages 2–4 (A3.8, Q8 default)
+
+The gate task screens at stages 2, 3 and 4 drop their pre-task hint lines
+(`shelltutor:1094`, `1309`, `1572`) and instead say what the gate checks
+(for example "I will check that the folder exists, and how you got
+there"). The rung-2 hint takes the pre-hint's place so fading runs forward
+(baseline §6 item 7). Hint texts for Stages 1–2 are finalised against
+WP-14's screens before this package lands.
 
 ## Change 6 — Harness: `second-try` observes the recall rungs (A1.3)
 

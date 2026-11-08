@@ -17,6 +17,9 @@ no transcripts. Phase A exits at three summarised sittings including one
 on macOS `/bin/bash` 3.2; the Phase B packages land only after that.
 
 **Status: 1 of 3 sittings recorded.** The 3.2 sitting is still pending.
+Amendment A2 of the decisions document reads this sitting; sittings 2 and 3
+follow A2.7 (at least one child; the 3.2 sitting invoked as
+`/bin/bash ./shelltutor`, with the actual command and `--info` output pasted).
 
 ## Sitting 1 — 2026-11-07, adult with some shell, macOS, Bash 5.3.20
 
@@ -57,8 +60,9 @@ on macOS `/bin/bash` 3.2; the Phase B packages land only after that.
   the idea with; the observer judged it undemystifying. This is the gap
   the `shells` module (WP-14) addresses in Phase D; whether part of it
   belongs in the core Stage 1 is a curriculum decision for the operator.
-- **O-M — Stage 2 names "path", `.`, `..` and `~` before the learner knows
-  what a path or a current directory is.** The intro screen presents the
+- **O-M (observer review, not learner observation: the learner stopped at
+  2.1 and never met 2.3) — Stage 2 names "path", `.`, `..` and `~` before
+  the learner knows what a path or a current directory is.** The intro screen presents the
   symbols as a list; the concept of a position in a tree of folders, and
   the difference between a file and a folder in `ls` output, is assumed.
   A conceptual screen before 2.1, or a reordering of Stage 2, is a core
