@@ -34,10 +34,21 @@ from .sentinels import PROMPT
 
 
 class Action(NamedTuple):
+    """One persona step.
+
+    wait_for  sentinel id (or literal substring); "" means "no wait":
+              the action fires as soon as the persona reaches it.
+    send      text to send; "" marks a checkpoint without typing.
+    raw       send the bytes exactly, with no trailing newline.
+    delay_s   sleep this long before sending (Vim key-code timeout).
+    """
+
     wait_for: str
     send: str
     intent: str
     screen_id: str
+    raw: bool = False
+    delay_s: float = 0.0
 
 
 def careful_beginner_stage1(

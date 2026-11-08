@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
-"""scripts/sim/run.py — Slice 1 dispatcher.
+"""scripts/sim/run.py — PTY harness dispatcher (FF-006c rung 1).
 
-Drives the careful-beginner persona through Stage 1 of the tutor via
-a Python stdlib PTY harness and writes a v1 evidence bundle per
-variant. Optional contributor tooling — NOT part of `make verify`.
+Drives the careful-beginner persona through one stage, or all five
+stages, of the tutor via a Python stdlib PTY harness and writes a v1
+evidence bundle per variant. Optional contributor tooling — NOT part
+of `make verify`.
 
 Usage examples:
 
     python3 scripts/sim/run.py
-    python3 scripts/sim/run.py --variant current-rc
+    python3 scripts/sim/run.py --stage all
+    python3 scripts/sim/run.py --stage 3 --variant current-rc
     python3 scripts/sim/run.py --variant no-system-rc-preview -v
 
 Exit codes:
 
-    0 — both variants green
+    0 — every requested variant green
     1 — uncaught exception (with traceback)
     2 — unsupported persona/stage/flag
     3 — PatchTargetMissingError
@@ -21,6 +23,7 @@ Exit codes:
     5 — PersonaRejectedError
     6 — NoTTYError
     7 — SandboxNotWritableError
+    8 — PrerequisiteMissingError (vim absent for --stage 5/all)
 """
 
 from __future__ import annotations
@@ -29,7 +32,6 @@ import argparse
 import datetime
 import difflib
 import getpass
-import json
 import os
 import secrets
 import shutil
@@ -50,9 +52,13 @@ from scripts.sim.errors import (  # noqa: E402
     NoTTYError,
     PatchTargetMissingError,
     PersonaRejectedError,
+    PrerequisiteMissingError,
     SandboxNotWritableError,
     SentinelNotFoundError,
 )
+from scripts.sim.project import project_terminal_out  # noqa: E402
+
+SUPPORTED_STAGES = ("1", "2", "3", "4", "5", "all")
 
 VARIANT_CURRENT = "current-rc"
 VARIANT_PREVIEW = "no-system-rc-preview"
@@ -75,8 +81,9 @@ def _parse_args(argv) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="scripts/sim/run.py",
         description=(
-            "Slice 1 PTY harness for the shelltutor Stage 1 careful-beginner "
-            "baseline. Writes a v1 evidence bundle per variant under --out."
+            "PTY harness for the shelltutor careful-beginner baseline "
+            "(one stage or all five). Writes a v1 evidence bundle per "
+            "variant under --out."
         ),
     )
     parser.add_argument(
@@ -87,18 +94,21 @@ def _parse_args(argv) -> argparse.Namespace:
     parser.add_argument(
         "--persona",
         default="careful-beginner",
-        help="Only careful-beginner is supported in Slice 1.",
+        help="Only careful-beginner is supported.",
     )
     parser.add_argument(
         "--stage",
-        type=int,
-        default=1,
-        help="Only stage 1 is supported in Slice 1.",
+        choices=SUPPORTED_STAGES,
+        default="1",
+        help="Stage to drive: 1-5 or all (default: 1).",
     )
     parser.add_argument(
         "--out",
         default=None,
-        help="Output directory. Defaults to audit/<UTC-date>/sim/stage1.",
+        help=(
+            "Output directory. Defaults to audit/<UTC-date>/sim/stage<N> "
+            "or audit/<UTC-date>/sim/all."
+        ),
     )
     parser.add_argument("--timeout", type=float, default=30.0)
     parser.add_argument("--cols", type=int, default=80)
@@ -113,6 +123,53 @@ def _parse_args(argv) -> argparse.Namespace:
 def _log(verbose: bool, msg: str) -> None:
     if verbose:
         print("sim: %s" % msg, file=sys.stderr)
+
+
+def _repo_relative(path: str, fallback: str) -> str:
+    """Record paths relative to the repository root, never absolute (D-15)."""
+    abs_path = os.path.abspath(path)
+    if abs_path == _PARENT or abs_path.startswith(_PARENT + os.sep):
+        return os.path.relpath(abs_path, _PARENT)
+    return fallback
+
+
+def _build_actions(
+    stage: str, whoami_answer: str, pwd_answer: str, day_answer: str
+) -> List[persona_mod.Action]:
+    if stage == "1":
+        return persona_mod.careful_beginner_stage1(
+            whoami_answer=whoami_answer,
+            pwd_answer=pwd_answer,
+            day_answer=day_answer,
+        )
+    raise SystemExit(
+        "scripts/sim/run.py: --stage %s walk not available yet" % stage
+    )
+
+
+def _final_gate_id(stage: str) -> str:
+    return "STAGE_CLEARED" if stage == "1" else "S%s_CLEARED" % stage
+
+
+def _child_args(stage: str) -> List[str]:
+    # C-001: `shelltutor N` for N >= 2; no argument for stage 1 and all.
+    return [stage] if stage in ("2", "3", "4", "5") else []
+
+
+def _read_progress(sandbox_root: str) -> str:
+    path = os.path.join(sandbox_root, ".progress")
+    try:
+        with open(path, "r", encoding="utf-8") as fp:
+            return fp.read().strip() or "empty"
+    except FileNotFoundError:
+        return "absent"
+    except OSError:
+        return "unreadable"
+
+
+def _expected_progress(stage: str) -> str:
+    # `all` and `5` both run the finale, which removes .progress.
+    return stage if stage in ("1", "2", "3", "4") else "absent"
 
 
 def _run_variant(
@@ -134,6 +191,9 @@ def _run_variant(
     host_inputs = env.host_snapshot()
 
     sandbox_root = env.make_shelltutor_home()
+    # Clean learner account: an empty per-run HOME so a pre-existing
+    # ~/.shelltutor (or any dotfile) on the host cannot hide defects.
+    user_home = env.make_shelltutor_home(prefix="shelltutor-sim-userhome-")
     _log(args.verbose, "variant=%s sandbox=%s" % (variant, sandbox_root))
 
     # Persona answers derived from harness host inputs.
@@ -141,11 +201,7 @@ def _run_variant(
     pwd_answer = os.path.join(sandbox_root, "stage1")
     day_answer = time.strftime("%a")
 
-    actions = persona_mod.careful_beginner_stage1(
-        whoami_answer=whoami_answer,
-        pwd_answer=pwd_answer,
-        day_answer=day_answer,
-    )
+    actions = _build_actions(args.stage, whoami_answer, pwd_answer, day_answer)
     p = persona_mod.Persona(persona_name, actions)
 
     started_at_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -156,8 +212,10 @@ def _run_variant(
         "variant": variant,
         "started_at_utc": started_at_utc,
         "harness_version": recorder.HARNESS_VERSION,
-        "shelltutor_path": args.shelltutor,
-        "shelltutor_path_used": shelltutor_path,
+        "shelltutor_path": _repo_relative(args.shelltutor, "shelltutor"),
+        "shelltutor_path_used": _repo_relative(
+            shelltutor_path, "shelltutor (%s patched copy)" % variant
+        ),
         "sandbox_root": sandbox_root,
         "pty_geometry": "%dx%d" % (args.cols, args.rows),
         "per_sentinel_timeout_seconds": args.timeout,
@@ -169,16 +227,37 @@ def _run_variant(
     # budget assumptions hold.
     child_env = dict(os.environ)
     child_env["SHELLTUTOR_HOME"] = sandbox_root
+    child_env["HOME"] = user_home
     child_env.setdefault("TERM", "xterm-256color")
     child_env["COLUMNS"] = str(args.cols)
     child_env["LINES"] = str(args.rows)
+    # D-03 controlled inputs.
+    child_env["LC_ALL"] = "C"
+    child_env["VIMINIT"] = "set nocompatible"
+    child_env["PAGER"] = "less"
+    child_env.pop("MANPAGER", None)
+    child_env.pop("LESS", None)
+    controlled_inputs = {
+        "HOME": "empty per-run tempdir",
+        "LC_ALL": "C",
+        "VIMINIT": "set nocompatible",
+        "PAGER": "less",
+        "MANPAGER": "unset",
+        "LESS": "unset",
+        "TERM": child_env["TERM"],
+        "COLUMNS": args.cols,
+        "LINES": args.rows,
+    }
 
     outcome: dict = {
         "gate_passed": False,
         "child_exit_code": None,
         "c002_meaning": "",
         "harness_exit_code": 1,
+        "progress_after": "n/a",
+        "progress_ok": False,
     }
+    error_signatures: List[dict] = []
     drive_exception: Optional[BaseException] = None
     result: Optional[dict] = None
     try:
@@ -191,6 +270,9 @@ def _run_variant(
                 rows=args.rows,
                 cols=args.cols,
                 per_sentinel_timeout=args.timeout,
+                child_args=_child_args(args.stage),
+                final_gate_id=_final_gate_id(args.stage),
+                display_path=run_meta["shelltutor_path_used"],
             )
         except (
             SentinelNotFoundError,
@@ -198,9 +280,15 @@ def _run_variant(
             NoTTYError,
         ) as exc:
             drive_exception = exc
+        # Read before sandbox cleanup.
+        outcome["progress_after"] = _read_progress(sandbox_root)
+        outcome["progress_ok"] = outcome["progress_after"] == _expected_progress(
+            args.stage
+        )
     finally:
         if not args.keep_sandbox:
             shutil.rmtree(sandbox_root, ignore_errors=True)
+            shutil.rmtree(user_home, ignore_errors=True)
 
     if result is not None:
         outcome["gate_passed"] = result["gate_passed"]
@@ -211,7 +299,9 @@ def _run_variant(
             else -1,
             "non-C-002 exit",
         )
-        outcome["harness_exit_code"] = 0 if result["gate_passed"] else 4
+        error_signatures = result["error_signatures"]
+        run_ok = result["gate_passed"] and outcome["progress_ok"]
+        outcome["harness_exit_code"] = 0 if run_ok else 4
         if result["wall_clock_capped"]:
             outcome["notes"] = "Run hit the 5-minute wall-clock cap."
         run_meta["duration_seconds"] = round(result["duration_seconds"], 3)
@@ -226,11 +316,19 @@ def _run_variant(
         host_inputs=host_inputs,
         run_meta=run_meta,
         outcome=outcome,
-        known_rough_edges=recorder.stage1_known_rough_edges(),
+        known_rough_edges=recorder.known_rough_edges(args.stage),
+        stage=args.stage,
+        controlled_inputs=controlled_inputs,
+        error_signatures=error_signatures,
     )
+    outcome["ok"] = bool(outcome["gate_passed"] and outcome["progress_ok"])
     rec.write_tap(
-        ok=outcome.get("gate_passed", False),
-        description="stage1 careful-beginner — variant=%s" % variant,
+        ok=outcome["ok"],
+        description="%s careful-beginner — variant=%s"
+        % (
+            "all-stages" if args.stage == "all" else "stage" + args.stage,
+            variant,
+        ),
     )
     if drive_exception is not None:
         # Re-raise so the dispatcher records the correct exit code,
@@ -239,45 +337,19 @@ def _run_variant(
     return rec, host_inputs, run_meta, outcome
 
 
-def _project_terminal_out(jsonl_path: str) -> List[str]:
-    """Project a terminal.jsonl to the list of UTF-8 OUT-direction
-    chunks, normalized for diff-readability.
-
-    Normalization here is more aggressive than the sentinel-matching
-    pass: CRLF→LF, bare CR→LF, and ANSI escape sequences stripped.
-    The raw bytes still live in terminal.jsonl; this projection
-    exists only to make the variant diff human-readable. Base64
-    (`enc=b64`) rows are skipped — the Stage 1 transcript should not
-    contain non-UTF-8 bytes; if a row is base64 it indicates a binary
-    spill worth keeping in the raw file but pointless for the human
-    diff.
-    """
-    lines: List[str] = []
-    with open(jsonl_path, "r", encoding="utf-8") as fp:
-        for raw in fp:
-            try:
-                row = json.loads(raw)
-            except json.JSONDecodeError:
-                continue
-            if row.get("dir") != "out":
-                continue
-            if row.get("enc") != "utf8":
-                continue
-            data = row.get("data", "")
-            data = env.normalize(data)
-            lines.append(data)
-    return lines
-
-
-def _write_diff(out_dir: str, current_dir: str, preview_dir: str) -> str:
+def _write_diff(
+    out_dir: str, current_dir: str, preview_dir: str, stage: str = "1"
+) -> str:
+    stage_name = "all-stages" if stage == "all" else "stage" + stage
+    stage_title = "Five-stage" if stage == "all" else "Stage %s" % stage
     current_terminal = os.path.join(current_dir, "terminal.jsonl")
     preview_terminal = os.path.join(preview_dir, "terminal.jsonl")
     if not (os.path.exists(current_terminal) and os.path.exists(preview_terminal)):
         return ""
-    current_text = "".join(_project_terminal_out(current_terminal)).splitlines(
+    current_text = "".join(project_terminal_out(current_terminal)).splitlines(
         keepends=True
     )
-    preview_text = "".join(_project_terminal_out(preview_terminal)).splitlines(
+    preview_text = "".join(project_terminal_out(preview_terminal)).splitlines(
         keepends=True
     )
     diff_lines = list(
@@ -293,16 +365,19 @@ def _write_diff(out_dir: str, current_dir: str, preview_dir: str) -> str:
     same = not diff_lines
     with open(diff_path, "w", encoding="utf-8") as fp:
         fp.write("---\n")
-        fp.write("title: Stage 1 simulation — current-rc vs no-system-rc-preview\n")
+        fp.write(
+            "title: %s simulation — current-rc vs no-system-rc-preview\n"
+            % stage_title
+        )
         fp.write("category: audit\n")
-        fp.write("component: stage1-sim\n")
+        fp.write("component: sim-%s\n" % stage_name)
         fp.write("status: evidence\n")
         fp.write("version: %s\n" % recorder.HARNESS_VERSION)
         fp.write("last_updated: %s\n" % _utc_today())
-        fp.write("tags: [audit, simulation, stage1, diff]\n")
+        fp.write("tags: [audit, simulation, %s, diff]\n" % stage_name)
         fp.write("priority: medium\n")
         fp.write("---\n\n")
-        fp.write("# Stage 1 baseline — variant diff\n\n")
+        fp.write("# %s baseline — variant diff\n\n" % stage_title)
         fp.write(
             "Unified diff of the OUT-direction UTF-8 chunks of each variant's\n"
             "`terminal.jsonl`, CRLF-normalized. Per\n"
@@ -342,6 +417,39 @@ def _resolve_shelltutor(path: str) -> str:
     return abs_path
 
 
+def _write_skip(out_dir: str, variant: str, args, reason: str) -> None:
+    """Record a prerequisite skip: summary note plus `# SKIP` TAP line."""
+    rec = recorder.Recorder(os.path.join(out_dir, variant))
+    try:
+        rec.write_summary(
+            host_inputs=env.host_snapshot(),
+            run_meta={
+                "persona": args.persona,
+                "stage": args.stage,
+                "variant": variant,
+                "harness_version": recorder.HARNESS_VERSION,
+            },
+            outcome={
+                "gate_passed": False,
+                "child_exit_code": None,
+                "harness_exit_code": 8,
+                "notes": "SKIPPED: %s (PrerequisiteMissingError, exit 8)." % reason,
+            },
+            known_rough_edges=[],
+            stage=args.stage,
+            controlled_inputs={},
+            error_signatures=[],
+        )
+        rec.write_tap(
+            ok=True,
+            description="%s careful-beginner — variant=%s"
+            % ("all-stages" if args.stage == "all" else "stage" + args.stage, variant),
+            skip_reason=reason,
+        )
+    finally:
+        rec.close()
+
+
 def _exit_code_for(exc: BaseException) -> int:
     if isinstance(exc, PatchTargetMissingError):
         return 3
@@ -353,6 +461,8 @@ def _exit_code_for(exc: BaseException) -> int:
         return 6
     if isinstance(exc, SandboxNotWritableError):
         return 7
+    if isinstance(exc, PrerequisiteMissingError):
+        return 8
     return 1
 
 
@@ -361,20 +471,14 @@ def main(argv=None) -> int:
 
     if args.persona != "careful-beginner":
         print(
-            "scripts/sim/run.py: --persona %r unsupported; Slice 1 only "
-            "supports careful-beginner." % args.persona,
-            file=sys.stderr,
-        )
-        return 2
-    if args.stage != 1:
-        print(
-            "scripts/sim/run.py: --stage %d unsupported; Slice 1 only "
-            "supports stage 1." % args.stage,
+            "scripts/sim/run.py: --persona %r unsupported; only "
+            "careful-beginner is available." % args.persona,
             file=sys.stderr,
         )
         return 2
 
-    out_dir = args.out or os.path.join("audit", _utc_today(), "sim", "stage1")
+    stage_dir = "all" if args.stage == "all" else "stage" + args.stage
+    out_dir = args.out or os.path.join("audit", _utc_today(), "sim", stage_dir)
     out_dir = os.path.abspath(out_dir)
     os.makedirs(out_dir, exist_ok=True)
 
@@ -391,6 +495,14 @@ def main(argv=None) -> int:
 
     aggregate_exit = 0
     preview_script_path = None
+
+    if args.stage in ("5", "all") and shutil.which("vim") is None:
+        exc = PrerequisiteMissingError("vim not installed")
+        for variant in variants_to_run:
+            _write_skip(out_dir, variant, args, "vim not installed")
+        print("sim: PrerequisiteMissingError: %s" % exc, file=sys.stderr)
+        return 8
+
     try:
         for variant in variants_to_run:
             script_path: str
@@ -421,11 +533,17 @@ def main(argv=None) -> int:
                         persona_name=args.persona,
                         args=args,
                     )
-                    if not outcome.get("gate_passed"):
+                    if not outcome.get("ok"):
                         aggregate_exit = max(aggregate_exit, 4)
                         print(
-                            "sim: variant=%s gate NOT passed (child_exit=%s)"
-                            % (variant, outcome.get("child_exit_code")),
+                            "sim: variant=%s NOT ok (gate_passed=%s "
+                            "progress_after=%s child_exit=%s)"
+                            % (
+                                variant,
+                                outcome.get("gate_passed"),
+                                outcome.get("progress_after"),
+                                outcome.get("child_exit_code"),
+                            ),
                             file=sys.stderr,
                         )
                     else:
@@ -467,6 +585,7 @@ def main(argv=None) -> int:
                 out_dir,
                 os.path.join(out_dir, VARIANT_CURRENT),
                 os.path.join(out_dir, VARIANT_PREVIEW),
+                args.stage,
             )
             if diff_path:
                 _log(args.verbose, "wrote %s" % diff_path)

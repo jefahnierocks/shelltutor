@@ -19,11 +19,15 @@ import tempfile
 
 from .errors import SandboxNotWritableError
 
-_ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
-# Some lesson copy uses CSI sequences with non-standard intermediate
-# bytes (`ESC [ ? 25 l`, `ESC [ K`, etc.). The Stage 1 lesson copy
-# only emits SGR plus a `clear` ANSI cursor home, both of which the
-# pattern above handles.
+# CSI (including private-parameter forms such as `ESC [ ? 1049 h` and
+# `ESC [ > 4 ; 2 m` that Vim emits), OSC (title strings), and the short
+# charset/keypad escapes (`ESC ( B`, `ESC =`, `ESC >`).
+_ANSI_RE = re.compile(
+    r"\x1b\[[0-9;?<=>]*[ -/]*[@-~]"
+    r"|\x1b\][^\x07\x1b]*(?:\x07|\x1b\\)"
+    r"|\x1b[()][0-2AB]"
+    r"|\x1b[=>]"
+)
 
 
 def strip_ansi(data: str) -> str:

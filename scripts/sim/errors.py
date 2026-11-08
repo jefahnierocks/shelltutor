@@ -49,3 +49,7 @@ class PersonaRejectedError(HarnessError):
     question). The persona is dispatch-deterministic; a re-fire of a
     previously-matched sentinel means the answer was rejected.
     """
+
+
+class PrerequisiteMissingError(HarnessError):
+    """A host tool the requested walk needs (e.g. vim for Stage 5) is absent."""

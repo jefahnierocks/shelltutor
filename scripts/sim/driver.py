@@ -24,6 +24,7 @@ Loop discipline:
 
 from __future__ import annotations
 
+import codecs
 import errno
 import fcntl
 import os
@@ -34,11 +35,11 @@ import signal
 import struct
 import termios
 import time
-from typing import Optional
+from typing import Dict, List, Optional, Sequence
 
 from .env import normalize
 from .errors import HarnessTimeoutError, NoTTYError, PersonaRejectedError, SentinelNotFoundError
-from .persona import Persona
+from .persona import Action, Persona
 from .recorder import Recorder
 from .sentinels import PROMPT, SENTINELS
 
@@ -48,6 +49,18 @@ PER_SENTINEL_TIMEOUT_S = 30.0
 WALL_CLOCK_CAP_S = 300.0
 SELECT_TICK_S = 0.25
 _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+
+# Lesson screens (S1-L1, S2-L3, ...): persona input typed here is scanned
+# for mechanical error signatures.
+_LESSON_SCREEN_RE = re.compile(r"^S[1-5]-L[0-9]$")
+ERROR_SIGNATURES = (
+    "No such file or directory",
+    "command not found",
+    ": not found",
+    "Permission denied",
+    "syntax error",
+    "Is a directory",
+)
 
 
 def _set_winsize(fd: int, rows: int, cols: int) -> None:
@@ -76,13 +89,23 @@ def drive(
     cols: int = 80,
     per_sentinel_timeout: float = PER_SENTINEL_TIMEOUT_S,
     wall_clock_cap: float = WALL_CLOCK_CAP_S,
+    child_args: Sequence[str] = (),
+    final_gate_id: str = "STAGE_CLEARED",
+    display_path: Optional[str] = None,
 ) -> dict:
     """Run a single variant. Returns a dict of run-level outcomes:
 
         {"child_exit_code": int | None,
          "gate_passed": bool,
          "duration_seconds": float,
-         "wall_clock_capped": bool}
+         "wall_clock_capped": bool,
+         "error_signatures": [{"screen_id", "intent", "text"}, ...]}
+
+    `child_args` is appended to argv (C-001: `shelltutor N`).
+    `final_gate_id` is the sentinel whose match counts as the run's
+    gate pass; every `*CLEARED` sentinel still records a gate-pass event.
+    `display_path` is what evidence records for the script (repo-relative,
+    D-15); it defaults to `shelltutor_path`.
     """
     try:
         master_fd, slave_fd = pty.openpty()
@@ -104,7 +127,7 @@ def drive(
             os.dup2(slave_fd, 2)
             if slave_fd > 2:
                 os.close(slave_fd)
-            os.execvpe(shelltutor_path, [shelltutor_path], env)
+            os.execvpe(shelltutor_path, [shelltutor_path] + list(child_args), env)
         except Exception as exc:  # pragma: no cover — child exec failure
             os.write(2, ("harness: exec failed: %s\n" % exc).encode("utf-8"))
             os._exit(127)
@@ -118,12 +141,17 @@ def drive(
     start_mono = time.monotonic()
     last_match_mono = start_mono
     norm_tail = ""
-    match_cursor = 0
+    tail_base = 0  # absolute offset of norm_tail[0] in the whole stream
+    match_cursor = 0  # absolute offset
+    decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
+    scan: Optional[Dict[str, object]] = None
+    error_signatures: List[Dict[str, str]] = []
+    last_guard: Optional[Action] = None
     gate_passed = False
     child_exit_code: Optional[int] = None
     wall_clock_capped = False
 
-    recorder.write_event(0.0, "session-start", payload={"shelltutor_path": shelltutor_path})
+    recorder.write_event(0.0, "session-start", payload={"shelltutor_path": display_path or shelltutor_path})
 
     try:
         while True:
@@ -177,100 +205,135 @@ def drive(
             if chunk_bytes:
                 ts = time.monotonic() - start_mono
                 recorder.write_terminal(ts, "out", chunk_bytes)
-                norm_chunk = normalize(chunk_bytes.decode("utf-8", "replace"))
-                norm_tail = (norm_tail + norm_chunk)[-TAIL_CAP:]
-                # Recompute cursor relative to the (possibly truncated) tail.
-                if len(norm_tail) < TAIL_CAP:
-                    # Cursor remains unchanged when tail has not wrapped.
-                    pass
-                else:
-                    # Tail truncated from the left by len(norm_chunk)
-                    # at most; clamp cursor so it stays inside the buffer.
-                    if match_cursor < 0:
-                        match_cursor = 0
-                    match_cursor = max(0, min(match_cursor, len(norm_tail)))
+                norm_chunk = normalize(decoder.decode(chunk_bytes))
+                norm_tail += norm_chunk
+                if len(norm_tail) > TAIL_CAP:
+                    cut = len(norm_tail) - TAIL_CAP
+                    norm_tail = norm_tail[cut:]
+                    tail_base += cut
 
-            # Try to match the current persona action.
-            current = persona.current
-            if current is not None and norm_tail:
-                pattern = _resolve_pattern(current.wait_for)
-                # Search only forward from the cursor.
-                idx = norm_tail.find(pattern, match_cursor)
-                if idx >= 0:
-                    matched_at_ts = time.monotonic() - start_mono
+            # Finalize a pending error-signature scan once the next
+            # prompt has appeared (before any matching, so a scan is
+            # never overwritten unscanned).
+            if scan is not None:
+                start = max(0, int(scan["start"]) - tail_base)
+                idx_p = norm_tail.find(PROMPT, start)
+                if idx_p >= 0:
+                    region = norm_tail[start:idx_p]
+                    for line in region.split("\n"):
+                        if any(sig in line for sig in ERROR_SIGNATURES):
+                            text = line.strip()
+                            error_signatures.append(
+                                {
+                                    "screen_id": str(scan["screen_id"]),
+                                    "intent": str(scan["intent"]),
+                                    "text": text,
+                                }
+                            )
+                            recorder.write_event(
+                                round(time.monotonic() - start_mono, 6),
+                                "error-signature",
+                                intent=str(scan["intent"]),
+                                screen_id=str(scan["screen_id"]),
+                                payload={"text": text},
+                            )
+                    scan = None
+
+            # Match persona actions against the buffer. Loop so that
+            # consecutive no-wait actions (raw keys, Vim sequences) and
+            # already-buffered sentinels fire without a select tick.
+            while True:
+                current = persona.current
+                if current is None or not (norm_tail or current.wait_for == ""):
+                    break
+                immediate = current.wait_for == ""
+                pattern = "" if immediate else _resolve_pattern(current.wait_for)
+                if immediate:
+                    idx_abs = match_cursor
+                    matched = True
+                else:
+                    idx = norm_tail.find(pattern, max(0, match_cursor - tail_base))
+                    matched = idx >= 0
+                    idx_abs = idx + tail_base
+                if not matched:
+                    # Re-fire detection: if the persona advanced past a
+                    # gate question or gate-task header and that same
+                    # text appears again ahead of the cursor before the
+                    # next sentinel matches, the gate rejected us.
+                    if last_guard is not None:
+                        gpat = _resolve_pattern(last_guard.wait_for)
+                        if norm_tail.find(gpat, max(0, match_cursor - tail_base)) >= 0:
+                            recorder.write_event(
+                                round(time.monotonic() - start_mono, 6),
+                                "gate-fail",
+                                intent=last_guard.intent,
+                                screen_id=last_guard.screen_id,
+                                payload={"reason": "question re-asked"},
+                            )
+                            _drain_and_kill(master_fd, child_pid)
+                            raise PersonaRejectedError(
+                                "gate re-asked %s — careful-beginner answer rejected"
+                                % last_guard.intent
+                            )
+                    break
+
+                matched_at_ts = time.monotonic() - start_mono
+                recorder.write_event(
+                    round(matched_at_ts, 6),
+                    "sentinel-matched",
+                    intent=current.intent,
+                    screen_id=current.screen_id,
+                    payload={
+                        "sentinel": current.wait_for,
+                        "pattern": pattern,
+                        "cursor_after": idx_abs + len(pattern),
+                    },
+                )
+                match_cursor = idx_abs + len(pattern)
+                last_match_mono = time.monotonic()
+                if current.send:
+                    if current.delay_s > 0:
+                        time.sleep(current.delay_s)
+                    payload_bytes = (
+                        current.send if current.raw else current.send + "\n"
+                    ).encode("utf-8")
+                    os.write(master_fd, payload_bytes)
+                    recorder.write_terminal(
+                        time.monotonic() - start_mono,
+                        "in",
+                        payload_bytes,
+                    )
+                    event_payload = {"data": current.send}
+                    if current.raw:
+                        event_payload["raw"] = True
                     recorder.write_event(
-                        round(matched_at_ts, 6),
-                        "sentinel-matched",
+                        round(time.monotonic() - start_mono, 6),
+                        "persona-input",
                         intent=current.intent,
                         screen_id=current.screen_id,
-                        payload={
-                            "sentinel": current.wait_for,
-                            "pattern": pattern,
-                            "cursor_after": idx + len(pattern),
-                        },
+                        payload=event_payload,
                     )
-                    match_cursor = idx + len(pattern)
-                    last_match_mono = time.monotonic()
-                    if current.send:
-                        payload_bytes = (current.send + "\n").encode("utf-8")
-                        os.write(master_fd, payload_bytes)
-                        recorder.write_terminal(
-                            time.monotonic() - start_mono,
-                            "in",
-                            payload_bytes,
-                        )
-                        recorder.write_event(
-                            round(time.monotonic() - start_mono, 6),
-                            "persona-input",
-                            intent=current.intent,
-                            screen_id=current.screen_id,
-                            payload={"data": current.send},
-                        )
-                    persona.advance()
+                    if _LESSON_SCREEN_RE.match(current.screen_id) and not current.raw:
+                        scan = {
+                            "start": tail_base + len(norm_tail),
+                            "screen_id": current.screen_id,
+                            "intent": current.intent,
+                        }
+                persona.advance()
 
-                    if current.wait_for == "STAGE_CLEARED":
+                if current.wait_for in _REJECTION_GUARD_IDS:
+                    last_guard = current
+                if current.wait_for.endswith("CLEARED"):
+                    if current.wait_for == final_gate_id:
                         gate_passed = True
-                        recorder.write_event(
-                            round(time.monotonic() - start_mono, 6),
-                            "gate-pass",
-                            intent=current.intent,
-                            screen_id=current.screen_id,
-                            payload={},
-                        )
-                    # Detect persona-rejection: if the very next action
-                    # waits for the same sentinel we just matched, that
-                    # is fine (a new prompt). But the gate-rejection
-                    # signal we care about is the recall question
-                    # text re-appearing. Handle that conservatively by
-                    # checking if the recently-matched cursor is far
-                    # enough behind end-of-tail to allow another match
-                    # of the same gate-question pattern; if such a
-                    # repeat happens for GATE_Q* or TASK_Q_* before we
-                    # progressed, raise.
-                    # (No-op here — re-fire detection handled when the
-                    # next iteration sees an unexpected pattern.)
-                else:
-                    # Re-fire detection: if the persona JUST advanced past
-                    # a gate-question (recall Q1/Q2/Q3 or task Q whoami/
-                    # pwd/day), and the same question pattern appears
-                    # again ahead of the cursor before our next sentinel
-                    # matches, the answer was rejected.
-                    rejected = _detect_rejection(
-                        persona, norm_tail, match_cursor
+                    recorder.write_event(
+                        round(time.monotonic() - start_mono, 6),
+                        "gate-pass",
+                        intent=current.intent,
+                        screen_id=current.screen_id,
+                        payload={"final": current.wait_for == final_gate_id},
                     )
-                    if rejected is not None:
-                        recorder.write_event(
-                            round(time.monotonic() - start_mono, 6),
-                            "gate-fail",
-                            intent=rejected,
-                            screen_id="S1-G",
-                            payload={"reason": "question re-asked"},
-                        )
-                        _drain_and_kill(master_fd, child_pid)
-                        raise PersonaRejectedError(
-                            "gate re-asked %s — careful-beginner answer rejected"
-                            % rejected
-                        )
+                    last_guard = None
 
             if child_eof:
                 break
@@ -337,9 +400,12 @@ def drive(
         "gate_passed": gate_passed,
         "duration_seconds": duration,
         "wall_clock_capped": wall_clock_capped,
+        "error_signatures": error_signatures,
     }
 
 
+# Recall-question and gate-task-header sentinels. A re-fire after the
+# persona advanced past one means the gate rejected the answer or task.
 _REJECTION_GUARD_IDS = {
     "GATE_Q1",
     "GATE_Q2",
@@ -347,27 +413,11 @@ _REJECTION_GUARD_IDS = {
     "TASK_Q_WHOAMI",
     "TASK_Q_PWD",
     "TASK_Q_DAY",
-}
-
-
-def _detect_rejection(persona: Persona, norm_tail: str, cursor: int) -> Optional[str]:
-    """If the prior step was a recall/task-question answer and the
-    same question pattern re-appears ahead of the cursor, the gate
-    rejected the answer.
-
-    Returns the intent string of the rejected step, or None.
-    """
-    if persona.cursor == 0:
-        return None
-    # Look at the action we just advanced past.
-    prior_idx = persona.cursor - 1
-    prior = persona._actions[prior_idx]  # private but stable in this module
-    if prior.wait_for not in _REJECTION_GUARD_IDS:
-        return None
-    pattern = _resolve_pattern(prior.wait_for)
-    if norm_tail.find(pattern, cursor) >= 0:
-        return prior.intent
-    return None
+} | {
+    "S%d_%s" % (n, k)
+    for n in (2, 3, 4, 5)
+    for k in ("Q1", "Q2", "Q3", "TASK")
+} | {"S5_TASK1", "S5_TASK2"}
 
 
 def _drain_and_kill(master_fd: int, child_pid: int) -> None:
