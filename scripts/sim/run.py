@@ -203,6 +203,7 @@ def _build_actions(
             table["gate"],
             lesson_actions=table.get("lesson_actions"),
             prompt_after=table.get("prompt_after"),
+            prompt_before_next=table.get("prompt_before_next"),
         )
     return persona_mod.build_walk(
         stage,
@@ -370,6 +371,17 @@ def _run_variant(
         outcome["progress_ok"] = outcome["progress_after"] == _expected_progress(
             args.stage
         )
+        if recorder.is_module(args.stage):
+            # A module never touches the learner's own configuration: the
+            # scratch HOME must hold no shell startup file afterwards.
+            present = [
+                n for n in (".bashrc", ".bash_profile", ".profile", ".zshrc", ".zprofile")
+                if os.path.exists(os.path.join(user_home, n))
+            ]
+            outcome["rc_files_absent"] = not present
+            if present:
+                outcome["progress_ok"] = False
+                outcome["notes"] = "module wrote startup files in HOME: %s" % present
     finally:
         if not args.keep_sandbox:
             shutil.rmtree(sandbox_root, ignore_errors=True)

@@ -368,8 +368,9 @@ def stage_walk(
 # Persona tables for stand-alone modules. A module's walk is expanded from
 # a small table, not hand-written (`module_walk`). Keys: `lessons` (count),
 # `gate` ({"recall": [...], "task": [...]}), and optionally `lesson_actions`
-# ({k: [commands typed at lesson k]}) and `prompt_after` ({k: prompt text
-# expected after lesson k's `next`}).
+# ({k: [commands typed at lesson k]}), `prompt_before_next` ({k: prompt text
+# left by lesson k's commands, awaited before its `next`}) and `prompt_after`
+# ({k: prompt text expected after lesson k's `next`}).
 MODULE_TABLES: dict = {
     # shells (WP-16): intro + 3 lessons, three recall answers, one task.
     "shells": {
@@ -378,6 +379,19 @@ MODULE_TABLES: dict = {
             "recall": ["a program", "command -v zsh", "login shell"],
             "task": ["command -v zsh > zsh.txt"],
         },
+    },
+    # env (WP-17): intro + 5 lessons. Lesson 4 sets PS1; the walk types
+    # `next` at the changed prompt and then asserts the next screen's prompt
+    # is the tutor's own again (the module's central claim: it reverts).
+    "env": {
+        "lessons": 5,
+        "gate": {
+            "recall": ["export", "a list of folders", "shelltutor>"],
+            "task": ["TOPIC=shell", "export TOPIC", "bash -c 'echo $TOPIC' > seen.txt"],
+        },
+        "lesson_actions": {4: ["PS1='me> '"]},
+        "prompt_before_next": {4: "\nme> "},
+        "prompt_after": {4: "shelltutor> "},
     },
 }
 
@@ -388,6 +402,7 @@ def module_walk(
     gate: dict,
     lesson_actions: Optional[dict] = None,
     prompt_after: Optional[dict] = None,
+    prompt_before_next: Optional[dict] = None,
 ) -> List[Action]:
     """Expand a module table into a careful-beginner walk.
 
@@ -412,10 +427,14 @@ def module_walk(
     the prompt text expected at the first prompt after that lesson's
     `next`: that wait uses the text instead of the generic prompt, so a
     prompt that should have reverted (or changed) is asserted, not assumed.
+    `prompt_before_next` maps a lesson number to the prompt text the lesson's
+    own commands leave behind: the wait before that lesson's `next` uses it
+    (a lesson that changes `PS1` types `next` at the new prompt).
     """
     gate = gate or {}
     lesson_actions = lesson_actions or {}
     prompt_after = prompt_after or {}
+    prompt_before_next = prompt_before_next or {}
     recall = list(gate.get("recall") or [])
     task = list(gate.get("task") or [])
     pending = {"text": None}
@@ -433,7 +452,10 @@ def module_walk(
         walk.append(Action("%s %d — " % (name, k), "", "render-lesson-%d" % k, sid))
         for cmd in lesson_actions.get(k, []):
             walk.append(Action(prompt(), cmd, "run-" + cmd.split()[0], sid))
-        walk.append(Action(prompt(), "next", "leave-lesson-%d" % k, sid))
+        wait_next = prompt()
+        if k in prompt_before_next:
+            wait_next = prompt_before_next[k]
+        walk.append(Action(wait_next, "next", "leave-lesson-%d" % k, sid))
         if k in prompt_after:
             pending["text"] = prompt_after[k]
     walk.append(Action("%s — gate" % name, "", "render-gate", "M-G"))

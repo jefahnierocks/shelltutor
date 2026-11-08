@@ -56,6 +56,7 @@ documents agree with the code.
 | WP-12 | `48c8355` | Stage 1 lesson 1.5 (read-only agent beat) and one sentence each in 3.3 and 4.3, net zero lines. |
 | WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
 | WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
+| WP-17 | branch `wp/17-env` | Module `env` (variables, `export`, `PATH`, the prompt): five lessons, a recall gate and an export-and-child task; the persona observes the `PS1` revert across screens. The real `~/.bashrc` and `~/.zshrc` are named in text only. Bundle `audit/2026-11-08/sim/module-env/` (macOS only; hosted Linux pending). |
 
 ### Curriculum and tutor
 

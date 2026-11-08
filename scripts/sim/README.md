@@ -126,14 +126,19 @@ design plan.
 A stand-alone module is driven from a small table in
 `persona.MODULE_TABLES` (`lessons` count plus a `gate` of `recall` answers
 and `task` commands, and optionally `lesson_actions` — commands typed at
-lesson k's prompt — and `prompt_after` — the prompt text expected after
-lesson k's `next`), expanded by `persona.module_walk()`. The sentinels
+lesson k's prompt — `prompt_before_next` — the prompt text lesson k's
+commands leave behind, awaited before its `next` — and `prompt_after` — the
+prompt text expected after lesson k's `next`), expanded by `persona.module_walk()`. The sentinels
 come from the module heading convention, so none are registered per
 module: intro `MODULE — <name>:`, lessons `<name> <k> — `, gate
 `<name> — gate`, task `<name> — task`, cleared `✓ <name> cleared.`. The run execs
 `shelltutor <name>`, expects `.progress` to stay absent (modules never save
-progress), and writes under `audit/<date>/sim/module-<name>/`. No module
-exists yet, so the table is empty.
+progress), asserts that the scratch `HOME` holds no shell startup file
+afterwards (a module never touches the learner's own configuration), and
+writes under `audit/<date>/sim/module-<name>/`. Tables exist for `shells` and
+`env`; `env` uses all three optional keys to observe its `PS1` revert (it
+types `next` at the changed prompt `me> ` and asserts the next screen is
+`shelltutor> `).
 
 `python3 scripts/sim/selftest_modules.py` (exit 0 or 1, stdlib, Python 3.9)
 checks the expansion and drives a fake tutor that follows the heading

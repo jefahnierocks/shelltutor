@@ -118,6 +118,25 @@ def check_expansion() -> int:
     if got != want:
         return _fail("lesson_actions/prompt_after expansion differs:\n got  %r\n want %r" % (got, want))
     print("ok - lesson_actions and prompt_after expand")
+
+    before = P.module_walk(
+        "m", 1, {}, lesson_actions={1: ["PS1='x> '"]},
+        prompt_before_next={1: "\nx> "}, prompt_after={1: "p> "},
+    )
+    got = [(a.wait_for, a.send) for a in before]
+    want = [
+        ("MODULE — m:", ""),
+        (P.PROMPT, "next"),
+        ("m 1 — ", ""),
+        (P.PROMPT, "PS1='x> '"),
+        ("\nx> ", "next"),
+        ("m — gate", ""),
+        ("✓ m cleared.", ""),
+        (P.PROMPT, "quit"),
+    ]
+    if got != want:
+        return _fail("prompt_before_next expansion differs:\n got  %r\n want %r" % (got, want))
+    print("ok - prompt_before_next expands")
     return 0
 
 

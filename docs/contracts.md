@@ -41,7 +41,7 @@ The tutor accepts five argument shapes:
 | ---                       | ---                                                                                  |
 | `./shelltutor`            | Resume at the next un-passed stage (or run the finale if all stages are passed).     |
 | `./shelltutor N`          | Enter stage `N` ∈ {1, 2, 3, 4, 5} for re-take or first-time. Bypasses the `.progress` resume; does not regress stored progress. |
-| `./shelltutor <module>`   | Run a stand-alone module, where `<module>` is a lowercase word from the fixed list in the script (`MODULES`; currently `shells`). A module needs no stage, saves nothing and exits 0; it never reads or writes `.progress`. `-h` lists the modules under their own heading. |
+| `./shelltutor <module>`   | Run a stand-alone module, where `<module>` is a lowercase word from the fixed list in the script (`MODULES`; currently `shells` and `env`). A module needs no stage, saves nothing and exits 0; it never reads or writes `.progress`. `-h` lists the modules under their own heading. |
 | `./shelltutor -h`         | Print usage to stdout, exit 0. `--help` is an accepted alias.                         |
 | `./shelltutor --info`     | Print an informational environment check and exit 0; does not start lessons.         |
 

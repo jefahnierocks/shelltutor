@@ -13,7 +13,7 @@ priority: high
 
 `shelltutor` is a **shell course** delivered as a single bash script. Its
 five-stage core is the **vimtutor prerequisite course** and hands off to
-`vimtutor`; stand-alone modules (`./shelltutor shells`) cover a topic on its
+`vimtutor`; stand-alone modules (`./shelltutor shells`, `./shelltutor env`) cover a topic on its
 own, need nothing passed and save nothing. The core teaches the small set of shell concepts a learner needs
 before sitting down to `vimtutor`: where am I, how do paths work, how do
 I create and edit files safely, how do commands and pipes combine, and
