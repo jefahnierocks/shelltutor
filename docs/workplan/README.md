@@ -38,7 +38,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-02](WP-02-tutor-correctness-fixes.md) | Tutor correctness fixes F-010–F-013; stage-folder model; FF-008 checker | WP-01 | none | **landed** f4fb671 (2026-11-07) |
 | [WP-03](WP-03-practice-shell-hardening.md) | Practice-shell hardening (Slice 2, C-007) | WP-01, WP-02 | none | **landed** 4482554 (2026-11-07) |
 | [WP-04](WP-04-stage1-density.md) | Stage 1 density split (lessons 1.1–1.4) | WP-03 | none | ready |
-| [WP-05](WP-05-gate-feedback.md) | Gate verification alignment; escalating feedback; `second-try` persona | WP-01, WP-02 | none | ready |
+| [WP-05](WP-05-gate-feedback.md) | Gate verification alignment; escalating feedback; `second-try` persona | WP-01, WP-02 | none | **landed** ff4248b (2026-11-07) |
 | [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | **landed** a71ab76 (commits 1–2); hosted run + commit 3 with the operator |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | after WP-05 |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
