@@ -543,6 +543,24 @@ gate_require_history() {
     return 1
 }
 
+# gate_escalate ATTEMPT HINT EXAMPLE...
+# attempt 1: nothing extra (the gate already printed what it saw).
+# attempt 2: HINT. attempt 3+: HINT plus the worked EXAMPLE lines, which
+# the learner still has to type themselves. There is no auto-pass.
+gate_escalate() {
+    local attempt="$1" hint="$2"; shift 2
+    [ "$attempt" -ge 2 ] || return 0
+    printf '%bHint:%b %s\n' "$SUB" "$RST" "$hint"
+    if [ "$attempt" -ge 3 ]; then
+        printf '%bWorked example — type these yourself:%b\n' "$SUB" "$RST"
+        local line
+        for line in "$@"; do
+            printf '  %b%s%b\n' "$CMD" "$line" "$RST"
+        done
+    fi
+    printf '\n'
+}
+
 # ---------------------------------------------------------------------
 # Welcome + orientation
 #
@@ -706,13 +724,21 @@ ${DIM}Unlimited retries. No skip.${RST}
 EOF
 }
 
-stage1_verify_task() {
-    # Re-read the values the learner reported. The four task questions
-    # were asked just before this verification runs.
-    [ "${TASK_S1_WHOAMI:-x}" = "$(whoami 2>/dev/null)" ] || return 1
+# Re-read the values the learner reported. The three task questions were
+# asked just before this verification runs. Split into one check per answer
+# so the gate can name which one did not match (never the expected value).
+stage1_verify_whoami() {
+    [ "${TASK_S1_WHOAMI:-x}" = "$(whoami 2>/dev/null)" ]
+}
+
+stage1_verify_pwd() {
     # pwd in practice subshell == $SANDBOX/stage1
-    local expected_pwd="$SANDBOX/stage1"
-    [ "${TASK_S1_PWD:-x}" = "$expected_pwd" ] || return 1
+    [ "${TASK_S1_PWD:-x}" = "$SANDBOX/stage1" ]
+}
+
+stage1_verify_task() {
+    stage1_verify_whoami || return 1
+    stage1_verify_pwd || return 1
     stage1_day_matches "${TASK_S1_DAY:-}" || return 1
     return 0
 }
@@ -782,7 +808,7 @@ stage1_gate() {
     local hist_mark
     hist_mark=$(history_mark)
 
-    local skip_screen=0
+    local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
             show_screen <<EOF
@@ -811,6 +837,10 @@ EOF
                     # the practice subshell with the same task — do NOT
                     # redisplay the task screen, so the missing-commands
                     # message stays visible above the new prompt.
+                    attempt=$((attempt + 1))
+                    gate_escalate "$attempt" \
+                        "Run the command again and copy its output exactly." \
+                        "whoami" "pwd" "date"
                     skip_screen=1
                     continue
                 fi
@@ -836,7 +866,17 @@ EOF
                     save_progress 1
                     return 0
                 fi
-                printf '\n%bOne or more answers did not match. Let'\''s redo the task.%b\n\n' "$EM" "$RST"
+                attempt=$((attempt + 1))
+                printf '\n%bOne or more answers did not match. Let'\''s redo the task.%b\n' "$EM" "$RST"
+                # Name which answer failed, never the expected value.
+                stage1_verify_whoami || printf '  The whoami answer did not match.\n'
+                stage1_verify_pwd || printf '  The pwd answer did not match.\n'
+                stage1_day_matches "${TASK_S1_DAY:-}" || printf '  The day answer did not match.\n'
+                printf '\n'
+                gate_escalate "$attempt" \
+                    "Run the command again and copy its output exactly." \
+                    "whoami" "pwd" "date"
+                skip_screen=1
                 ;;
             "$RC_QUIT")
                 return $rc
@@ -1017,7 +1057,7 @@ EOF
     local hist_mark
     hist_mark=$(history_mark)
 
-    local skip_screen=0
+    local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
             show_screen <<EOF
@@ -1047,6 +1087,10 @@ EOF
                     # Helper printed what is missing. Re-enter the practice
                     # prompt without redisplaying the task screen, so the
                     # message stays visible (same pattern as Stage 1).
+                    attempt=$((attempt + 1))
+                    gate_escalate "$attempt" \
+                        "mkdir makes the folder; cd moves into it; pwd shows where you are." \
+                        "mkdir practice" "cd practice" "pwd"
                     skip_screen=1
                     continue
                 fi
@@ -1055,10 +1099,15 @@ EOF
                     save_progress 2
                     return 0
                 fi
+                attempt=$((attempt + 1))
                 printf '\n%bI don'\''t see a %bpractice%b%b folder under %s.%b\n' \
                     "$EM" "$DIR" "$RST" "$EM" "$SANDBOX/stage2" "$RST"
                 printf '%bTry again. %bshow%b%b redisplays the task.%b\n\n' \
                     "$EM" "$CMD" "$RST" "$EM" "$RST"
+                gate_escalate "$attempt" \
+                    "mkdir makes the folder; cd moves into it; pwd shows where you are." \
+                    "mkdir practice" "cd practice" "pwd"
+                skip_screen=1
                 ;;
             "$RC_QUIT") return $rc ;;
             *) : ;;
@@ -1226,8 +1275,10 @@ EOF
     setup_stage_dir 3
     rm -f "$SANDBOX/stage3/notes.txt" "$SANDBOX/stage3/backup.txt" "$SANDBOX/stage3/done.txt" 2>/dev/null
 
+    local skip_screen=0 attempt=0
     while true; do
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 3 — GATE TASK${RST}
 
 You will work inside ${DIR}${SANDBOX}/stage3${RST}.
@@ -1247,6 +1298,8 @@ ${DIM}backup.txt are gone.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
+        fi
+        skip_screen=0
         practice "$SANDBOX/stage3" gate
         local rc=$?
         case "$rc" in
@@ -1256,6 +1309,7 @@ EOF
                     save_progress 3
                     return 0
                 fi
+                attempt=$((attempt + 1))
                 printf '\n%bThe folder state doesn'\''t match yet.%b\n' "$EM" "$RST"
                 printf '%bWhat I expected:%b\n' "$SUB" "$RST"
                 printf '  done.txt exists and contains the word ''hello''\n'
@@ -1264,6 +1318,11 @@ EOF
                 printf '%bWhat I see in %s:%b\n' "$SUB" "$SANDBOX/stage3" "$RST"
                 ls -1 "$SANDBOX/stage3" 2>/dev/null | sed 's/^/  /'
                 printf '\n'
+                gate_escalate "$attempt" \
+                    "echo hello > notes.txt writes a file; cp copies; mv renames; rm removes." \
+                    "echo hello > notes.txt" "cp notes.txt backup.txt" \
+                    "mv notes.txt done.txt" "rm backup.txt"
+                skip_screen=1
                 ;;
             "$RC_QUIT") return $rc ;;
             *) : ;;
@@ -1478,7 +1537,7 @@ EOF
     local hist_mark
     hist_mark=$(history_mark)
 
-    local skip_screen=0
+    local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
             show_screen <<EOF
@@ -1510,6 +1569,10 @@ EOF
                 # literal *.txt is what to look for.
                 if ! gate_require_history "$hist_mark" \
                     "list the .txt files with a glob (ls *.txt)" '\*\.txt'; then
+                    attempt=$((attempt + 1))
+                    gate_escalate "$attempt" \
+                        "A pipe feeds seq into wc -l; > saves the count; *.txt is the glob." \
+                        "seq 1 100 | wc -l > count.txt" "ls *.txt"
                     skip_screen=1
                     continue
                 fi
@@ -1518,6 +1581,7 @@ EOF
                     save_progress 4
                     return 0
                 fi
+                attempt=$((attempt + 1))
                 printf '\n%bcount.txt should exist and contain the number 100.%b\n' "$EM" "$RST"
                 if [ -f "$SANDBOX/stage4/count.txt" ]; then
                     printf '%bI see count.txt with content: %s%b\n' "$SUB" "$(cat "$SANDBOX/stage4/count.txt")" "$RST"
@@ -1526,6 +1590,10 @@ EOF
                 fi
                 printf '\n%bTry again. %bshow%b%b redisplays the task.%b\n\n' \
                     "$EM" "$CMD" "$RST" "$EM" "$RST"
+                gate_escalate "$attempt" \
+                    "A pipe feeds seq into wc -l; > saves the count; *.txt is the glob." \
+                    "seq 1 100 | wc -l > count.txt" "ls *.txt"
+                skip_screen=1
                 ;;
             "$RC_QUIT") return $rc ;;
             *) : ;;
@@ -1772,9 +1840,11 @@ EOF
         'it did not change' || return $?
 
     # Phase 1: open, edit, discard. File must still read 'before' afterward.
+    local skip_screen=0 attempt=0
     while true; do
         stage5_seed_practice
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 5 — GATE TASK (phase 1 of 2)${RST}
 
 I've reset ${DIR}practice.txt${RST} to contain just the word ${SUB}before${RST}.
@@ -1795,6 +1865,8 @@ ${DIM}I will verify the file is still exactly 'before'.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
+        fi
+        skip_screen=0
         practice "$SANDBOX/stage5" gate
         local rc=$?
         case "$rc" in
@@ -1803,10 +1875,15 @@ EOF
                     printf '\n%b✓ Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$RST"
                     break
                 fi
+                attempt=$((attempt + 1))
                 printf '\n%bThe file is no longer exactly ''before''.%b\n' "$EM" "$RST"
                 printf '%b(Did you use %b:wq%b%b instead of %b:q!%b%b?)%b\n' \
                     "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
                 printf '%bI'\''ll reset it and we'\''ll try phase 1 again.%b\n\n' "$EM" "$RST"
+                gate_escalate "$attempt" \
+                    ":q! throws the change away; :wq would write it." \
+                    "vim practice.txt" "i" "type a letter" "Esc" ":q!"
+                skip_screen=1
                 ;;
             "$RC_QUIT") return $rc ;;
             *) : ;;
@@ -1814,10 +1891,12 @@ EOF
     done
 
     # Phase 2: open, edit, save. File must differ from 'before' afterward.
+    skip_screen=0 attempt=0
     while true; do
         # Don't reset between phases — the learner should see their phase-1
         # 'before' state and edit forward from it.
-        show_screen <<EOF
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
 ${H1}STAGE 5 — GATE TASK (phase 2 of 2)${RST}
 
 Now save a real edit.
@@ -1833,6 +1912,8 @@ ${DIM}I will verify the file is no longer exactly 'before'.${RST}
 
 ${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
 EOF
+        fi
+        skip_screen=0
         practice "$SANDBOX/stage5" gate
         local rc=$?
         case "$rc" in
@@ -1843,9 +1924,14 @@ EOF
                     save_progress 5
                     return 0
                 fi
+                attempt=$((attempt + 1))
                 printf '\n%bThe file still reads exactly ''before''.%b\n' "$EM" "$RST"
                 printf '%b(Did you use %b:q!%b%b instead of %b:wq%b%b? Try again.)%b\n\n' \
                     "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
+                gate_escalate "$attempt" \
+                    ":wq writes the buffer to the file, then quits." \
+                    "vim practice.txt" "i" "type a letter" "Esc" ":wq"
+                skip_screen=1
                 ;;
             "$RC_QUIT") return $rc ;;
             *) : ;;
