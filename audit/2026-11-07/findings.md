@@ -50,7 +50,7 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
 - **Fix**: decision D-04 in `docs/workplan/README.md`; implemented by
   `WP-02` (stage 3 to 5 lessons run in their stage folder; stage fixtures are
   seeded on stage entry; contract C-003 updated).
-- **Status**: open; fix scheduled in `WP-02`.
+- **Status**: resolved by WP-02 in `eecccd6` (stage 3–5 lessons run in their stage folder; fixtures seeded on stage entry) and `8674044` (contract C-003). Post-fix PTY evidence: `audit/2026-11-08/sim/all-postfix/current-rc/` (no `error-signature` events; lesson 5.3 `cat practice.txt` prints `before`).
 
 ## F-011 — Lesson copy hardcodes `~/.shelltutor`
 
@@ -66,7 +66,7 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
   shows.
 - **Fix**: decision D-05; `WP-02` renders `${SANDBOX}` or a relative path and
   extends the FF-004 checker so the literal cannot return.
-- **Status**: open; fix scheduled in `WP-02`.
+- **Status**: resolved by WP-02 in `1bf9057` (copy renders `${SANDBOX}` or relative paths) and `20ed4da` (FF-004 now rejects `~/.shelltutor` and `$HOME/.shelltutor` in lesson heredocs). Post-fix PTY evidence: `audit/2026-11-08/sim/all-postfix/current-rc/` (2.2 `cd <sandbox>` and 3.2 `cat ../poem.txt` succeed).
 
 ## F-012 — `ask_question` whitespace collapse uses GNU sed `\+`
 
@@ -87,7 +87,7 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
 - **Fix**: `tr -s '[:space:]' ' '` in a shared `normalize_answer()` helper
   (`WP-02`), plus the FF-008 checker proposed below so GNU-only text-tool
   syntax cannot re-enter the script.
-- **Status**: open; fix scheduled in `WP-02`.
+- **Status**: resolved by WP-02 in `75af51e` (`normalize_answer()` with `tr -s`) and `20ed4da`, `b60e30f` (FF-008 checker, `make check`).
 
 ## F-013 — Stage 1 day-of-week verification assumes an English locale
 
@@ -111,7 +111,7 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
   forms of `%a` and `%A`, compared case-insensitively with a trailing period
   ignored, and the question invites the learner to type the day "as `date`
   printed it".
-- **Status**: open; fix scheduled in `WP-02`.
+- **Status**: resolved by WP-02 in `99b6ac7` (`stage1_day_matches`; the question now invites the day as `date` printed it). The interactive `de_DE` gate walk is still an operator spot-check; the matcher was exercised directly under `LC_ALL=de_DE.UTF-8`, where `date +%a` prints `Sa.`.
 
 ## Observations (recorded, not findings)
 
@@ -130,7 +130,7 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
   (`SHELLTUTOR_HOME=/tmp/x/`) makes the expected Stage 1 `pwd` value
   `/tmp/x//stage1` while the practice shell prints `/tmp/x/stage1`; a
   relative value makes the sandbox depend on the caller's working directory.
-  Decision D-08; `WP-02` normalises the path at startup. **By inspection.**
+  Decision D-08; `WP-02` normalises the path at startup (fixed in `4543f8c`). **By inspection.**
 - **O-D — Inherited history variables can break the Stage 1 commands-run
   check.** The practice shell inherits the learner's environment. An
   exported `HISTIGNORE` listing `pwd` or `date`, or `HISTCONTROL`, or `TMOUT`
@@ -155,10 +155,10 @@ or blocked, 2 = inconsistent across supported surfaces, 1 = cosmetic).
 | Enforcement category | `static-analysis` |
 | Scope | `shelltutor`, code lines outside heredocs, excluding comment lines and lines annotated `# nofitness:posix` |
 | Failure condition | any match; exit 1 with `file:line: FF-008 …` |
-| Implementation | `scripts/check-posix-tools.sh`, same shape as the sibling checkers (awk heredoc state machine, `--self-test`), wired into `make check` and `make self-test` (`WP-02`) |
+| Implementation | `scripts/check-posix-tools.sh`, same shape as the sibling checkers (awk heredoc state machine, `--self-test`), wired into `make check` and `make self-test` (`WP-02`; implemented in `20ed4da`, flag handling in `b60e30f`) |
 | Related findings | F-008 (2026-05-23), F-012 |
 
-The next audit cycle should admit FF-008 to the fitness-function catalogue
+FF-008 is implemented and enforced by `make check`. The next audit cycle should admit FF-008 to the fitness-function catalogue
 alongside FF-001 to FF-007.
 
 ## Cross-references

@@ -109,14 +109,24 @@ Current truth for the `shelltutor` repository.
   five stages with an empty per-run `HOME`; the pre-fix baseline observes
   F-010 (`S5-L3`) and F-011 (`S2-L2`, `S3-L2`) as `error-signature` events.
   Green on Bash 3.2.57 and 5.3.20; nothing fixed yet (WP-02).
+- **WP-02 landed: tutor correctness fixes** (F-010 to F-013 resolved; post-fix
+  evidence `audit/2026-11-08/sim/all-postfix/`). Stage 3–5 lessons now run in
+  their stage folder with fixtures seeded on stage entry (C-003); lesson copy
+  uses `${SANDBOX}` or relative paths; `SHELLTUTOR_HOME` is normalised at
+  startup (C-004); `ask_question` normalises with `tr -s`; the Stage 1 day check
+  accepts the locale form of `date`. New gates: FF-004 sandbox-path rule and
+  FF-008 (`scripts/check-posix-tools.sh`, in `make check`). The five-stage
+  harness is green on Bash 3.2.57 and 5.3.20 with no `error-signature` events.
+  The interactive `de_DE` gate walk remains an operator spot-check.
 - **F-010 to F-013 surfaced by static review** (`audit/2026-11-07/findings.md`,
-  2026-11-07; all open, fixes scheduled in WP-02 after the WP-01 baseline):
+  2026-11-07; all four resolved by WP-02, see the landing line above):
   lesson 5.3 promises a `practice.txt` fixture that does not exist at lesson
   time (F-010, sev 3); lesson copy hardcodes `~/.shelltutor` and fails under
   `SHELLTUTOR_HOME` (F-011, sev 3); `ask_question` uses GNU-sed `\+`, a no-op
   on macOS (F-012, sev 2); the Stage 1 day-of-week check assumes an English
   locale and cannot pass under e.g. `de_DE` (F-013, sev 3). FF-008 (POSIX
-  text-tool portability in script code) is proposed there.
+  text-tool portability in script code) was proposed there and is now
+  implemented.
 - On 2026-11-07 `make verify` (24 declaration tests plus the static, lint and
   smoke checks), `make self-test`, and the Stage 1 PTY harness passed locally
   under Bash 3.2.57 and 5.3.20; the hosted `verify` run on `b2fdff7`
