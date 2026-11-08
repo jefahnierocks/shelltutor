@@ -1,11 +1,12 @@
 """Host input snapshot + output-normalization helpers.
 
-Slice 1 isolates only the /etc/bashrc source statement (in the
-no-system-rc-preview variant). Every other host input — TERM,
-geometry, PATH, locale, etc. — still bleeds into the captured
+Since Slice 2 the practice shell is project-controlled (contract C-007),
+and the harness controls a short list of inputs (see run.py and the
+"Controlled inputs" section of summary.md). Every other host input —
+TERM, geometry, PATH, locale, etc. — still bleeds into the captured
 transcript unless the harness explicitly notes it. summary.md cites
-this module's snapshot so later reviewers do not over-read the
-current-rc vs no-system-rc-preview diff.
+this module's snapshot so later reviewers do not over-read a
+before/after comparison.
 """
 
 from __future__ import annotations

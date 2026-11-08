@@ -23,16 +23,15 @@ can compare transcripts before and after each work package.
 ## Quick start
 
 ```sh
-make sim                                    # --stage all, both variants
-make lesson-flow                            # Stage 1 only, both variants
+make sim                                    # --stage all, current-rc
+make lesson-flow                            # Stage 1 only, current-rc
 python3 scripts/sim/run.py --stage 3 --variant current-rc -v
-python3 scripts/sim/run.py --stage all --variant no-system-rc-preview -v
+python3 scripts/sim/run.py --stage all -v
 python3 scripts/sim/compare.py <bundle-A> <bundle-B>   # before/after diff
 ```
 
 Default output: `audit/<UTC-date>/sim/stage<N>/` or `.../sim/all/`, each
-holding `{current-rc,no-system-rc-preview}/` plus a top-level `diff.md`
-when `--variant both` is used. Needs a real pseudo-terminal; inside an
+holding `current-rc/`. Needs a real pseudo-terminal; inside an
 agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
 
 ## What it does
@@ -61,16 +60,12 @@ geometry, and an empty per-run `HOME` so a pre-existing `~/.shelltutor`
 cannot hide defects. Everything else is inherited and listed as a host
 input. Recorded paths are repository-relative (D-15).
 
-Two back-to-back baselines are produced by default:
-
-- `current-rc` — the production script as learners run it.
-- `no-system-rc-preview` — a harness-generated patched copy in a
-  tempdir with the `/etc/bashrc` source line replaced by a
-  provenance comment. **Diagnostic only**; not a production code
-  path.
-
-`diff.md` carries the unified diff of the OUT-direction UTF-8 chunks
-between the two variants — input to the Slice 2 hardening decision.
+One variant exists, `current-rc` — the production script as learners run
+it. The `no-system-rc-preview` variant and its `diff.md` were retired in
+Slice 2: the practice shell no longer sources the system bashrc (contract
+C-007), so there is nothing for it to isolate. `--variant no-system-rc-preview`
+and `--variant both` exit 2 with a retirement message. Use `compare.py` for
+before/after comparisons between two bundles.
 
 ## Persona scope
 
@@ -97,7 +92,6 @@ design plan.
 | `persona.py` | careful-beginner walks for stages 1–5 and the finale. |
 | `sentinels.py` | Stable substring patterns per screen / question. |
 | `recorder.py` | terminal.jsonl, events.jsonl, summary.md, result.tap writers. |
-| `patcher.py` | no-system-rc-preview substitution. |
 | `env.py` | Host snapshot + CRLF/ANSI normalization helpers. |
 | `errors.py` | Typed exceptions per the dispatcher exit code table. |
 
@@ -108,7 +102,7 @@ design plan.
 | 0 | Every requested variant green (`gate_passed` and `progress_ok`). |
 | 1 | Uncaught exception (traceback printed). |
 | 2 | Unsupported persona / stage / flag. |
-| 3 | `PatchTargetMissingError` — `/etc/bashrc` source line absent or non-unique. |
+| 3 | retired (Slice 2; formerly `PatchTargetMissingError`). The number is kept so later codes do not move. |
 | 4 | `SentinelNotFoundError` — sentinel missed within the per-sentinel timeout. |
 | 5 | `PersonaRejectedError` — gate re-asked a question. |
 | 6 | `NoTTYError` — `pty.openpty` failed. |
@@ -119,7 +113,7 @@ design plan.
 
 | Flag | Default |
 | --- | --- |
-| `--variant {current-rc,no-system-rc-preview,both}` | `both` |
+| `--variant current-rc` | `current-rc` (`no-system-rc-preview` and `both` were retired in Slice 2 and exit 2) |
 | `--persona` | `careful-beginner` (only one supported) |
 | `--stage {1,2,3,4,5,all}` | `1` |
 | `--out` | `audit/<UTC-date>/sim/stage<N>` or `.../sim/all` |
@@ -127,7 +121,6 @@ design plan.
 | `--cols` / `--rows` | `80` / `24` |
 | `--shelltutor` | `./shelltutor` |
 | `--keep-sandbox` | off — fresh `SHELLTUTOR_HOME` and empty `HOME` tempdirs are removed after each variant |
-| `--keep-patched-script` | off — preview tempdir is removed after the preview run |
 | `-v` / `--verbose` | off |
 
 ## Hosted Linux evidence intake

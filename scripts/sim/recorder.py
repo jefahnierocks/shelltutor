@@ -164,11 +164,8 @@ class Recorder:
 
             fp.write("## Host inputs\n\n")
             fp.write(
-                "The harness isolates only the `/etc/bashrc` source statement (in the\n"
-                "`no-system-rc-preview` variant) and the controlled inputs above. All\n"
-                "other host inputs still bleed into the captured transcript — they\n"
-                "are recorded here so later reviewers do not over-read the\n"
-                "current-vs-preview diff.\n\n"
+                "The practice shell is project-controlled since Slice 2 (C-007); the\n"
+                "host inputs below still reach the transcript.\n\n"
             )
             for key in (
                 "term",

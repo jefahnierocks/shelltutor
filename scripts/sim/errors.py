@@ -32,10 +32,6 @@ class SentinelNotFoundError(HarnessError):
         self.tail = tail
 
 
-class PatchTargetMissingError(HarnessError):
-    """no-system-rc-preview substitution target was absent or non-unique."""
-
-
 class NoTTYError(HarnessError):
     """PTY allocation failed."""
 

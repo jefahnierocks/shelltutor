@@ -11,14 +11,14 @@ Usage examples:
     python3 scripts/sim/run.py
     python3 scripts/sim/run.py --stage all
     python3 scripts/sim/run.py --stage 3 --variant current-rc
-    python3 scripts/sim/run.py --variant no-system-rc-preview -v
+    python3 scripts/sim/run.py --stage all -v
 
 Exit codes:
 
     0 — every requested variant green
     1 — uncaught exception (with traceback)
     2 — unsupported persona/stage/flag
-    3 — PatchTargetMissingError
+    3 — retired (Slice 2; formerly PatchTargetMissingError)
     4 — SentinelNotFoundError
     5 — PersonaRejectedError
     6 — NoTTYError
@@ -30,7 +30,6 @@ from __future__ import annotations
 
 import argparse
 import datetime
-import difflib
 import getpass
 import os
 import secrets
@@ -47,22 +46,26 @@ _PARENT = os.path.dirname(os.path.dirname(_HERE))
 if _PARENT not in sys.path:
     sys.path.insert(0, _PARENT)
 
-from scripts.sim import driver, env, patcher, persona as persona_mod, recorder  # noqa: E402
+from scripts.sim import driver, env, persona as persona_mod, recorder  # noqa: E402
 from scripts.sim.errors import (  # noqa: E402
     NoTTYError,
-    PatchTargetMissingError,
     PersonaRejectedError,
     PrerequisiteMissingError,
     SandboxNotWritableError,
     SentinelNotFoundError,
 )
-from scripts.sim.project import project_terminal_out  # noqa: E402
 
 SUPPORTED_STAGES = ("1", "2", "3", "4", "5", "all")
 
 VARIANT_CURRENT = "current-rc"
-VARIANT_PREVIEW = "no-system-rc-preview"
-SUPPORTED_VARIANTS = (VARIANT_CURRENT, VARIANT_PREVIEW, "both")
+# Retired in Slice 2: the practice shell no longer sources the system
+# bashrc, so there is nothing for the preview variant to isolate. The
+# names stay accepted by argparse only to print the retirement message.
+RETIRED_VARIANTS = ("no-system-rc-preview", "both")
+RETIRED_VARIANT_MESSAGE = (
+    "scripts/sim/run.py: variant retired in Slice 2 (practice shell no "
+    "longer sources /etc/bashrc); use --variant current-rc"
+)
 
 C002_MEANING = {
     0: "next (lesson advance / stage cleared)",
@@ -88,8 +91,9 @@ def _parse_args(argv) -> argparse.Namespace:
     )
     parser.add_argument(
         "--variant",
-        choices=SUPPORTED_VARIANTS,
-        default="both",
+        choices=(VARIANT_CURRENT,) + RETIRED_VARIANTS,
+        default=VARIANT_CURRENT,
+        help="Only current-rc is supported (the preview variant was retired in Slice 2).",
     )
     parser.add_argument(
         "--persona",
@@ -115,7 +119,6 @@ def _parse_args(argv) -> argparse.Namespace:
     parser.add_argument("--rows", type=int, default=24)
     parser.add_argument("--shelltutor", default="./shelltutor")
     parser.add_argument("--keep-sandbox", action="store_true")
-    parser.add_argument("--keep-patched-script", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
     return parser.parse_args(argv)
 
@@ -344,73 +347,6 @@ def _run_variant(
     return rec, host_inputs, run_meta, outcome
 
 
-def _write_diff(
-    out_dir: str, current_dir: str, preview_dir: str, stage: str = "1"
-) -> str:
-    stage_name = "all-stages" if stage == "all" else "stage" + stage
-    stage_title = "Five-stage" if stage == "all" else "Stage %s" % stage
-    current_terminal = os.path.join(current_dir, "terminal.jsonl")
-    preview_terminal = os.path.join(preview_dir, "terminal.jsonl")
-    if not (os.path.exists(current_terminal) and os.path.exists(preview_terminal)):
-        return ""
-    current_text = "".join(project_terminal_out(current_terminal)).splitlines(
-        keepends=True
-    )
-    preview_text = "".join(project_terminal_out(preview_terminal)).splitlines(
-        keepends=True
-    )
-    diff_lines = list(
-        difflib.unified_diff(
-            current_text,
-            preview_text,
-            fromfile="current-rc/terminal.jsonl (out, normalized)",
-            tofile="no-system-rc-preview/terminal.jsonl (out, normalized)",
-            n=3,
-        )
-    )
-    diff_path = os.path.join(out_dir, "diff.md")
-    same = not diff_lines
-    with open(diff_path, "w", encoding="utf-8") as fp:
-        fp.write("---\n")
-        fp.write(
-            "title: %s simulation — current-rc vs no-system-rc-preview\n"
-            % stage_title
-        )
-        fp.write("category: audit\n")
-        fp.write("component: sim-%s\n" % stage_name)
-        fp.write("status: evidence\n")
-        fp.write("version: %s\n" % recorder.HARNESS_VERSION)
-        fp.write("last_updated: %s\n" % _utc_today())
-        fp.write("tags: [audit, simulation, %s, diff]\n" % stage_name)
-        fp.write("priority: medium\n")
-        fp.write("---\n\n")
-        fp.write("# %s baseline — variant diff\n\n" % stage_title)
-        fp.write(
-            "Unified diff of the OUT-direction UTF-8 chunks of each variant's\n"
-            "`terminal.jsonl`, CRLF-normalized. Per\n"
-            "`docs/simulation-design-plan.md` §Slice 1, this diff is the\n"
-            "input to the Slice 2 hardening decision: the predicted\n"
-            "divergence is the `/etc/bashrc` leak signature when the host\n"
-            "rcfile injects banner output, aliases, or prompt-affecting state\n"
-            "into the practice subshell.\n\n"
-        )
-        if same:
-            fp.write(
-                "**No textual divergence on this host.** The `/etc/bashrc` either\n"
-                "did not exist or sourced no observable output into the practice\n"
-                "subshell. Slice 2 still hardens by removing the source line so\n"
-                "future hosts cannot inject behavior, but this host produced no\n"
-                "leak signature to point at.\n"
-            )
-        else:
-            fp.write("```diff\n")
-            fp.write("".join(diff_lines))
-            if not diff_lines[-1].endswith("\n"):
-                fp.write("\n")
-            fp.write("```\n")
-    return diff_path
-
-
 def _resolve_shelltutor(path: str) -> str:
     abs_path = os.path.abspath(path)
     if not os.path.isfile(abs_path):
@@ -458,8 +394,6 @@ def _write_skip(out_dir: str, variant: str, args, reason: str) -> None:
 
 
 def _exit_code_for(exc: BaseException) -> int:
-    if isinstance(exc, PatchTargetMissingError):
-        return 3
     if isinstance(exc, SentinelNotFoundError):
         return 4
     if isinstance(exc, PersonaRejectedError):
@@ -484,6 +418,10 @@ def main(argv=None) -> int:
         )
         return 2
 
+    if args.variant in RETIRED_VARIANTS:
+        print(RETIRED_VARIANT_MESSAGE, file=sys.stderr)
+        return 2
+
     stage_dir = "all" if args.stage == "all" else "stage" + args.stage
     out_dir = args.out or os.path.join("audit", _utc_today(), "sim", stage_dir)
     out_dir = os.path.abspath(out_dir)
@@ -494,14 +432,9 @@ def main(argv=None) -> int:
     run_id = secrets.token_hex(4)
     _log(args.verbose, "run_id=%s out=%s" % (run_id, out_dir))
 
-    variants_to_run: List[str]
-    if args.variant == "both":
-        variants_to_run = [VARIANT_CURRENT, VARIANT_PREVIEW]
-    else:
-        variants_to_run = [args.variant]
+    variants_to_run: List[str] = [VARIANT_CURRENT]
 
     aggregate_exit = 0
-    preview_script_path = None
 
     if args.stage in ("5", "all") and shutil.which("vim") is None:
         exc = PrerequisiteMissingError("vim not installed")
@@ -512,103 +445,57 @@ def main(argv=None) -> int:
 
     try:
         for variant in variants_to_run:
-            script_path: str
-            if variant == VARIANT_CURRENT:
-                script_path = real_shelltutor
-            else:
-                try:
-                    preview_script_path = patcher.make_preview_copy(real_shelltutor)
-                except PatchTargetMissingError as exc:
-                    print(
-                        "sim: PatchTargetMissingError (variant=%s): %s"
-                        % (variant, exc),
-                        file=sys.stderr,
-                    )
-                    aggregate_exit = max(aggregate_exit, _exit_code_for(exc))
-                    continue
-                script_path = preview_script_path
-                _log(args.verbose, "preview script at %s" % script_path)
-
             rec = None
             try:
-                try:
-                    rec, _, _, outcome = _run_variant(
-                        variant=variant,
-                        shelltutor_path=script_path,
-                        out_dir=out_dir,
-                        run_id=run_id,
-                        persona_name=args.persona,
-                        args=args,
-                    )
-                    if not outcome.get("ok"):
-                        aggregate_exit = max(aggregate_exit, 4)
-                        print(
-                            "sim: variant=%s NOT ok (gate_passed=%s "
-                            "progress_after=%s child_exit=%s)"
-                            % (
-                                variant,
-                                outcome.get("gate_passed"),
-                                outcome.get("progress_after"),
-                                outcome.get("child_exit_code"),
-                            ),
-                            file=sys.stderr,
-                        )
-                    else:
-                        _log(
-                            args.verbose,
-                            "variant=%s gate_passed=true child_exit=%s"
-                            % (variant, outcome.get("child_exit_code")),
-                        )
-                except (
-                    SentinelNotFoundError,
-                    PersonaRejectedError,
-                    NoTTYError,
-                    SandboxNotWritableError,
-                ) as exc:
-                    # Per-variant evidence (summary.md, result.tap) was
-                    # already written from inside _run_variant; the
-                    # outer dispatcher records the worst exit and
-                    # continues to the next variant.
+                rec, _, _, outcome = _run_variant(
+                    variant=variant,
+                    shelltutor_path=real_shelltutor,
+                    out_dir=out_dir,
+                    run_id=run_id,
+                    persona_name=args.persona,
+                    args=args,
+                )
+                if not outcome.get("ok"):
+                    aggregate_exit = max(aggregate_exit, 4)
                     print(
-                        "sim: %s (variant=%s): %s"
-                        % (exc.__class__.__name__, variant, exc),
+                        "sim: variant=%s NOT ok (gate_passed=%s "
+                        "progress_after=%s child_exit=%s)"
+                        % (
+                            variant,
+                            outcome.get("gate_passed"),
+                            outcome.get("progress_after"),
+                            outcome.get("child_exit_code"),
+                        ),
                         file=sys.stderr,
                     )
-                    aggregate_exit = max(aggregate_exit, _exit_code_for(exc))
+                else:
+                    _log(
+                        args.verbose,
+                        "variant=%s gate_passed=true child_exit=%s"
+                        % (variant, outcome.get("child_exit_code")),
+                    )
+            except (
+                SentinelNotFoundError,
+                PersonaRejectedError,
+                NoTTYError,
+                SandboxNotWritableError,
+            ) as exc:
+                # Evidence (summary.md, result.tap) was already written
+                # from inside _run_variant; record the exit code.
+                print(
+                    "sim: %s (variant=%s): %s"
+                    % (exc.__class__.__name__, variant, exc),
+                    file=sys.stderr,
+                )
+                aggregate_exit = max(aggregate_exit, _exit_code_for(exc))
             finally:
                 if rec is not None:
                     rec.close()
-                if (
-                    variant == VARIANT_PREVIEW
-                    and preview_script_path is not None
-                    and not args.keep_patched_script
-                ):
-                    tmp_dir = os.path.dirname(preview_script_path)
-                    shutil.rmtree(tmp_dir, ignore_errors=True)
-                    preview_script_path = None
-
-        if args.variant == "both":
-            diff_path = _write_diff(
-                out_dir,
-                os.path.join(out_dir, VARIANT_CURRENT),
-                os.path.join(out_dir, VARIANT_PREVIEW),
-                args.stage,
-            )
-            if diff_path:
-                _log(args.verbose, "wrote %s" % diff_path)
-
     except SystemExit:
         raise
     except Exception:  # pragma: no cover — last-resort diagnostic
         traceback.print_exc()
         return 1
-    finally:
-        if (
-            preview_script_path is not None
-            and not args.keep_patched_script
-        ):
-            tmp_dir = os.path.dirname(preview_script_path)
-            shutil.rmtree(tmp_dir, ignore_errors=True)
 
     return aggregate_exit
 
