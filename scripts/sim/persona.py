@@ -157,9 +157,8 @@ def _gate_commands(
     """Gate-task commands followed by `check`.
 
     careful-beginner runs `first + rest` and checks once. `second-try`
-    runs only `first`, checks, observes the gate's "Almost — you still
-    need to" feedback (sentinel ALMOST), then runs `rest` and checks
-    again. It never improvises: the missing step is the one the gate named.
+    runs only `first`, checks, observes the gate's "not yet:" feedback
+    (sentinel NOT_YET), then runs `rest` and checks again. It never improvises: the missing step is the one the gate named.
     """
     if not second_try:
         return _cmds(screen_id, first + rest) + [
@@ -169,7 +168,7 @@ def _gate_commands(
         _cmds(screen_id, first)
         + [
             Action(PROMPT, "check", "run-check-first", screen_id),
-            Action("ALMOST", "", "observe-almost", screen_id),
+            Action("NOT_YET", "", "observe-not-yet", screen_id),
         ]
         + _cmds(screen_id, rest)
         + [Action(PROMPT, "check", "run-check", screen_id)]
@@ -201,7 +200,7 @@ def stage_walk(
     """Walk for stage `n` (2-5), from its intro to its cleared line.
 
     `second_try` (stages 2 and 4 only) makes the first `check` of the gate
-    task fail on purpose so the gate's "Almost" feedback is observed once.
+    task fail on purpose so the gate's "not yet:" feedback is observed once.
 
     Follows the stage-folder lesson copy (F-010, F-011; WP-02): lesson 2.2
     ends with `cd <sandbox_root>` and lesson 3.2 reads `../poem.txt` and

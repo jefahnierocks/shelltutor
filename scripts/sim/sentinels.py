@@ -91,7 +91,7 @@ SENTINELS.update(
         "FINALE": "You're ready for vimtutor.",
         "MAN_LS": "LS(1)",
         "LESS_NUMBERS": "1\n2\n3\n4\n5",
-        "ALMOST": "Almost — you still need to",
+        "NOT_YET": "not yet:",
         "VIM_INTRO": "VIM - Vi IMproved",
         "VIM_PRACTICE": '"practice.txt"',
         "VIM_INSERT": "-- INSERT --",

@@ -56,7 +56,7 @@ agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
 6. Reads `.progress` before sandbox cleanup: stages 1–4 expect the stage
    number, stage 5 and `all` expect it absent (the finale removes it).
    TAP `ok` requires `gate_passed` and `progress_ok` (and, for
-   `second-try`, exactly one `Almost — you still need to`).
+   `second-try`, exactly one `not yet:`).
 
 Controlled inputs (decision D-03), recorded in `summary.md`: `LC_ALL=C`,
 `VIMINIT='set nocompatible'`, `PAGER=less`, `MANPAGER` and `LESS` unset,
@@ -88,13 +88,13 @@ covers the Stage 2 and Stage 4 gates only.
   2) — walks the stage as `careful-beginner` does, but fails the first
   `check` of the gate task on purpose to observe the first rung of the
   gate's escalating feedback (WP-05, decision D-14):
-  - Stage 2 task: `mkdir practice`, `check` → wait for `ALMOST`
-    (`Almost — you still need to`) → `cd practice`, `pwd`, `check` →
+  - Stage 2 task: `mkdir practice`, `check` → wait for `NOT_YET`
+    (`not yet:`) → `cd practice`, `pwd`, `check` →
     `S2_CLEARED`.
-  - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `ALMOST` →
+  - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `NOT_YET` →
     `ls *.txt`, `check` → `S4_CLEARED`.
   - Recall answers are the same as `careful-beginner`'s. TAP `ok` requires
-    the stage cleared and exactly one `Almost — you still need to` in the
+    the stage cleared and exactly one `not yet:` in the
     output; zero or two means the gate's feedback changed.
 
 `confused-novice` and confusion events remain deferred (Slice 3) per the
@@ -138,7 +138,7 @@ is skipped with a message when none is available.
 
 | Code | Meaning |
 | ---: | --- |
-| 0 | The run is green (`gate_passed` and `progress_ok`, plus one `ALMOST` for `second-try`). |
+| 0 | The run is green (`gate_passed` and `progress_ok`, plus one `NOT_YET` for `second-try`). |
 | 1 | Uncaught exception (traceback printed). |
 | 2 | Unsupported persona / stage / flag. |
 | 3 | retired (Slice 2; formerly `PatchTargetMissingError`). The number is kept so later codes do not move. |

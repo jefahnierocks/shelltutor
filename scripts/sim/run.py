@@ -62,7 +62,7 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # second-try fails the first gate check on purpose; only the Stage 2 and
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
-ALMOST_TEXT = "Almost — you still need to"
+NOT_YET_TEXT = "not yet:"
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -382,16 +382,16 @@ def _run_variant(
         screen_heights = result["screen_heights"]
         run_ok = result["gate_passed"] and outcome["progress_ok"]
         if persona_name == "second-try":
-            # The deliberate first failure must show the gate's "Almost"
+            # The deliberate first failure must show the gate's `not yet:`
             # feedback exactly once; zero or two means the gate changed.
-            almost = "".join(
+            seen = "".join(
                 project_terminal_out(os.path.join(variant_out, "terminal.jsonl"))
-            ).count(ALMOST_TEXT)
-            outcome["almost_count"] = almost
-            if almost != 1:
+            ).count(NOT_YET_TEXT)
+            outcome["not_yet_count"] = seen
+            if seen != 1:
                 run_ok = False
                 outcome["notes"] = (
-                    "second-try expected exactly one %r, saw %d." % (ALMOST_TEXT, almost)
+                    "second-try expected exactly one %r, saw %d." % (NOT_YET_TEXT, seen)
                 )
         outcome["harness_exit_code"] = 0 if run_ok else 4
         if result["wall_clock_capped"]:
@@ -418,7 +418,7 @@ def _run_variant(
     outcome["ok"] = bool(
         outcome["gate_passed"]
         and outcome["progress_ok"]
-        and outcome.get("almost_count", 1) == 1
+        and outcome.get("not_yet_count", 1) == 1
     )
     rec.write_tap(
         ok=outcome["ok"],
