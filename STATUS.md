@@ -52,6 +52,7 @@ documents agree with the code.
 | WP-06 | `a71ab76` | Non-gating `sim-evidence` workflow for hosted Linux transcripts (commits 1–2); the first hosted run and its evidence commit remain with the operator. |
 | WP-07 | this sweep | Documents realigned with the code and with this file; the governance check covers `docs/` and the harness README. |
 | WP-08 part A | `7d5065f` | MIT `LICENSE` and the script's SPDX header; part B (CHANGELOG, `v0.1.0` inputs) waits for the Phase 2 results. |
+| WP-12 | branch `wp/12-agent-aware` (held) | Stage 1 lesson 1.5 (read-only agent beat) and one sentence each in 3.3 and 4.3, net zero lines; lands after WP-15 and WP-11 (A4). |
 | WP-09 | `bd841ae` | F-014 fixed: the practice shell runs under the outer script's own Bash (`"$BASH"`); the harness records the Bash path and version; post-WP-04/05 macOS baseline `all-current`. |
 
 ### Curriculum and tutor

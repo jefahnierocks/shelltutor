@@ -486,4 +486,13 @@ def known_rough_edges(stage: str) -> List[Dict[str, str]]:
                 "Watch for long PTY pauses before deciding to split."
             ),
         },
+        {
+            "id": "S1-L5",
+            "recommendation": "keep with watch",
+            "note": (
+                "1.5 is read-only and follows the read-only 1.4, so two concept "
+                "screens precede the gate (A1.5). Watch for long pauses and "
+                "early quits in the next walkthrough round."
+            ),
+        },
     ]

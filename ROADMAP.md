@@ -503,6 +503,10 @@ question O-3 is resolved: the welcome carries the authority sentence.
 Landing order after three summarised sittings: WP-15, WP-11, WP-12, WP-14,
 WP-10. The module packages are WP-16 `shells` and WP-17 `env`.
 
+WP-12 (2026-11-08): Stage 1 has five lessons; the new read-only 1.5 extends
+terminal → shell → program to an assistant typing into the same shell (D3),
+and 3.3 and 4.3 gain one sentence each, net zero lines.
+
 ### Phase C — Module infrastructure (agent; lands with the first module)
 
 WP-13: C-001 module argument, C-003 `$SANDBOX/<module>/`, modules save

@@ -102,6 +102,8 @@ def careful_beginner_stage1(
         Action(PROMPT, "next", "leave-lesson-1-3", "S1-L3"),
         Action("LESSON_1_4", "", "render-lesson-1-4", "S1-L4"),
         Action(PROMPT, "next", "leave-lesson-1-4", "S1-L4"),
+        Action("LESSON_1_5", "", "render-lesson-1-5", "S1-L5"),
+        Action(PROMPT, "next", "leave-lesson-1-5", "S1-L5"),
         Action("GATE_HEADER", "", "render-gate", "S1-G"),
         Action("GATE_Q1", "$", "answer-q1", "S1-G"),
         Action("GATE_Q2", "the current working directory", "answer-q2", "S1-G"),
