@@ -338,6 +338,83 @@ def stage_walk(
     raise ValueError("stage_walk: unsupported stage %r" % (n,))
 
 
+# Persona tables for stand-alone modules. A module's walk is expanded from
+# a small table, not hand-written. No module exists yet; WP-14 adds the
+# first entry, e.g.
+#   "shells": {"lessons": 4,
+#              "gate": {"recall": ["a", "b", "c"], "task": ["echo hi"]},
+#              "lesson_actions": {2: ["echo $0"]},      # optional
+#              "prompt_after": {2: "shelltutor> "}}     # optional
+MODULE_TABLES: dict = {}
+
+
+def module_walk(
+    name: str,
+    lessons: int,
+    gate: dict,
+    lesson_actions: Optional[dict] = None,
+    prompt_after: Optional[dict] = None,
+) -> List[Action]:
+    """Expand a module table into a careful-beginner walk.
+
+    Sentinels come from the module heading convention, so sentinels.py
+    carries no per-module entries (the driver treats an unregistered
+    `wait_for` as a literal substring):
+
+        intro    ``MODULE — <name>:``
+        lesson   ``<name> <k> — ``            (prefix, no title text)
+        gate     ``<name> — gate``
+        task     ``<name> — task``
+        cleared  ``✓ <name> cleared.``
+
+    `gate` is ``{"recall": [answers...], "task": [commands...]}``; either
+    list may be empty. Recall answers wait for ``Q<i>:``. A non-empty task
+    list waits for the task heading, types each command at the practice
+    prompt, then `check`. The walk ends at the cleared screen with `quit`;
+    modules never save progress.
+
+    `lesson_actions` maps a lesson number to commands typed at that
+    lesson's prompt before `next`. `prompt_after` maps a lesson number to
+    the prompt text expected at the first prompt after that lesson's
+    `next`: that wait uses the text instead of the generic prompt, so a
+    prompt that should have reverted (or changed) is asserted, not assumed.
+    """
+    gate = gate or {}
+    lesson_actions = lesson_actions or {}
+    prompt_after = prompt_after or {}
+    recall = list(gate.get("recall") or [])
+    task = list(gate.get("task") or [])
+    pending = {"text": None}
+
+    def prompt() -> str:
+        text, pending["text"] = pending["text"], None
+        return text if text is not None else PROMPT
+
+    walk = [
+        Action("MODULE — %s:" % name, "", "render-module-intro", "M-I"),
+        Action(prompt(), "next", "leave-module-intro", "M-I"),
+    ]
+    for k in range(1, lessons + 1):
+        sid = "M-L%d" % k
+        walk.append(Action("%s %d — " % (name, k), "", "render-lesson-%d" % k, sid))
+        for cmd in lesson_actions.get(k, []):
+            walk.append(Action(prompt(), cmd, "run-" + cmd.split()[0], sid))
+        walk.append(Action(prompt(), "next", "leave-lesson-%d" % k, sid))
+        if k in prompt_after:
+            pending["text"] = prompt_after[k]
+    walk.append(Action("%s — gate" % name, "", "render-gate", "M-G"))
+    for i, answer in enumerate(recall, 1):
+        walk.append(Action("Q%d:" % i, answer, "answer-q%d" % i, "M-G"))
+    if task:
+        walk.append(Action("%s — task" % name, "", "render-task", "M-GT"))
+        for cmd in task:
+            walk.append(Action(prompt(), cmd, "run-" + cmd.split()[0], "M-GT"))
+        walk.append(Action(prompt(), "check", "run-check", "M-GT"))
+    walk.append(Action("✓ %s cleared." % name, "", "module-cleared", "M-C"))
+    walk.append(Action(PROMPT, "quit", "quit-tutor", "M-C"))
+    return walk
+
+
 def build_walk(
     stage: str,
     whoami_answer: str,

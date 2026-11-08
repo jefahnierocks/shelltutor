@@ -420,7 +420,10 @@ def drive(
 
                 if current.wait_for in _REJECTION_GUARD_IDS:
                     last_guard = current
-                if current.wait_for.endswith("CLEARED"):
+                if (
+                    current.wait_for.endswith("CLEARED")
+                    or current.wait_for == final_gate_id
+                ):
                     if current.wait_for == final_gate_id:
                         gate_passed = True
                     recorder.write_event(

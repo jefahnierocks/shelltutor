@@ -113,8 +113,16 @@ def _parse_args(argv) -> argparse.Namespace:
     parser.add_argument(
         "--stage",
         choices=SUPPORTED_STAGES,
-        default="1",
-        help="Stage to drive: 1-5 or all (default: 1).",
+        default=None,
+        help="Stage to drive: 1-5 or all (default: 1). Exclusive with --module.",
+    )
+    parser.add_argument(
+        "--module",
+        default=None,
+        help=(
+            "Drive a stand-alone module by name from its persona table "
+            "(exclusive with --stage)."
+        ),
     )
     parser.add_argument(
         "--out",
@@ -179,6 +187,16 @@ def _build_actions(
     sandbox_root: str,
     persona_name: str = "careful-beginner",
 ) -> List[persona_mod.Action]:
+    if recorder.is_module(stage):
+        name = stage[len("module:"):]
+        table = persona_mod.MODULE_TABLES[name]
+        return persona_mod.module_walk(
+            name,
+            table["lessons"],
+            table["gate"],
+            lesson_actions=table.get("lesson_actions"),
+            prompt_after=table.get("prompt_after"),
+        )
     return persona_mod.build_walk(
         stage,
         whoami_answer=whoami_answer,
@@ -191,13 +209,18 @@ def _build_actions(
 
 
 def _final_gate_id(stage: str) -> str:
+    if recorder.is_module(stage):
+        return "✓ %s cleared." % stage[len("module:"):]
     if stage == "1":
         return "STAGE_CLEARED"
     return "S5_CLEARED" if stage == "all" else "S%s_CLEARED" % stage
 
 
 def _child_args(stage: str) -> List[str]:
-    # C-001: `shelltutor N` for N >= 2; no argument for stage 1 and all.
+    # C-001: `shelltutor N` for N >= 2; `shelltutor <name>` for a module;
+    # no argument for stage 1 and all.
+    if recorder.is_module(stage):
+        return [stage[len("module:"):]]
     return [stage] if stage in ("2", "3", "4", "5") else []
 
 
@@ -213,6 +236,9 @@ def _read_progress(sandbox_root: str) -> str:
 
 
 def _expected_progress(stage: str) -> str:
+    # Modules never save progress: a fresh sandbox stays without .progress.
+    if recorder.is_module(stage):
+        return "absent"
     # `all` and `5` both run the finale, which removes .progress.
     return stage if stage in ("1", "2", "3", "4") else "absent"
 
@@ -395,7 +421,7 @@ def _run_variant(
         ok=outcome["ok"],
         description="%s %s — variant=%s"
         % (
-            "all-stages" if args.stage == "all" else "stage" + args.stage,
+            "all-stages" if args.stage == "all" else recorder.stage_slug(args.stage),
             persona_name,
             variant,
         ),
@@ -446,7 +472,10 @@ def _write_skip(out_dir: str, variant: str, args, reason: str) -> None:
         rec.write_tap(
             ok=True,
             description="%s careful-beginner — variant=%s"
-            % ("all-stages" if args.stage == "all" else "stage" + args.stage, variant),
+            % (
+                "all-stages" if args.stage == "all" else recorder.stage_slug(args.stage),
+                variant,
+            ),
             skip_reason=reason,
         )
     finally:
@@ -470,6 +499,25 @@ def _exit_code_for(exc: BaseException) -> int:
 def main(argv=None) -> int:
     args = _parse_args(argv if argv is not None else sys.argv[1:])
 
+    if args.stage and args.module:
+        print(
+            "scripts/sim/run.py: --stage and --module are mutually exclusive.",
+            file=sys.stderr,
+        )
+        return 2
+    if args.module:
+        if args.module not in persona_mod.MODULE_TABLES:
+            known = ", ".join(sorted(persona_mod.MODULE_TABLES)) or "none yet"
+            print(
+                "scripts/sim/run.py: --module %r has no persona table (known: %s)."
+                % (args.module, known),
+                file=sys.stderr,
+            )
+            return 2
+        args.stage = "module:" + args.module
+    elif not args.stage:
+        args.stage = "1"
+
     if args.persona not in SUPPORTED_PERSONAS:
         print(
             "scripts/sim/run.py: --persona %r unsupported; choose from %s."
@@ -489,7 +537,7 @@ def main(argv=None) -> int:
         print(RETIRED_VARIANT_MESSAGE, file=sys.stderr)
         return 2
 
-    stage_dir = "all" if args.stage == "all" else "stage" + args.stage
+    stage_dir = recorder.stage_slug(args.stage)
     out_dir = args.out or os.path.join("audit", _utc_today(), "sim", stage_dir)
     out_dir = os.path.abspath(out_dir)
     os.makedirs(out_dir, exist_ok=True)

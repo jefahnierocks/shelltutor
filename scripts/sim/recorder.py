@@ -188,7 +188,7 @@ class Recorder:
             fp.write("---\n")
             fp.write("title: %s simulation summary\n" % label)
             fp.write("category: audit\n")
-            fp.write("component: sim-%s\n" % ("all" if stage == "all" else "stage" + stage))
+            fp.write("component: sim-%s\n" % stage_slug(stage))
             fp.write("status: evidence\n")
             fp.write(
                 "version: %s\n" % HARNESS_VERSION,
@@ -199,7 +199,7 @@ class Recorder:
             )
             fp.write(
                 "tags: [audit, simulation, %s, pty]\n"
-                % ("all-stages" if stage == "all" else "stage" + stage)
+                % ("all-stages" if stage == "all" else stage_slug(stage))
             )
             fp.write("priority: medium\n")
             fp.write("---\n\n")
@@ -407,8 +407,25 @@ class Recorder:
                 self._events_fp.close()
 
 
+def is_module(stage: str) -> bool:
+    return stage.startswith("module:")
+
+
+def stage_slug(stage: str) -> str:
+    """Directory and tag form: `all`, `stage3` or `module-<name>`."""
+    if stage == "all":
+        return "all"
+    if is_module(stage):
+        return "module-" + stage[len("module:"):]
+    return "stage" + stage
+
+
 def stage_label(stage: str) -> str:
-    return "Five-stage baseline" if stage == "all" else "Stage %s baseline" % stage
+    if stage == "all":
+        return "Five-stage baseline"
+    if is_module(stage):
+        return "Module %s baseline" % stage[len("module:"):]
+    return "Stage %s baseline" % stage
 
 
 def known_rough_edges(stage: str) -> List[Dict[str, str]]:
