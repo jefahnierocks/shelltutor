@@ -16,6 +16,10 @@
 #     vm_stat     macOS-only command
 #     systemctl   Linux systemd
 #     launchctl   macOS launchd
+#     ~/.shelltutor, $HOME/.shelltutor
+#                 hardcoded default sandbox path; lesson copy must
+#                 render ${SANDBOX} or a relative path so it stays true
+#                 under SHELLTUTOR_HOME (audit/2026-11-07 F-011)
 #   Allowed:
 #     brew install / dnf install / apt install / apt-get install /
 #     yum install / pacman -S / port install
@@ -110,6 +114,11 @@ awk_check() {
                 violations++
                 next
             }
+            if (match($0, /~\/\.shelltutor|\$HOME\/\.shelltutor/)) {
+                printf "%s:%d: FF-004 sandbox path hardcoded (use ${SANDBOX}): %s\n", FILENAME, NR, $0
+                violations++
+                next
+            }
         }
 
         END {
@@ -119,13 +128,14 @@ awk_check() {
 }
 
 self_test() {
-    local tmp_pass tmp_proc tmp_free tmp_install
+    local tmp_pass tmp_proc tmp_free tmp_install tmp_sbx
     tmp_pass="$(mktemp -t check-portability-pass.XXXXXX)"
     tmp_proc="$(mktemp -t check-portability-proc.XXXXXX)"
     tmp_free="$(mktemp -t check-portability-free.XXXXXX)"
     tmp_install="$(mktemp -t check-portability-install.XXXXXX)"
+    tmp_sbx="$(mktemp -t check-portability-sbx.XXXXXX)"
     # shellcheck disable=SC2064  # expand at trap-set time
-    trap "rm -f '$tmp_pass' '$tmp_proc' '$tmp_free' '$tmp_install'" EXIT
+    trap "rm -f '$tmp_pass' '$tmp_proc' '$tmp_free' '$tmp_install' '$tmp_sbx'" EXIT
 
     # Known-good: portable lesson copy + install hints in heredoc
     cat > "$tmp_pass" <<'PASS'
@@ -165,6 +175,17 @@ The terminal is free to use. Type commands; the shell runs them.
 EOF
 PASS
 
+    # Known-bad: lesson hardcodes the default sandbox path (F-011). The
+    # code line outside the heredoc is the legitimate default and is not
+    # scanned.
+    cat > "$tmp_sbx" <<'FAIL'
+#!/usr/bin/env bash
+SANDBOX="${SHELLTUTOR_HOME:-$HOME/.shelltutor}"
+cat <<EOF
+If you wander, cd ~/.shelltutor brings you back.
+EOF
+FAIL
+
     printf 'self-test: portable heredocs should pass            ... '
     if awk_check "$tmp_pass" >/dev/null; then
         printf 'PASS\n'
@@ -194,6 +215,14 @@ PASS
         printf 'PASS\n'
     else
         printf 'FAIL (checker flagged a benign English word)\n' >&2
+        return 1
+    fi
+
+    printf 'self-test: ~/.shelltutor in heredoc should be flagged ... '
+    if ! awk_check "$tmp_sbx" >/dev/null; then
+        printf 'PASS\n'
+    else
+        printf 'FAIL (checker missed a hardcoded sandbox path)\n' >&2
         return 1
     fi
 

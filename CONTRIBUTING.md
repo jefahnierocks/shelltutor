@@ -39,7 +39,7 @@ first; `make verify` refuses unavailable declaration prerequisites. CI runs the
 same gate on every push and pull request. The learner runtime remains Bash-only.
 
 ```bash
-make check       # FF-001 + FF-002 + FF-004 + FF-007 static analysis (always runs)
+make check       # FF-001 + FF-002 + FF-004 + FF-007 + FF-008 static analysis (always runs)
 make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
 make smoke       # FF-006a minimal static smoke test
 make verify      # released manifest check/tests + check + lint + smoke
@@ -59,7 +59,8 @@ with the rules it describes.
 | ---                  | ---             | --- |
 | `check-safety`       | FF-001          | the script does not invoke privilege-escalation, network, or remote-shell commands at runtime (lesson heredocs are exempt) — see `scripts/check-safety.sh` for the pattern list |
 | `check-safety`       | FF-002          | every write target resolves to a path under `$SANDBOX` or `$PROGRESS_FILE`; system paths are blocked — see `scripts/check-safety.sh` |
-| `check-portability`  | FF-004          | lesson heredocs do not teach platform-specific paths (`/proc/`, `/sys/`) or platform-specific runtime commands (`free -`, `vm_stat`, `systemctl`, `launchctl`); install hints (`brew install`, `dnf install`, etc.) are allowed by nature — see `scripts/check-portability.sh` |
+| `check-portability`  | FF-004          | lesson heredocs do not teach platform-specific paths (`/proc/`, `/sys/`) or platform-specific runtime commands (`free -`, `vm_stat`, `systemctl`, `launchctl`); install hints (`brew install`, `dnf install`, etc.) are allowed by nature; lesson heredocs also do not hardcode the default sandbox path (`~/.shelltutor`, `$HOME/.shelltutor`) — they render `${SANDBOX}` or a relative path — see `scripts/check-portability.sh` |
+| `check-posix-tools`  | FF-008          | script code outside lesson heredocs uses no GNU-only text-tool syntax (`sed` repetition/alternation escapes such as `\+` and `\?`, `\L` `\U` `\s` `\w` `\d`, `sed -i`, `grep -P`, `readlink -f`, `date -d`, `stat -c`); `# nofitness:posix` exempts a line — see `scripts/check-posix-tools.sh` |
 | `check-governance`   | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
 | `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
 | `smoke`              | FF-006a         | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
@@ -100,6 +101,8 @@ regression if it:
   elevated privileges, or reaches the network.
 - Assumes a particular `$HOME` layout, prompt, or pre-existing
   configuration.
+- Uses GNU-only text-tool syntax in script code (`sed \+`, `sed -i`,
+  `grep -P`, `readlink -f`, `date -d`, `stat -c`).
 
 If a lesson genuinely requires a non-portable surface, gate it on a runtime
 check and degrade gracefully — do not couple the script's default path to
