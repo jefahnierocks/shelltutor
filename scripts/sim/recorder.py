@@ -289,20 +289,19 @@ def known_rough_edges(stage: str) -> List[Dict[str, str]]:
     return [
         {
             "id": "S1-L1",
-            "recommendation": "SPLIT",
+            "recommendation": "resolved in WP-04",
             "note": (
-                "1.1 running-commands packs 6 concepts and 5+ distinct actions "
-                "(echo + quoting; Tab/Tab-Tab; Ctrl+L; Up; Ctrl+C). Density-audit "
-                "calls for a 1.1a/1.1b split. Baseline captures the unsplit screen."
+                "Resolved in WP-04 (see `audit/2026-11-08/stage1-density-followup.md`): "
+                "the old 1.1 split into 1.1 running commands and 1.2 keyboard habits."
             ),
         },
         {
             "id": "S1-L2",
-            "recommendation": "SPLIT or TRIM",
+            "recommendation": "resolved in WP-04",
             "note": (
-                "1.2 identity/location/time packs 5 concepts and 4 distinct actions "
-                "(whoami/pwd/date + clear). Density-audit calls for TRIM (drop clear, "
-                "soften the Stage-2 forward-reference) as the conservative fix."
+                "Resolved in WP-04 (see `audit/2026-11-08/stage1-density-followup.md`): "
+                "the identity lesson (now 1.3) dropped the `clear` block and softened "
+                "the Stage 2 forward reference."
             ),
         },
         {
@@ -315,12 +314,12 @@ def known_rough_edges(stage: str) -> List[Dict[str, str]]:
             ),
         },
         {
-            "id": "S1-L3",
+            "id": "S1-L4",
             "recommendation": "keep with watch",
             "note": (
-                "1.3 concept density is high but action density is zero (read only). "
-                "Risk: information overload after 1.1 and 1.2. Watch for long PTY "
-                "pauses before deciding to split."
+                "1.4 (formerly 1.3) concept density is high but action density is "
+                "zero (read only). Risk: information overload after 1.2 and 1.3. "
+                "Watch for long PTY pauses before deciding to split."
             ),
         },
     ]

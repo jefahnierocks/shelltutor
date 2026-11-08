@@ -18,7 +18,7 @@ improvising).
 
 The careful-beginner walk for Stage 1:
 
-    welcome → orientation → 1-intro → 1.1 → 1.2 → 1.3
+    welcome → orientation → 1-intro → 1.1 → 1.2 → 1.3 → 1.4
     → gate recall Q1/Q2/Q3 → gate task screen
     → whoami / pwd / date in practice → check
     → follow-up Q1 (whoami text) / Q2 (pwd path) / Q3 (day)
@@ -79,14 +79,29 @@ def careful_beginner_stage1(
         Action("STAGE1_INTRO", "", "render-stage1-intro", "S1-I"),
         Action(PROMPT, "next", "leave-stage1-intro", "S1-I"),
         Action("LESSON_1_1", "", "render-lesson-1-1", "S1-L1"),
-        # Tab completion: `echo p<Tab>` completes to poem.txt.
-        Action(PROMPT, "echo p\t", "tab-complete-echo", "S1-L1", raw=True),
-        Action("echo poem.txt", "\n", "run-completed-echo", "S1-L1", raw=True),
+        Action(PROMPT, "echo hello", "run-echo", "S1-L1"),
+        Action(PROMPT, "echo I am at the shell", "run-echo-words", "S1-L1"),
+        Action(PROMPT, 'echo "I am at the shell"', "run-echo-quoted", "S1-L1"),
         Action(PROMPT, "next", "leave-lesson-1-1", "S1-L1"),
         Action("LESSON_1_2", "", "render-lesson-1-2", "S1-L2"),
+        # Tab completion: `echo p<Tab>` completes to poem.txt.
+        Action(PROMPT, "echo p\t", "tab-complete-echo", "S1-L2", raw=True),
+        Action("echo poem.txt", "\n", "run-completed-echo", "S1-L2", raw=True),
+        # Ctrl+L clears the screen; the prompt is redrawn.
+        Action(PROMPT, "\x0c", "ctrl-l-clear", "S1-L2", raw=True),
+        # Up arrow recalls `echo poem.txt`; Enter runs it again.
+        Action(PROMPT, "\x1b[A", "up-arrow-recall", "S1-L2", raw=True),
+        Action("", "\n", "run-recalled-echo", "S1-L2", raw=True, delay_s=0.1),
+        # Ctrl+C at an empty prompt gives a fresh prompt.
+        Action(PROMPT, "\x03", "ctrl-c-fresh-prompt", "S1-L2", raw=True),
         Action(PROMPT, "next", "leave-lesson-1-2", "S1-L2"),
         Action("LESSON_1_3", "", "render-lesson-1-3", "S1-L3"),
+        Action(PROMPT, "whoami", "run-whoami", "S1-L3"),
+        Action(PROMPT, "pwd", "run-pwd", "S1-L3"),
+        Action(PROMPT, "date", "run-date", "S1-L3"),
         Action(PROMPT, "next", "leave-lesson-1-3", "S1-L3"),
+        Action("LESSON_1_4", "", "render-lesson-1-4", "S1-L4"),
+        Action(PROMPT, "next", "leave-lesson-1-4", "S1-L4"),
         Action("GATE_HEADER", "", "render-gate", "S1-G"),
         Action("GATE_Q1", "$", "answer-q1", "S1-G"),
         Action("GATE_Q2", "the current working directory", "answer-q2", "S1-G"),
