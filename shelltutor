@@ -58,6 +58,16 @@ fi
 # ---------------------------------------------------------------------
 
 SANDBOX="${SHELLTUTOR_HOME:-$HOME/.shelltutor}"
+# A relative SHELLTUTOR_HOME is anchored to the caller's directory once, so
+# the sandbox does not move when the practice shell changes folder.
+case "$SANDBOX" in
+    /*) ;;
+    *)  SANDBOX="$PWD/$SANDBOX" ;;
+esac
+# Trailing slashes would make "$SANDBOX/stage1" differ from what pwd prints.
+while [ "${#SANDBOX}" -gt 1 ] && [ "${SANDBOX%/}" != "$SANDBOX" ]; do
+    SANDBOX="${SANDBOX%/}"
+done
 PROGRESS_FILE="$SANDBOX/.progress"
 TOTAL_STAGES=5
 
