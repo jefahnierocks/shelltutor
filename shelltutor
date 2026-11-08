@@ -1585,8 +1585,7 @@ ${H1}3.3 — copy, move, delete${RST}
 ${CMD}cp${RST} copies. The original stays.
   ${CMD}cp hello.txt backup.txt${RST}
 
-${CMD}mv${RST} moves. The original moves to the new name or folder.
-The same command is used for ${SUB}rename${RST}:
+${CMD}mv${RST} moves; the same command ${SUB}renames${RST}:
   ${CMD}mv hello.txt hi.txt${RST}            ${DIM}# rename${RST}
   ${CMD}mv hi.txt notes/${RST}               ${DIM}# move into a folder${RST}
 
@@ -1596,9 +1595,7 @@ ${CMD}rm${RST} deletes. ${EM}Immediately and permanently.${RST}
 There is no Trash and no undo. ${EM}Look before you press Enter —
 you, or an assistant typing for you.${RST}
 
-${SUB}A safety habit${RST}: list before you remove.
-  ${CMD}ls${RST}
-  ${CMD}rm <only-now-that-you-are-sure>${RST}
+${SUB}A safety habit${RST}: ${CMD}ls${RST} first, then ${CMD}rm <only-now-that-you-are-sure>${RST}.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 3's gate.${RST}
 EOF
