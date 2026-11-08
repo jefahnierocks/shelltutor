@@ -75,7 +75,7 @@ TOTAL_STAGES=5
 # Stand-alone modules, entered by name (C-001). Each is one function block
 # below (module_<name>_*, run_module_<name>) and writes only under
 # $SANDBOX/<name>/; none touches .progress.
-MODULES="shells"
+MODULES="shells env"
 
 # Exit codes propagated from the practice subshell to the outer dispatcher.
 RC_NEXT=0
@@ -157,6 +157,7 @@ Stages:
 
 Modules (stand alone; nothing saved):
   shells   What a shell is; other shells; your login shell
+  env      Variables, export, PATH and the prompt
 
 Each stage closes with a gate: three recall questions (all three must be
 correct) and one practical task (verified by the script). Passing means
@@ -356,7 +357,7 @@ EOF_SEED
 }
 
 # Module fixtures (C-003): $SANDBOX/<name>/, created on entry and
-# self-healing like the stage folders. `shells` seeds nothing; its gate
+# self-healing like the stage folders. `shells` and `env` seed nothing; each gate
 # clears its own output file.
 setup_module_dir() {
     mkdir -p "$SANDBOX/$1"
@@ -2753,9 +2754,299 @@ run_module_shells() {
     done
 }
 
+# ---- module: env ----------------------------------------------------
+
+module_env_intro() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}MODULE — env: variables and the prompt${RST}
+
+Five short lessons, then a gate. This module stands alone and saves
+nothing. Type ${CMD}quit${RST} to leave at any point.
+
+You will see:
+  variables, and how the shell uses them
+  ${CMD}export${RST}, and what a child program receives
+  ${CMD}PATH${RST}, the list the shell searches for programs
+  the prompt, which is a variable too
+  where these settings live for real
+
+Everything stays inside this tutor's practice shell. Your own
+configuration files are not touched.
+
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 1.${RST}
+EOF
+}
+
+module_env_lesson_1() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}env 1 — variables${RST}
+
+A ${SUB}variable${RST} is a name that holds a value. The shell swaps
+${CMD}\$name${RST} for the value before it runs the line.
+
+  ${CMD}echo \$HOME${RST}           ${DIM}# a variable the shell already has${RST}
+  ${CMD}pet=owl${RST}               ${DIM}# set one: no spaces around =${RST}
+  ${CMD}echo \$pet${RST}            ${DIM}# prints owl${RST}
+  ${CMD}env | head${RST}            ${DIM}# the first lines of the variable list${RST}
+  ${CMD}env | grep '^pet='${RST}    ${DIM}# prints nothing${RST}
+
+Notice that ${CMD}pet${RST} is missing from the list. A variable you set
+is private to this shell until you export it (lesson 2).
+
+${INSTR}${G_PLAY} Try the five lines, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_env_lesson_2() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}env 2 — export and child programs${RST}
+
+A program the shell starts is a ${SUB}child${RST}. It receives only the
+variables that were ${SUB}exported${RST}. Single quotes stop this shell from
+replacing ${CMD}\$pet${RST}, so the child does it.
+
+  ${CMD}pet=owl${RST}                          ${DIM}# set it again: new screen, new shell${RST}
+  ${CMD}bash -c 'echo [\$pet]'${RST}            ${DIM}# prints [] : the child sees nothing${RST}
+  ${CMD}export pet${RST}                       ${DIM}# mark it for children${RST}
+  ${CMD}bash -c 'echo [\$pet]'${RST}            ${DIM}# prints [owl]${RST}
+  ${CMD}env | grep '^pet='${RST}               ${DIM}# now it is listed${RST}
+
+Notice that ${CMD}export${RST} copies nothing. It marks the name so every
+child gets the value at the moment it starts.
+
+${INSTR}${G_PLAY} Run the five lines in order, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_env_lesson_3() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}env 3 — PATH is a list${RST}
+
+${CMD}PATH${RST} is a variable that holds folders separated by ${CMD}:${RST}. When you
+type a command name, the shell looks in those folders, in order, and
+runs the first match.
+
+  ${CMD}echo "\$PATH"${RST}                  ${DIM}# one long line${RST}
+  ${CMD}echo "\$PATH" | tr : '\n'${RST}      ${DIM}# one folder per line${RST}
+  ${CMD}command -v ls${RST}                 ${DIM}# the folder where ls was found${RST}
+
+This is why ${CMD}command -v${RST} (Stage 4) could answer: it reads this list.
+A program in a folder that is not on the list is not found by name.
+
+${INSTR}${G_PLAY} Run the three lines, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_env_lesson_4() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}env 4 — the prompt is a variable${RST}
+
+The text before your cursor is the variable ${CMD}PS1${RST}. Change it and the
+prompt changes at once.
+
+  ${CMD}PS1='me> '${RST}       ${DIM}# the prompt is now me>${RST}
+  ${CMD}PS1='\$ '${RST}         ${DIM}# and now a plain dollar sign${RST}
+
+Try both. Then type ${CMD}next${RST} and look at the prompt on the next screen.
+
+${INSTR}${G_PLAY} Change the prompt, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+module_env_lesson_5() {
+    lesson "$SANDBOX/env" <<EOF
+${H1}env 5 — where this lives for real${RST}
+
+Your prompt went back: each screen starts a fresh shell, and the tutor
+ignores your own configuration files so every learner sees the same thing.
+A real terminal reads one file when it starts:
+  ${DIR}~/.bashrc${RST}   if your login shell is bash
+  ${DIR}~/.zshrc${RST}    if it is zsh ${DIM}(check: echo \$SHELL)${RST}
+${DIM}macOS with bash reads ~/.bash_profile instead.${RST}
+
+Lines you could add there:
+  ${CMD}PS1='\$ '${RST}
+  ${CMD}export PATH="\$HOME/bin:\$PATH"${RST}
+
+${EM}Quit the tutor${RST}, open a new terminal, edit the file there. The tutor
+will not touch it. Open another new terminal to see the change.
+
+${INSTR}${G_PLAY} Read the lines, then type ${CMD}next${INSTR} to take the gate.${RST}
+EOF
+}
+
+module_env_verify_task() {
+    [ -f "$SANDBOX/env/seen.txt" ] || return 1
+    [ "$(cat "$SANDBOX/env/seen.txt")" = "shell" ] || return 1
+    return 0
+}
+
+module_env_gate() {
+    PANEL_POS=gate
+    show_screen <<EOF
+${H1}env — gate${RST}
+
+${SUB}Recall${RST} (three questions, all three must be correct).
+Then a ${SUB}practical task${RST}.
+EOF
+
+    ask_question \
+        "Q1: Which command makes a variable visible to the programs the shell starts?  (set, export, env, echo)" \
+        "Lesson 2: it is the line you typed after setting pet, before the second bash -c." \
+        'export' || return $?
+
+    ask_question \
+        "Q2: What does ${CMD}PATH${RST} hold?  (a list of folders, one folder, a file name)" \
+        "Lesson 3: you split it at each colon to read it. It names several places, searched in order." \
+        'a list of folders' \
+        'list of folders' \
+        'folders' \
+        'a list' \
+        'list' \
+        'a list of directories' \
+        'list of directories' \
+        'directories' || return $?
+
+    ask_question \
+        "Q3: You type ${CMD}PS1='me> '${RST}, then ${CMD}next${RST}. What is the prompt on the next screen?  (me> , shelltutor> )" \
+        "Each screen starts a new shell, and a new shell starts from the tutor's own setting." \
+        'shelltutor>' \
+        'shelltutor' \
+        'it reverts' \
+        'reverts' \
+        'reverted' || return $?
+
+    # Clean slate once at task entry; learner state then persists across
+    # in-gate `show` redisplays.
+    setup_module_dir env
+    rm -f "$SANDBOX/env/seen.txt" 2>/dev/null
+
+    local hist_mark
+    hist_mark=$(history_mark)
+
+    PANEL_POS=task
+    local skip_screen=0 attempt=0
+    while true; do
+        if [ "$skip_screen" -eq 0 ]; then
+            show_screen <<EOF
+${H1}env — task${RST}
+
+Prove that a child program can see a variable you exported. You will
+work inside ${DIR}${SANDBOX}/env${RST}.
+
+  1. set ${CMD}TOPIC${RST} to the word ${SUB}shell${RST}
+  2. export it
+  3. run a child ${CMD}bash -c${RST} that prints ${CMD}\$TOPIC${RST} into ${DIR}seen.txt${RST}
+     ${DIM}(hint: single quotes, so the child replaces the variable)${RST}
+
+${DIM}I will check: seen.txt holds the word shell, and your history shows${RST}
+${DIM}TOPIC set, exported, and read inside single quotes by a child.${RST}
+
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
+EOF
+        fi
+        skip_screen=0
+        practice "$SANDBOX/env" gate
+        local rc=$?
+        case "$rc" in
+            "$RC_CHECK")
+                if ! gate_require_history "$hist_mark" \
+                    'set TOPIC to shell: TOPIC=shell' 'TOPIC=shell' \
+                    'export TOPIC' 'export[[:space:]]+TOPIC' \
+                    'a child bash -c that reads $TOPIC inside single quotes' \
+                    '(ba)?sh[[:space:]]+-c[[:space:]]+'\''[^'\'']*\$\{?TOPIC'; then
+                    attempt=$((attempt + 1))
+                    gate_escalate "$attempt" \
+                        "Set it, export it, then bash -c with single quotes around echo \$TOPIC and > seen.txt." \
+                        "TOPIC=shell" "export TOPIC" "bash -c 'echo \$TOPIC' > seen.txt"
+                    skip_screen=1
+                    continue
+                fi
+                if module_env_verify_task; then
+                    return 0
+                fi
+                attempt=$((attempt + 1))
+                fb_begin
+                if [ -f "$SANDBOX/env/seen.txt" ]; then
+                    fb_ok "seen.txt exists"
+                    fb_todo "seen.txt is shell" "it holds: $(head -n 1 "$SANDBOX/env/seen.txt" 2>/dev/null | tr -cd '[:print:]' | cut -c1-40)"
+                else
+                    fb_todo "seen.txt exists" "no seen.txt in this folder"
+                fi
+                fb_note "Expected: seen.txt holds the word shell."
+                gate_escalate "$attempt" \
+                    "Set it, export it, then bash -c with single quotes around echo \$TOPIC and > seen.txt." \
+                    "TOPIC=shell" "export TOPIC" "bash -c 'echo \$TOPIC' > seen.txt"
+                skip_screen=1
+                ;;
+            "$RC_QUIT") return $rc ;;
+            *) : ;;
+        esac
+    done
+}
+
+module_env_cleared() {
+    PANEL_POS=''
+    show_screen <<EOF
+${H1}${G_OK} env cleared.${RST}
+
+Commands and keys from this module:
+$(recap_line 'name=value' 'set a variable in this shell')
+$(recap_line 'export name' 'let child programs see it')
+$(recap_line 'echo "$PATH"' 'the folders searched for programs')
+$(recap_line env 'list what children receive')
+$(recap_line "PS1='\$ '" 'change the prompt (this shell only)')
+
+${INSTR}${G_PLAY} Type ${CMD}quit${INSTR} to leave, or ${CMD}next${INSTR} to return to the start of this module.${RST}
+EOF
+    practice "$SANDBOX/env" module-cleared
+    return $?
+}
+
+run_module_env() {
+    PANEL_MODULE='env'
+    setup_module_dir env
+    local lessons=(module_env_intro module_env_lesson_1 module_env_lesson_2 module_env_lesson_3 module_env_lesson_4 module_env_lesson_5)
+    local i rc
+    while true; do
+        i=0
+        while [ "$i" -lt "${#lessons[@]}" ]; do
+            PANEL_POS=''
+            [ "$i" -ge 1 ] && PANEL_POS="$i of $((${#lessons[@]} - 1))"
+            "${lessons[$i]}"
+            rc=$?
+            case "$rc" in
+                "$RC_NEXT")  ((i++)) ;;
+                "$RC_SHOW")  : ;;
+                "$RC_PREV")  i=$((i > 0 ? i - 1 : 0)) ;;
+                "$RC_CHECK")
+                    printf '\n%b(check is only for gate tasks. Type next to advance or show to redisplay this lesson.)%b\n' "$DIM" "$RST"
+                    sleep 2
+                    ;;
+                *)           return "$rc" ;;
+            esac
+        done
+        module_env_gate || return $?
+        while true; do
+            module_env_cleared
+            rc=$?
+            case "$rc" in
+                "$RC_NEXT")  break ;;
+                "$RC_SHOW"|"$RC_PREV") : ;;
+                "$RC_CHECK")
+                    printf '\n%b(check is only for gate tasks. Type next to start again, or quit to leave.)%b\n' "$DIM" "$RST"
+                    sleep 2
+                    ;;
+                *)           return "$rc" ;;
+            esac
+        done
+    done
+}
+
 run_module() {
     case "$1" in
         shells) run_module_shells ;;
+        env) run_module_env ;;
         *) return 1 ;;
     esac
 }
