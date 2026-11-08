@@ -26,7 +26,7 @@ SENTINELS = {
     "LESSON_1_1": "1.1 — running commands",
     "LESSON_1_2": "1.2 — keyboard habits",
     "LESSON_1_3": "1.3 — where am I, who am I, when is it",
-    "LESSON_1_4": "1.4 — what just happened",
+    "LESSON_1_4": "1.4 — the shell, caught in the act",
     "LESSON_1_5": "1.5 — who else types here",
     "GATE_HEADER": "STAGE 1 — GATE",
     "GATE_Q1": "Q1: Which character usually ends a shell prompt",

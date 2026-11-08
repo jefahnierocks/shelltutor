@@ -101,6 +101,8 @@ def careful_beginner_stage1(
         Action(PROMPT, "date", "run-date", "S1-L3"),
         Action(PROMPT, "next", "leave-lesson-1-3", "S1-L3"),
         Action("LESSON_1_4", "", "render-lesson-1-4", "S1-L4"),
+        Action(PROMPT, "date", "run-date", "S1-L4"),
+        Action(PROMPT, "dtae", "run-dtae-mistyped", "S1-L4"),
         Action(PROMPT, "next", "leave-lesson-1-4", "S1-L4"),
         Action("LESSON_1_5", "", "render-lesson-1-5", "S1-L5"),
         Action(PROMPT, "next", "leave-lesson-1-5", "S1-L5"),

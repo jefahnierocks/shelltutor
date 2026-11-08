@@ -852,8 +852,7 @@ Four keys make the shell comfortable. Try each one now.
             ${KEY}Tab${RST} fills in the shared part; ${KEY}Tab${RST} again lists them.
             (Other shells and setups differ.)
   ${KEY}↑${RST}         brings back the last command. Enter runs it again.
-  ${KEY}Ctrl+L${RST}    clears the screen; the command ${CMD}clear${RST} does the same.
-            Type ${CMD}show${RST} to bring this lesson back afterwards.
+  ${KEY}Ctrl+L${RST}    clears the screen (${CMD}clear${RST} too); ${CMD}show${RST} brings the lesson back.
   ${KEY}Ctrl+C${RST}    the escape hatch. If anything feels stuck, press it
             and you get a fresh prompt.
 
@@ -883,24 +882,24 @@ EOF
 
 stage1_lesson_4() {
     lesson <<EOF
-${H1}1.4 — what just happened${RST}
+${H1}1.4 — the shell, caught in the act${RST}
 
-When you type ${CMD}whoami${RST} and press Enter:
+Type ${CMD}date${RST}. Now type ${CMD}dtae${RST}.
 
-  1. The terminal hands your line to ${SUB}the shell${RST}.
-  2. The shell looks for a program named ${CMD}whoami${RST}.
-  3. It runs it.
-  4. The program prints to ${SUB}standard output${RST} — your screen.
-  5. The shell shows the prompt again, ready for the next command.
+  ${CMD}date${RST}     ${DIM}# prints the date and time${RST}
+  ${CMD}dtae${RST}     ${DIM}# bash: dtae: command not found${RST}
 
-The shell is not "Unix." It is a program — a ${SUB}command interpreter${RST}.
-The terminal is a window that lets you talk to the shell. The program
-${CMD}whoami${RST} is a third thing — it runs, prints, and exits.
+Read who is speaking. ${CMD}bash:${RST} is the shell. It looked for a
+program called dtae, found none, and told you. When the name is
+right, it finds the program and runs it; what the program prints
+comes back to you.
 
-You will keep these three apart for the rest of this tutor:
+Three parts, kept apart for the rest of this tutor:
   ${SUB}terminal${RST}  →  ${SUB}shell${RST}  →  ${SUB}program${RST}
+The terminal is the window. The shell is the program named ${CMD}bash${RST}
+that read your line. ${CMD}date${RST} is the program it ran.
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try both, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }

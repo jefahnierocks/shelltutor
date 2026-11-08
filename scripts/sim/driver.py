@@ -157,9 +157,10 @@ ERROR_SIGNATURES = (
 # Lesson screen ids whose practice-shell error text is the lesson's point
 # (the learner is asked to mistype a command). A listed screen's error
 # substrings are recorded as `expected-error` events and listed under
-# "Expected errors" in summary.md instead of `error-signature`. Empty until
-# a screen needs it (WP-14 Change 1 adds S1-L4's `command not found`).
-EXPECT_ERROR_SCREENS: frozenset = frozenset()
+# "Expected errors" in summary.md instead of `error-signature`. Only S1-L4
+# is listed: it asks the learner to mistype `dtae`, and the shell's
+# `command not found` is that lesson's point (WP-14).
+EXPECT_ERROR_SCREENS: frozenset = frozenset({"S1-L4"})
 
 
 def classify_error_lines(region: str, screen_id: str, expect=None):
@@ -174,6 +175,13 @@ def classify_error_lines(region: str, screen_id: str, expect=None):
         if any(sig in line for sig in ERROR_SIGNATURES):
             (expected if screen_id in allowed else unexpected).append(line.strip())
     return unexpected, expected
+
+
+def should_scan(screen_id: str, intent: str, raw: bool) -> bool:
+    """Whether persona input starts an error-signature scan. A `leave-*`
+    input (`next`) only paints the following lesson, whose text may quote an
+    error on purpose (S1-L4's aside), so it is never scanned."""
+    return bool(_LESSON_SCREEN_RE.match(screen_id)) and not raw and not intent.startswith("leave-")
 
 
 def _set_winsize(fd: int, rows: int, cols: int) -> None:
@@ -439,7 +447,7 @@ def drive(
                         screen_id=current.screen_id,
                         payload=event_payload,
                     )
-                    if _LESSON_SCREEN_RE.match(current.screen_id) and not current.raw:
+                    if should_scan(current.screen_id, current.intent, current.raw):
                         scan = {
                             "start": tail_base + len(norm_tail),
                             "screen_id": current.screen_id,

@@ -177,13 +177,21 @@ def check_expected_errors() -> int:
     got = D.classify_error_lines(region, "S1_L3", allow)
     if got != (["bash: dtae: command not found"], []):
         return _fail("unlisted screen should route to unexpected: %r" % (got,))
-    if D.classify_error_lines(region, "S1_L4") != (
-        ["bash: dtae: command not found"],
+    if D.classify_error_lines(region, "S1-L4") != (
         [],
+        ["bash: dtae: command not found"],
     ):
-        return _fail("the default allowance must be empty")
+        return _fail("S1-L4 must be in the default allowance (WP-14)")
+    if D.classify_error_lines(region, "S1-L3")[1]:
+        return _fail("no other lesson screen may be allowed by default")
     if D.classify_error_lines("clean\n", "S1_L4", allow) != ([], []):
         return _fail("a clean region must yield nothing")
+    if D.should_scan("S1-L3", "leave-lesson-1-3", False):
+        return _fail("a leave-* input must not start a scan")
+    if not D.should_scan("S1-L4", "run-dtae-mistyped", False):
+        return _fail("a command at a lesson screen must start a scan")
+    if D.should_scan("S1-L2", "ctrl-l-clear", True):
+        return _fail("raw keys are not scanned")
     print("selftest_modules: expected-error routing ok")
     return 0
 
