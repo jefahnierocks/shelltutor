@@ -54,7 +54,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-15](WP-15-screen-chrome.md) | Screen chrome: panel rules, header with stage dots, key-hint footer, `┃` feedback checklist, ASCII fallback (A3) | — | none | **landed** 9c4452a (2026-11-08) |
 | [WP-14](WP-14-stages-1-2-grounding.md) | Stages 1–2 grounding: the shell made visible, Stage 2 opens with position, `ls -p` (A2) | Phase A summary, WP-15 | none | **drafted**; lands fourth |
 | [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; lands fifth (after WP-14) |
-| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land second, after WP-15 |
+| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **landed** 732f9a3 (2026-11-08; includes the F-016 banner fix) |
 | [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands third |
 | [WP-16](WP-16-module-shells.md) | Module `shells` (D1): three lessons, recall gate, zsh-lookup task | WP-13, WP-10 | none | **drafted** (renumbered from WP-14) |
 | [WP-17](WP-17-module-env.md) | Module `env` (D2): five lessons, recall gate, export-and-child task | WP-13, WP-16 | none | **drafted** (renumbered from WP-15) |
