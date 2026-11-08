@@ -2,7 +2,7 @@
 title: shelltutor Design Direction — November 2026 (draft)
 category: planning
 component: design-direction
-status: draft
+status: superseded
 version: 0.1.0
 last_updated: 2026-11-08
 tags: [design, direction, curriculum, scope, draft, decisions-pending]
@@ -10,6 +10,11 @@ priority: high
 ---
 
 # Design Direction — November 2026 (draft)
+
+**Superseded on 2026-11-08 by `docs/direction-decisions-2026-11.md`**, which
+answers the eight decisions in §6 below (as D1–D8), sets Phases A–D, and
+defines the module standard. This brief is kept as the record of the
+operator's stated intent and of the analysis that framed the decisions.
 
 The operator stated a broader direction for `shelltutor` on 2026-11-08.
 This brief records that direction as given, measures it against the design
@@ -242,13 +247,13 @@ for comparison, not chosen.
 
 ## 7. How this brief is meant to be used
 
-It is the record of operator intent as of 2026-11-08. The next step in
-the project's own process is a decision session that answers §6; its
-outcomes would then be written as a dated ROADMAP phase (the curriculum's
-design record lives in `ROADMAP.md` Phase 3 and its Amendments), followed
-by contract updates and work packages under `docs/workplan/`. Until then,
-`docs/design-description.md` describes what exists and this brief
-describes what is wanted; neither is a specification.
+It was the record of operator intent as of 2026-11-08. The decision session
+it asked for happened the same day; its outcome is
+`docs/direction-decisions-2026-11.md`, which replaces the path described in
+the original version of this section (decision session → ROADMAP phase →
+contract updates → work packages) with that document plus work packages.
+`docs/design-description.md` still describes what exists; the decisions
+document says what is wanted and in what order.
 
 ## Cross-references
 
