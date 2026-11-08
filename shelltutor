@@ -85,21 +85,44 @@ RC_QUIT=99
 # (https://no-color.org).
 # ---------------------------------------------------------------------
 
+# shellcheck disable=SC2034  # RULE is used by the panel (next commit)
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
-    H1=$'\e[1;38;5;208m'      # stage title — bold orange accent
-    SUB=$'\e[1;38;5;244m'     # sub-section header — bold ash
-    CMD=$'\e[1;38;5;220m'     # command to type — bold gold
-    KEY=$'\e[38;5;208m'       # key combo — orange
-    EM=$'\e[1;38;5;196m'      # warning / emphasis — bold red
-    DIR=$'\e[38;5;109m'       # path / filename — steel
-    INSTR=$'\e[1;38;5;208m'   # action footer — bold orange
-    DIM=$'\e[2m'              # dim — inline comments
-    OK=$'\e[1;38;5;46m'       # gate pass — bold green
-    Q=$'\e[1;38;5;39m'        # gate question — bold blue
+    # Roles per docs/direction-decisions-2026-11.md A3.6. The tutor emits
+    # the codes; the learner's terminal chooses the colours.
+    H1=$'\e[1;97m'           # screen title
+    SUB=$'\e[36m'            # a concept being named
+    CMD=$'\e[92m'            # something you can type
+    KEY=$'\e[95m'            # a key or chord; the navigation words
+    DIR=$'\e[94m'            # a path or folder
+    EM=$'\e[91m'             # a warning; something irreversible
+    INSTR=$'\e[93m'          # the action line, header name, feedback bar
+    DIM=$'\e[90m'            # asides, footer hints, unreached dots
+    OK=$'\e[92m'             # a passed check, a finished stage
+    Q=$'\e[96m'              # a recall question
+    RULE=$'\e[90m'           # box drawing only, never text
     RST=$'\e[0m'
 else
     # shellcheck disable=SC1007  # multiple empty assignments on one line are intentional
-    H1=''; SUB=''; CMD=''; KEY=''; EM=''; DIR=''; INSTR=''; DIM=''; OK=''; Q=''; RST=''
+    H1=''; SUB=''; CMD=''; KEY=''; EM=''; DIR=''; INSTR=''; DIM=''; OK=''; Q=''; RULE=''; RST=''
+fi
+
+# Glyphs (A3.7). ASCII substitutes are chosen by the same plain-text
+# condition as the colours (NO_COLOR set, or stdout not a terminal) or by
+# an explicit SHELLTUTOR_ASCII=1. Never by locale: the harness runs under
+# LC_ALL=C and its sentinels contain the UTF-8 glyphs.
+# shellcheck disable=SC2034  # the full glyph set is defined here; not every one is used yet
+if [ ! -t 1 ] || [ -n "${NO_COLOR:-}" ] || [ "${SHELLTUTOR_ASCII:-}" = "1" ]; then
+    G_PLAY='>'; G_OK='ok'; G_DONE='#'; G_CUR='*'; G_TODO='-'
+    G_HINT='>'; G_BACK='<'; G_SEP='-'
+    G_RULE='-'; G_VBAR='|'; G_BAR='|'
+    G_TEE_L='+'; G_BL='+'; G_RTL='+'; G_RTR='+'; G_RBL='+'; G_RBR='+'
+    G_TL='+'; G_TR='+'; G_BR='+'
+else
+    G_PLAY='▶'; G_OK='✓'; G_DONE='●'; G_CUR='◉'; G_TODO='○'
+    G_HINT='▸'; G_BACK='◀'; G_SEP='·'
+    G_RULE='─'; G_VBAR='│'; G_BAR='┃'
+    G_TEE_L='├'; G_BL='└'; G_RTL='╭'; G_RTR='╮'; G_RBL='╰'; G_RBR='╯'
+    G_TL='┌'; G_TR='┐'; G_BR='┘'
 fi
 
 # NOTE: do NOT `trap '' INT` here. SIG_IGN propagates across exec, bash
@@ -494,7 +517,7 @@ ask_question() {
             fi
         done
         if [ "$matched" -eq 1 ]; then
-            printf '  %b✓%b\n\n' "$OK" "$RST"
+            printf '  %b%s%b\n\n' "$OK" "$G_OK" "$RST"
             return 0
         fi
         printf '  %bnot quite. try again.%b\n\n' "$EM" "$RST"
@@ -595,7 +618,7 @@ skip.
 Your work happens in ${DIR}${SANDBOX}${RST}; the tutor never writes
 outside that folder.
 
-${INSTR}▶ Type ${CMD}next${INSTR} for a quick orientation.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for a quick orientation.${RST}
 EOF
     return $?
 }
@@ -619,7 +642,7 @@ ${SUB}Four words steer the tutor:${RST}
 
 A fifth word, ${CMD}check${RST}, appears at gate tasks when relevant.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin Stage 1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin Stage 1.${RST}
 EOF
     return $?
 }
@@ -638,7 +661,7 @@ Four short lessons (about 10 minutes) followed by a small task.
 You'll meet the prompt, run a few simple commands, and learn the
 keyboard habits that make the shell easy to live with.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to start lesson 1.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to start lesson 1.1.${RST}
 EOF
     return $?
 }
@@ -661,7 +684,7 @@ ${CMD}echo${RST} just repeats its words back. It is the simplest command
 there is, and its shape is the shape of every command you'll meet:
 a name, then the words you hand it.
 
-${INSTR}▶ Try all three, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
@@ -683,7 +706,7 @@ Four keys make the shell comfortable. Try each one now.
   ${KEY}Ctrl+C${RST}    the escape hatch. If anything feels stuck, press it
             and you get a fresh prompt.
 
-${INSTR}▶ Try each key, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try each key, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
@@ -702,7 +725,7 @@ Three commands that ask the system about itself.
 Here ${CMD}pwd${RST} shows the tutor's own folder, because that is where
 this practice prompt starts. Stage 2 is all about folders.
 
-${INSTR}▶ Run all three, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run all three, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
@@ -726,7 +749,7 @@ ${CMD}whoami${RST} is a third thing — it runs, prints, and exits.
 You will keep these three apart for the rest of this tutor:
   ${SUB}terminal${RST}  →  ${SUB}shell${RST}  →  ${SUB}program${RST}
 
-${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 1's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 1's gate.${RST}
 EOF
     return $?
 }
@@ -843,7 +866,7 @@ Then type ${CMD}check${RST}.
 
 After all three have run, I'll ask you what each one printed.
 
-${INSTR}▶ Type ${CMD}check${INSTR} only after running all three.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} only after running all three.${RST}
 EOF
         fi
         skip_screen=0
@@ -882,7 +905,7 @@ EOF
                 TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
 
                 if stage1_verify_task; then
-                    printf '\n%b✓ Stage 1 cleared.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Stage 1 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 1
                     return 0
                 fi
@@ -954,7 +977,7 @@ And the path symbols:
   ${SUB}..${RST}    the parent folder
   ${SUB}~${RST}     your home folder
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 2.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 2.1.${RST}
 EOF
 }
 
@@ -974,7 +997,7 @@ Try each. Then ${CMD}ls${RST} a folder you don't ${CMD}cd${RST} into:
 
 (${DIM}/etc${RST} and ${DIM}/usr/bin${RST} exist on both Linux and macOS.)
 
-${INSTR}▶ Try a few, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try a few, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -997,7 +1020,7 @@ ${EM}Stages 1 and 2 start every practice prompt in${RST} ${DIR}${SANDBOX}${RST}$
 Later stages start in a stage folder inside it. If you wander off,
 ${CMD}cd ${SANDBOX}${RST} brings you back.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to continue.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to continue.${RST}
 EOF
 }
 
@@ -1025,7 +1048,7 @@ ${EM}Predict before you act.${RST}  If you're in ${DIM}~/projects${RST}
 and you type ${CMD}cat notes.txt${RST}, the shell looks for
 ${DIM}~/projects/notes.txt${RST}. If you mean a different folder, name it.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 2's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 2's gate.${RST}
 EOF
 }
 
@@ -1093,7 +1116,7 @@ Then type ${CMD}check${RST}. I'll look for ${DIR}practice${RST} on disk.
 
 ${DIM}Hint: ${CMD}mkdir practice${RST}${DIM} creates the folder.${RST}
 
-${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
@@ -1115,7 +1138,7 @@ EOF
                     continue
                 fi
                 if stage2_verify_task; then
-                    printf '\n%b✓ Stage 2 cleared.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Stage 2 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 2
                     return 0
                 fi
@@ -1182,7 +1205,7 @@ Commands this stage:
   ${CMD}mv${RST}      move (or rename — same command)
   ${CMD}rm${RST}      remove a file (${EM}immediate${RST})
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 3.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 3.1.${RST}
 EOF
 }
 
@@ -1205,7 +1228,7 @@ To create a file ${SUB}with content${RST}, use redirection (Stage 4):
 But for now, ${CMD}touch${RST} for empty files, ${CMD}mkdir${RST} for
 folders.
 
-${INSTR}▶ Make a few, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Make a few, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1228,7 +1251,7 @@ ${KEY}q${RST} to exit. (More on full-screen programs in Stage 5.)
 ${EM}Important:${RST} when ${CMD}less${RST} takes over, the prompt is
 gone. You're inside a program. ${KEY}q${RST} returns you to the shell.
 
-${INSTR}▶ Try both, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try both, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1254,7 +1277,7 @@ ${SUB}A safety habit${RST}: list before you remove.
   ${CMD}ls${RST}
   ${CMD}rm <only-now-that-you-are-sure>${RST}
 
-${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 3's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 3's gate.${RST}
 EOF
 }
 
@@ -1316,7 +1339,7 @@ Then type ${CMD}check${RST}. The script will look at the folder.
 ${DIM}I will check: done.txt exists with 'hello' in it; notes.txt and${RST}
 ${DIM}backup.txt are gone.${RST}
 
-${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
@@ -1325,7 +1348,7 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage3_verify_task; then
-                    printf '\n%b✓ Stage 3 cleared.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Stage 3 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 3
                     return 0
                 fi
@@ -1400,7 +1423,7 @@ Commands this stage:
   ${CMD}<${RST}             ${SUB}input redirect${RST}: read a file into a command
   ${CMD}*${RST}             ${SUB}glob${RST}: match many filenames at once
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 4.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 4.1.${RST}
 EOF
 }
 
@@ -1430,7 +1453,7 @@ ${SUB}command -v${RST} asks the shell whether a command exists.
   ${CMD}command -v vim${RST}           ${DIM}# does Vim exist on this system?${RST}
   ${CMD}command -v vimtutor${RST}      ${DIM}# does vimtutor?${RST}
 
-${INSTR}▶ Try a few ${CMD}command -v${INSTR} probes, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try a few ${CMD}command -v${INSTR} probes, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1459,7 +1482,7 @@ Things to notice while you try these:
   - Each piece is a normal command; only the connector is new.
   - The pipeline runs left-to-right; output flows.
 
-${INSTR}▶ Try a few pipelines, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try a few pipelines, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1494,7 +1517,7 @@ ${SUB}before${RST} the command sees them.
 ${EM}Predict before you act.${RST}  ${CMD}rm *${RST} removes everything
 in the current folder. ${CMD}rm *.tmp${RST} removes only .tmp files.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 4's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 4's gate.${RST}
 EOF
 }
 
@@ -1577,7 +1600,7 @@ Then type ${CMD}check${RST}.
 
 ${DIM}I will check: count.txt exists and contains 100.${RST}
 
-${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
@@ -1597,7 +1620,7 @@ EOF
                     continue
                 fi
                 if stage4_verify_task; then
-                    printf '\n%b✓ Stage 4 cleared.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Stage 4 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 4
                     return 0
                 fi
@@ -1662,7 +1685,7 @@ understand why Vim has ${CMD}:w${RST}, ${CMD}:q${RST}, and ${CMD}:q!${RST}.
 After the gate, this tutor hands you to ${CMD}vimtutor${RST} (if it's
 installed on your system) — that is the next step.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to begin lesson 5.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 5.1.${RST}
 EOF
 }
 
@@ -1690,7 +1713,7 @@ Try one:
   ${CMD}man ls${RST}
   ${DIM}(read a few lines; press ${KEY}q${DIM} to come back here.)${RST}
 
-${INSTR}▶ When back at ${DIM}shelltutor>${INSTR}, type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} When back at ${DIM}shelltutor>${INSTR}, type ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1722,7 +1745,7 @@ are unsaved changes), use the ${EM}discard${RST} form:
 
 ${EM}You will need :q!${RST} the first few times you use Vim. Memorize it.
 
-${INSTR}▶ Try ${CMD}vim --version${INSTR} and ${CMD}vim${INSTR} (then ${CMD}:q${INSTR}). Then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try ${CMD}vim --version${INSTR} and ${CMD}vim${INSTR} (then ${CMD}:q${INSTR}). Then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1762,7 +1785,7 @@ ${DIR}practice.txt${RST} fixture is in this stage's folder. Try:
      type ${CMD}:wq${RST}, Enter
      ${CMD}cat practice.txt${RST}   ${DIM}# now the file has changed${RST}
 
-${INSTR}▶ Try both, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try both, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1789,7 +1812,7 @@ If not, you can install it:
 This stage's gate runs through the file-vs-buffer exercise from 5.3
 once more, then you'll be done.
 
-${INSTR}▶ Type ${CMD}next${INSTR} to take Stage 5's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 5's gate.${RST}
 EOF
 }
 
@@ -1883,7 +1906,7 @@ Then type ${CMD}check${RST}.
 
 ${DIM}I will verify the file is still exactly 'before'.${RST}
 
-${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
@@ -1892,7 +1915,7 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage5_verify_phase1; then
-                    printf '\n%b✓ Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$G_OK" "$RST"
                     break
                 fi
                 attempt=$((attempt + 1))
@@ -1930,7 +1953,7 @@ Then type ${CMD}check${RST}.
 
 ${DIM}I will verify the file is no longer exactly 'before'.${RST}
 
-${INSTR}▶ Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
@@ -1939,8 +1962,8 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage5_verify_phase2; then
-                    printf '\n%b✓ Phase 2 verified — the file was written.%b\n\n' "$OK" "$RST"
-                    printf '%b✓ Stage 5 cleared.%b\n\n' "$OK" "$RST"
+                    printf '\n%b%s Phase 2 verified — the file was written.%b\n\n' "$OK" "$G_OK" "$RST"
+                    printf '%b%s Stage 5 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 5
                     return 0
                 fi
