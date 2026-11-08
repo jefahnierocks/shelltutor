@@ -34,7 +34,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 
 | WP | Title | Depends on | Operator gate | Status |
 | --- | --- | --- | --- | --- |
-| [WP-01](WP-01-five-stage-harness.md) | Five-stage PTY harness (FF-006c rung 1); pre-fix baseline | — | none | ready |
+| [WP-01](WP-01-five-stage-harness.md) | Five-stage PTY harness (FF-006c rung 1); pre-fix baseline | — | none | **landed** c4f92c5 (2026-11-07) |
 | [WP-02](WP-02-tutor-correctness-fixes.md) | Tutor correctness fixes F-010–F-013; stage-folder model; FF-008 checker | WP-01 | none | ready |
 | [WP-03](WP-03-practice-shell-hardening.md) | Practice-shell hardening (Slice 2, C-007) | WP-01, WP-02 | none | ready |
 | [WP-04](WP-04-stage1-density.md) | Stage 1 density split (lessons 1.1–1.4) | WP-03 | none | ready |
