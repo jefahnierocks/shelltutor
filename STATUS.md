@@ -55,6 +55,7 @@ documents agree with the code.
 | WP-09 | `bd841ae` | F-014 fixed: the practice shell runs under the outer script's own Bash (`"$BASH"`); the harness records the Bash path and version; post-WP-04/05 macOS baseline `all-current`. |
 | WP-12 | `48c8355` | Stage 1 lesson 1.5 (read-only agent beat) and one sentence each in 3.3 and 4.3, net zero lines. |
 | WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
+| WP-18 | branch `wp/18-budget` | Stages 3–5 and the finale to the screen budget (A5, O-J): every screen at most 18 heredoc lines and 22 rendered rows; 4.3 split (Stage 4 has four lessons), 5.3 split (Stage 5 has five); no command removed, gates unchanged. |
 | WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
 | WP-17 | branch `wp/17-env` | Module `env` (variables, `export`, `PATH`, the prompt): five lessons, a recall gate and an export-and-child task; the persona observes the `PS1` revert across screens. The real `~/.bashrc` and `~/.zshrc` are named in text only. Bundle `audit/2026-11-08/sim/module-env/` (macOS only; hosted Linux pending). |
 
@@ -64,7 +65,8 @@ documents agree with the code.
   each closing with three recall questions and one practical task, on a
   Bash 3.2 runtime floor (ROADMAP Phase 3 is complete, `9f61570`,
   2026-05-21; Phase 1, the user-agnostic refactor, is complete, `e6257aa`).
-- Stage 1 has four lessons; the other stages have three or four. Stages 1
+- Stage 1 has five lessons, Stage 2 four, Stage 3 three, Stage 4 four and
+  Stage 5 five. Stages 1
   and 2 start practice prompts in `$SANDBOX`; stages 3 to 5 start in their
   stage folder (C-003). Fixtures are seeded on stage entry.
 - Gates verify the filesystem; Stages 1, 2 and 4 also check the practice

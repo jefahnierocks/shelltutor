@@ -126,7 +126,7 @@ Foundations for Vimtutor") and its 12 concepts / 6 units.
 
 ### Stage map
 
-Five stages. Each stage carries three or four short lessons followed by
+Five stages. Each stage carries three to five short lessons followed by
 one gate. Total time budget: 45–60 minutes for a motivated learner.
 
 | # | Stage | Learning goals (verbatim shape) | Commands introduced | Maps to research.md |
@@ -517,6 +517,12 @@ in one line.
 WP-12 (2026-11-08): Stage 1 has five lessons; the new read-only 1.5 extends
 terminal → shell → program to an assistant typing into the same shell (D3),
 and 3.3 and 4.3 gain one sentence each, net zero lines.
+
+WP-18 (2026-11-08, A5): Stages 3–5 and the finale are brought to the screen
+budget (observation O-J). 3.3, 4.1, 4.2, 5.1, 5.2 and the finale are trimmed;
+4.3 is split into redirection and globs (Stage 4 has four lessons) and 5.3 into
+the buffer idea and the practice (Stage 5 has five, vimtutor becomes 5.5). No
+command is removed and no gate or verifier changes.
 
 ### Phase C — Module infrastructure (agent; lands with the first module)
 

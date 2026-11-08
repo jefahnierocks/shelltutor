@@ -108,7 +108,9 @@ FF-001 to FF-008.
   described the budget as a course-wide property and are corrected to
   cite this observation. Not a Phase B package by itself; recorded for
   the operator's decision (the WP-12 sentences are added net-zero so
-  neither 3.3 nor 4.3 grows).
+  neither 3.3 nor 4.3 grows). **Resolved 2026-11-08 by WP-18 (A5):** every
+  screen is at most 18 heredoc lines and 22 rendered rows
+  (`stage3-5-density.md`).
 - **O-I** `sim-evidence` runs on every push to `main` (about 13 s each)
   and produces an artifact per commit; only reviewed bundles are intaken.
   Acceptable as designed (D-17); the operator may narrow the trigger to
