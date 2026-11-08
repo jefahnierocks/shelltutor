@@ -284,7 +284,7 @@ def stage_walk(
             + _lesson(
                 4,
                 1,
-                ["ls -l", "wc -l poem.txt", 'echo "hello world"', "command -v ls", "command -v vim"],
+                ["ls -l /etc", "wc -l poem.txt", 'echo "hello world"', "command -v ls", "command -v vim"],
             )
             + _lesson(
                 4,
@@ -299,9 +299,9 @@ def stage_walk(
                     "echo second >> greeting.txt",
                     "cat greeting.txt",
                     "wc -w < poem.txt",
-                    "ls *.txt",
                 ],
             )
+            + _lesson(4, 4, ["ls *.txt"])
             + _recall(4, ["the path to vim", "> overwrites, >> appends", "because of the space"])
             + [Action("S4_TASK", "", "render-gate-task", "S4-GT")]
             + _gate_commands(

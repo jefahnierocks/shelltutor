@@ -1739,7 +1739,7 @@ run_stage3() {
 stage4_intro() {
     lesson "$SANDBOX/stage4" <<EOF
 ${H1}STAGE 4 — Commands, streams, composition${RST}
-Three lessons, then a gate. You'll read a command's structure, check
+Four lessons, then a gate. You'll read a command's structure, check
 whether a command exists, and chain commands together with pipes,
 redirects, and globs.
 Commands this stage:
@@ -1764,26 +1764,19 @@ stage4_lesson_1() {
 ${H1}4.1 — reading a command${RST}
 
 A shell command has a small grammar:
-
   ${SUB}command  options  arguments${RST}
 
-Examples:
-  ${CMD}ls${RST}
-  ${CMD}ls -l${RST}                    ${DIM}# one option, no argument${RST}
   ${CMD}ls -l /etc${RST}               ${DIM}# option + argument${RST}
   ${CMD}wc -l poem.txt${RST}           ${DIM}# count lines in a file${RST}
-  ${CMD}echo "hello world"${RST}       ${DIM}# argument with a space — quoted${RST}
+  ${CMD}echo "hello world"${RST}       ${DIM}# an argument with a space — quoted${RST}
 
-${EM}Spaces matter.${RST}  The shell splits on spaces. If a filename
-has a space, ${SUB}quote it${RST} or the shell will see two arguments:
-
+${EM}Spaces matter.${RST}  The shell splits on spaces; ${SUB}quote${RST} a name that has one:
   ${CMD}vim "my notes.txt"${RST}       ${DIM}# opens one file${RST}
   ${CMD}vim my notes.txt${RST}         ${DIM}# opens TWO files: 'my' and 'notes.txt'${RST}
 
-${SUB}command -v${RST} asks the shell whether a command exists.
+${SUB}command -v${RST} asks the shell whether a command exists:
   ${CMD}command -v ls${RST}            ${DIM}# prints the path; exits 0${RST}
   ${CMD}command -v vim${RST}           ${DIM}# does Vim exist on this system?${RST}
-  ${CMD}command -v vimtutor${RST}      ${DIM}# does vimtutor?${RST}
 
 ${INSTR}${G_PLAY} Try a few ${CMD}command -v${INSTR} probes, then ${CMD}next${INSTR}.${RST}
 EOF
@@ -1793,14 +1786,11 @@ stage4_lesson_2() {
     lesson "$SANDBOX/stage4" <<EOF
 ${H1}4.2 — the pipe${RST}
 
-A ${SUB}pipe${RST} ( ${CMD}|${RST} ) sends the standard output of one
-command into the standard input of the next. ${EM}Most important idea
-in the shell.${RST}
+A ${SUB}pipe${RST} ( ${CMD}|${RST} ) sends one command's output into the next command's
+input. ${EM}Most important idea in the shell.${RST}
 
-${CMD}wc${RST} alone counts:
+${CMD}wc${RST} counts ${SUB}whatever you piped in${RST}:
   ${CMD}wc -l poem.txt${RST}          ${DIM}# lines in poem.txt${RST}
-
-${CMD}wc${RST} via pipe counts ${SUB}whatever you piped in${RST}:
   ${CMD}seq 1 100 | wc -l${RST}       ${DIM}# 100${RST}
   ${CMD}ls /usr/bin | wc -l${RST}     ${DIM}# how many programs are installed${RST}
 
@@ -1809,10 +1799,7 @@ Pipes stack:
   ${CMD}ls /usr/bin | grep ^a${RST}            ${DIM}# names starting with 'a'${RST}
   ${CMD}ls /usr/bin | grep ^a | wc -l${RST}    ${DIM}# …and count them${RST}
 
-Things to notice while you try these:
-  - ${CMD}|${RST} is Shift+Backslash on most keyboards.
-  - Each piece is a normal command; only the connector is new.
-  - The pipeline runs left-to-right; output flows.
+Each piece is a normal command; only the connector is new. ${CMD}|${RST} is Shift+Backslash.
 
 ${INSTR}${G_PLAY} Try a few pipelines, then ${CMD}next${INSTR}.${RST}
 EOF
@@ -1820,7 +1807,7 @@ EOF
 
 stage4_lesson_3() {
     lesson "$SANDBOX/stage4" <<EOF
-${H1}4.3 — redirection and globs${RST}
+${H1}4.3 — redirection${RST}
 
 A pipe sends output to ${SUB}another program${RST}. A redirect sends it
 to ${SUB}a file${RST}, and ${CMD}>${RST} replaces it without asking, whoever typed the line.
@@ -1829,15 +1816,21 @@ to ${SUB}a file${RST}, and ${CMD}>${RST} replaces it without asking, whoever typ
   ${CMD}>>${RST}   append to a file (creates if missing)
   ${CMD}<${RST}    read a file ${SUB}into${RST} a command
 
-Examples:
   ${CMD}echo first > greeting.txt${RST}        ${DIM}# overwrite${RST}
   ${CMD}echo second >> greeting.txt${RST}      ${DIM}# append${RST}
   ${CMD}cat greeting.txt${RST}                 ${DIM}# two lines${RST}
   ${CMD}wc -w < poem.txt${RST}                 ${DIM}# count words read from poem.txt${RST}
 
-Combine with pipes:
-  ${CMD}ls /usr/bin | sort > programs.txt${RST}
+  ${CMD}ls /usr/bin | sort > programs.txt${RST}     ${DIM}# a pipe and a redirect together${RST}
   ${CMD}wc -l programs.txt${RST}
+
+${INSTR}${G_PLAY} Try them, then type ${CMD}next${INSTR}.${RST}
+EOF
+}
+
+stage4_lesson_4() {
+    lesson "$SANDBOX/stage4" <<EOF
+${H1}4.4 — globs${RST}
 
 ${SUB}Globs${RST} match many filenames at once. The shell expands them
 ${SUB}before${RST} the command sees them.
@@ -1980,7 +1973,7 @@ EOF
 
 run_stage4() {
     setup_stage_dir 4
-    local lessons=(stage4_intro stage4_lesson_1 stage4_lesson_2 stage4_lesson_3)
+    local lessons=(stage4_intro stage4_lesson_1 stage4_lesson_2 stage4_lesson_3 stage4_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 4 "${lessons[$i]}"
