@@ -327,19 +327,22 @@ def stage_walk(
             Action("VIM_INTRO", ":q", "vim-quit", "S5-L2"),
             Action(PROMPT, "next", "leave-lesson-5-2", "S5-L2"),
         ]
-        l3 = (
-            [Action("S5_L3", "", "render-lesson-5-3", "S5-L3")]
-            + _cmds("S5-L3", ["cat practice.txt"])
-            + _vim_edit("S5-L3", "abc", ":q!")
-            + _cmds("S5-L3", ["cat practice.txt"])
-            + _vim_edit("S5-L3", "abc", ":wq")
-            + _cmds("S5-L3", ["cat practice.txt"])
-            + [Action(PROMPT, "next", "leave-lesson-5-3", "S5-L3")]
-        )
+        # 5.3 is the idea (read only); 5.4 practises both sequences; 5.5
+        # probes for vimtutor.
+        l3 = _lesson(5, 3, [])
         l4 = (
             [Action("S5_L4", "", "render-lesson-5-4", "S5-L4")]
-            + _cmds("S5-L4", ["command -v vimtutor"])
+            + _cmds("S5-L4", ["cat practice.txt"])
+            + _vim_edit("S5-L4", "abc", ":q!")
+            + _cmds("S5-L4", ["cat practice.txt"])
+            + _vim_edit("S5-L4", "abc", ":wq")
+            + _cmds("S5-L4", ["cat practice.txt"])
             + [Action(PROMPT, "next", "leave-lesson-5-4", "S5-L4")]
+        )
+        l5 = (
+            [Action("S5_L5", "", "render-lesson-5-5", "S5-L5")]
+            + _cmds("S5-L5", ["command -v vimtutor"])
+            + [Action(PROMPT, "next", "leave-lesson-5-5", "S5-L5")]
         )
         gate = _recall(5, ["q", ":w", "no"])
         task1 = (
@@ -361,7 +364,7 @@ def stage_walk(
                 Action("S5_CLEARED", "", "stage5-cleared", "S5-GT2"),
             ]
         )
-        return _intro(5) + l1 + l2 + l3 + l4 + gate + task1 + task2
+        return _intro(5) + l1 + l2 + l3 + l4 + l5 + gate + task1 + task2
     raise ValueError("stage_walk: unsupported stage %r" % (n,))
 
 

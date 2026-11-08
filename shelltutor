@@ -348,7 +348,7 @@ to give the glob something to match
 EOF_SEED
             fi
             ;;
-        5)  # Lesson 5.3 edits practice.txt; the gate re-seeds it to
+        5)  # Lesson 5.4 edits practice.txt; the gate re-seeds it to
             # exactly 'before' at gate entry (stage5_seed_practice).
             [ -f "$SANDBOX/stage5/practice.txt" ] \
                 || echo before > "$SANDBOX/stage5/practice.txt"
@@ -2006,7 +2006,7 @@ stage5_intro() {
     lesson "$SANDBOX/stage5" <<EOF
 ${H1}STAGE 5 — Ready for vimtutor${RST}
 
-Four lessons, then a gate. By the end, you'll know the difference
+Five lessons, then a gate. By the end, you'll know the difference
 between a command that prints-and-exits and one that takes over the
 terminal; you'll be able to leave any of them deliberately; and you'll
 understand why Vim has ${CMD}:w${RST}, ${CMD}:q${RST}, and ${CMD}:q!${RST}.
@@ -2030,17 +2030,11 @@ Other commands ${EM}take over the screen${RST} until you exit them:
   ${CMD}less long-file.txt${RST}  ${DIM}# page through a long file${RST}
   ${CMD}vim file${RST}            ${DIM}# the Vim editor${RST}
 
-While a full-screen program is running, the shell prompt is ${SUB}gone${RST}.
-You're inside a program. The same keys may do different things there.
+While one runs, the shell prompt is ${SUB}gone${RST}: you're inside a program,
+and the same keys may do different things there.
 
-${SUB}Exit keys${RST}:
-  ${CMD}man${RST}   →  press ${KEY}q${RST}
-  ${CMD}less${RST}  →  press ${KEY}q${RST}
-  ${CMD}vim${RST}   →  type ${CMD}:q${RST} then Enter (and friends — Lesson 5.3)
-
-Try one:
-  ${CMD}man ls${RST}
-  ${DIM}(read a few lines; press ${KEY}q${DIM} to come back here.)${RST}
+${SUB}Exit keys${RST}:  ${CMD}man${RST} and ${CMD}less${RST} ${KEY}q${RST}   ·   ${CMD}vim${RST} ${CMD}:q${RST} then Enter (Lesson 5.3)
+Try one: ${CMD}man ls${RST}, then ${KEY}q${RST} to come back.
 
 ${INSTR}${G_PLAY} When back at ${DIM}shelltutor>${INSTR}, type ${CMD}next${INSTR}.${RST}
 EOF
@@ -2054,22 +2048,13 @@ ${CMD}vim${RST} is a text editor. Before you ${SUB}edit${RST} anything,
 let's learn how to ${SUB}leave${RST}.
 
 First, see if Vim is installed:
-  ${CMD}command -v vim${RST}
+  ${CMD}command -v vim${RST}   ${DIM}# a path means it is; if not, install it${RST}
 
-If you got a path, Vim is there. If not, install it before continuing.
+A safe entrance, then a full session with no file:
+  ${CMD}vim --version${RST}   ${DIM}# prints version info and exits${RST}
+  ${CMD}vim${RST}             ${DIM}# leave with ${RST}${CMD}:q${RST}${DIM} then Enter${RST}
 
-A safe entrance:
-  ${CMD}vim --version${RST}     ${DIM}# prints version info and exits${RST}
-
-A full Vim session:
-  ${CMD}vim${RST}
-
-This drops you into Vim with no file. To leave without doing anything,
-type:
-  ${CMD}:q${RST} then Enter
-
-If Vim refuses (because you typed something by accident and now there
-are unsaved changes), use the ${EM}discard${RST} form:
+If Vim refuses (unsaved changes), use the ${EM}discard${RST} form:
   ${CMD}:q!${RST} then Enter
 
 ${EM}You will need :q!${RST} the first few times you use Vim. Memorize it.
@@ -2082,25 +2067,30 @@ stage5_lesson_3() {
     lesson "$SANDBOX/stage5" <<EOF
 ${H1}5.3 — buffer vs file${RST}
 
-This is the most important idea in this stage.
-
-When you open a file in Vim, Vim ${SUB}reads it into a buffer${RST} —
-a copy in memory. Your keystrokes change the ${SUB}buffer${RST}, not
-the file. The file on disk only changes when you ${SUB}write${RST} the
-buffer back.
+${EM}The most important idea in this stage.${RST} When you open a file in
+Vim, Vim ${SUB}reads it into a buffer${RST} — a copy in memory. Your
+keystrokes change the ${SUB}buffer${RST}, not the file. The file on disk
+only changes when you ${SUB}write${RST} the buffer back.
 
   ${SUB}file on disk${RST}  →  ${SUB}buffer in memory${RST}  →  ${SUB}file on disk${RST}
        (read)                  (edit)                     (write)
 
 That's why Vim has separate commands for save and quit:
-
   ${CMD}:w${RST}    write the buffer to the file
   ${CMD}:q${RST}    quit (only if there are no unsaved changes)
   ${CMD}:q!${RST}   quit and discard unsaved changes
   ${CMD}:wq${RST}   write, then quit
 
-${EM}Practice this on a file you don't mind editing.${RST}  A
-${DIR}practice.txt${RST} fixture is in this stage's folder. Try:
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to practise both.${RST}
+EOF
+}
+
+stage5_lesson_4() {
+    lesson "$SANDBOX/stage5" <<EOF
+${H1}5.4 — practice: discard, then save${RST}
+
+${EM}Practice on a file you don't mind editing.${RST}  A ${DIR}practice.txt${RST}
+fixture is in this stage's folder. Try:
 
   ${CMD}vim practice.txt${RST}
      type ${CMD}i${RST} to enter insert mode (vimtutor will teach modes)
@@ -2118,28 +2108,21 @@ ${INSTR}${G_PLAY} Try both, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
-stage5_lesson_4() {
+stage5_lesson_5() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.4 — calling vimtutor${RST}
+${H1}5.5 — calling vimtutor${RST}
 
-${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a
-${SUB}copy${RST} of a tutorial file so you can practice without
-damaging the original.
+${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a ${SUB}copy${RST}
+of a tutorial file so you can practice without damaging the original.
 
 Check whether it's installed:
   ${CMD}command -v vimtutor${RST}
 
-If it prints a path, you're set.
+If it prints a path, you're set. If not:
+  - Linux: install your distro's full ${SUB}vim${RST} package (not ${SUB}vim-minimal${RST}).
+  - macOS: ${CMD}vimtutor${RST} may not be on PATH; ${CMD}brew install vim${RST} adds it.
 
-If not, you can install it:
-  - on Linux: install your distro's full ${SUB}vim${RST} package (often
-    a ${SUB}vim-enhanced${RST} or ${SUB}vim${RST} (not ${SUB}vim-minimal${RST})
-    package).
-  - on macOS: Vim ships in macOS, but ${CMD}vimtutor${RST} may not be
-    on PATH. ${CMD}brew install vim${RST} via Homebrew adds it.
-
-This stage's gate runs through the file-vs-buffer exercise from 5.3
-once more, then you'll be done.
+This stage's gate runs the practice from 5.4 once more, then you'll be done.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 5's gate.${RST}
 EOF
@@ -2316,7 +2299,7 @@ EOF
 
 run_stage5() {
     setup_stage_dir 5
-    local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4)
+    local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4 stage5_lesson_5)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 5 "${lessons[$i]}"
