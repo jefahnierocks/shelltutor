@@ -3,7 +3,7 @@ title: scripts/sim — contributor PTY harness
 category: contributor-tooling
 component: simulation
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-07
 tags: [simulation, pty, evidence, ff-006c, contributor-tooling]
 priority: medium
@@ -12,8 +12,9 @@ priority: medium
 # scripts/sim — contributor PTY harness
 
 Optional, contributor-side Python 3.9+ stdlib PTY harness that drives
-the `careful-beginner` persona through one stage, or all five stages,
-of `shelltutor` and produces a v1 evidence bundle per run. Slice 1 and
+a synthetic persona (`careful-beginner`, or `second-try` for the Stage 2 and
+4 gates) through one stage, or all five stages, of `shelltutor` and
+produces a v1 evidence bundle per run. Slice 1 and
 FF-006c rung 1 of `docs/simulation-design-plan.md`.
 
 This harness is **not** part of `make verify`. The runtime tutor is
@@ -38,7 +39,7 @@ agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
 
 1. Allocates a fresh pseudo-terminal via `pty.openpty()`.
 2. `fork()`s and `execvpe()`s the tutor under that PTY.
-3. Drives the careful-beginner persona through the requested stage(s)
+3. Drives the chosen persona through the requested stage(s)
    by waiting for stable substring sentinels and writing the next input
    on each match. `--stage N` (N ≥ 2) execs `shelltutor N` (C-001);
    `1` and `all` run with no argument.
@@ -51,7 +52,8 @@ agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
    a non-fatal `error-signature` event listed in `summary.md`.
 6. Reads `.progress` before sandbox cleanup: stages 1–4 expect the stage
    number, stage 5 and `all` expect it absent (the finale removes it).
-   TAP `ok` requires `gate_passed` and `progress_ok`.
+   TAP `ok` requires `gate_passed` and `progress_ok` (and, for
+   `second-try`, exactly one `Almost — you still need to`).
 
 Controlled inputs (decision D-03), recorded in `summary.md`: `LC_ALL=C`,
 `VIMINIT='set nocompatible'`, `PAGER=less`, `MANPAGER` and `LESS` unset,
@@ -99,7 +101,7 @@ design plan.
 
 | File | Purpose |
 | --- | --- |
-| `run.py` | CLI entry; argparse, variant orchestration, summary/diff writers. |
+| `run.py` | CLI entry; argparse, persona dispatch, run orchestration, summary writer. |
 | `driver.py` | PTY driver loop (pty + selectors). |
 | `compare.py` | Unified diff of two bundles' normalized OUT projection. |
 | `project.py` | Shared `terminal.jsonl` OUT projection (run.py, compare.py). |
@@ -113,7 +115,7 @@ design plan.
 
 | Code | Meaning |
 | ---: | --- |
-| 0 | Every requested variant green (`gate_passed` and `progress_ok`). |
+| 0 | The run is green (`gate_passed` and `progress_ok`, plus one `ALMOST` for `second-try`). |
 | 1 | Uncaught exception (traceback printed). |
 | 2 | Unsupported persona / stage / flag. |
 | 3 | retired (Slice 2; formerly `PatchTargetMissingError`). The number is kept so later codes do not move. |
@@ -134,7 +136,7 @@ design plan.
 | `--timeout` | `30` (per-sentinel, seconds) |
 | `--cols` / `--rows` | `80` / `24` |
 | `--shelltutor` | `./shelltutor` |
-| `--keep-sandbox` | off — fresh `SHELLTUTOR_HOME` and empty `HOME` tempdirs are removed after each variant |
+| `--keep-sandbox` | off — fresh `SHELLTUTOR_HOME` and empty `HOME` tempdirs are removed after the run |
 | `-v` / `--verbose` | off |
 
 ## Hosted Linux evidence intake

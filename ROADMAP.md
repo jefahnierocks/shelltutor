@@ -20,7 +20,9 @@ the implementation work that serves Phases 2 to 4 as eight worker-executable
 packages (WP-01 to WP-08). Its decision log D-01 to D-18 is binding for the
 cycle; this roadmap records phase status, the work plan records how each
 piece lands. Landings are summarised here under the phase they advance and
-in `STATUS.md`.
+in `STATUS.md`. As of the WP-07 sweep WP-01 to WP-06 (WP-06's hosted run
+still pending with the operator) and WP-08 part A have landed; the human
+Phase 2 walkthroughs and WP-08 part B remain.
 
 ## Phase 0 — Day-1 Scaffold (complete)
 
@@ -83,12 +85,12 @@ Work:
   `make lint` runs ShellCheck clean and the hosted `verify` workflow repeats
   it on every push (2026-10-17).
 - Automated support (2026-11 work plan): the five-stage PTY baseline
-  (`WP-01`, FF-006c rung 1) and hosted Linux transcript capture (`WP-06`,
-  approved 2026-11-07) de-risk the human walkthroughs; they do not replace them.
-  Four defects found by static review on 2026-11-07 (F-010 to F-013,
-  `audit/2026-11-07/findings.md`) are fixed by `WP-02` before the human
-  walks, because two of them (F-010, F-013) would fail a walk on a clean
-  host.
+  (`WP-01`, FF-006c rung 1, landed) and hosted Linux transcript capture
+  (`WP-06`, workflow landed; first hosted run pending) de-risk the human
+  walkthroughs; they do not replace them. Four defects found by static
+  review on 2026-11-07 (F-010 to F-013, `audit/2026-11-07/findings.md`) were
+  fixed by `WP-02` before the human walks, because two of them (F-010,
+  F-013) would fail a walk on a clean host.
 
 Exit criteria:
 
@@ -137,6 +139,12 @@ one gate. Total time budget: 45–60 minutes for a motivated learner.
 | 5 | Ready for `vimtutor` | I can tell full-screen programs from print-and-exit ones. I can exit `man`, `less`, `vim` deliberately. I know Vim edits a buffer; the file isn't changed until the buffer is written. I know how to launch `vimtutor`. | `man`, `less` (full-screen), `vim --version`, `vim`, `:q!`, `:wq`, `vimtutor` | Concepts 6, 9, 10, 11, 12 (Units 4, 5, 6) |
 
 ### Per-stage detail
+
+*Amended since adoption (see Amendments below): Stage 1 now has four
+lessons; Stage 3 to 5 lessons and gates run in `$SANDBOX/stageN` and the
+Stage 2 gate folder is `$SANDBOX/stage2/practice/`; the Stage 2 and Stage 4
+gate verification and the retry feedback follow WP-05. The text below is the
+original design record.*
 
 **Stage 1 — Where am I?** (3 lessons)
 
@@ -402,6 +410,13 @@ shipped curriculum are listed here, dated, rather than rewritten into it.
   Stage 4 verifies the `*.txt` glob from history, with escalating retry
   feedback on every gate and no auto-pass (`WP-05`, D-14). Each landing
   adds a dated line here.
+- **2026-11 (WP-02).** Stage 3 to 5 lessons and gates start their practice
+  prompt in `$SANDBOX/stageN`, with `poem.txt`, `seed.txt` and `practice.txt`
+  seeded on stage entry (D-04, contract C-003); lesson copy renders the
+  configured sandbox instead of `~/.shelltutor` (F-010, F-011); the Stage 1
+  day answer is accepted as `date` printed it in the learner's locale
+  (F-013, D-06); `SHELLTUTOR_HOME` is made absolute and stripped of trailing
+  slashes at startup (D-08, contract C-004).
 - **2026-11 (WP-05).** Stage 2 gate requires at least one `cd` in the
   practice history (the task as taught), not the four-step trace in the
   original spec; Stage 4 gate verifies the `*.txt` glob from history as
@@ -419,16 +434,15 @@ Work:
 
 - License decision: **MIT, decided 2026-11-07** (`docs/license-decision.md`).
   Execution package `docs/workplan/WP-08-release-prep.md`: part A (LICENSE,
-  script header, README/STATUS wording) once the copyright line is
-  confirmed; part B (CHANGELOG, `v0.1.0` inputs) after the Phase 2
-  walkthrough results.
+  script header, README/STATUS wording) **landed** (`7d5065f`); part B
+  (CHANGELOG, `v0.1.0` inputs) follows the Phase 2 walkthrough results.
 - Create `CHANGELOG.md` and tag `v0.1.0`.
 - Decide whether managed distribution (Homebrew tap, AUR, etc.) is worth
   the maintenance cost or whether `clone + run` stays the install story.
 
 Exit criteria:
 
-- `LICENSE` present, posture clear.
+- `LICENSE` present, posture clear (met, `7d5065f`).
 - First tagged release.
 - Distribution decision recorded in `STATUS.md`.
 

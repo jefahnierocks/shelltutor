@@ -4,7 +4,7 @@ category: process
 component: contributing
 status: active
 version: 0.2.0
-last_updated: 2026-10-17
+last_updated: 2026-11-07
 tags: [contributing, verification, change-discipline]
 priority: medium
 ---
@@ -44,6 +44,7 @@ make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
 make smoke       # FF-006a minimal static smoke test
 make verify      # released manifest check/tests + check + lint + smoke
 make manifest-check # declaration only; not a substitute for make verify
+make manifest-self-test # declaration-check regression tests
 make self-test   # exercise the checkers against built-in fixtures
 make lesson-flow # FF-006b PTY harness (optional; Python 3.9+; not in verify)
 make sim         # FF-006c five-stage PTY harness (optional; Python 3.9+; not in verify)
@@ -65,7 +66,7 @@ with the rules it describes.
 | `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
 | `smoke`              | FF-006a         | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
 | `lesson-flow`        | FF-006b         | Optional contributor target. Drives the `scripts/sim/` Python 3.9+ stdlib PTY harness through a persona walkthrough of Stage 1 and emits a v1 evidence bundle (project-local `terminal.jsonl`, `events.jsonl`, `summary.md`, `result.tap`). Skips with a clear message when `python3` is missing or `<3.9`. Not part of `make verify`. Governed by `docs/simulation-design-plan.md`. |
-| `sim`                | FF-006c rung 1  | Optional contributor target. Runs `scripts/sim/run.py --stage all`: the `careful-beginner` persona drives all five stages in one PTY run per variant and writes the same v1 evidence bundle, plus mechanical `error-signature` events and a `.progress` assertion. `SIMARGS` passes extra flags. Same Python guard as `lesson-flow`; needs a real pseudo-terminal; not part of `make verify`. |
+| `sim`                | FF-006c rung 1  | Optional contributor target. Runs `scripts/sim/run.py --stage all`: the `careful-beginner` persona drives all five stages in one PTY run and writes the same v1 evidence bundle, plus mechanical `error-signature` events and a `.progress` assertion. `SIMARGS` passes extra flags (for example `--persona second-try --stage 2`, which fails the first gate check on purpose). Same Python guard as `lesson-flow`; needs a real pseudo-terminal; not part of `make verify`. The non-gating `sim-evidence` workflow runs it on hosted Linux. |
 
 The checkers use `# nofitness:` line annotations for legitimate
 exceptions in the script. The Markdown checker skips fenced (` ``` `)

@@ -14,13 +14,8 @@ priority: medium
 **Implemented (2026-11-08):** WP-03, commits `08013cf` (practice shell, C-007),
 `c1b41c7` (contract) and `6fa53d2` (preview variant retired). The two
 recommendations the work plan overrode are recorded in D-10 and D-12 of
-`docs/workplan/README.md`.
-
-**Status (2026-11-07):** scheduled as `docs/workplan/WP-03-practice-shell-hardening.md`,
-which carries the exact rcfile and the C-007 contract text. Two
-recommendations below are overridden by the work plan's decision log: the
-lesson 1.1 Tab copy change lands in the hardening commit (D-10), and the
-hardening does not wait for a Linux baseline (D-12). The rest stands.
+`docs/workplan/README.md`. The Tab copy discussed below now lives in lesson
+1.2 (WP-04 moved it when it split Stage 1 into four lessons).
 
 Refinement of `docs/simulation-design-plan.md` §First Three Slices
 §Slice 2 ("Practice-Shell Hardening") in light of the Slice 1

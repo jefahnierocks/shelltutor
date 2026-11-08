@@ -3,7 +3,7 @@ title: shelltutor Simulation Design Plan
 category: planning
 component: simulation-design
 status: active
-version: 0.3.0
+version: 0.4.0
 last_updated: 2026-11-07
 tags: [simulation, pty, evidence, personas, planning, lesson-flow]
 priority: high
@@ -80,23 +80,24 @@ This keeps the production contract intact:
 - **Slice 1 — complete**: Stage 1 density audit, stdlib PTY harness, both
   baselines, and comparison evidence landed on 2026-05-23 (`29dc0d3`).
 - **FF-006c rung 1 — complete**
-  (`docs/workplan/WP-01-five-stage-harness.md`): one persona
-  (`careful-beginner`), five stages; second persona still deferred.
+  (`docs/workplan/WP-01-five-stage-harness.md`): `careful-beginner` across
+  five stages, plus the deliberate-failure `second-try` persona for stages 2
+  and 4 (WP-05).
   `make sim`, mechanical `error-signature` events, the `.progress`
   assertion and `scripts/sim/compare.py` landed. Decisions D-02 and D-03
   fix the coverage model and the harness's controlled inputs (including
   an empty per-run `HOME`).
 - **Slice 2 — complete** (2026-11-08, `6fa53d2`) as
   `docs/workplan/WP-03-practice-shell-hardening.md`. Decisions D-09 to D-12:
-  the exact rcfile and contract C-007; the lesson 1.1 Tab/bell line landed
-  with the hardening (D-10); the `no-system-rc-preview` variant is retired
+  the exact rcfile and contract C-007; the Tab/bell line landed with the
+  hardening (D-10; the Tab copy now lives in lesson 1.2 after WP-04); the `no-system-rc-preview` variant is retired
   (D-11); the Linux baseline is captured when available and was not a
   prerequisite (D-12). Evidence: `audit/2026-11-08/sim/all-slice2*` and
   `audit/2026-11-08/slice2-comparison.md`.
-- **Slice 3 — partially scheduled**: the mechanical error-signature scan
-  (`WP-01`) and a deliberate-failure `second-try` persona for stages 2 and 4
-  (`WP-05`) land in this cycle; `confused-novice` and the full confusion-
-  event set remain deferred.
+- **Slice 3 — partially complete**: the mechanical error-signature scan
+  (`WP-01`) and the deliberate-failure `second-try` persona for stages 2 and 4
+  (`WP-05`) landed in the 2026-11 cycle; `confused-novice` and the full
+  confusion-event set remain deferred.
 
 ## Implementation Ladder
 
@@ -106,7 +107,7 @@ Treat FF-006 as a ladder, not one binary state.
 | --- | --- | --- | --- |
 | FF-006a | Static smoke | Current syntax/help/structure/bad-arg checks | `make smoke` |
 | FF-006b | Minimal lesson flow | `careful-beginner` through Stage 1 lessons and gate via PTY | `make lesson-flow` |
-| FF-006c | Simulation depth | all stages (rung 1, `WP-01`), then multiple personas | `make sim` |
+| FF-006c | Simulation depth | all stages and `second-try` (rung 1, `WP-01`, `WP-05`; complete), then further personas | `make sim` |
 
 FF-006b is the release-readiness milestone for automated lesson-flow
 coverage. FF-006c is depth and regression confidence, not a prerequisite
@@ -223,9 +224,10 @@ careful-beginner
 confused-novice
 ```
 
-The first implementation should start with `careful-beginner` only,
-Stage 1 only. Add `confused-novice` after the harness and evidence
-bundle are stable. Add `skimmer`, `interrupting-user`, and
+The first implementation started with `careful-beginner` only, Stage 1
+only; it now drives all five stages and a `second-try` persona covers the
+Stage 2 and 4 gates (`scripts/sim/README.md`). Add `confused-novice` after
+the harness and evidence bundle are stable. Add `skimmer`, `interrupting-user`, and
 `overconfident-user` only after the first two personas can drive all five
 stages reliably.
 
@@ -440,7 +442,11 @@ provenance.
 - Update `Makefile`, `CONTRIBUTING.md`, and `STATUS.md` in the same
   implementation commit.
 
-### Slice 2: Practice-Shell Hardening (next)
+### Slice 2: Practice-Shell Hardening (complete)
+
+Landed 2026-11-08 as `docs/workplan/WP-03-practice-shell-hardening.md`
+(C-007; evidence under `audit/2026-11-08/`). The list below is the original
+slice checklist, retained as provenance.
 
 - Stop sourcing `/etc/bashrc`.
 - Add explicit practice-shell setup.
@@ -462,8 +468,8 @@ provenance.
 
 ## Deferred
 
-- Full five-stage simulation.
-- Additional personas.
+- Further personas beyond `careful-beginner` and `second-try`
+  (`confused-novice`, `skimmer`, `interrupting-user`, `overconfident-user`).
 - LLM-generated trace exploration.
 - Guide voice variants.
 - Runtime command blocking.

@@ -96,6 +96,9 @@ When authority is unclear, ask before acting.
   Specification 1 declaration check and its regression tests, followed by the
   existing static checks, optional ShellCheck and smoke checks. It installs
   nothing. `scripts/verify-project.sh` is its no-argument manifest entrypoint.
+- `make check` also runs the portability and POSIX-tool fitness checks
+  (FF-004, FF-008). `make sim` (optional, not part of `verify`) drives the
+  PTY harness under `scripts/sim/` and needs a real pseudo-terminal.
 - Adoption: root `project.yaml` follows Specification 1, with repo-owned
   immutable Release 1 binding from `jefahnierocks/project-manifest`; see
   [the binding and contributor workflow](docs/project-manifest.md). No parent
@@ -127,7 +130,11 @@ context that already exists.
   implementation session takes exactly one package.
 - `audit/2026-11-07/findings.md` — F-010 to F-013 (lesson fixture,
   hardcoded sandbox path, GNU-sed `\+`, locale-dependent gate) and the
-  FF-008 proposal; closed by WP-02.
+  FF-008 proposal; all resolved by WP-02 and FF-008 is implemented.
+- `audit/2026-11-08/` — synthetic PTY evidence for the 2026-11 cycle
+  (`sim/` bundles: pre-fix baseline, post-fix, Slice 2 hardening, Stage 1
+  split, `second-try`), `slice2-comparison.md` and the Stage 1 density
+  follow-up. Only synthetic harness bundles live here.
 - `audit/2026-07-14/findings.md` — resolved F-009 portability regression
   and the Bash 3.2/Bash 5.3 validation boundary.
 - `audit/2026-05-21/SUMMARY.md` — first audit cycle (Agentic Architecture

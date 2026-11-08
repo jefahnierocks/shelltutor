@@ -9,7 +9,10 @@
 #   check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 static analysis (default)
 #   lint         shellcheck shelltutor (FF-005; warns if shellcheck absent)
 #   smoke        FF-006a minimal smoke test
-#   verify       check + lint + smoke (full pre-commit gate)
+#   lesson-flow  FF-006b Stage 1 PTY harness (optional; Python 3.9+; not in verify)
+#   sim          FF-006c rung 1 five-stage PTY harness (optional; Python 3.9+; not in verify)
+#   verify       manifest check/tests + check + lint + smoke (full pre-commit gate)
+#   manifest-check / manifest-self-test   declaration check and its regression tests
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
 
@@ -32,6 +35,7 @@ help:
 	@printf '  sim          FF-006c rung 1 five-stage PTY harness (optional; Python 3.9+; not in verify)\n'
 	@printf '  verify       manifest check/tests + check + lint + smoke\n'
 	@printf '  manifest-check      released declaration checks (prepared Python/Git)\n'
+	@printf '  manifest-self-test  declaration-check regression tests\n'
 	@printf '  self-test    run checker self-tests\n'
 
 check: check-safety check-governance check-portability check-posix-tools

@@ -3,7 +3,7 @@ title: shelltutor Contracts
 category: reference
 component: contracts
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-07
 tags: [contracts, cli, exit-codes, sandbox, environment]
 priority: medium
@@ -204,7 +204,7 @@ anything else it did.
 | Navigation words | per C-002 |
 | Not controlled | `PATH`, `TERM`, `COLUMNS`, `LINES`, locale variables, exported functions other than `command_not_found_handle`, programmable-completion specs loaded by a system rcfile |
 
-Tab contract taught by lesson 1.1: a single Tab completes a unique match;
+Tab contract taught by lesson 1.2: a single Tab completes a unique match;
 with several matches the first Tab inserts the shared prefix and a second
 Tab lists the candidates; Tab never cycles; no bell.
 

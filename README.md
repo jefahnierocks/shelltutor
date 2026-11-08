@@ -20,9 +20,11 @@ program like Vim.
 
 The course is structured as **five mastery-gated stages**. Each stage
 closes with a gate: three recall questions (all three must be correct)
-plus one practical task that the script verifies on the filesystem.
-**Passing means passing** — unlimited retries, no time pressure, no
-skip. About 45–60 minutes for a motivated learner.
+plus one practical task that the script verifies on the filesystem and,
+for Stages 1, 2 and 4, against the commands you actually ran. **Passing
+means passing** — unlimited retries, no time pressure, no skip; a repeated
+miss earns a hint and then a worked example, never a free pass. About 45–60
+minutes for a motivated learner.
 
 The tutor is intentionally **user-agnostic**: it does not assume a
 particular operator name, home layout, distro, hostname, prompt theme,
@@ -53,15 +55,19 @@ shelltutor/
 ├── CONTRIBUTING.md   # Change discipline + Quality Gates
 ├── STATUS.md         # Current truth, posture, deferrals
 ├── ROADMAP.md        # Phase sequence; Phase 3 carries the curriculum spec
+├── LICENSE           # MIT License
 ├── project.yaml      # Specification 1 project/workstation declaration
 ├── shelltutor        # The tutor itself (single bash script, executable)
-├── Makefile          # Local quality gates and optional lesson-flow target
-├── scripts/          # Static checkers, smoke test, and optional PTY harness
+├── Makefile          # Local quality gates and optional lesson-flow / sim targets
+├── scripts/          # Static checkers, smoke test, and optional PTY harness (scripts/sim)
+├── tests/            # Declaration-check regression tests (make verify)
+├── vendor/           # Vendored Specification 1 release, byte-exact
 ├── docs/
 │   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
 │   ├── workplan/     # Current cycle plan: decisions + worker-executable packages
 │   ├── audit/        # Audit-spec authority package + reference docs
 │   └── audit/references/  # Curriculum reference: shell-research.md
+├── .github/          # Hosted workflows: verify (gate), sim-evidence (non-gating Linux transcripts)
 ├── .claude/          # Claude Code agentic context (settings.json)
 ├── profile/          # Dated project-profile snapshots
 ├── audit/            # Dated audit-cycle artifacts
@@ -84,7 +90,9 @@ The tutor is a single bash script with no installation step:
 ./shelltutor -h       # help
 ```
 
-Contributors use `make verify` after preparing Python 3.11+ and Git 2.56+.
+Contributors use `make verify` after preparing Python 3.11+ and Git 2.56+;
+`make sim` (optional, not part of `verify`) drives the five-stage PTY harness
+and needs Python 3.9+ and a real pseudo-terminal (`scripts/sim/README.md`).
 These are validation tools, not learner prerequisites. See
 [project declaration and verification](docs/project-manifest.md) for offline
 release binding, linked-worktree arguments and CI setup. The tutor remains a
@@ -97,8 +105,10 @@ Requirements:
 - `bash` 3.2+ on `PATH`. The stock macOS `/bin/bash` (3.2.57) is fine —
   no install step is required on macOS. Linux distros ship modern bash.
   The tutor's practice prompts explicitly spawn `bash --rcfile`, so lessons
-  run in Bash regardless of your login shell (bash, zsh, fish). Inherited
-  host rc behavior remains a Phase 2/Slice 2 validation and hardening surface.
+  run in Bash regardless of your login shell (bash, zsh, fish). The practice
+  shell does not source `/etc/bashrc` or `~/.bashrc` and resets the variables
+  that change shell behaviour; `PATH`, `TERM` and locale are inherited (see
+  `docs/contracts.md` C-007 for the exact environment).
 - ANSI color support in the terminal (the standard default; set
   `NO_COLOR=1` to disable).
 
