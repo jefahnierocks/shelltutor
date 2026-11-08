@@ -53,6 +53,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; frozen until `audit/<date>/walkthroughs.md`; lands third |
 | [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; commit 1 (D-19 redaction, harness only) **landed** 7185001; the screens land first after Phase A |
 | [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands second |
+| [WP-13](WP-13-module-infrastructure.md) | Module entry by name, module standard, harness tables and screen-height check | WP-10, WP-14 | none | **drafted**; harness commits A–B may land during the freeze |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
