@@ -54,8 +54,8 @@ documents agree with the code.
 | WP-08 part A | `7d5065f` | MIT `LICENSE` and the script's SPDX header; part B (CHANGELOG, `v0.1.0` inputs) waits for the Phase 2 results. |
 | WP-09 | `bd841ae` | F-014 fixed: the practice shell runs under the outer script's own Bash (`"$BASH"`); the harness records the Bash path and version; post-WP-04/05 macOS baseline `all-current`. |
 | WP-12 | `48c8355` | Stage 1 lesson 1.5 (read-only agent beat) and one sentence each in 3.3 and 4.3, net zero lines. |
-| WP-14 | branch `wp/14-grounding` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
-| WP-13 C–D, WP-16 | branch `wp/16-shells-with-module-entry` (held for the WP-10 rebase) | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
+| WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
+| WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
 
 ### Curriculum and tutor
 
@@ -131,10 +131,11 @@ documents agree with the code.
   be repeated with `/bin/bash ./shelltutor` and `echo $BASH_VERSION` recorded;
   the operator re-records it. The like-for-like macOS baseline is
   `audit/2026-11-08/sim/all-current/`.
-- Recall navigation and ladder (WP-10, A1.1-A1.7) is built on `wp/10-recall-ladder`, waiting
-  to rebase behind WP-12 and WP-14: `show`/`quit` at every recall question and Stage 1
-  follow-up, one three-rung ladder with fifteen hints (Stage 1-2 hints provisional until
-  WP-14), FF-009 hint-leak check, F-015 day question, pre-task hints removed at stages 2-4.
+- Recall navigation and ladder (WP-10, A1.1-A1.7) landed at `deae605`: `show`/`quit` at
+  every recall question and Stage 1 follow-up, one three-rung ladder with fifteen hints
+  (re-read against the WP-14 screens), FF-009 hint-leak check in `make check`, F-015 day
+  question, pre-task hints removed at stages 2-4, Stage 2 `$HOME` accepted forms fixed.
+  Answer-list widening waits for sittings 2 and 3 (A4).
   Evidence: `audit/2026-11-08/sim/wp10-*`.
 - Stage-cleared screens (WP-11, A1.4/A3.5) give stages 1-4 a stopping point after each gate
   (`next` continues, `quit` saves and leaves, `show` redisplays); `--info` no longer promises
