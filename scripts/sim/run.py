@@ -136,19 +136,19 @@ def _repo_relative(path: str, fallback: str) -> str:
 def _build_actions(
     stage: str, whoami_answer: str, pwd_answer: str, day_answer: str
 ) -> List[persona_mod.Action]:
-    if stage == "1":
-        return persona_mod.careful_beginner_stage1(
-            whoami_answer=whoami_answer,
-            pwd_answer=pwd_answer,
-            day_answer=day_answer,
-        )
-    raise SystemExit(
-        "scripts/sim/run.py: --stage %s walk not available yet" % stage
+    return persona_mod.build_walk(
+        stage,
+        whoami_answer=whoami_answer,
+        pwd_answer=pwd_answer,
+        day_answer=day_answer,
+        man_available=shutil.which("man") is not None,
     )
 
 
 def _final_gate_id(stage: str) -> str:
-    return "STAGE_CLEARED" if stage == "1" else "S%s_CLEARED" % stage
+    if stage == "1":
+        return "STAGE_CLEARED"
+    return "S5_CLEARED" if stage == "all" else "S%s_CLEARED" % stage
 
 
 def _child_args(stage: str) -> List[str]:
