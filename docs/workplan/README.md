@@ -55,7 +55,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-14](WP-14-stages-1-2-grounding.md) | Stages 1–2 grounding: the shell made visible, Stage 2 opens with position, `ls -p` (A2) | Phase A summary, WP-15 | none | **drafted**; lands fourth |
 | [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; lands fifth (after WP-14) |
 | [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **landed** 732f9a3 (2026-11-08; includes the F-016 banner fix) |
-| [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands third |
+| [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **landed** 48c8355 (2026-11-08) |
 | [WP-16](WP-16-module-shells.md) | Module `shells` (D1): three lessons, recall gate, zsh-lookup task | WP-13, WP-10 | none | **drafted** (renumbered from WP-14) |
 | [WP-17](WP-17-module-env.md) | Module `env` (D2): five lessons, recall gate, export-and-child task | WP-13, WP-16 | none | **drafted** (renumbered from WP-15) |
 | [WP-13](WP-13-module-infrastructure.md) | Module entry by name, module standard, harness tables and screen-height check | WP-10, WP-14 | none | **drafted**; harness commits A–B **landed** f47fa01 (screen-height check reproduces O-J; module tables ready); C–D wait for Phase B |
