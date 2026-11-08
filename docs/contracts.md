@@ -183,6 +183,17 @@ not. Gate feedback wording is likewise not contractual, but the escalation
 order on repeated gate failure (restatement, then hint, then worked example,
 with no auto-pass) is part of the curriculum design.
 
+Recall escalation: three rungs. A first miss prints the message; a second
+adds the question's hint; the third and later print the hint and the three
+navigation facts (passed stages are saved; `quit` leaves now and the next run
+starts this stage from its first lesson; `show` repeats the question). There
+is no reveal of an accepted form at any rung. `show` repeats the question
+without counting a miss; `quit` leaves with the same farewell as the practice
+prompt. Contractual: the rung order and the three facts. Not contractual: the
+wording. Every hint passes FF-009 (no accepted answer appears in it). The
+Stage 1 follow-up prompts accept `show` and `quit` but have no ladder; a
+mismatch re-asks only the failing item.
+
 Gate feedback is a `┃` checklist (A3.4): each line of the block starts with
 the bar, a `✓` line marks what the gate saw done, a `○` line marks what it did
 not with `not yet: <what it sees>`, and one closing line names the action and
@@ -233,7 +244,7 @@ table, which this section now owns.
 | C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02) |
 | C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02, WP-15) |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
-| C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05, WP-15) |
+| C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05, WP-15, WP-10) |
 | C-007 | —                | added 2026-11 (WP-03, Slice 2): practice-shell environment and Readline behaviour; owns what C-004 listed for the practice subshell |
 
 The current revision passes the audit's Phase 4 exit checks: no

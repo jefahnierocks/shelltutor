@@ -178,6 +178,8 @@ try again." (`shelltutor:500`), by design: "No hints, no answer reveal"
 answers are fixed lists per question (for example `shelltutor:806-815`,
 `1045-1075`, `1519-1550`).
 
+*Amended 2026-11 (WP-10, A1.1).* The paragraph above describes the baseline. Recall now has one three-rung ladder: the message, then the question's hint, then the hint plus three navigation facts; `show` and `quit` are accepted at every question; there is still no reveal. See C-006.
+
 **Gate tasks** escalate. The first failed `check` prints what the gate
 saw: the missing commands list ("Almost — you still need to:",
 `shelltutor:542-546`), or the expected-versus-seen folder state
@@ -580,6 +582,7 @@ Ranked by how little the design currently offers at the moment of risk.
    escalation ladder of §1.5 does not reach recall. Nothing on screen tells
    the learner that Ctrl+C is the exit or that progress to this point is
    safe.
+   *Amended 2026-11 (WP-10):* closed for the mechanism (hint on the second miss, `show`/`quit`, the navigation facts from the third). Answer-list widening from the rejected-answer record is still open.
 2. **Stage 5 without Vim.** The gate cannot be passed and the course offers
    no alternative; the learner is told to install something, which the
    project otherwise never asks (`shelltutor:1707`, `1782-1787`;
