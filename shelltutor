@@ -808,7 +808,7 @@ stage1_intro() {
     lesson <<EOF
 ${H1}STAGE 1 — Where am I?${RST}
 
-Four short lessons (about 10 minutes) followed by a small task.
+Five short lessons (about 10 minutes) followed by a small task.
 You'll meet the prompt, run a few simple commands, and learn the
 keyboard habits that make the shell easy to live with.
 
@@ -899,6 +899,28 @@ ${CMD}whoami${RST} is a third thing — it runs, prints, and exits.
 
 You will keep these three apart for the rest of this tutor:
   ${SUB}terminal${RST}  →  ${SUB}shell${RST}  →  ${SUB}program${RST}
+
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage1_lesson_5() {
+    lesson <<EOF
+${H1}1.5 — who else types here${RST}
+
+Everything you typed went terminal → shell → program. There is no
+other way in: anything that runs a command on this machine goes
+through a shell the same way.
+
+An AI assistant that "runs commands" for you is no exception. It
+types a line into a shell; the shell finds the program; the program
+runs. The line it typed can be read exactly as you read your own.
+
+So the habits in this course count twice:
+  ${SUB}read the line${RST} before anyone presses Enter — you, or a helper
+  ${SUB}know the folder${RST} it will run in
+  ${SUB}read the output${RST} when it comes back, instead of skimming it
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 1's gate.${RST}
 EOF
@@ -1085,7 +1107,7 @@ EOF
 }
 
 run_stage1() {
-    local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3 stage1_lesson_4)
+    local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3 stage1_lesson_4 stage1_lesson_5)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 1 "${lessons[$i]}"
