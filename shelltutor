@@ -1056,7 +1056,6 @@ EOF
                 TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
 
                 if stage1_verify_task; then
-                    printf '\n%b%s Stage 1 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 1
                     return 0
                 fi
@@ -1294,7 +1293,6 @@ EOF
                     continue
                 fi
                 if stage2_verify_task; then
-                    printf '\n%b%s Stage 2 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 2
                     return 0
                 fi
@@ -1505,7 +1503,6 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage3_verify_task; then
-                    printf '\n%b%s Stage 3 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 3
                     return 0
                 fi
@@ -1788,7 +1785,6 @@ EOF
                     continue
                 fi
                 if stage4_verify_task; then
-                    printf '\n%b%s Stage 4 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
                     save_progress 4
                     return 0
                 fi
@@ -2224,6 +2220,86 @@ EOF
 }
 
 # ---------------------------------------------------------------------
+# Stage-cleared screens (A1.4, A3.5)
+#
+# A stopping point after each of stages 1-4. The screen is a panel with no
+# current stage in the header (the dots show what is passed) and the
+# `cleared` footer. Stage 5 keeps its own line and flows into the finale.
+# ---------------------------------------------------------------------
+
+# recap_line LABEL GLOSS [ROLE]: "  label   gloss", label in ROLE (default CMD).
+recap_line() {
+    printf '  %s%-14s%s %s%s%s\n' "${3:-$CMD}" "$1" "$RST" "$DIM" "$2" "$RST"
+}
+
+# stage_recap N: at most eight lines, commands then keys or operators.
+stage_recap() {
+    case "$1" in
+        1)
+            recap_line echo 'print the words you give it'
+            recap_line pwd 'show where you are'
+            recap_line whoami 'show who you are'
+            recap_line date 'show the date and time'
+            recap_line clear 'empty the screen (Ctrl+L too)'
+            recap_line Tab 'finish a name for you' "$KEY"
+            recap_line Up 'bring back an earlier command' "$KEY"
+            recap_line Ctrl+C 'stop a running command' "$KEY"
+            ;;
+        2)
+            recap_line ls 'list what is here'
+            recap_line 'ls -l' 'list with details'
+            recap_line 'ls -a' 'include hidden names'
+            recap_line cd 'change folder'
+            recap_line 'cd ..' 'go up one folder'
+            recap_line 'cd ~' 'go to your home folder'
+            recap_line 'cd -' 'go back to the last folder'
+            recap_line pwd 'show where you are'
+            ;;
+        3)
+            recap_line touch 'make an empty file'
+            recap_line mkdir 'make a folder'
+            recap_line rmdir 'remove an empty folder'
+            recap_line cat 'print a file'
+            recap_line less 'page through a file (q leaves)'
+            recap_line cp 'copy a file'
+            recap_line mv 'move or rename a file'
+            recap_line rm 'delete a file (no undo)'
+            ;;
+        4)
+            recap_line 'command -v' 'is this program installed?'
+            recap_line wc 'count lines and words'
+            recap_line seq 'count out numbers'
+            recap_line head 'show the first lines only'
+            recap_line sort 'put lines in order'
+            recap_line grep 'keep the lines that match'
+            recap_line '|' 'feed one output into the next command'
+            recap_line '>  >>  <  *' 'to a file, add, from a file, match many'
+            ;;
+    esac
+}
+
+# stage_cleared N: show the screen for the stage just passed. Returns the
+# practice() code (RC_NEXT, RC_SHOW, RC_PREV, RC_CHECK).
+stage_cleared() {
+    local n=$1 next=$(( $1 + 1 )) next_title
+    panel_title "$next"
+    next_title="$REPLY"
+    PANEL_STAGE=''; PANEL_POS=''; PANEL_DONE=$n
+    show_screen <<RECAP
+${H1}${G_OK} Stage ${n} cleared.${RST}
+
+You can now:
+$(stage_recap "$n")
+
+${DIM}Next: Stage ${next} ${G_SEP} ${next_title}${RST}
+
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage ${next}, or ${CMD}quit${INSTR} to stop here. Your place is saved.${RST}
+RECAP
+    practice "$SANDBOX" cleared
+    return $?
+}
+
+# ---------------------------------------------------------------------
 # Stage dispatcher
 # ---------------------------------------------------------------------
 
@@ -2280,6 +2356,21 @@ main() {
         if [ "$rc" -ne 0 ]; then
             # quit / interrupt — bail without finale; progress file already saved.
             exit 0
+        fi
+        if [ "$s" -lt "$TOTAL_STAGES" ]; then
+            while true; do
+                stage_cleared "$s"
+                rc=$?
+                case "$rc" in
+                    "$RC_NEXT") break ;;
+                    "$RC_SHOW"|"$RC_PREV") : ;;
+                    "$RC_CHECK")
+                        printf '\n%b(check is only for gate tasks. Type next to continue.)%b\n' "$DIM" "$RST"
+                        sleep 2
+                        ;;
+                    *) exit 0 ;;
+                esac
+            done
         fi
     done
 
