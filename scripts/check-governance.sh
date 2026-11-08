@@ -15,7 +15,10 @@
 # counts as operator-private content for the purposes of this check.
 #
 # Default file set: README.md AGENTS.md CLAUDE.md CONTRIBUTING.md
-# STATUS.md ROADMAP.md. Pass explicit paths to check other files.
+# STATUS.md ROADMAP.md, plus docs/*.md, docs/workplan/*.md and
+# scripts/sim/README.md (globs expand at runtime from the repository root;
+# the audit reference packages under docs/audit/ are not included). Pass
+# explicit paths to check other files.
 #
 # Usage:
 #   ./scripts/check-governance.sh                  # default set
@@ -29,7 +32,10 @@
 
 set -eu
 
-DEFAULT_FILES=(README.md AGENTS.md CLAUDE.md CONTRIBUTING.md STATUS.md ROADMAP.md docs/contracts.md)
+# Globs are expanded here, at runtime; an unmatched glob stays literal and is
+# dropped by the existing-file filter in main().
+DEFAULT_FILES=(README.md AGENTS.md CLAUDE.md CONTRIBUTING.md STATUS.md ROADMAP.md
+    docs/*.md docs/workplan/*.md scripts/sim/README.md)
 
 awk_check() {
     awk '
