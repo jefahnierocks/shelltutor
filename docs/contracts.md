@@ -3,8 +3,8 @@ title: shelltutor Contracts
 category: reference
 component: contracts
 status: active
-version: 0.2.0
-last_updated: 2026-11-07
+version: 0.3.0
+last_updated: 2026-11-08
 tags: [contracts, cli, exit-codes, sandbox, environment]
 priority: medium
 ---
@@ -35,20 +35,23 @@ audit's contract IDs (C-001 … C-006) and the later C-007.
 
 ## C-001 — CLI arguments
 
-The tutor accepts four argument shapes:
+The tutor accepts five argument shapes:
 
 | Invocation                | Behaviour                                                                            |
 | ---                       | ---                                                                                  |
 | `./shelltutor`            | Resume at the next un-passed stage (or run the finale if all stages are passed).     |
 | `./shelltutor N`          | Enter stage `N` ∈ {1, 2, 3, 4, 5} for re-take or first-time. Bypasses the `.progress` resume; does not regress stored progress. |
+| `./shelltutor <module>`   | Run a stand-alone module, where `<module>` is a lowercase word from the fixed list in the script (`MODULES`; currently `shells`). A module needs no stage, saves nothing and exits 0; it never reads or writes `.progress`. `-h` lists the modules under their own heading. |
 | `./shelltutor -h`         | Print usage to stdout, exit 0. `--help` is an accepted alias.                         |
 | `./shelltutor --info`     | Print an informational environment check and exit 0; does not start lessons.         |
 
-Any other invocation prints an error to stderr and exits 1.
+Any other invocation (a word that is neither a stage number nor a listed
+module) prints an error to stderr and exits 1.
 
 The numeric range is **inclusive 1 through 5**. Adding a sixth stage
 is a breaking change (CLI accepts a new value); removing the upper
-bound or adding `0` is also breaking.
+bound or adding `0` is also breaking. Adding a module name to `MODULES` is
+not breaking; removing or renaming one is.
 
 Stability commitment: stable for the lifetime of the 5-stage
 curriculum. If the curriculum expands to 6+ stages in a future cycle,
@@ -113,6 +116,12 @@ $SANDBOX/
 Where practice prompts start: stages 1 and 2 start in `$SANDBOX`; stages 3
 to 5 start in their stage folder (`$SANDBOX/stage3` to `$SANDBOX/stage5`) for
 lessons and gates.
+
+Modules: a module's fixtures live in `$SANDBOX/<module>/` (for example
+`$SANDBOX/shells/`), created on entry and self-healing like the stage
+folders; its practice prompts start there. A module writes only under its own
+folder and never touches `.progress` (`./shelltutor shells` leaves `.progress`
+byte-identical, or absent).
 
 Stability commitment:
 
@@ -239,9 +248,9 @@ table, which this section now owns.
 
 | ID    | Audit Phase 4 ID | Status in current revision                          |
 | ---   | ---              | ---                                                 |
-| C-001 | C-001            | stable for the 5-stage curriculum                    |
+| C-001 | C-001            | stable for the 5-stage curriculum; extended 2026-11 (WP-13, WP-16): module argument |
 | C-002 | C-002            | extended with `check` (RC=96) in curriculum redesign |
-| C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02) |
+| C-003 | C-003            | extended with stage{1..5}/ subdirs; extended 2026-11 (WP-02, WP-13: `$SANDBOX/<module>/`) |
 | C-004 | C-004            | extended by `--info`; startup environment documented; extended 2026-11 (WP-02, WP-15) |
 | C-005 | C-005            | rewritten in curriculum redesign                     |
 | C-006 | C-006            | rewritten in curriculum redesign; extended 2026-11 (WP-05, WP-15, WP-10) |

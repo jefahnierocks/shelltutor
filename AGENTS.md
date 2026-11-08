@@ -4,7 +4,7 @@ category: governance
 component: agents-contract
 status: active
 version: 0.2.0
-last_updated: 2026-11-07
+last_updated: 2026-11-08
 tags: [agents, claude, codex, authority, boundary]
 priority: high
 ---
@@ -28,8 +28,9 @@ while the Jefahnierocks workspace boundary still applies.
 
 ## Identity
 
-`shelltutor` is a single-file interactive tutor for the Unix shell. The
-project's defining property is that it is **user-agnostic**: no operator
+`shelltutor` is a single-file interactive tutor for the Unix shell: a shell
+course whose five-stage core hands off to `vimtutor`, with stand-alone
+modules (`./shelltutor shells`). The project's defining property is that it is **user-agnostic**: no operator
 name, distro, hostname, theme, home-directory layout, or pre-existing shell
 setup is assumed by the script or by any document in this repository.
 
@@ -110,6 +111,12 @@ When authority is unclear, ask before acting.
   tracked working bytes; CI also selects the exact commit with
   `SHELLTUTOR_MANIFEST_REV`. That selector does not turn the native gate into
   a historical-source execution.
+- Two evidence tiers (`docs/direction-decisions-2026-11.md` §0). The five
+  stages, the finale and `docs/contracts.md` keep the core standard: the
+  fitness functions, the evidence-bundle discipline and a density review for
+  any changed screen. New curriculum ships as a module under the module
+  standard in `CONTRIBUTING.md`; a module is never held to the core standard
+  unless the operator folds it into the core line.
 - Run the tutor (`./shelltutor`) and complete at least the lesson surface
   affected by a change.
 - For portability changes, validate on both Linux and macOS when possible,

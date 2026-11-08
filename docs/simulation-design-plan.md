@@ -4,7 +4,7 @@ category: planning
 component: simulation-design
 status: active
 version: 0.4.0
-last_updated: 2026-11-07
+last_updated: 2026-11-08
 tags: [simulation, pty, evidence, personas, planning, lesson-flow]
 priority: high
 ---
@@ -330,7 +330,8 @@ not part of the v1 design.
 ## Pedagogy And UX
 
 The target audience is adult beginners first, child-friendly compatible
-second.
+second. Children are named learners; the tone rules below are unchanged for
+them (D5, `docs/direction-decisions-2026-11.md`).
 
 Default tone:
 

@@ -4,7 +4,7 @@ category: process
 component: contributing
 status: active
 version: 0.2.0
-last_updated: 2026-11-07
+last_updated: 2026-11-08
 tags: [contributing, verification, change-discipline]
 priority: medium
 ---
@@ -123,7 +123,72 @@ are built by a loop at a fixed 80 columns; never `tr` on a multibyte glyph or
 not literal `▶` or `✓`; ASCII substitutes are selected by the plain-text path or
 `SHELLTUTOR_ASCII=1`, never by locale. Gate feedback goes through `fb_ok`,
 `fb_todo` and `fb_note`.
-The full lesson-screen template lands with WP-13 (commit D).
+The lesson-screen template is under Module Standard below.
+
+## Module Standard
+
+New curriculum ships as a **module** under this standard, not the core
+standard (`docs/direction-decisions-2026-11.md` §0, §5). A module is entered by
+name (`./shelltutor shells`), stands alone, requires nothing passed and saves
+nothing.
+
+A module **requires**:
+
+1. One function block in the script (intro, lessons, verifiers, gate,
+   runner) following the stage pattern, and a line in `MODULES`.
+2. Fixtures under `$SANDBOX/<module>/` if any, seeded and self-healing.
+3. Screens that fit the 20-line budget (authored to 18 heredoc lines under
+   the chrome) and end in a `▶` line; headings are the harness sentinels.
+4. One gate: three recall questions with the recall ladder, plus a task
+   verified from state or history where the content allows one.
+5. One persona table (lesson count, gate actions) in
+   `scripts/sim/persona.py` (`MODULE_TABLES`).
+6. One green harness run on the contributor's macOS and one on hosted Linux
+   via the existing non-gating workflow; `result.tap` and `summary.md`
+   committed, the rest of the bundle not.
+7. The static gates FF-001 to FF-008 green.
+8. A three-line entry in `STATUS.md`.
+
+A module **does not require**: a density audit, a work-package report, a
+comparison summary, a findings file unless a run goes red, a full committed
+evidence bundle, or a ROADMAP amendment. It stays at this standard unless the
+operator folds it into the core line. Writing a module reads `AGENTS.md`,
+this section and one existing stage block as a model, not the whole script.
+
+**Heading convention** (binding; the harness derives its sentinels from it):
+
+| Screen | Heading |
+| --- | --- |
+| intro | `MODULE — <name>: <title>` |
+| lesson `k` | `<name> <k> — <title>` |
+| gate (opening screen; no `▶` line, the first question follows) | `<name> — gate` |
+| task | `<name> — task` |
+| cleared | `✓ <name> cleared.` |
+
+Module screens are height-checked by the harness's `screen-height` events;
+a module author counts by hand only when the harness is unavailable.
+
+**Lesson-screen template** (one idea per screen; two concepts or two distinct
+actions is a split candidate):
+
+```
+<heading in H1 colour>                      # the sentinel
+
+<one idea, in two to six lines of plain prose>
+
+  <command>        # <what it will print or do>
+  <command>        # <aside>
+
+<optional: one line beginning "Notice that">
+
+▶ <the one thing to do>, then type next.
+```
+
+Recall questions go through `ask_question "<prompt>" "<hint>" <accepted>...`;
+no accepted answer may appear in its hint (case-insensitive), and none is one
+or two characters. Every command a module demonstrates must exist in the base
+install on macOS and Linux; other programs get a concept screen and
+`command -v <name>` (D6).
 
 ## Evidence Rules
 
