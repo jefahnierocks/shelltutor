@@ -51,6 +51,7 @@ documents agree with the code.
 | WP-06 | `a71ab76` | Non-gating `sim-evidence` workflow for hosted Linux transcripts (commits 1–2); the first hosted run and its evidence commit remain with the operator. |
 | WP-07 | this sweep | Documents realigned with the code and with this file; the governance check covers `docs/` and the harness README. |
 | WP-08 part A | `7d5065f` | MIT `LICENSE` and the script's SPDX header; part B (CHANGELOG, `v0.1.0` inputs) waits for the Phase 2 results. |
+| WP-09 | `bd841ae` | F-014 fixed: the practice shell runs under the outer script's own Bash (`"$BASH"`); the harness records the Bash path and version; post-WP-04/05 macOS baseline `all-current`. |
 
 ### Curriculum and tutor
 
@@ -148,6 +149,17 @@ documents agree with the code.
 - Day-1 documentation set (`README.md`, `CLAUDE.md`, `AGENTS.md`,
   `CONTRIBUTING.md`, `STATUS.md`, `ROADMAP.md`) plus `docs/contracts.md` is in
   place.
+
+### Design record
+
+- `docs/design-description.md` (2026-11-08) is the formal design baseline:
+  game-design, software, user-journey and pedagogy lenses, a glossary, the
+  design tensions the framing exposes, and which claims are backed by
+  evidence under `audit/`. Descriptive only.
+- `docs/design-direction-2026-11.md` (draft, 2026-11-08) records the
+  operator's stated direction toward a general-purpose, agent-aware shell
+  course and the decisions that must precede any specification. No
+  identity, contract or curriculum change has been made on its account.
 
 ## Immediate Next Steps
 

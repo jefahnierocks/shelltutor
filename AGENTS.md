@@ -125,6 +125,13 @@ context that already exists.
 
 - `STATUS.md` — current status-of-record; `project.yaml` is its
   machine-readable meta-inventory projection and must not outrun it.
+- `docs/design-description.md` — formal design baseline (2026-11-08):
+  what the tutor is and does under game-design, software, user-journey
+  and pedagogy lenses, with every claim tied to a file or line. Read it
+  before any curriculum or UX change.
+- `docs/design-direction-2026-11.md` — draft record of the operator's
+  stated direction (general-purpose, agent-aware shell course) and the
+  decisions pending before a specification; not a spec.
 - `docs/workplan/README.md` — the 2026-11 cycle plan: binding worker
   protocol, decision log D-01 to D-18, and the WP-01 to WP-08 packages. An
   implementation session takes exactly one package.

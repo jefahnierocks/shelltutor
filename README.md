@@ -64,6 +64,8 @@ shelltutor/
 ├── vendor/           # Vendored Specification 1 release, byte-exact
 ├── docs/
 │   ├── contracts.md  # De-facto interface contracts (CLI, exit codes, layout)
+│   ├── design-description.md        # Formal design baseline (four lenses, glossary, tensions)
+│   ├── design-direction-2026-11.md  # Draft: operator direction for a broader course
 │   ├── workplan/     # Current cycle plan: decisions + worker-executable packages
 │   ├── audit/        # Audit-spec authority package + reference docs
 │   └── audit/references/  # Curriculum reference: shell-research.md
