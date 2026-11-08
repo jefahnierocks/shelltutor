@@ -155,7 +155,9 @@ deviate must say so in its report and get operator approval first.
   `confused-novice` and confusion events remain Slice 3.
 - **D-03 Harness controlled inputs.** `LC_ALL=C`, `VIMINIT='set
   nocompatible'`, `PAGER=less`, `MANPAGER` and `LESS` unset, `TERM`
-  defaulted, `COLUMNS`/`LINES` forced to the PTY geometry. Reason:
+  defaulted, `COLUMNS`/`LINES` forced to the PTY geometry, and (added
+  2026-11-07 during WP-01) `HOME` set to an empty per-run temporary
+  directory, because a pre-existing `~/.shelltutor` on the host hid F-011. Reason:
   sentinel strings for Vim (`-- INSERT --`), `man` and `date` are
   locale- and configuration-dependent; a deterministic persona needs
   deterministic programs. Everything else stays a recorded host input.

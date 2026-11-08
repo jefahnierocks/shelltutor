@@ -48,8 +48,10 @@ finds.
   never improvises.
 - **D-03** Controlled inputs: the harness sets `LC_ALL=C`,
   `VIMINIT='set nocompatible'`, `PAGER=less`, unsets `MANPAGER` and
-  `LESS`, keeps `TERM` (defaulting to `xterm-256color`), and forces
-  `COLUMNS`/`LINES` to the PTY geometry. Everything else is inherited and
+  `LESS`, keeps `TERM` (defaulting to `xterm-256color`), forces
+  `COLUMNS`/`LINES` to the PTY geometry, and sets `HOME` to an empty
+  per-run temporary directory (amended 2026-11-07: a real `~/.shelltutor`
+  on the host made F-011 invisible). Everything else is inherited and
   recorded as a host input. `summary.md` gains a "Controlled inputs"
   section listing exactly these.
 
@@ -281,8 +283,9 @@ cleared line instead and the child exits on its own.
    the front of `PATH`), `python3 scripts/sim/run.py --stage all
    --variant current-rc --out <scratch>` exits 0, `result.tap` is `ok`,
    `progress_after` is `absent`.
-2. `--stage N` for each `N` in 1..5 exits 0 with `progress_after` equal
-   to `N`.
+2. `--stage N` for each `N` in 1..4 exits 0 with `progress_after` equal
+   to `N`; `--stage 5` ends in the finale, which removes `.progress`, so
+   it expects `absent` (corrected 2026-11-07).
 3. The `all` run records `error-signature` events at screens `S2-L2`
    (`cd ~/.shelltutor`), `S3-L2` (`cat ~/.shelltutor/poem.txt`) and `S5-L3`
    (`cat practice.txt`), and `summary.md` lists them with a pointer to
