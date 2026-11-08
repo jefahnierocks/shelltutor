@@ -58,6 +58,23 @@ per the findings flow in `docs/simulation-design-plan.md`.
   stay set: Apple's bash checks it after the rcfile runs). Bash 3.2.57 screen heights drop by four rows
   (`audit/2026-11-08/wp11-screen-heights.md`).
 
+## Proposed fitness function
+
+### FF-009 — recall hints never contain an accepted answer
+
+| Field | Value |
+| --- | --- |
+| Rule | For every `ask_question` call in `shelltutor`, no accepted answer appears in the call's hint, case-insensitive; the call has exactly one prompt, one hint and at least one accepted form, one argument per line; `show`, `quit` and `exit` are never accepted forms. |
+| Enforcement category | `static-analysis` |
+| Scope | `shelltutor`, code lines of `ask_question` calls (colour-variable references such as `${CMD}` are ignored in the comparison) |
+| Failure condition | any violation; exit 1 with `file:line: FF-009 …` |
+| Implementation | `scripts/check-hints.sh`, same shape as the sibling checkers (awk state machine, `--self-test` with six fixtures, exit 0/1/2), wired into `make check` and `make self-test` (`WP-10`; A1.2) |
+| Related findings | A1.1, A1.2 of `docs/direction-decisions-2026-11.md` |
+
+FF-009 turns "the hint names the concept without the word" from a copy rule
+into a gate. The next audit cycle should admit it to the catalogue with
+FF-001 to FF-008.
+
 ## Observations
 
 - **O-F** The hosted-evidence intake grep for home-directory prefixes hits
