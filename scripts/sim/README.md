@@ -50,6 +50,9 @@ agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
    `No such file or directory`, `command not found`, `: not found`,
    `Permission denied`, `syntax error` and `Is a directory`; each hit is
    a non-fatal `error-signature` event listed in `summary.md`.
+   A screen id listed in `EXPECT_ERROR_SCREENS` (`driver.py`; empty until a
+   lesson asks the learner to mistype) records its hits as `expected-error`
+   events under "Expected errors" instead.
 6. Reads `.progress` before sandbox cleanup: stages 1–4 expect the stage
    number, stage 5 and `all` expect it absent (the finale removes it).
    TAP `ok` requires `gate_passed` and `progress_ok` (and, for

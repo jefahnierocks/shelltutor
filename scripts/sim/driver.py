@@ -154,6 +154,28 @@ ERROR_SIGNATURES = (
 )
 
 
+# Lesson screen ids whose practice-shell error text is the lesson's point
+# (the learner is asked to mistype a command). A listed screen's error
+# substrings are recorded as `expected-error` events and listed under
+# "Expected errors" in summary.md instead of `error-signature`. Empty until
+# a screen needs it (WP-14 Change 1 adds S1-L4's `command not found`).
+EXPECT_ERROR_SCREENS: frozenset = frozenset()
+
+
+def classify_error_lines(region: str, screen_id: str, expect=None):
+    """Split the error-signature lines of a scanned region into
+    (unexpected, expected) lists of stripped lines. A line is an error when
+    it contains any ERROR_SIGNATURES substring; it is expected only when
+    `screen_id` is in `expect` (default EXPECT_ERROR_SCREENS)."""
+    allowed = EXPECT_ERROR_SCREENS if expect is None else expect
+    unexpected: List[str] = []
+    expected: List[str] = []
+    for line in region.split("\n"):
+        if any(sig in line for sig in ERROR_SIGNATURES):
+            (expected if screen_id in allowed else unexpected).append(line.strip())
+    return unexpected, expected
+
+
 def _set_winsize(fd: int, rows: int, cols: int) -> None:
     fcntl.ioctl(fd, termios.TIOCSWINSZ, struct.pack("HHHH", rows, cols, 0, 0))
 
@@ -190,7 +212,8 @@ def drive(
          "gate_passed": bool,
          "duration_seconds": float,
          "wall_clock_capped": bool,
-         "error_signatures": [{"screen_id", "intent", "text"}, ...]}
+         "error_signatures": [{"screen_id", "intent", "text"}, ...],
+         "expected_errors": [same shape; screens in EXPECT_ERROR_SCREENS]}
 
     `child_args` is appended to argv (C-001: `shelltutor N`).
     `final_gate_id` is the sentinel whose match counts as the run's
@@ -239,6 +262,7 @@ def drive(
     heights = ScreenHeightTracker()
     screen_heights: List[Dict[str, object]] = []
     error_signatures: List[Dict[str, str]] = []
+    expected_errors: List[Dict[str, str]] = []
     last_guard: Optional[Action] = None
     gate_passed = False
     child_exit_code: Optional[int] = None
@@ -317,10 +341,15 @@ def drive(
                 idx_p = norm_tail.find(PROMPT, start)
                 if idx_p >= 0:
                     region = norm_tail[start:idx_p]
-                    for line in region.split("\n"):
-                        if any(sig in line for sig in ERROR_SIGNATURES):
-                            text = line.strip()
-                            error_signatures.append(
+                    unexpected, expected = classify_error_lines(
+                        region, str(scan["screen_id"])
+                    )
+                    for kind, texts, bucket in (
+                        ("error-signature", unexpected, error_signatures),
+                        ("expected-error", expected, expected_errors),
+                    ):
+                        for text in texts:
+                            bucket.append(
                                 {
                                     "screen_id": str(scan["screen_id"]),
                                     "intent": str(scan["intent"]),
@@ -329,7 +358,7 @@ def drive(
                             )
                             recorder.write_event(
                                 round(time.monotonic() - start_mono, 6),
-                                "error-signature",
+                                kind,
                                 intent=str(scan["intent"]),
                                 screen_id=str(scan["screen_id"]),
                                 payload={"text": text},
@@ -505,6 +534,7 @@ def drive(
         "duration_seconds": duration,
         "wall_clock_capped": wall_clock_capped,
         "error_signatures": error_signatures,
+        "expected_errors": expected_errors,
         "screen_heights": screen_heights,
     }
 

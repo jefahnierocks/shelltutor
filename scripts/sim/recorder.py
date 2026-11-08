@@ -180,6 +180,7 @@ class Recorder:
         stage: str = "1",
         controlled_inputs: Optional[Dict[str, Any]] = None,
         error_signatures: Optional[List[Dict[str, str]]] = None,
+        expected_errors: Optional[List[Dict[str, str]]] = None,
         screen_heights: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         label = stage_label(stage)
@@ -296,6 +297,20 @@ class Recorder:
                     "`audit/2026-11-07/findings.md`.\n\n"
                 )
                 for sig in sigs:
+                    fp.write(
+                        "- **%s** (`%s`): `%s`\n"
+                        % (sig["screen_id"], sig["intent"], sig["text"])
+                    )
+                fp.write("\n")
+
+            if expected_errors:
+                fp.write("## Expected errors\n\n")
+                fp.write(
+                    "Error text on lesson screens that ask the learner to provoke it\n"
+                    "(`EXPECT_ERROR_SCREENS` in `driver.py`; see `events.jsonl`\n"
+                    "`expected-error`). Not counted as error signatures.\n\n"
+                )
+                for sig in expected_errors:
                     fp.write(
                         "- **%s** (`%s`): `%s`\n"
                         % (sig["screen_id"], sig["intent"], sig["text"])

@@ -164,8 +164,32 @@ def check_drive() -> int:
         shutil.rmtree(work, ignore_errors=True)
 
 
+def check_expected_errors() -> int:
+    """Routing of error lines: a screen listed in the allowance yields
+    `expected` lines, any other screen yields `unexpected` ones."""
+    from scripts.sim import driver as D
+
+    region = "$ dtae\nbash: dtae: command not found\nplain line\n"
+    allow = frozenset({"S1_L4"})
+    got = D.classify_error_lines(region, "S1_L4", allow)
+    if got != ([], ["bash: dtae: command not found"]):
+        return _fail("listed screen should route to expected: %r" % (got,))
+    got = D.classify_error_lines(region, "S1_L3", allow)
+    if got != (["bash: dtae: command not found"], []):
+        return _fail("unlisted screen should route to unexpected: %r" % (got,))
+    if D.classify_error_lines(region, "S1_L4") != (
+        ["bash: dtae: command not found"],
+        [],
+    ):
+        return _fail("the default allowance must be empty")
+    if D.classify_error_lines("clean\n", "S1_L4", allow) != ([], []):
+        return _fail("a clean region must yield nothing")
+    print("selftest_modules: expected-error routing ok")
+    return 0
+
+
 def main() -> int:
-    failures = check_expansion() + check_drive()
+    failures = check_expansion() + check_drive() + check_expected_errors()
     if failures:
         print("selftest_modules: FAILED")
         return 1
