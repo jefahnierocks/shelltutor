@@ -103,6 +103,12 @@ Current truth for the `shelltutor` repository.
   baseline → tutor correctness fixes → practice-shell hardening (Slice 2,
   C-007) → Stage 1 density split → gate feedback alignment → doc sweep.
   Hosted Linux evidence capture and release preparation are operator-gated.
+- **WP-01 landed: five-stage harness baseline** (`audit/2026-11-08/sim/`,
+  harness at `72f6021`, FF-006c rung 1 — one persona, five stages; second
+  persona still deferred). `make sim` drives `careful-beginner` across all
+  five stages with an empty per-run `HOME`; the pre-fix baseline observes
+  F-010 (`S5-L3`) and F-011 (`S2-L2`, `S3-L2`) as `error-signature` events.
+  Green on Bash 3.2.57 and 5.3.20; nothing fixed yet (WP-02).
 - **F-010 to F-013 surfaced by static review** (`audit/2026-11-07/findings.md`,
   2026-11-07; all open, fixes scheduled in WP-02 after the WP-01 baseline):
   lesson 5.3 promises a `practice.txt` fixture that does not exist at lesson

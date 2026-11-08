@@ -1,0 +1,122 @@
+{"ts": 0.024602, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.026579, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — Files and operations\u001b[0m\r\n\r\nThree lessons, then a gate. You'll create, read, copy, move, and remove\r\nfiles. \u001b[1;38;5;196mrm is immediate.\u001b[0m It does not move things to a trash.\r\nWe'll do everything inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-7mwrqwwz/stage3\u001b[0m so practice is\r\ncontained.\r\n\r\nCommands this stage:\r\n  \u001b[1;38;5;220mtouch\u001b[0m   create an empty file (or update its timestamp)\r\n  \u001b[1;38;5;220mmkdir\u001b[0m   create a folder\r\n  \u001b[1;38;5;220mrmdir\u001b[0m   remove an EMPTY folder\r\n  \u001b[1;38;5;220mcat\u001b[0m     print a text file\r\n  \u001b[1;38;5;220mless\u001b[0m    page through a long file (exit with \u001b[38;5;208mq\u001b[0m)\r\n  \u001b[1;38;5;220mcp\u001b[0m      copy\r\n  \u001b[1;38;5;220mmv\u001b[0m      move (or rename — same command)\r\n  \u001b[1;38;5;220mrm\u001b[0m      remove a file (\u001b[1;38;5;196mimmediate\u001b[0m)\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 3.1.\u001b[0m\r\n", "len": 928}
+{"ts": 0.026739, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.040288, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.040368, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.040384, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.040417, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.040447, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.04353, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.045561, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.1 — creating: touch, mkdir\u001b[0m\r\n\r\n\u001b[1;38;5;220mtouch\u001b[0m creates an empty file (or updates the timestamp of\r\nan existing one).\r\n  \u001b[1;38;5;220mtouch hello.txt\u001b[0m\r\n  \u001b[1;38;5;220mls\u001b[0m              \u001b[2m# you should see hello.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mmkdir\u001b[0m creates a folder.\r\n  \u001b[1;38;5;220mmkdir notes\u001b[0m\r\n  \u001b[1;38;5;220mls\u001b[0m              \u001b[2m# notes/ is now there\u001b[0m\r\n\r\nTo create a file \u001b[1;38;5;244mwith content\u001b[0m, use redirection (Stage 4):\r\n  \u001b[1;38;5;220mecho \"first line\" > greeting.txt\u001b[0m\r\n\r\nBut for now, \u001b[1;38;5;220mtouch\u001b[0m for empty files, \u001b[1;38;5;220mmkdir\u001b[0m for\r\nfolders.\r\n\r\n\u001b[1;38;5;208m▶ Make a few, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 691}
+{"ts": 0.045707, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.059072, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.059158, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.059178, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.059206, "dir": "in", "enc": "utf8", "data": "touch hello.txt\n", "len": 16}
+{"ts": 0.059237, "dir": "out", "enc": "utf8", "data": "touch hello.txt\r\n\u001b[?2004l\r", "len": 26}
+{"ts": 0.061492, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.061535, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.061558, "dir": "out", "enc": "utf8", "data": "ls\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.06393, "dir": "out", "enc": "utf8", "data": "hello.txt\tnumbers.txt\tpoem.txt\r\n", "len": 32}
+{"ts": 0.064171, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.064192, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.064222, "dir": "in", "enc": "utf8", "data": "mkdir notes\n", "len": 12}
+{"ts": 0.064249, "dir": "out", "enc": "utf8", "data": "mkdir notes\r\n", "len": 13}
+{"ts": 0.064259, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.066561, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.066586, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.066604, "dir": "out", "enc": "utf8", "data": "ls\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.068456, "dir": "out", "enc": "utf8", "data": "hello.txt\tnotes\t\tnumbers.txt\tpoem.txt\r\n", "len": 39}
+{"ts": 0.068703, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.06872, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.068751, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.068775, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.071667, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.073895, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.2 — reading: cat, less\u001b[0m\r\n\r\n\u001b[1;38;5;220mcat\u001b[0m prints the entire file at once.\r\n  \u001b[1;38;5;220mcat hello.txt\u001b[0m                \u001b[2m# probably empty\u001b[0m\r\n  \u001b[1;38;5;220mcat ~/.shelltutor/poem.txt\u001b[0m   \u001b[2m# the tutor's poem fixture\u001b[0m\r\n\r\nFor a long file, \u001b[1;38;5;220mcat\u001b[0m floods the screen. Use \u001b[1;38;5;220mless\u001b[0m\r\nto page through it:\r\n  \u001b[1;38;5;220mless ~/.shelltutor/poem.txt\u001b[0m\r\n\r\nInside \u001b[1;38;5;220mless\u001b[0m, the screen takes over. Press \u001b[38;5;208mSpace\u001b[0m\r\nor \u001b[38;5;208mf\u001b[0m to page down, \u001b[38;5;208mb\u001b[0m to page back, and\r\n\u001b[38;5;208mq\u001b[0m to exit. (More on full-screen programs in Stage 5.)\r\n\r\n\u001b[1;38;5;196mImportant:\u001b[0m when \u001b[1;38;5;220mless\u001b[0m takes over, the prompt is\r\ngone. You're inside a program. \u001b[38;5;208mq\u001b[0m returns you to the shell.\r\n\r\n\u001b[1;38;5;208m▶ Try both, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 867}
+{"ts": 0.074045, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.08676, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.086844, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.086856, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.08689, "dir": "in", "enc": "utf8", "data": "cat hello.txt\n", "len": 14}
+{"ts": 0.086916, "dir": "out", "enc": "utf8", "data": "cat hello.txt\r\n", "len": 15}
+{"ts": 0.086925, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.089319, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.089357, "dir": "in", "enc": "utf8", "data": "cat ~/.shelltutor/poem.txt\n", "len": 27}
+{"ts": 0.089401, "dir": "out", "enc": "utf8", "data": "cat ~/.shelltutor/poem.txt\r\n\u001b[?2004l\r", "len": 37}
+{"ts": 0.091146, "dir": "out", "enc": "utf8", "data": "cat: /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-userhome-ck59hffa/.shelltutor/poem.txt: No such file or directory\r\n", "len": 136}
+{"ts": 0.091389, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.09143, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.091446, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.094166, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.096145, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m3.3 — copy, move, delete\u001b[0m\r\n\r\n\u001b[1;38;5;220mcp\u001b[0m copies. The original stays.\r\n  \u001b[1;38;5;220mcp hello.txt backup.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mmv\u001b[0m moves. The original moves to the new name or folder.\r\nThe same command is used for \u001b[1;38;5;244mrename\u001b[0m:\r\n  \u001b[1;38;5;220mmv hello.txt hi.txt\u001b[0m            \u001b[2m# rename\u001b[0m\r\n  \u001b[1;38;5;220mmv hi.txt notes/\u001b[0m               \u001b[2m# move into a folder\u001b[0m\r\n\r\n\u001b[1;38;5;220mrm\u001b[0m deletes. \u001b[1;38;5;196mImmediately and permanently.\u001b[0m\r\n  \u001b[1;38;5;220mrm backup.txt\u001b[0m\r\n\r\nThere is no Trash to recover from. There is no undo. \u001b[1;38;5;196mType\r\ncarefully and look before you press Enter.\u001b[0m\r\n\r\n\u001b[1;38;5;244mA safety habit\u001b[0m: list before you remove.\r\n  \u001b[1;38;5;220mls\u001b[0m\r\n  \u001b[1;38;5;220mrm <only-now-that-you-are-sure>\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 3's gate.\u001b[0m\r\n", "len": 872}
+{"ts": 0.096297, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.110134, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.110223, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.110239, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.110283, "dir": "in", "enc": "utf8", "data": "cp hello.txt backup.txt\n", "len": 24}
+{"ts": 0.110324, "dir": "out", "enc": "utf8", "data": "cp hello.txt backup.txt\r\n", "len": 25}
+{"ts": 0.110336, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.113412, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.113457, "dir": "in", "enc": "utf8", "data": "mv hello.txt hi.txt\n", "len": 20}
+{"ts": 0.11351, "dir": "out", "enc": "utf8", "data": "mv hello.txt hi.txt\r\n\u001b[?2004l\r", "len": 30}
+{"ts": 0.115771, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.115798, "dir": "in", "enc": "utf8", "data": "mv hi.txt notes/\n", "len": 17}
+{"ts": 0.115842, "dir": "out", "enc": "utf8", "data": "mv hi.txt notes/\r\n\u001b[?2004l\r", "len": 27}
+{"ts": 0.117764, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.117821, "dir": "in", "enc": "utf8", "data": "rm backup.txt\n", "len": 14}
+{"ts": 0.117852, "dir": "out", "enc": "utf8", "data": "rm backup.txt\r\n\u001b[?2004l\r", "len": 24}
+{"ts": 0.120008, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.120056, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.120085, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.12317, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.125032, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m.\r\n", "len": 149}
+{"ts": 0.125168, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.12523, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: Which command creates an empty file?  (touch, mkdir, new, cat)\u001b[0m\r\n", "len": 84}
+{"ts": 0.125256, "dir": "in", "enc": "utf8", "data": "touch\n", "len": 6}
+{"ts": 0.125276, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m touch\r\n", "len": 39}
+{"ts": 0.131377, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.131437, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: After \u001b[1;38;5;220mrm important.txt\u001b[0m, where is the file?  (~/.Trash, on disk, gone, depends)\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 149}
+{"ts": 0.13147, "dir": "in", "enc": "utf8", "data": "gone\n", "len": 5}
+{"ts": 0.131501, "dir": "out", "enc": "utf8", "data": "gone\r\n", "len": 6}
+{"ts": 0.13728, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.137318, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: What single command renames \u001b[38;5;109mold.txt\u001b[0m to \u001b[38;5;109mnew.txt\u001b[0m?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 131}
+{"ts": 0.137343, "dir": "in", "enc": "utf8", "data": "mv\n", "len": 3}
+{"ts": 0.137364, "dir": "out", "enc": "utf8", "data": "mv\r\n", "len": 4}
+{"ts": 0.143331, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.149577, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.151465, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 3 — GATE TASK\u001b[0m\r\n\r\nYou will work inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-7mwrqwwz/stage3\u001b[0m.\r\n\r\nDo these, in order:\r\n\r\n  1. create a file \u001b[38;5;109mnotes.txt\u001b[0m containing the word \u001b[1;38;5;244mhello\u001b[0m\r\n     \u001b[2m(hint: \u001b[1;38;5;220mecho hello > notes.txt\u001b[0m\u001b[2m)\u001b[0m\r\n  2. copy \u001b[38;5;109mnotes.txt\u001b[0m to \u001b[38;5;109mbackup.txt\u001b[0m\r\n  3. rename \u001b[38;5;109mnotes.txt\u001b[0m to \u001b[38;5;109mdone.txt\u001b[0m\r\n  4. remove \u001b[38;5;109mbackup.txt\u001b[0m\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m. The script will look at the folder.\r\n\r\n\u001b[2mI will check: done.txt exists with 'hello' in it; notes.txt and\u001b[0m\r\n\u001b[2mbackup.txt are gone.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 763}
+{"ts": 0.151597, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.164446, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.164545, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.164558, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.164598, "dir": "in", "enc": "utf8", "data": "echo hello > notes.txt\n", "len": 23}
+{"ts": 0.164643, "dir": "out", "enc": "utf8", "data": "echo hello > notes.txt\r\n", "len": 24}
+{"ts": 0.164654, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.16488, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.16489, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.16491, "dir": "in", "enc": "utf8", "data": "cp notes.txt backup.txt\n", "len": 24}
+{"ts": 0.164947, "dir": "out", "enc": "utf8", "data": "cp notes.txt backup.txt\r\n", "len": 25}
+{"ts": 0.164956, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.16748, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.167499, "dir": "in", "enc": "utf8", "data": "mv notes.txt done.txt\n", "len": 22}
+{"ts": 0.16753, "dir": "out", "enc": "utf8", "data": "mv notes.txt done.txt\r\n", "len": 23}
+{"ts": 0.167539, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.169615, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.169652, "dir": "in", "enc": "utf8", "data": "rm backup.txt\n", "len": 14}
+{"ts": 0.169678, "dir": "out", "enc": "utf8", "data": "rm backup.txt\r\n\u001b[?2004l\r", "len": 24}
+{"ts": 0.171903, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.171928, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.171948, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.171971, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.175025, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 3 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.178213, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.180188, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — Commands, streams, composition\u001b[0m\r\n\r\nThree lessons, then a gate. You'll read a command's structure, check\r\nwhether a command exists, and chain commands together with pipes,\r\nredirects, and globs.\r\n\r\nCommands this stage:\r\n  \u001b[1;38;5;220mcommand -v\u001b[0m   ask the shell if a program is installed\r\n  \u001b[1;38;5;220mwc\u001b[0m           word, line, and character count\r\n  \u001b[1;38;5;220mseq\u001b[0m           generate number sequences\r\n  \u001b[1;38;5;220mhead\u001b[0m          first N lines of input\r\n  \u001b[1;38;5;220msort\u001b[0m          sort lines\r\n  \u001b[1;38;5;220mgrep\u001b[0m          select lines matching a pattern\r\n  \u001b[1;38;5;220m|\u001b[0m             \u001b[1;38;5;244mpipe\u001b[0m: send one command's output into the next\r\n  \u001b[1;38;5;220m>\u001b[0m             \u001b[1;38;5;244mredirect\u001b[0m: write output to a file (overwrites)\r\n  \u001b[1;38;5;220m>>\u001b[0m            \u001b[1;38;5;244mappend\u001b[0m: add output to the end of a file\r\n  \u001b[1;38;5;220m<\u001b[0m             \u001b[1;38;5;244minput redirect\u001b[0m: read a file into a command\r\n  \u001b[1;38;5;220m*\u001b[0m            ", "len": 1024}
+{"ts": 0.180237, "dir": "out", "enc": "utf8", "data": " \u001b[1;38;5;244mglob\u001b[0m: match many filenames at once\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 4.1.\u001b[0m\r\n", "len": 135}
+{"ts": 0.180372, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.193702, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.193797, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.193817, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.193845, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.193866, "dir": "out", "enc": "utf8", "data": "quit\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.196699, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.196856, "dir": "out", "enc": "utf8", "data": "Bye. Run 'shelltutor' again to pick up where you left off.\r\n", "len": 60}

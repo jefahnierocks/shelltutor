@@ -1,0 +1,104 @@
+{"ts": 0.0, "kind": "session-start", "intent": "", "screen_id": "", "payload": {"shelltutor_path": "shelltutor"}}
+{"ts": 0.026791, "kind": "sentinel-matched", "intent": "render-stage5-intro", "screen_id": "S5-I", "payload": {"sentinel": "S5_INTRO", "pattern": "STAGE 5 — Ready for vimtutor", "cursor_after": 28}}
+{"ts": 0.039779, "kind": "sentinel-matched", "intent": "leave-stage5-intro", "screen_id": "S5-I", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 477}}
+{"ts": 0.039823, "kind": "persona-input", "intent": "leave-stage5-intro", "screen_id": "S5-I", "payload": {"data": "next"}}
+{"ts": 0.044942, "kind": "sentinel-matched", "intent": "render-lesson-5-1", "screen_id": "S5-L1", "payload": {"sentinel": "S5_L1", "pattern": "5.1 — print-and-exit vs full-screen", "cursor_after": 518}}
+{"ts": 0.059111, "kind": "sentinel-matched", "intent": "run-man", "screen_id": "S5-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 1245}}
+{"ts": 0.059139, "kind": "persona-input", "intent": "run-man", "screen_id": "S5-L1", "payload": {"data": "man ls"}}
+{"ts": 0.252823, "kind": "sentinel-matched", "intent": "leave-man-pager", "screen_id": "S5-L1", "payload": {"sentinel": "MAN_LS", "pattern": "LS(1)", "cursor_after": 1259}}
+{"ts": 0.252851, "kind": "persona-input", "intent": "leave-man-pager", "screen_id": "S5-L1", "payload": {"data": "q", "raw": true}}
+{"ts": 0.254139, "kind": "sentinel-matched", "intent": "leave-lesson-5-1", "screen_id": "S5-L1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2156}}
+{"ts": 0.254167, "kind": "persona-input", "intent": "leave-lesson-5-1", "screen_id": "S5-L1", "payload": {"data": "next"}}
+{"ts": 0.259695, "kind": "sentinel-matched", "intent": "render-lesson-5-2", "screen_id": "S5-L2", "payload": {"sentinel": "S5_L2", "pattern": "5.2 — entering and leaving Vim", "cursor_after": 2192}}
+{"ts": 0.27391, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2887}}
+{"ts": 0.273942, "kind": "persona-input", "intent": "run-command", "screen_id": "S5-L2", "payload": {"data": "command -v vim"}}
+{"ts": 0.274163, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 2928}}
+{"ts": 0.27418, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"data": "vim --version"}}
+{"ts": 0.278906, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 5936}}
+{"ts": 0.278936, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L2", "payload": {"data": "vim"}}
+{"ts": 0.291263, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L2", "payload": {"sentinel": "VIM_INTRO", "pattern": "VIM - Vi IMproved", "cursor_after": 7738}}
+{"ts": 0.291289, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L2", "payload": {"data": ":q"}}
+{"ts": 0.393252, "kind": "sentinel-matched", "intent": "leave-lesson-5-2", "screen_id": "S5-L2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 8049}}
+{"ts": 0.393285, "kind": "persona-input", "intent": "leave-lesson-5-2", "screen_id": "S5-L2", "payload": {"data": "next"}}
+{"ts": 0.400434, "kind": "sentinel-matched", "intent": "render-lesson-5-3", "screen_id": "S5-L3", "payload": {"sentinel": "S5_L3", "pattern": "5.3 — buffer vs file", "cursor_after": 8075}}
+{"ts": 0.416897, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 9154}}
+{"ts": 0.416927, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 0.419847, "kind": "error-signature", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"text": "cat: practice.txt: No such file or directory"}}
+{"ts": 0.419861, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 9229}}
+{"ts": 0.419889, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"data": "vim practice.txt"}}
+{"ts": 0.431861, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 9261}}
+{"ts": 0.431891, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"data": "i", "raw": true}}
+{"ts": 0.432319, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 11061}}
+{"ts": 0.432344, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"data": "abc", "raw": true}}
+{"ts": 0.432355, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 11061}}
+{"ts": 0.537539, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 0.537563, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 11061}}
+{"ts": 0.839644, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"data": ":q!"}}
+{"ts": 0.947851, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11085}}
+{"ts": 0.94796, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 0.956257, "kind": "error-signature", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"text": "cat: practice.txt: No such file or directory"}}
+{"ts": 0.956285, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 11160}}
+{"ts": 0.956335, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-L3", "payload": {"data": "vim practice.txt"}}
+{"ts": 0.979711, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 11192}}
+{"ts": 0.979769, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-L3", "payload": {"data": "i", "raw": true}}
+{"ts": 0.9803, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 12992}}
+{"ts": 0.980332, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-L3", "payload": {"data": "abc", "raw": true}}
+{"ts": 0.980347, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 12992}}
+{"ts": 1.0856, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-L3", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 1.08564, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"sentinel": "", "pattern": "", "cursor_after": 12992}}
+{"ts": 1.38818, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-L3", "payload": {"data": ":wq"}}
+{"ts": 1.502578, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13054}}
+{"ts": 1.502648, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-L3", "payload": {"data": "cat practice.txt"}}
+{"ts": 1.508377, "kind": "sentinel-matched", "intent": "leave-lesson-5-3", "screen_id": "S5-L3", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13088}}
+{"ts": 1.508423, "kind": "persona-input", "intent": "leave-lesson-5-3", "screen_id": "S5-L3", "payload": {"data": "next"}}
+{"ts": 1.519126, "kind": "sentinel-matched", "intent": "render-lesson-5-4", "screen_id": "S5-L4", "payload": {"sentinel": "S5_L4", "pattern": "5.4 — calling vimtutor", "cursor_after": 13116}}
+{"ts": 1.544657, "kind": "sentinel-matched", "intent": "run-command", "screen_id": "S5-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13790}}
+{"ts": 1.544698, "kind": "persona-input", "intent": "run-command", "screen_id": "S5-L4", "payload": {"data": "command -v vimtutor"}}
+{"ts": 1.545093, "kind": "sentinel-matched", "intent": "leave-lesson-5-4", "screen_id": "S5-L4", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 13841}}
+{"ts": 1.545114, "kind": "persona-input", "intent": "leave-lesson-5-4", "screen_id": "S5-L4", "payload": {"data": "next"}}
+{"ts": 1.554089, "kind": "sentinel-matched", "intent": "render-gate", "screen_id": "S5-G", "payload": {"sentinel": "S5_GATE", "pattern": "STAGE 5 — GATE", "cursor_after": 13861}}
+{"ts": 1.554449, "kind": "sentinel-matched", "intent": "answer-q1", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q1", "pattern": "Q1: How do you exit man ls?", "cursor_after": 13977}}
+{"ts": 1.554487, "kind": "persona-input", "intent": "answer-q1", "screen_id": "S5-G", "payload": {"data": "q"}}
+{"ts": 1.564722, "kind": "sentinel-matched", "intent": "answer-q2", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q2", "pattern": "Q2: After vim notes.txt, what makes Vim write your edit to the file?", "cursor_after": 14068}}
+{"ts": 1.56475, "kind": "persona-input", "intent": "answer-q2", "screen_id": "S5-G", "payload": {"data": ":w"}}
+{"ts": 1.575041, "kind": "sentinel-matched", "intent": "answer-q3", "screen_id": "S5-G", "payload": {"sentinel": "S5_Q3", "pattern": "Q3: If you open notes.txt in vim, type some letters, and quit with :q!", "cursor_after": 14162}}
+{"ts": 1.575078, "kind": "persona-input", "intent": "answer-q3", "screen_id": "S5-G", "payload": {"data": "no"}}
+{"ts": 1.592839, "kind": "sentinel-matched", "intent": "render-gate-task-1", "screen_id": "S5-GT1", "payload": {"sentinel": "S5_TASK1", "pattern": "STAGE 5 — GATE TASK (phase 1 of 2)", "cursor_after": 14251}}
+{"ts": 1.611547, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 14733}}
+{"ts": 1.611585, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"data": "cat practice.txt"}}
+{"ts": 1.615686, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 14770}}
+{"ts": 1.615723, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-GT1", "payload": {"data": "vim practice.txt"}}
+{"ts": 1.629248, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-GT1", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 14802}}
+{"ts": 1.629278, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-GT1", "payload": {"data": "i", "raw": true}}
+{"ts": 1.629647, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-GT1", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 16610}}
+{"ts": 1.629666, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-GT1", "payload": {"data": "xyz", "raw": true}}
+{"ts": 1.629676, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-GT1", "payload": {"sentinel": "", "pattern": "", "cursor_after": 16610}}
+{"ts": 1.734877, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-GT1", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 1.73491, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-GT1", "payload": {"sentinel": "", "pattern": "", "cursor_after": 16610}}
+{"ts": 2.035468, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-GT1", "payload": {"data": ":q!"}}
+{"ts": 2.141738, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 16644}}
+{"ts": 2.141844, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT1", "payload": {"data": "cat practice.txt"}}
+{"ts": 2.150857, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S5-GT1", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 16681}}
+{"ts": 2.150902, "kind": "persona-input", "intent": "run-check", "screen_id": "S5-GT1", "payload": {"data": "check"}}
+{"ts": 2.159696, "kind": "sentinel-matched", "intent": "phase1-verified", "screen_id": "S5-GT1", "payload": {"sentinel": "S5_PHASE1_OK", "pattern": "Phase 1 verified — the file was unchanged.", "cursor_after": 16733}}
+{"ts": 2.1694, "kind": "sentinel-matched", "intent": "render-gate-task-2", "screen_id": "S5-GT2", "payload": {"sentinel": "S5_TASK2", "pattern": "STAGE 5 — GATE TASK (phase 2 of 2)", "cursor_after": 16769}}
+{"ts": 2.193928, "kind": "sentinel-matched", "intent": "run-vim", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 17109}}
+{"ts": 2.193981, "kind": "persona-input", "intent": "run-vim", "screen_id": "S5-GT2", "payload": {"data": "vim practice.txt"}}
+{"ts": 2.21054, "kind": "sentinel-matched", "intent": "vim-insert-mode", "screen_id": "S5-GT2", "payload": {"sentinel": "VIM_PRACTICE", "pattern": "\"practice.txt\"", "cursor_after": 17141}}
+{"ts": 2.210608, "kind": "persona-input", "intent": "vim-insert-mode", "screen_id": "S5-GT2", "payload": {"data": "i", "raw": true}}
+{"ts": 2.211045, "kind": "sentinel-matched", "intent": "vim-type", "screen_id": "S5-GT2", "payload": {"sentinel": "VIM_INSERT", "pattern": "-- INSERT --", "cursor_after": 18949}}
+{"ts": 2.211083, "kind": "persona-input", "intent": "vim-type", "screen_id": "S5-GT2", "payload": {"data": "after ", "raw": true}}
+{"ts": 2.211096, "kind": "sentinel-matched", "intent": "vim-escape", "screen_id": "S5-GT2", "payload": {"sentinel": "", "pattern": "", "cursor_after": 18949}}
+{"ts": 2.311662, "kind": "persona-input", "intent": "vim-escape", "screen_id": "S5-GT2", "payload": {"data": "\u001b", "raw": true}}
+{"ts": 2.311696, "kind": "sentinel-matched", "intent": "vim-quit", "screen_id": "S5-GT2", "payload": {"sentinel": "", "pattern": "", "cursor_after": 18949}}
+{"ts": 2.61753, "kind": "persona-input", "intent": "vim-quit", "screen_id": "S5-GT2", "payload": {"data": ":wq"}}
+{"ts": 2.729751, "kind": "sentinel-matched", "intent": "run-cat", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19021}}
+{"ts": 2.729837, "kind": "persona-input", "intent": "run-cat", "screen_id": "S5-GT2", "payload": {"data": "cat practice.txt"}}
+{"ts": 2.737387, "kind": "sentinel-matched", "intent": "run-check", "screen_id": "S5-GT2", "payload": {"sentinel": "shelltutor> ", "pattern": "shelltutor> ", "cursor_after": 19064}}
+{"ts": 2.737491, "kind": "persona-input", "intent": "run-check", "screen_id": "S5-GT2", "payload": {"data": "check"}}
+{"ts": 2.745514, "kind": "sentinel-matched", "intent": "stage5-cleared", "screen_id": "S5-GT2", "payload": {"sentinel": "S5_CLEARED", "pattern": "Stage 5 cleared.", "cursor_after": 19134}}
+{"ts": 2.745545, "kind": "gate-pass", "intent": "stage5-cleared", "screen_id": "S5-GT2", "payload": {"final": true}}
+{"ts": 2.754587, "kind": "sentinel-matched", "intent": "render-finale", "screen_id": "FIN", "payload": {"sentinel": "FINALE", "pattern": "You're ready for vimtutor.", "cursor_after": 19162}}
+{"ts": 2.762145, "kind": "child-exit", "intent": "", "screen_id": "", "payload": {"exit_code": 0}}
+{"ts": 2.762145, "kind": "session-end", "intent": "", "screen_id": "", "payload": {"gate_passed": true, "wall_clock_capped": false}}
+{"ts": 2.762145, "kind": "persona-end", "intent": "", "screen_id": "", "payload": {}}

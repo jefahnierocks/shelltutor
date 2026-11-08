@@ -1,0 +1,146 @@
+{"ts": 0.0251, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.026982, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — Commands, streams, composition\u001b[0m\r\n\r\nThree lessons, then a gate. You'll read a command's structure, check\r\nwhether a command exists, and chain commands together with pipes,\r\nredirects, and globs.\r\n\r\nCommands this stage:\r\n  \u001b[1;38;5;220mcommand -v\u001b[0m   ask the shell if a program is installed\r\n  \u001b[1;38;5;220mwc\u001b[0m           word, line, and character count\r\n  \u001b[1;38;5;220mseq\u001b[0m           generate number sequences\r\n  \u001b[1;38;5;220mhead\u001b[0m          first N lines of input\r\n  \u001b[1;38;5;220msort\u001b[0m          sort lines\r\n  \u001b[1;38;5;220mgrep\u001b[0m          select lines matching a pattern\r\n  \u001b[1;38;5;220m|\u001b[0m             \u001b[1;38;5;244mpipe\u001b[0m: send one command's output into the next\r\n  \u001b[1;38;5;220m>\u001b[0m             \u001b[1;38;5;244mredirect\u001b[0m: write output to a file (overwrites)\r\n  \u001b[1;38;5;220m>>\u001b[0m            \u001b[1;38;5;244mappend\u001b[0m: add output to the end of a file\r\n  \u001b[1;38;5;220m<\u001b[0m             \u001b[1;38;5;244minput redirect\u001b[0m: read a file into a command\r\n  \u001b[1;38;5;220m*\u001b[0m            ", "len": 1024}
+{"ts": 0.027095, "dir": "out", "enc": "utf8", "data": " \u001b[1;38;5;244mglob\u001b[0m: match many filenames at once\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 4.1.\u001b[0m\r\n", "len": 135}
+{"ts": 0.027125, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.040704, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.040795, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.040813, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.040852, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.04088, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.043907, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.045809, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.1 — reading a command\u001b[0m\r\n\r\nA shell command has a small grammar:\r\n\r\n  \u001b[1;38;5;244mcommand  options  arguments\u001b[0m\r\n\r\nExamples:\r\n  \u001b[1;38;5;220mls\u001b[0m\r\n  \u001b[1;38;5;220mls -l\u001b[0m                    \u001b[2m# one option, no argument\u001b[0m\r\n  \u001b[1;38;5;220mls -l /etc\u001b[0m               \u001b[2m# option + argument\u001b[0m\r\n  \u001b[1;38;5;220mwc -l poem.txt\u001b[0m           \u001b[2m# count lines in a file\u001b[0m\r\n  \u001b[1;38;5;220mecho \"hello world\"\u001b[0m       \u001b[2m# argument with a space — quoted\u001b[0m\r\n\r\n\u001b[1;38;5;196mSpaces matter.\u001b[0m  The shell splits on spaces. If a filename\r\nhas a space, \u001b[1;38;5;244mquote it\u001b[0m or the shell will see two arguments:\r\n\r\n  \u001b[1;38;5;220mvim \"my notes.txt\"\u001b[0m       \u001b[2m# opens one file\u001b[0m\r\n  \u001b[1;38;5;220mvim my notes.txt\u001b[0m         \u001b[2m# opens TWO files: 'my' and 'notes.txt'\u001b[0m\r\n\r\n\u001b[1;38;5;244mcommand -v\u001b[0m asks the shell whether a command exists.\r\n  \u001b[1;38;5;220mcommand -v ls\u001b[0m            \u001b[2m# prints the path; exits 0\u001b[0m\r\n  \u001b[1;38;5;220mcommand -v vim\u001b[0m           \u001b[2m# does Vim exist ", "len": 1024}
+{"ts": 0.045894, "dir": "out", "enc": "utf8", "data": "on this system?\u001b[0m\r\n  \u001b[1;38;5;220mcommand -v vimtutor\u001b[0m      \u001b[2m# does vimtutor?\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Try a few \u001b[1;38;5;220mcommand -v\u001b[1;38;5;208m probes, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 207}
+{"ts": 0.045975, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.060075, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.060192, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.06021, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.060238, "dir": "in", "enc": "utf8", "data": "ls -l\n", "len": 6}
+{"ts": 0.060266, "dir": "out", "enc": "utf8", "data": "ls -l\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.063221, "dir": "out", "enc": "utf8", "data": "total 16\r\n", "len": 10}
+{"ts": 0.063359, "dir": "out", "enc": "utf8", "data": "-rw-r--r--@ 1 verlyn13  staff  141 Nov  7 16:54 numbers.txt\r\n-rw-r--r--@ 1 verlyn13  staff  147 Nov  7 16:54 poem.txt\r\n", "len": 119}
+{"ts": 0.063684, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.063695, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.063736, "dir": "in", "enc": "utf8", "data": "wc -l poem.txt\n", "len": 15}
+{"ts": 0.063782, "dir": "out", "enc": "utf8", "data": "wc -l poem.txt\r\n\u001b[?2004l\r", "len": 25}
+{"ts": 0.066233, "dir": "out", "enc": "utf8", "data": "       4 poem.txt\r\n", "len": 19}
+{"ts": 0.066528, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.066538, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.06656, "dir": "in", "enc": "utf8", "data": "echo \"hello world\"\n", "len": 19}
+{"ts": 0.066593, "dir": "out", "enc": "utf8", "data": "echo \"hello world\"\r\n", "len": 20}
+{"ts": 0.066602, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.066617, "dir": "out", "enc": "utf8", "data": "hello world\r\n", "len": 13}
+{"ts": 0.06668, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.066689, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.066709, "dir": "in", "enc": "utf8", "data": "command -v ls\n", "len": 14}
+{"ts": 0.066733, "dir": "out", "enc": "utf8", "data": "command -v ls\r\n\u001b[?2004l\r", "len": 24}
+{"ts": 0.066747, "dir": "out", "enc": "utf8", "data": "/bin/ls\r\n", "len": 9}
+{"ts": 0.066807, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.066816, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.066833, "dir": "in", "enc": "utf8", "data": "command -v vim\n", "len": 15}
+{"ts": 0.066858, "dir": "out", "enc": "utf8", "data": "command -v vim\r\n", "len": 16}
+{"ts": 0.066867, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.066931, "dir": "out", "enc": "utf8", "data": "/usr/bin/vim\r\n", "len": 14}
+{"ts": 0.066996, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.067005, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.067022, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.06704, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.069992, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.071981, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.2 — the pipe\u001b[0m\r\n\r\nA \u001b[1;38;5;244mpipe\u001b[0m ( \u001b[1;38;5;220m|\u001b[0m ) sends the standard output of one\r\ncommand into the standard input of the next. \u001b[1;38;5;196mMost important idea\r\nin the shell.\u001b[0m\r\n\r\n\u001b[1;38;5;220mwc\u001b[0m alone counts:\r\n  \u001b[1;38;5;220mwc -l poem.txt\u001b[0m          \u001b[2m# lines in poem.txt\u001b[0m\r\n\r\n\u001b[1;38;5;220mwc\u001b[0m via pipe counts \u001b[1;38;5;244mwhatever you piped in\u001b[0m:\r\n  \u001b[1;38;5;220mseq 1 100 | wc -l\u001b[0m       \u001b[2m# 100\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | wc -l\u001b[0m     \u001b[2m# how many programs are installed\u001b[0m\r\n\r\nPipes stack:\r\n  \u001b[1;38;5;220mls /usr/bin | sort | head\u001b[0m        \u001b[2m# list → sort → first 10\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | grep ^a\u001b[0m            \u001b[2m# names starting with 'a'\u001b[0m\r\n  \u001b[1;38;5;220mls /usr/bin | grep ^a | wc -l\u001b[0m    \u001b[2m# …and count them\u001b[0m\r\n\r\nThings to notice while you try these:\r\n  - \u001b[1;38;5;220m|\u001b[0m is Shift+Backslash on most keyboards.\r\n  - Each piece is a normal command; only the connector is new.\r\n  - The pipeline runs left-to-right", "len": 1024}
+{"ts": 0.072083, "dir": "out", "enc": "utf8", "data": "; output flows.\r\n\r\n\u001b[1;38;5;208m▶ Try a few pipelines, then \u001b[1;38;5;220mnext\u001b[1;38;5;208m.\u001b[0m\r\n", "len": 99}
+{"ts": 0.072168, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.08615, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.086244, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.086263, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.08631, "dir": "in", "enc": "utf8", "data": "seq 1 100 | wc -l\n", "len": 18}
+{"ts": 0.086343, "dir": "out", "enc": "utf8", "data": "seq 1 100 | wc -l\r\n", "len": 19}
+{"ts": 0.086355, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.089121, "dir": "out", "enc": "utf8", "data": "     100\r\n", "len": 10}
+{"ts": 0.089486, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.089558, "dir": "in", "enc": "utf8", "data": "ls /usr/bin | sort | head\n", "len": 26}
+{"ts": 0.089602, "dir": "out", "enc": "utf8", "data": "ls /usr/bin | sort | head\r\n\u001b[?2004l\r", "len": 36}
+{"ts": 0.095066, "dir": "out", "enc": "utf8", "data": "AssetCacheLocatorUtil\r\nAssetCacheManagerUtil\r\nAssetCacheTetheratorUtil\r\nDeRez\r\nGetFileInfo\r\nIOAccelMemory\r\nIOMFBDiagnose\r\nIOMFB_FDR_Loader\r\n", "len": 140}
+{"ts": 0.095095, "dir": "out", "enc": "utf8", "data": "IOSDebug\r\nResMerger\r\n", "len": 21}
+{"ts": 0.095332, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.095343, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.095373, "dir": "in", "enc": "utf8", "data": "ls /usr/bin | grep ^a | wc -l\n", "len": 30}
+{"ts": 0.095419, "dir": "out", "enc": "utf8", "data": "ls /usr/bin | grep ^a | wc -l\r\n\u001b[?2004l\r", "len": 40}
+{"ts": 0.10032, "dir": "out", "enc": "utf8", "data": "      41\r\n", "len": 10}
+{"ts": 0.100647, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.100676, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.100707, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.104163, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.106691, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208m4.3 — redirection and globs\u001b[0m\r\n\r\nA pipe sends output to \u001b[1;38;5;244manother program\u001b[0m. A redirect sends it\r\nto \u001b[1;38;5;244ma file\u001b[0m.\r\n\r\n  \u001b[1;38;5;220m>\u001b[0m    write to a file (\u001b[1;38;5;196moverwrites\u001b[0m if it exists)\r\n  \u001b[1;38;5;220m>>\u001b[0m   append to a file (creates if missing)\r\n  \u001b[1;38;5;220m<\u001b[0m    read a file \u001b[1;38;5;244minto\u001b[0m a command\r\n\r\nExamples:\r\n  \u001b[1;38;5;220mecho first > greeting.txt\u001b[0m        \u001b[2m# overwrite\u001b[0m\r\n  \u001b[1;38;5;220mecho second >> greeting.txt\u001b[0m      \u001b[2m# append\u001b[0m\r\n  \u001b[1;38;5;220mcat greeting.txt\u001b[0m                 \u001b[2m# two lines\u001b[0m\r\n  \u001b[1;38;5;220mwc -w < poem.txt\u001b[0m                 \u001b[2m# count words read from poem.txt\u001b[0m\r\n\r\nCombine with pipes:\r\n  \u001b[1;38;5;220mls /usr/bin | sort > programs.txt\u001b[0m\r\n  \u001b[1;38;5;220mwc -l programs.txt\u001b[0m\r\n\r\n\u001b[1;38;5;244mGlobs\u001b[0m match many filenames at once. The shell expands them\r\n\u001b[1;38;5;244mbefore\u001b[0m the command sees them.\r\n\r\n  \u001b[1;38;5;220mls *.txt\u001b[0m              \u001b[2m# every .txt file in this folder\u001b[0m", "len": 1024}
+{"ts": 0.10681, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[1;38;5;220mwc -l *.txt\u001b[0m           \u001b[2m# count lines in each .txt file\u001b[0m\r\n  \u001b[1;38;5;220mcat *.txt\u001b[0m             \u001b[2m# print them all back-to-back\u001b[0m\r\n\r\n\u001b[1;38;5;196mPredict before you act.\u001b[0m  \u001b[1;38;5;220mrm *\u001b[0m removes everything\r\nin the current folder. \u001b[1;38;5;220mrm *.tmp\u001b[0m removes only .tmp files.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to take Stage 4's gate.\u001b[0m\r\n", "len": 409}
+{"ts": 0.106894, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.119727, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.119823, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.11984, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.11989, "dir": "in", "enc": "utf8", "data": "echo first > greeting.txt\n", "len": 26}
+{"ts": 0.119933, "dir": "out", "enc": "utf8", "data": "echo first > greeting.txt\r\n", "len": 27}
+{"ts": 0.119944, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.120144, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.120154, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.120174, "dir": "in", "enc": "utf8", "data": "echo second >> greeting.txt\n", "len": 28}
+{"ts": 0.12023, "dir": "out", "enc": "utf8", "data": "echo second >> greeting.txt\r\n\u001b[?2004l\r", "len": 38}
+{"ts": 0.120367, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.120411, "dir": "in", "enc": "utf8", "data": "cat greeting.txt\n", "len": 17}
+{"ts": 0.120443, "dir": "out", "enc": "utf8", "data": "cat greeting.txt\r\n\u001b[?2004l\r", "len": 27}
+{"ts": 0.122972, "dir": "out", "enc": "utf8", "data": "first\r\nsecond\r\n", "len": 15}
+{"ts": 0.123217, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.123229, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.123252, "dir": "in", "enc": "utf8", "data": "wc -w < poem.txt\n", "len": 17}
+{"ts": 0.123281, "dir": "out", "enc": "utf8", "data": "wc -w < poem.txt\r\n", "len": 18}
+{"ts": 0.123291, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.125369, "dir": "out", "enc": "utf8", "data": "      28\r\n", "len": 10}
+{"ts": 0.125629, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.12564, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.12566, "dir": "in", "enc": "utf8", "data": "ls *.txt\n", "len": 9}
+{"ts": 0.125678, "dir": "out", "enc": "utf8", "data": "ls *.txt\r\n\u001b[?2004l\r", "len": 19}
+{"ts": 0.128029, "dir": "out", "enc": "utf8", "data": "greeting.txt\tnumbers.txt\tpoem.txt\r\n", "len": 35}
+{"ts": 0.128262, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.128277, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.128303, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.128324, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.131176, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.133128, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — GATE\u001b[0m\r\n\r\n\u001b[1;38;5;244mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[1;38;5;244mpractical task\u001b[0m.\r\n", "len": 149}
+{"ts": 0.13327, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.133344, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ1: What does \u001b[1;38;5;220mcommand -v vim\u001b[0m print, if Vim is installed?\u001b[0m\r\n", "len": 91}
+{"ts": 0.133383, "dir": "in", "enc": "utf8", "data": "the path to vim\n", "len": 16}
+{"ts": 0.133403, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m the path to vim\r\n", "len": 49}
+{"ts": 0.139613, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.139679, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ2: What is the difference between \u001b[1;38;5;220m>\u001b[0m and \u001b[1;38;5;220m>>\u001b[0m?\u001b[0m\r\n", "len": 96}
+{"ts": 0.139708, "dir": "in", "enc": "utf8", "data": "> overwrites, >> appends\n", "len": 25}
+{"ts": 0.139727, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;220myour answer:\u001b[0m > overwrites, >> appends\r\n", "len": 58}
+{"ts": 0.145777, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.145834, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;39mQ3: Why does \u001b[1;38;5;220mvim my notes.txt\u001b[0m open two files instead of one?\u001b[0m\r\n  \u001b[1;38;5;220myour answer:\u001b[0m ", "len": 127}
+{"ts": 0.145866, "dir": "in", "enc": "utf8", "data": "because of the space\n", "len": 21}
+{"ts": 0.145888, "dir": "out", "enc": "utf8", "data": "because of the space\r\n", "len": 22}
+{"ts": 0.15192, "dir": "out", "enc": "utf8", "data": "  \u001b[1;38;5;46m✓\u001b[0m\r\n\r\n", "len": 25}
+{"ts": 0.159898, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.161766, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 4 — GATE TASK\u001b[0m\r\n\r\nWork inside \u001b[38;5;109m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-g7rh7y7i/stage4\u001b[0m.\r\n\r\nDo these:\r\n\r\n  1. Use \u001b[1;38;5;220mseq\u001b[0m and a pipe to count from 1 to 100 and save\r\n     the count to \u001b[38;5;109mcount.txt\u001b[0m.\r\n     \u001b[2m(hint: \u001b[1;38;5;220mseq 1 100 | wc -l > count.txt\u001b[0m\u001b[2m)\u001b[0m\r\n\r\n  2. Use a glob to list every \u001b[38;5;109m*.txt\u001b[0m file in this folder.\r\n\r\nThen type \u001b[1;38;5;220mcheck\u001b[0m.\r\n\r\n\u001b[2mI will check: count.txt exists and contains 100.\u001b[0m\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mcheck\u001b[1;38;5;208m when done.\u001b[0m\r\n", "len": 607}
+{"ts": 0.161894, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.174822, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mcheck\u001b[0m\u001b[2m when done — or \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.17491, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.17493, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.174972, "dir": "in", "enc": "utf8", "data": "seq 1 100 | wc -l > count.txt\n", "len": 30}
+{"ts": 0.175017, "dir": "out", "enc": "utf8", "data": "seq 1 100 | wc -l > count.txt\r\n", "len": 31}
+{"ts": 0.175028, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.177809, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.177843, "dir": "in", "enc": "utf8", "data": "ls *.txt\n", "len": 9}
+{"ts": 0.177864, "dir": "out", "enc": "utf8", "data": "ls *.txt\r\n", "len": 10}
+{"ts": 0.177875, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.18007, "dir": "out", "enc": "utf8", "data": "count.txt\tseed.txt\r\n", "len": 20}
+{"ts": 0.180279, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.180322, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.180346, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.183939, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[1;38;5;46m✓ Stage 4 cleared.\u001b[0m\r\n\r\n", "len": 42}
+{"ts": 0.187033, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.188879, "dir": "out", "enc": "utf8", "data": "\u001b[1;38;5;208mSTAGE 5 — Ready for vimtutor\u001b[0m\r\n\r\nFour lessons, then a gate. By the end, you'll know the difference\r\nbetween a command that prints-and-exits and one that takes over the\r\nterminal; you'll be able to leave any of them deliberately; and you'll\r\nunderstand why Vim has \u001b[1;38;5;220m:w\u001b[0m, \u001b[1;38;5;220m:q\u001b[0m, and \u001b[1;38;5;220m:q!\u001b[0m.\r\n\r\nAfter the gate, this tutor hands you to \u001b[1;38;5;220mvimtutor\u001b[0m (if it's\r\ninstalled on your system) — that is the next step.\r\n\r\n\u001b[1;38;5;208m▶ Type \u001b[1;38;5;220mnext\u001b[1;38;5;208m to begin lesson 5.1.\u001b[0m\r\n", "len": 564}
+{"ts": 0.189028, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.20244, "dir": "out", "enc": "utf8", "data": "\u001b[2m(type \u001b[1;38;5;220mnext\u001b[0m\u001b[2m to advance — or \u001b[0m\u001b[1;38;5;220mprev\u001b[2m, \u001b[0m\u001b[1;38;5;220mshow\u001b[2m, \u001b[0m\u001b[1;38;5;220mquit\u001b[2m)\u001b[0m\r\n", "len": 140}
+{"ts": 0.202531, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.202546, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.20257, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.202589, "dir": "out", "enc": "utf8", "data": "quit\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.20504, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.205198, "dir": "out", "enc": "utf8", "data": "Bye. Run 'shelltutor' again to pick up where you left off.\r\n", "len": 60}
