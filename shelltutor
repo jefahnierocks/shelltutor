@@ -1892,7 +1892,7 @@ EOF
                     break
                 fi
                 attempt=$((attempt + 1))
-                printf '\n%bThe file is no longer exactly ''before''.%b\n' "$EM" "$RST"
+                printf '\n%bThe file is no longer exactly '\''before'\''.%b\n' "$EM" "$RST"
                 printf '%b(Did you use %b:wq%b%b instead of %b:q!%b%b?)%b\n' \
                     "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
                 printf '%bI'\''ll reset it and we'\''ll try phase 1 again.%b\n\n' "$EM" "$RST"
@@ -1941,7 +1941,7 @@ EOF
                     return 0
                 fi
                 attempt=$((attempt + 1))
-                printf '\n%bThe file still reads exactly ''before''.%b\n' "$EM" "$RST"
+                printf '\n%bThe file still reads exactly '\''before'\''.%b\n' "$EM" "$RST"
                 printf '%b(Did you use %b:q!%b%b instead of %b:wq%b%b? Try again.)%b\n\n' \
                     "$SUB" "$CMD" "$RST" "$SUB" "$CMD" "$RST" "$SUB" "$RST"
                 gate_escalate "$attempt" \
