@@ -1,0 +1,34 @@
+name: sim-evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  sim:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Record host inputs
+        run: |
+          bash --version | head -1
+          python3 --version
+          for c in vim man less; do printf '%s: %s\n' "$c" "$(command -v "$c" || echo missing)"; done
+          locale || true
+      - name: Five-stage careful-beginner walk (evidence only, never a gate)
+        continue-on-error: true
+        run: python3 scripts/sim/run.py --stage all --variant current-rc -v --out sim-out
+      - name: Upload evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sim-evidence-${{ github.sha }}
+          path: sim-out
+          retention-days: 30
