@@ -103,7 +103,6 @@ The shell reads the line you type, finds the program you named, runs
 it, and shows what it printed. The shell is itself a program.
 
   ${CMD}echo \$BASH_VERSION${RST}   ${DIM}# the version of the shell running now${RST}
-  ${CMD}echo \$0${RST}              ${DIM}# the name or path it was started under${RST}
   ${CMD}ps${RST}                    ${DIM}# one line is this shell, one is ps itself${RST}
 
 ${CMD}\$BASH_VERSION${RST} is a ${SUB}variable${RST}: a name that holds a value. The
@@ -111,14 +110,14 @@ shell swaps ${CMD}\$name${RST} for its value before it runs the line.
 
 Notice that ${CMD}ps${RST} lists the shell next to the command you just ran.
 
-${INSTR}▶ Run the three commands, then type ${CMD}next${INSTR}.${RST}
+${INSTR}▶ Run both commands, then type ${CMD}next${INSTR}.${RST}
 EOF
 }
 ```
 
-(15 lines. `echo $0` prints a path here because the tutor starts the practice
-shell by its full path; a real terminal usually prints `zsh` or `bash`.
-Not stated on the screen; see [decision] 3.)
+(14 lines. `echo $0` was dropped in review: under the `"$BASH"` launch it
+prints a path here and a bare name in a real terminal, which does not
+transfer.)
 
 ### Lesson 2 — heading `shells 2 — other shells exist`
 
@@ -130,7 +129,7 @@ ${H1}shells 2 — other shells exist${RST}
 Four shells you will meet:
   ${CMD}bash${RST}   common on Linux; the shell this tutor runs
   ${CMD}zsh${RST}    the default on current macOS
-  ${CMD}fish${RST}   a friendlier shell, installed on request
+  ${CMD}fish${RST}   a shell with its own syntax, installed separately
   ${CMD}sh${RST}     the minimal standard shell, used by scripts
 
 Ask which of two are installed here:
@@ -295,7 +294,6 @@ ${OK}✓ shells cleared.${RST}
 
 Commands and keys from this module:
   ${CMD}echo \$BASH_VERSION${RST}   the shell running now
-  ${CMD}echo \$0${RST}              how it was started
   ${CMD}ps${RST}                    the shell is one of the running programs
   ${CMD}command -v NAME${RST}       is NAME installed, and where
   ${CMD}echo \$SHELL${RST}          your login shell
@@ -369,7 +367,17 @@ this of core stages only; modules are not required to).
 
 (WP-13 Commits C and D precede or accompany commit 1.)
 
-## Open points
+## Open points (resolved in review, 2026-11-08)
+
+Coordinator decisions: 1 keep (do not name the command; the first miss
+names it); 2 keep `command -v zsh` only; 3 resolved by dropping `echo $0`;
+4 no deliberate miss in module personas (module standard); 5 `<name> — task`
+adopted into WP-13's convention; 6 the count is lessons only (intro, gate,
+task and cleared screens are not counted); 7 keep the stage precedent: the
+gate opening screen has no `▶` because the first question follows at once
+(recorded in WP-13).
+
+Original points:
 
 - **[decision] 1** Task wording does not name `command -v zsh`. Keep, or
   name it in the hint after Phase A?

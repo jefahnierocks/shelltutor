@@ -45,8 +45,13 @@ line per screen; report any difference and explain it. Two sentences in
 `persona.py`: `module_walk(name, lessons, gate)` builds a walk from a
 table: wait for the module intro heading, `next`; for `k` in `1..lessons`
 wait for the heading `"<name> <k> — "` (prefix match, no title text),
-`next`; then the gate per a small gate spec (recall answers list; task
-commands list; `check`); then wait `"✓ <name> cleared."`. Sentinels are
+`next`; then the gate per a small gate spec (recall answers list; wait
+`"<name> — task"`; task commands list; `check`); then wait
+`"✓ <name> cleared."`. The table may carry an optional
+`lesson_actions={k: [commands]}` typed at lesson `k`'s prompt, and an
+optional `prompt_after={k: "text"}` asserting the prompt text seen after
+that lesson's `next` (the `env` module uses both to observe the prompt
+reverting, WP-15 [decision] 6). Sentinels are
 derived from the convention below, so `sentinels.py` gains no per-module
 entries. `run.py`: `--module <name>` is accepted when `--stage` is absent;
 `--stage` and `--module` together exit 2. Until a module exists, a unit
@@ -74,8 +79,11 @@ check with a fake transcript proves the expansion; no bundle.
   never and write only under `$SANDBOX/<name>/`.
 - **Heading convention** (binding for modules; the harness depends on it):
   intro heading `MODULE — <name>: <title>`; lesson headings
-  `<name> <k> — <title>`; gate heading `<name> — gate`; cleared line
-  `✓ <name> cleared.`.
+  `<name> <k> — <title>`; gate heading `<name> — gate`; task-screen
+  heading `<name> — task`; cleared line `✓ <name> cleared.`. The gate
+  opening screen has no `▶` line (the first question follows at once), as
+  in the stages; every other screen ends in one. "Three to five screens"
+  in the module standard counts lessons only.
 
 ## Commit D — documents (with Commit C)
 

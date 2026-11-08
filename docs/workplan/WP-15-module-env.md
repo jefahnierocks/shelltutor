@@ -436,7 +436,16 @@ or leave the claim to the human walks.
 1. `feat(env): module block — intro, five lessons, recall gate, export-and-child task (D2)`
 2. `chore(sim): env persona table; module bundle result.tap and summary.md; STATUS entry`
 
-## Open points
+## Open points (resolved in review, 2026-11-08)
+
+Coordinator decisions: 1 seed nothing; 2 keep the sentence; 3 one screen
+(the revert explanation is lesson 4's payoff and belongs at the top of
+lesson 5; six lessons would exceed §5); 4 keep the `DIM` aside; 5 accepted
+as a module-standard limit; 6 yes, the prompt-revert observation goes into
+the persona table (WP-13 Commit B gains `lesson_actions` and a post-`next`
+prompt assertion); 7 and 8 as in WP-14.
+
+Original points:
 
 - **[decision] 1** Seed nothing under `$SANDBOX/env/` (draft), or a file.
 - **[decision] 2** Keep or drop the lesson-2 "export copies nothing" line.
