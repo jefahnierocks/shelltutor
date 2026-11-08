@@ -648,9 +648,30 @@ stage1_verify_task() {
     # pwd in practice subshell == $SANDBOX/stage1
     local expected_pwd="$SANDBOX/stage1"
     [ "${TASK_S1_PWD:-x}" = "$expected_pwd" ] || return 1
-    # date day-of-week (e.g., Mon, Tue, ...)
-    [ "${TASK_S1_DAY:-x}" = "$(date +%a 2>/dev/null)" ] || return 1
+    stage1_day_matches "${TASK_S1_DAY:-}" || return 1
     return 0
+}
+
+# Accept the day as `date` printed it in the learner's locale or as the
+# English form the question lists. Case-insensitive; a trailing period is
+# ignored (de_DE prints "Sa."); a full name also matches by its first three
+# characters ("saturday" -> "sat"). See audit/2026-05-23/findings.md F-008
+# (no GNU sed case modifiers) and audit/2026-11-07/findings.md F-013.
+stage1_day_matches() {
+    local given cand norm
+    given=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]' \
+        | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/\.$//')
+    [ -n "$given" ] || return 1
+    for cand in "$(LC_ALL=C date +%a)" "$(LC_ALL=C date +%A)" \
+                "$(date +%a)" "$(date +%A)"; do
+        norm=$(printf '%s' "$cand" | tr '[:upper:]' '[:lower:]' | sed 's/\.$//')
+        [ -n "$norm" ] || continue
+        [ "$given" = "$norm" ] && return 0
+        case "$norm" in
+            "$given"*) [ "${#given}" -ge 3 ] && return 0 ;;
+        esac
+    done
+    return 1
 }
 
 # Verify the learner actually ran whoami / pwd / date during the task
@@ -755,17 +776,10 @@ EOF
                 IFS= read -r TASK_S1_PWD < /dev/tty || return 1
                 TASK_S1_PWD=$(printf '%s' "$TASK_S1_PWD" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
 
-                printf '\n%bWhat day of the week did %bdate%b show? (Mon, Tue, Wed, Thu, Fri, Sat, Sun)%b\n' "$Q" "$CMD" "$Q" "$RST"
+                printf '\n%bWhat day of the week did %bdate%b show? (Mon, Tue, … — or exactly as date printed it)%b\n' "$Q" "$CMD" "$Q" "$RST"
                 printf '  %byour answer:%b ' "$CMD" "$RST"
                 IFS= read -r TASK_S1_DAY < /dev/tty || return 1
                 TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
-                # Normalize day to the 3-letter abbreviation. awk for
-                # the title-case step because BSD sed (macOS) lacks the
-                # GNU \L modifier — see audit/2026-05-23/findings.md F-008.
-                TASK_S1_DAY=$(printf '%s' "$TASK_S1_DAY" \
-                    | tr '[:lower:]' '[:upper:]' \
-                    | sed 's/^\(...\).*/\1/' \
-                    | awk '{print toupper(substr($0,1,1)) tolower(substr($0,2))}')
 
                 if stage1_verify_task; then
                     printf '\n%b✓ Stage 1 cleared.%b\n\n' "$OK" "$RST"
