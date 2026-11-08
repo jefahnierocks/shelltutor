@@ -25,6 +25,12 @@ jobs:
       - name: Five-stage careful-beginner walk (evidence only, never a gate)
         continue-on-error: true
         run: python3 scripts/sim/run.py --stage all --variant current-rc -v --out sim-out
+      - name: Module shells (evidence only, never a gate)
+        continue-on-error: true
+        run: python3 scripts/sim/run.py --module shells -v --out sim-out/module-shells
+      - name: Module env (evidence only, never a gate)
+        continue-on-error: true
+        run: python3 scripts/sim/run.py --module env -v --out sim-out/module-env
       - name: Upload evidence bundle
         if: always()
         uses: actions/upload-artifact@v4
