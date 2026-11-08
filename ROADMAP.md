@@ -503,6 +503,11 @@ question O-3 is resolved: the welcome carries the authority sentence.
 Landing order after three summarised sittings: WP-15, WP-11, WP-12, WP-14,
 WP-10. The module packages are WP-16 `shells` and WP-17 `env`.
 
+Amendments A4 and A5 (2026-11-08): the freeze was lifted and Phase B landed
+in full before sittings 2 and 3; Phase C and the first two modules landed
+the same day. **WP-18** brings stages 3–5 and the finale to the screen
+budget (O-J) before the next sitting.
+
 WP-14 (2026-11-08): Stage 1's 1.4 is replaced by "the shell, caught in the act"
 (a mistyped command shows the shell speaking); Stage 2 has four lessons and
 opens with a drawn tree and `pwd`; `ls -p` marks folders and `ls -l` moves out

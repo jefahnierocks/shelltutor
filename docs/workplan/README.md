@@ -59,6 +59,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-16](WP-16-module-shells.md) | Module `shells` (D1): three lessons, recall gate, zsh-lookup task | WP-13, WP-10 | none | **landed** 486e7ac (2026-11-08); hosted Linux bundle pending |
 | [WP-17](WP-17-module-env.md) | Module `env` (D2): five lessons, recall gate, export-and-child task | WP-13, WP-16 | none | **landed** 6331ff2 (2026-11-08); hosted Linux bundle pending |
 | [WP-13](WP-13-module-infrastructure.md) | Module entry by name, module standard, harness tables and screen-height check | WP-10, WP-14 | none | **landed**: A–B f47fa01, C–D 486e7ac (2026-11-08) |
+| [WP-18](WP-18-stages-3-5-to-budget.md) | Stages 3–5 and the finale trimmed or split to the 22-row budget (O-J, A5) | — | approved 2026-11-08 | ready |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02

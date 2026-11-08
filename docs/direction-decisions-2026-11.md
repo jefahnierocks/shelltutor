@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.4.0
+version: 0.5.0
 last_updated: 2026-11-08
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -811,6 +811,18 @@ of fixes. WP-10's answer-list widening uses only what sitting 1 recorded
 (F-015) and is widened again after sittings 2 and 3. Sitting 1's
 findings remain comparable because they are recorded against the
 revision they observed (`1aea23b`). Everything else in A1–A3 stands.
+
+### A5 — Stages 3–5 and the finale to the screen budget (2026-11-08)
+
+Operator approval, in session, of the coordinator's recommendation after
+the Phase B closure check (`audit/2026-11-08/phase-b-closure.md`): nine
+stage 3–5 screens and the finale exceed the 22-row rendered budget (O-J).
+A2's "Stages 3 to 5 are not reopened" is relaxed for height only: WP-18
+trims or splits those screens to the budget, removes no command, changes
+no gate, and runs at the core standard. It lands before sittings 2 and 3
+so the sittings see finished screens. Operator actions are no longer
+reserved for the push and the hosted-evidence intake: the agent performs
+them.
 
 ## Cross-references
 
