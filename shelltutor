@@ -2335,31 +2335,21 @@ ${H1}You're ready for vimtutor.${RST}
 
 Across five stages you have met:
 
-  ${SUB}commands${RST}    echo, pwd, whoami, date, clear, exit,
-                ls, cd, ~, .., touch, mkdir, rmdir,
-                cat, less, cp, mv, rm,
-                command -v, wc, seq, head, sort, grep,
-                man, vim, vim --version, vimtutor
+  ${SUB}commands${RST}    echo, pwd, whoami, date, clear, exit, ls, cd, ~, .., touch,
+                mkdir, rmdir, cat, less, cp, mv, rm, command -v, wc, seq,
+                head, sort, grep, man, vim, vim --version, vimtutor
   ${SUB}keys${RST}        Tab, Up Arrow, Ctrl+C, Ctrl+L, q, Esc
-  ${SUB}operators${RST}   ${CMD}|${RST} (pipe)  ${CMD}>${RST} (redirect)  ${CMD}>>${RST} (append)
-                ${CMD}<${RST} (input)  ${CMD}*${RST} (glob)
-  ${SUB}ideas${RST}       prompt vs program  ·  buffer vs file
-                relative vs absolute paths
-                file is not changed until the buffer is written
+  ${SUB}operators${RST}   ${CMD}|${RST} (pipe)  ${CMD}>${RST} (redirect)  ${CMD}>>${RST} (append)  ${CMD}<${RST} (input)  ${CMD}*${RST} (glob)
+  ${SUB}ideas${RST}       prompt vs program  ·  buffer vs file  ·  relative vs absolute
 
-${SUB}What's next${RST}:
-
-  ${CMD}vimtutor${RST}
-    ${DIM}# the Vim tutor itself; about 30 minutes, hands-on${RST}
+${SUB}What's next${RST}:  ${CMD}vimtutor${RST}  ${DIM}# the Vim tutor itself; about 30 minutes, hands-on${RST}
 
 If ${CMD}vimtutor${RST} isn't installed:
   - Linux: install your distro's full vim package
     (Fedora: ${CMD}sudo dnf install vim-enhanced${RST}; Debian/Ubuntu: ${CMD}sudo apt install vim${RST})
   - macOS:  ${CMD}brew install vim${RST}
 
-Re-take any stage at any time:
-  ${CMD}shelltutor 1${RST}   ${DIM}# replay Stage 1${RST}
-
+Re-take any stage at any time: ${CMD}shelltutor 1${RST} ${DIM}# replay Stage 1${RST}
 Sandbox stays at ${DIR}${SANDBOX}${RST} if you want to keep playing.
 
 EOF
