@@ -134,7 +134,11 @@ def _repo_relative(path: str, fallback: str) -> str:
 
 
 def _build_actions(
-    stage: str, whoami_answer: str, pwd_answer: str, day_answer: str
+    stage: str,
+    whoami_answer: str,
+    pwd_answer: str,
+    day_answer: str,
+    sandbox_root: str,
 ) -> List[persona_mod.Action]:
     return persona_mod.build_walk(
         stage,
@@ -142,6 +146,7 @@ def _build_actions(
         pwd_answer=pwd_answer,
         day_answer=day_answer,
         man_available=shutil.which("man") is not None,
+        sandbox_root=sandbox_root,
     )
 
 
@@ -201,7 +206,9 @@ def _run_variant(
     pwd_answer = os.path.join(sandbox_root, "stage1")
     day_answer = time.strftime("%a")
 
-    actions = _build_actions(args.stage, whoami_answer, pwd_answer, day_answer)
+    actions = _build_actions(
+        args.stage, whoami_answer, pwd_answer, day_answer, sandbox_root
+    )
     p = persona_mod.Persona(persona_name, actions)
 
     started_at_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")

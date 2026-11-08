@@ -34,6 +34,7 @@ PersonaRejectedError.
 
 from __future__ import annotations
 
+import os
 from typing import List, NamedTuple, Optional
 
 from .sentinels import PROMPT
@@ -154,19 +155,23 @@ def stage_walk(
     n: int,
     pwd_answer: str = "",
     man_available: bool = True,
+    sandbox_root: str = "",
 ) -> List[Action]:
     """Walk for stage `n` (2-5), from its intro to its cleared line.
 
-    The `cd ~/.shelltutor` and `cat ~/.shelltutor/poem.txt` lines are kept
-    deliberately: on the pre-fix script under a tempdir SHELLTUTOR_HOME they
-    produce the F-011 error signature. `cat practice.txt` in 5.3 produces
-    the F-010 one. WP-02 changes them together with the lesson copy.
+    Follows the stage-folder lesson copy (F-010, F-011; WP-02): lesson 2.2
+    ends with `cd <sandbox_root>` and lesson 3.2 reads `../poem.txt` and
+    pages `../numbers.txt`, because stage 3-5 practice prompts start in
+    their stage folder. `sandbox_root` defaults to the parent of the
+    Stage 1 `pwd_answer` (`<sandbox>/stage1`).
     """
+    if not sandbox_root:
+        sandbox_root = os.path.dirname(pwd_answer)
     if n == 2:
         return (
             _intro(2)
             + _lesson(2, 1, ["ls", "ls -l", "ls -a", "ls /etc"])
-            + _lesson(2, 2, ["cd /tmp", "pwd", "cd", "cd -", "cd ..", "cd ~/.shelltutor"])
+            + _lesson(2, 2, ["cd /tmp", "pwd", "cd", "cd -", "cd ..", "cd " + sandbox_root])
             + _lesson(2, 3, [])
             + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"])
             + [Action("S2_TASK", "", "render-gate-task", "S2-GT")]
@@ -180,7 +185,13 @@ def stage_walk(
         return (
             _intro(3)
             + _lesson(3, 1, ["touch hello.txt", "ls", "mkdir notes", "ls"])
-            + _lesson(3, 2, ["cat hello.txt", "cat ~/.shelltutor/poem.txt"])
+            + [Action("S3_L2", "", "render-lesson-3-2", "S3-L2")]
+            + _cmds("S3-L2", ["cat hello.txt", "cat ../poem.txt"])
+            + [
+                Action(PROMPT, "less ../numbers.txt", "run-less", "S3-L2"),
+                Action("LESS_NUMBERS", "q", "leave-less-pager", "S3-L2", raw=True),
+                Action(PROMPT, "next", "leave-lesson-3-2", "S3-L2"),
+            ]
             + _lesson(
                 3,
                 3,
@@ -291,6 +302,7 @@ def build_walk(
     pwd_answer: str,
     day_answer: str,
     man_available: bool = True,
+    sandbox_root: str = "",
 ) -> List[Action]:
     """Compose the walk for `--stage` (`1`..`5` or `all`).
 
@@ -307,10 +319,10 @@ def build_walk(
             whoami_answer, pwd_answer, day_answer, with_quit=False
         )
         for n in (2, 3, 4, 5):
-            walk += stage_walk(n, pwd_answer, man_available)
+            walk += stage_walk(n, pwd_answer, man_available, sandbox_root)
         return walk + finale
     n = int(stage)
-    walk = stage_walk(n, pwd_answer, man_available)
+    walk = stage_walk(n, pwd_answer, man_available, sandbox_root)
     if n == 5:
         return walk + finale
     return walk + [Action(PROMPT, "quit", "quit-tutor", "S%d-GT" % n)]
