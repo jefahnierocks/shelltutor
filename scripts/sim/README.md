@@ -139,6 +139,22 @@ design plan.
 | `--keep-sandbox` | off — fresh `SHELLTUTOR_HOME` and empty `HOME` tempdirs are removed after the run |
 | `-v` / `--verbose` | off |
 
+## Evidence
+
+Each run writes `terminal.jsonl`, `events.jsonl`, `summary.md` and
+`result.tap`. The harness cannot control `whoami`, so the host login name
+would reach all of them; under decision D-19 the recorder treats it as a
+host input, like temp paths, and replaces it with the fixed token `[user]`
+before anything is written. The redaction covers terminal chunks (including
+base64 rows and a name split across two reads), every string in
+`events.jsonl` (the `answer-task-whoami` input included) and `summary.md`,
+and it applies to the hosted runner's `runner` the same way. It affects only
+what is written: the live stream the driver matches against is untouched.
+`summary.md` records the choice under "Controlled inputs" as
+`host_user: redacted as [user]`, or `host_user: not redacted (name too
+short)` for names under three characters. Bundles committed before D-19 are
+not rewritten.
+
 ## Hosted Linux evidence intake
 
 The `sim-evidence` workflow (`.github/workflows/sim-evidence.yml`) runs

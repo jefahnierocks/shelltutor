@@ -22,12 +22,82 @@ from __future__ import annotations
 
 import base64
 import datetime
+import getpass
 import json
 import os
 from typing import Any, Dict, Iterable, List, Optional
 
 
 HARNESS_VERSION = "0.1.0"
+
+# D-19: the host login name is a host input the harness cannot control
+# (`whoami` is the host's), so it is replaced with a fixed token before
+# any committed file is written. Names shorter than this are left alone
+# (too many false hits) and the summary says so.
+REDACTION_TOKEN = "[user]"
+MIN_REDACT_LEN = 3
+
+
+class Redactor:
+    """Replace the host user name with REDACTION_TOKEN in written evidence.
+
+    Built once per run. It only touches what is written to disk; the
+    driver keeps matching against the unredacted stream. Terminal chunks
+    are redacted as bytes, so base64 rows (non-UTF-8 chunks) are covered
+    too. A chunk that ends with a partial name is held back and joined
+    with the next chunk of the same direction, so a name split across two
+    PTY reads is still caught.
+    """
+
+    def __init__(self, name: Optional[str]):
+        self.name = name or ""
+        self.enabled = len(self.name) >= MIN_REDACT_LEN
+        self._name_b = self.name.encode("utf-8")
+        self._token_b = REDACTION_TOKEN.encode("utf-8")
+        self._carry: Dict[str, bytes] = {}
+
+    @classmethod
+    def for_host(cls) -> "Redactor":
+        try:
+            return cls(getpass.getuser())
+        except Exception:  # no login name available: nothing to redact
+            return cls("")
+
+    def status(self) -> str:
+        if self.enabled:
+            return "redacted as %s" % REDACTION_TOKEN
+        return "not redacted (name too short)"
+
+    def text(self, value: str) -> str:
+        if not self.enabled:
+            return value
+        return value.replace(self.name, REDACTION_TOKEN)
+
+    def obj(self, value: Any) -> Any:
+        """Redact every string in a JSON-shaped value."""
+        if isinstance(value, str):
+            return self.text(value)
+        if isinstance(value, dict):
+            return {k: self.obj(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [self.obj(v) for v in value]
+        return value
+
+    def chunk(self, key: str, data: bytes) -> bytes:
+        if not self.enabled:
+            return data
+        buf = self._carry.pop(key, b"") + data
+        buf = buf.replace(self._name_b, self._token_b)
+        for k in range(min(len(self._name_b) - 1, len(buf)), 0, -1):
+            if buf.endswith(self._name_b[:k]):
+                self._carry[key] = buf[-k:]
+                buf = buf[:-k]
+                break
+        return buf
+
+    def flush(self) -> Dict[str, bytes]:
+        carried, self._carry = self._carry, {}
+        return carried
 
 
 def _safe_text(data: bytes) -> Dict[str, Any]:
@@ -57,8 +127,10 @@ class Recorder:
     does not promise crash-consistency.
     """
 
-    def __init__(self, out_dir: str):
+    def __init__(self, out_dir: str, redactor: Optional[Redactor] = None):
         os.makedirs(out_dir, exist_ok=True)
+        self.redactor = redactor if redactor is not None else Redactor.for_host()
+        self._last_ts = 0.0
         self.out_dir = out_dir
         self._terminal_path = os.path.join(out_dir, "terminal.jsonl")
         self._events_path = os.path.join(out_dir, "events.jsonl")
@@ -68,6 +140,10 @@ class Recorder:
 
     def write_terminal(self, ts: float, direction: str, data: bytes) -> None:
         if self._closed:
+            return
+        self._last_ts = ts
+        data = self.redactor.chunk(direction, data)
+        if not data:
             return
         row = {"ts": round(ts, 6), "dir": direction}
         row.update(_safe_text(data))
@@ -91,6 +167,7 @@ class Recorder:
             "screen_id": screen_id,
             "payload": payload or {},
         }
+        row = self.redactor.obj(row)
         self._events_fp.write(json.dumps(row, ensure_ascii=False) + "\n")
         self._events_fp.flush()
 
@@ -162,6 +239,7 @@ class Recorder:
             )
             for key, val in (controlled_inputs or {}).items():
                 fp.write("- %s: `%s`\n" % (key, val))
+            fp.write("- host_user: `%s`\n" % self.redactor.status())
             fp.write("\n")
 
             fp.write("## Host inputs\n\n")
@@ -255,6 +333,15 @@ class Recorder:
                 "- `events.jsonl` — sentinel matches, persona inputs, gate result.\n"
             )
             fp.write("- `result.tap` — TAP 13 single-test outcome line.\n")
+        self._redact_file(path)
+
+    def _redact_file(self, path: str) -> None:
+        with open(path, "r", encoding="utf-8") as fp:
+            content = fp.read()
+        redacted = self.redactor.text(content)
+        if redacted != content:
+            with open(path, "w", encoding="utf-8") as fp:
+                fp.write(redacted)
 
     def write_tap(
         self, ok: bool, description: str, skip_reason: Optional[str] = None
@@ -267,9 +354,16 @@ class Recorder:
             if skip_reason:
                 line += " # SKIP %s" % skip_reason
             fp.write(line + "\n")
+        self._redact_file(path)
 
     def close(self) -> None:
         if not self._closed:
+            # Partial-name suffixes held back at the end never completed
+            # a name, so they are written unchanged.
+            for direction, tail in self.redactor.flush().items():
+                row = {"ts": round(self._last_ts, 6), "dir": direction}
+                row.update(_safe_text(tail))
+                self._terminal_fp.write(json.dumps(row, ensure_ascii=False) + "\n")
             self._closed = True
             try:
                 self._terminal_fp.close()
