@@ -303,6 +303,24 @@ POEM
 setup_stage_dir() {
     local n=$1
     mkdir -p "$SANDBOX/stage${n}"
+    case "$n" in
+        4)  # Stage 4 lessons count lines in poem.txt from inside the
+            # stage folder; seed.txt gives the *.txt glob a second match.
+            [ -f "$SANDBOX/stage4/poem.txt" ] \
+                || cp "$SANDBOX/poem.txt" "$SANDBOX/stage4/poem.txt"
+            if [ ! -f "$SANDBOX/stage4/seed.txt" ]; then
+                cat > "$SANDBOX/stage4/seed.txt" <<'EOF_SEED'
+a small text file
+to give the glob something to match
+EOF_SEED
+            fi
+            ;;
+        5)  # Lesson 5.3 edits practice.txt; the gate re-seeds it to
+            # exactly 'before' at gate entry (stage5_seed_practice).
+            [ -f "$SANDBOX/stage5/practice.txt" ] \
+                || echo before > "$SANDBOX/stage5/practice.txt"
+            ;;
+    esac
 }
 
 save_progress() {
@@ -404,7 +422,8 @@ show_screen() {
     echo
 }
 
-# Optional directory argument; built-in lesson calls intentionally use SANDBOX.
+# Optional directory argument: the practice prompt starts there. Stages 1
+# and 2 use the SANDBOX default; stage 3 to 5 lessons pass their stage folder.
 # shellcheck disable=SC2120
 lesson() {
     show_screen
@@ -1030,7 +1049,7 @@ run_stage2() {
 # ---------------------------------------------------------------------
 
 stage3_intro() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage3" <<EOF
 ${H1}STAGE 3 — Files and operations${RST}
 
 Three lessons, then a gate. You'll create, read, copy, move, and remove
@@ -1053,7 +1072,7 @@ EOF
 }
 
 stage3_lesson_1() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage3" <<EOF
 ${H1}3.1 — creating: touch, mkdir${RST}
 
 ${CMD}touch${RST} creates an empty file (or updates the timestamp of
@@ -1076,7 +1095,7 @@ EOF
 }
 
 stage3_lesson_2() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage3" <<EOF
 ${H1}3.2 — reading: cat, less${RST}
 
 ${CMD}cat${RST} prints the entire file at once.
@@ -1099,7 +1118,7 @@ EOF
 }
 
 stage3_lesson_3() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage3" <<EOF
 ${H1}3.3 — copy, move, delete${RST}
 
 ${CMD}cp${RST} copies. The original stays.
@@ -1207,6 +1226,7 @@ EOF
 }
 
 run_stage3() {
+    setup_stage_dir 3
     local lessons=(stage3_intro stage3_lesson_1 stage3_lesson_2 stage3_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
@@ -1235,7 +1255,7 @@ run_stage3() {
 # ---------------------------------------------------------------------
 
 stage4_intro() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage4" <<EOF
 ${H1}STAGE 4 — Commands, streams, composition${RST}
 
 Three lessons, then a gate. You'll read a command's structure, check
@@ -1260,7 +1280,7 @@ EOF
 }
 
 stage4_lesson_1() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage4" <<EOF
 ${H1}4.1 — reading a command${RST}
 
 A shell command has a small grammar:
@@ -1290,7 +1310,7 @@ EOF
 }
 
 stage4_lesson_2() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage4" <<EOF
 ${H1}4.2 — the pipe${RST}
 
 A ${SUB}pipe${RST} ( ${CMD}|${RST} ) sends the standard output of one
@@ -1319,7 +1339,7 @@ EOF
 }
 
 stage4_lesson_3() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage4" <<EOF
 ${H1}4.3 — redirection and globs${RST}
 
 A pipe sends output to ${SUB}another program${RST}. A redirect sends it
@@ -1404,15 +1424,9 @@ EOF
         'because of spaces' \
         'the shell splits on spaces' || return $?
 
-    # Clean slate once at gate entry; seed.txt stub so the glob exercise has
-    # something to match before the learner creates count.txt.
+    # Clean slate once at gate entry; setup_stage_dir seeds seed.txt so the
+    # glob exercise has something to match before count.txt exists.
     setup_stage_dir 4
-    if [ ! -f "$SANDBOX/stage4/seed.txt" ]; then
-        cat > "$SANDBOX/stage4/seed.txt" <<'EOF'
-a small text file
-to give the glob something to match
-EOF
-    fi
     rm -f "$SANDBOX/stage4/count.txt" 2>/dev/null
 
     while true; do
@@ -1460,6 +1474,7 @@ EOF
 }
 
 run_stage4() {
+    setup_stage_dir 4
     local lessons=(stage4_intro stage4_lesson_1 stage4_lesson_2 stage4_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
@@ -1488,7 +1503,7 @@ run_stage4() {
 # ---------------------------------------------------------------------
 
 stage5_intro() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage5" <<EOF
 ${H1}STAGE 5 — Ready for vimtutor${RST}
 
 Four lessons, then a gate. By the end, you'll know the difference
@@ -1504,7 +1519,7 @@ EOF
 }
 
 stage5_lesson_1() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage5" <<EOF
 ${H1}5.1 — print-and-exit vs full-screen${RST}
 
 Most of the commands you've used print output and return immediately:
@@ -1532,7 +1547,7 @@ EOF
 }
 
 stage5_lesson_2() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage5" <<EOF
 ${H1}5.2 — entering and leaving Vim${RST}
 
 ${CMD}vim${RST} is a text editor. Before you ${SUB}edit${RST} anything,
@@ -1564,7 +1579,7 @@ EOF
 }
 
 stage5_lesson_3() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage5" <<EOF
 ${H1}5.3 — buffer vs file${RST}
 
 This is the most important idea in this stage.
@@ -1604,7 +1619,7 @@ EOF
 }
 
 stage5_lesson_4() {
-    lesson <<EOF
+    lesson "$SANDBOX/stage5" <<EOF
 ${H1}5.4 — calling vimtutor${RST}
 
 ${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a
@@ -1779,6 +1794,7 @@ EOF
 }
 
 run_stage5() {
+    setup_stage_dir 5
     local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
