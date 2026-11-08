@@ -157,15 +157,23 @@ artifact by hand and commits it deliberately:
    timeout means `man` is absent on the runner: add
    `sudo apt-get update && sudo apt-get install --no-install-recommends -y man-db`
    before the walk and note that in the summary.
-3. Check the bundle for operator-private content (for example
-   `grep -r '/home/' <bundle>`); the harness records repo-relative paths
-   and tempdirs only. Copy it to
-   `audit/<UTC-date>/sim/all-linux/current-rc/` and add a two-line
-   "Provenance" section to that directory's `summary.md`: the run id and
-   runner image, and the Bash version from the "Record host inputs" log.
-4. Commit it as
+3. Check the bundle for operator-private content with the command below,
+   run from the repository root. The harness records repo-relative paths
+   and tempdirs only. The `grep -v` removes the one expected hit: lesson
+   2.3 prints a fictional absolute path under a made-up user's home as a
+   teaching example, so it appears in every bundle's terminal log.
+
+```sh
+grep -rn '/home/' <bundle> | grep -v '/home/alice/notes.txt'
+```
+
+4. Copy the bundle to `audit/<UTC-date>/sim/all-linux/current-rc/` and add
+   a two-line "Provenance" section to that directory's `summary.md`: the
+   run id and runner image, and the Bash version (`summary.md` records it
+   as `bash_version`; the "Record host inputs" log shows it too).
+5. Commit it as
    `chore(audit): Linux five-stage evidence from hosted run <run-id>`.
-5. Compare against the same-revision macOS bundle with
+6. Compare against the same-revision macOS bundle with
    `python3 scripts/sim/compare.py audit/<date>/sim/all/current-rc audit/<date>/sim/all-linux/current-rc`;
    record any divergence signature in `audit/<date>/findings.md` as an
    observation.

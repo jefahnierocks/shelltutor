@@ -145,6 +145,8 @@ class Recorder:
                 "harness_version",
                 "shelltutor_path",
                 "shelltutor_path_used",
+                "bash_path",
+                "bash_version",
                 "sandbox_root",
                 "pty_geometry",
                 "per_sentinel_timeout_seconds",

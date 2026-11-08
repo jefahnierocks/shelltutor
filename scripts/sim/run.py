@@ -34,6 +34,7 @@ import getpass
 import os
 import secrets
 import shutil
+import subprocess
 import sys
 import time
 import traceback
@@ -145,6 +146,31 @@ def _repo_relative(path: str, fallback: str) -> str:
     return fallback
 
 
+def _bash_provenance():
+    """Path and version of the `bash` the tutor will run under.
+
+    The tutor's shebang resolves `bash` through the child's PATH, and the
+    practice shell is the same binary (F-014), so one lookup under that
+    PATH identifies both. A path under the operator's home is recorded
+    with a leading `~` so evidence never carries a home directory (D-15).
+    """
+    path = shutil.which("bash", path=os.environ.get("PATH"))
+    if not path:
+        return "not found", "unknown"
+    try:
+        proc = subprocess.run(
+            [path, "--version"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+            universal_newlines=True, timeout=10,
+        )
+        version = (proc.stdout.splitlines() or ["unknown"])[0]
+    except (OSError, subprocess.SubprocessError):
+        version = "unknown"
+    home = os.path.expanduser("~")
+    if home and home != "~" and path.startswith(home + os.sep):
+        path = "~" + path[len(home):]
+    return path, version
+
+
 def _build_actions(
     stage: str,
     whoami_answer: str,
@@ -225,6 +251,7 @@ def _run_variant(
     )
     p = persona_mod.Persona(persona_name, actions)
 
+    bash_path, bash_version = _bash_provenance()
     started_at_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     run_meta = {
         "run_id": run_id,
@@ -237,6 +264,8 @@ def _run_variant(
         "shelltutor_path_used": _repo_relative(
             shelltutor_path, "shelltutor (%s patched copy)" % variant
         ),
+        "bash_path": bash_path,
+        "bash_version": bash_version,
         "sandbox_root": sandbox_root,
         "pty_geometry": "%dx%d" % (args.cols, args.rows),
         "per_sentinel_timeout_seconds": args.timeout,
