@@ -123,13 +123,17 @@ Current truth for the `shelltutor` repository.
   succeeded. Inside an agent session the manifest check refuses inherited
   `GIT_CONFIG_*` overrides and reports NOT_CHECKED; the work plan's worker
   protocol gives the environment-clearing command that restores the verdict.
-- **Operator decisions of 2026-11-07**: license **MIT** (file lands via
-  WP-08 part A once the copyright line is confirmed; default copyright
-  applies until then); WP-06 (non-gating hosted Linux evidence workflow)
+- **Operator decisions of 2026-11-07**: license **MIT** (landed via WP-08
+  part A, see the License bullet below); WP-06 (non-gating hosted Linux evidence workflow)
   **approved**, to start after WP-01.
 - The companion `wyn-setup/` directory from prior-art is intentionally
   not carried forward.
-- No `LICENSE` or `CHANGELOG.md` file yet (see Deferrals).
+- **License adopted (WP-08 part A)**: MIT, SPDX id `MIT`, `Copyright (c) 2026
+  Jefahnierocks` (operator decision and copyright line of 2026-11-07).
+  `LICENSE` is at the repo root and `shelltutor` carries the SPDX header.
+  Distribution is unchanged: clone + run remains the install story. No
+  `CHANGELOG.md` yet (see Deferrals); the Phase 2 walkthrough results are
+  still pending.
 
 ## Immediate Next Steps
 
@@ -164,7 +168,6 @@ Current truth for the `shelltutor` repository.
 
 | Deferred surface | Reason | Trigger to revisit |
 |------------------|--------|--------------------|
-| `LICENSE` file | MIT chosen 2026-11-07; the file has not landed yet, so default copyright still applies | WP-08 part A (copyright line confirmed 2026-11-07) |
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release |
 | `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
 | Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |

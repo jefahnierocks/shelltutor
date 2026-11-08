@@ -158,7 +158,7 @@ project profile and first audit cycle (snapshot 2026-05-21) live under
 
 ## License Posture
 
-MIT was chosen on 2026-11-07 (`docs/license-decision.md`). The `LICENSE`
-file lands with the release-preparation package; until it is present,
-default copyright applies and external reuse is not granted. See
-`STATUS.md` for the deferral entry.
+`shelltutor` is released under the MIT License (SPDX id `MIT`), chosen on
+2026-11-07 (`docs/license-decision.md`). The full text, with the copyright
+line `Copyright (c) 2026 Jefahnierocks`, is in [`LICENSE`](LICENSE), and the
+script carries an `SPDX-License-Identifier: MIT` header.

@@ -5,26 +5,26 @@ component: license-decision
 status: decided
 version: 0.1.0
 last_updated: 2026-11-07
-tags: [license, phase4, planning, decided]
+tags: [license, phase4, planning, decided, adopted]
 priority: medium
 ---
 
 # LICENSE Decision Options (Phase 4)
 
-`shelltutor` is currently published under default copyright (no
-`LICENSE` file). The repo is public at
-`github.com/jefahnierocks/shelltutor` but external reuse is not
-granted until a license is chosen. This document surfaces the
-options and tradeoffs so the operator can decide deliberately.
+Before adoption, `shelltutor` was published under default copyright (no
+`LICENSE` file). The repo is public at `github.com/jefahnierocks/shelltutor`.
+This document surfaces the options and tradeoffs so the operator can decide
+deliberately.
 
 **Decision (2026-11-07): MIT.** Chosen by the operator on the basis of
-the tradeoffs below. The copyright line is confirmed in
-`docs/workplan/WP-08-release-prep.md`, whose part A lands the `LICENSE`
-file, the script header and the README/STATUS wording; part B
-(`CHANGELOG.md`, `v0.1.0` inputs) waits for the Phase 2 walkthrough
-results. Until the file lands, default copyright applies and external
-reuse is not granted. The sections below are the record of the options
-as weighed before the decision.
+the tradeoffs below, with the copyright line `Copyright (c) 2026
+Jefahnierocks` (confirmed in `docs/workplan/WP-08-release-prep.md`). The
+sections below are the record of the options as weighed before the decision.
+
+**Part A landed (WP-08):** `LICENSE`, the `SPDX-License-Identifier: MIT`
+header in `shelltutor`, and the README/STATUS wording are in place; external
+reuse is granted under the MIT terms. Part B (`CHANGELOG.md`, `v0.1.0`
+inputs) still waits for the Phase 2 walkthrough results.
 
 ## Constraints to honor
 
