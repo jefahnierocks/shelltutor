@@ -280,12 +280,12 @@ show_info() {
     if [ -n "$man_path" ]; then
         printf '  %bman%b          : %s\n' "$SUB" "$RST" "$man_path"
     else
-        printf '  %bman%b          : %bnot found — Stage 5 lesson 5.1 will skip the man demo%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %bman%b          : %bnot found — the man ls example in lesson 5.1 will not work until it is installed%b\n' "$SUB" "$RST" "$EM" "$RST"
     fi
     if [ -n "$less_path" ]; then
         printf '  %bless%b         : %s\n' "$SUB" "$RST" "$less_path"
     else
-        printf '  %bless%b         : %bnot found — Stage 3 lesson 3.2 will skip the less demo%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %bless%b         : %bnot found — the less example in lesson 3.2 will not work until it is installed%b\n' "$SUB" "$RST" "$EM" "$RST"
     fi
     if [ -n "$vim_path" ]; then
         printf '  %bvim%b          : %s\n' "$SUB" "$RST" "$vim_path"
@@ -294,7 +294,7 @@ show_info() {
     fi
     if [ -n "$vimtutor_path" ]; then
         printf '  %bvimtutor%b     : %s\n' "$SUB" "$RST" "$vimtutor_path"
-        printf '                 [%s] Stage 5 finale will hand off to this\n' "$ok"
+        printf '                 [%s] the finale names this as the next step\n' "$ok"
     else
         printf '  %bvimtutor%b     : %bnot found%b\n' "$SUB" "$RST" "$DIM" "$RST"
         printf '                 [%s] Stage 5 finale will print install hints instead of handing off\n' "$info"
