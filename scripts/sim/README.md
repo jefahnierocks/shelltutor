@@ -103,6 +103,7 @@ design plan.
 | --- | --- |
 | `run.py` | CLI entry; argparse, persona dispatch, run orchestration, summary writer. |
 | `driver.py` | PTY driver loop (pty + selectors). |
+| `selftest_modules.py` | Self-test for module persona tables (expansion and a fake-tutor drive). |
 | `compare.py` | Unified diff of two bundles' normalized OUT projection. |
 | `project.py` | Shared `terminal.jsonl` OUT projection (run.py, compare.py). |
 | `persona.py` | careful-beginner walks for stages 1–5 and the finale; second-try for stages 2 and 4. |
@@ -124,6 +125,11 @@ module: intro `MODULE — <name>:`, lessons `<name> <k> — `, gate
 `shelltutor <name>`, expects `.progress` to stay absent (modules never save
 progress), and writes under `audit/<date>/sim/module-<name>/`. No module
 exists yet, so the table is empty.
+
+`python3 scripts/sim/selftest_modules.py` (exit 0 or 1, stdlib, Python 3.9)
+checks the expansion and drives a fake tutor that follows the heading
+convention through `run.py --module`; the drive needs a pseudo-terminal and
+is skipped with a message when none is available.
 
 ## Exit codes
 
