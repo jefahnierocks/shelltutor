@@ -168,7 +168,7 @@ Current truth for the `shelltutor` repository.
 | `CHANGELOG.md` | Nothing released yet; no tagged history | First tagged release |
 | `CODEOWNERS`, PR templates and unrelated GitHub automation | Not needed by the declaration migration | A project-specific need |
 | Hosted `verify` qualification and branch enforcement | Specification 1 adoption supplies the activation trigger; source is prepared | Actual hosted checks and effective protection readback |
-| Cross-platform CI | Same as above; manual validation suffices for now | When manual validation stops scaling |
+| Cross-platform CI | Hosted cross-platform *acceptance* remains deferred; `sim-evidence` captures Linux transcripts only | When manual validation stops scaling |
 | Package distribution (Homebrew tap, AUR, etc.) | Single-file script; install is `clone + run` | If users ask for managed install |
 
 ## Blockers

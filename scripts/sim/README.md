@@ -130,6 +130,39 @@ design plan.
 | `--keep-patched-script` | off — preview tempdir is removed after the preview run |
 | `-v` / `--verbose` | off |
 
+## Hosted Linux evidence intake
+
+The `sim-evidence` workflow (`.github/workflows/sim-evidence.yml`) runs
+`run.py --stage all --variant current-rc` on `ubuntu-24.04` and uploads
+the bundle as the artifact `sim-evidence-<sha>` (30-day retention). It
+runs on `workflow_dispatch` and on push to `main`. It is evidence
+capture, not a gate: the walk step has `continue-on-error`, so a green
+workflow run does **not** mean a green bundle. The operator reviews each
+artifact by hand and commits it deliberately:
+
+1. Download the artifact for the run. The archive holds `current-rc/`
+   (the `--out sim-out` directory contents).
+2. Read `summary.md` and `events.jsonl`; confirm `gate_passed=true` and
+   `progress_after=absent` and that `result.tap` is `ok`. List any
+   `error-signature` events. A `skip-man-missing` intent or a `MAN_LS`
+   timeout means `man` is absent on the runner: add
+   `sudo apt-get update && sudo apt-get install --no-install-recommends -y man-db`
+   before the walk and note that in the summary.
+3. Check the bundle for operator-private content (for example
+   `grep -r '/home/' <bundle>`); the harness records repo-relative paths
+   and tempdirs only. Copy it to
+   `audit/<UTC-date>/sim/all-linux/current-rc/` and add a two-line
+   "Provenance" section to that directory's `summary.md`: the run id and
+   runner image, and the Bash version from the "Record host inputs" log.
+4. Commit it as
+   `chore(audit): Linux five-stage evidence from hosted run <run-id>`.
+5. Compare against the same-revision macOS bundle with
+   `python3 scripts/sim/compare.py audit/<date>/sim/all/current-rc audit/<date>/sim/all-linux/current-rc`;
+   record any divergence signature in `audit/<date>/findings.md` as an
+   observation.
+
+Only synthetic harness bundles are committed; never a human transcript.
+
 ## Boundaries
 
 - Python 3.9+ stdlib only. No third-party deps. No Pexpect.

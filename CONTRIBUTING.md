@@ -127,3 +127,8 @@ filters, job conditions or allowed failures. Its source preparation is separate
 from actual hosted qualification and branch-protection readback; record those
 results in `STATUS.md` before claiming enforcement. No deployment or secrets
 are needed. `CODEOWNERS`, PR templates and unrelated automation remain deferred.
+
+`sim-evidence` runs the optional PTY harness on Ubuntu and uploads the bundle
+as an artifact. It is evidence capture, not a required check; failures do not
+block anything, and artifacts are reviewed by hand before any of them are
+committed (intake: `scripts/sim/README.md`).
