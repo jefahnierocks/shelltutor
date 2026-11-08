@@ -67,6 +67,10 @@ blocking.
    the package names. No unrelated edits, no formatting sweeps, no
    dependency additions. Learner runtime stays Bash 3.2+ and POSIX
    userland; contributor Python stays 3.9+ stdlib for `scripts/sim/`.
+   Commits are signed through the workstation's SSH agent; inside an
+   agent sandbox `git commit` can fail with an agent "Operation not
+   permitted" error. Run that commit outside the sandbox. Never change
+   the signing configuration or pass `--no-gpg-sign`.
 4. **Validate before every commit** and again before reporting:
    - `make check lint smoke` and `make self-test` — Bash-only gates.
    - `make verify` — adds the Specification 1 declaration checks. Inside
