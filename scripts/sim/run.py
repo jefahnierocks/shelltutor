@@ -308,6 +308,7 @@ def _run_variant(
         "progress_ok": False,
     }
     error_signatures: List[dict] = []
+    screen_heights: List[dict] = []
     drive_exception: Optional[BaseException] = None
     result: Optional[dict] = None
     try:
@@ -350,6 +351,7 @@ def _run_variant(
             "non-C-002 exit",
         )
         error_signatures = result["error_signatures"]
+        screen_heights = result["screen_heights"]
         run_ok = result["gate_passed"] and outcome["progress_ok"]
         if persona_name == "second-try":
             # The deliberate first failure must show the gate's "Almost"
@@ -382,6 +384,7 @@ def _run_variant(
         stage=args.stage,
         controlled_inputs=controlled_inputs,
         error_signatures=error_signatures,
+        screen_heights=screen_heights,
     )
     outcome["ok"] = bool(
         outcome["gate_passed"]

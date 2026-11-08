@@ -180,6 +180,7 @@ class Recorder:
         stage: str = "1",
         controlled_inputs: Optional[Dict[str, Any]] = None,
         error_signatures: Optional[List[Dict[str, str]]] = None,
+        screen_heights: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         label = stage_label(stage)
         path = os.path.join(self.out_dir, "summary.md")
@@ -298,6 +299,41 @@ class Recorder:
                     fp.write(
                         "- **%s** (`%s`): `%s`\n"
                         % (sig["screen_id"], sig["intent"], sig["text"])
+                    )
+                fp.write("\n")
+
+            if screen_heights:
+                fp.write("## Screen heights\n\n")
+                fp.write(
+                    "Informational only (Q5): it changes neither the TAP result nor\n"
+                    "any exit code. A screen starts at a clear sequence and ends at\n"
+                    "the next practice prompt (or at the end of the run for the\n"
+                    "finale). The count is the newline-terminated lines of normalised\n"
+                    "output in between, so the blank line the screen helper adds and\n"
+                    "the practice footer printed just before the prompt are included.\n"
+                    "Logical lines are counted; a long line that wraps is one line.\n"
+                    "Where one screen id has several clears (Ctrl+L, `clear`), the\n"
+                    "largest is shown. Budget: 22 rendered lines before the prompt,\n"
+                    "which equals the script's stated 20 content lines (heredoc 20 +\n"
+                    "the blank line the screen helper adds + the practice footer), so\n"
+                    "a 24-row terminal still shows the prompt. `Lines` is the raw\n"
+                    "rendered count.\n\n"
+                )
+                fp.write("| Screen | Lines | Over budget |\n| --- | ---: | --- |\n")
+                order: List[str] = []
+                best: Dict[str, int] = {}
+                budget = 22
+                for row in screen_heights:
+                    sid = str(row.get("screen_id") or "?")
+                    budget = int(row.get("budget", budget))
+                    if sid not in best:
+                        order.append(sid)
+                        best[sid] = 0
+                    best[sid] = max(best[sid], int(row.get("lines", 0)))
+                for sid in order:
+                    fp.write(
+                        "| %s | %d | %s |\n"
+                        % (sid, best[sid], "yes" if best[sid] > budget else "no")
                     )
                 fp.write("\n")
 

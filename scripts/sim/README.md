@@ -155,6 +155,15 @@ what is written: the live stream the driver matches against is untouched.
 short)` for names under three characters. Bundles committed before D-19 are
 not rewritten.
 
+The driver also records, per cleared screen, a `screen-height` event and a
+"Screen heights" table in `summary.md`: the rendered lines between a clear
+and the next practice prompt (blank line and practice footer included)
+against a budget of 22 rendered lines, which equals the script's stated 20
+content lines (heredoc 20 plus the blank line `show_screen` adds plus the
+footer), so a 24-row terminal still shows the prompt. It is informational
+only and never changes the TAP result or an exit code; gate recall screens
+end without a prompt and are not measured.
+
 ## Hosted Linux evidence intake
 
 The `sim-evidence` workflow (`.github/workflows/sim-evidence.yml`) runs

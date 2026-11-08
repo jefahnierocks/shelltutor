@@ -53,6 +53,97 @@ _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 # Lesson screens (S1-L1, S2-L3, ...): persona input typed here is scanned
 # for mechanical error signatures.
 _LESSON_SCREEN_RE = re.compile(r"^S[1-5]-L[0-9]$")
+# Rendered screen height (Q5). A screen starts at a clear sequence and
+# ends at the next practice prompt. The budget is on RENDERED lines: 22
+# rendered lines before the prompt equal the 20 content lines the script
+# states for itself (heredoc 20 + the blank line show_screen adds + the
+# practice footer), so a 24-row terminal still shows the prompt.
+SCREEN_BUDGET = 22
+_CLEAR_RE = re.compile(r"\x1b\[(?:H|2J|3J)")
+_PARTIAL_ESC_RE = re.compile(r"\x1b(?:\[[0-9;?]*)?$")
+
+
+class ScreenHeightTracker:
+    """Count rendered lines per cleared screen from the raw OUT stream.
+
+    Feed decoded (not normalised) text. A screen opens at a clear
+    sequence (`ESC[H`, `ESC[2J` or `ESC[3J`, any order, consecutive ones
+    collapse into one) and closes at the next PROMPT. The count is the
+    number of newline-terminated lines of normalised text between the
+    two, so the blank line `show_screen` adds and the practice footer
+    printed before the prompt are included. Logical lines are counted:
+    a line wider than the terminal that wraps is still one line. A
+    partial escape sequence or partial prompt at the end of a chunk is
+    held back and joined with the next one.
+    """
+
+    def __init__(self) -> None:
+        self._carry = ""
+        self._open = False
+        self._text = ""
+
+    def _hold(self, data: str) -> int:
+        m = _PARTIAL_ESC_RE.search(data)
+        hold = len(data) - m.start() if m else 0
+        for k in range(min(len(PROMPT) - 1, len(data)), 0, -1):
+            if data.endswith(PROMPT[:k]):
+                hold = max(hold, k)
+                break
+        return hold
+
+    def feed(self, raw: str) -> List[int]:
+        data = self._carry + raw
+        hold = self._hold(data)
+        self._carry = data[len(data) - hold:] if hold else ""
+        if hold:
+            data = data[: len(data) - hold]
+        tokens = sorted(
+            [(m.start(), m.end(), "clear") for m in _CLEAR_RE.finditer(data)]
+            + [
+                (i, i + len(PROMPT), "prompt")
+                for i in _find_all(data, PROMPT)
+            ]
+        )
+        done: List[int] = []
+        pos = 0
+        for start, end, kind in tokens:
+            if self._open and start > pos:
+                self._text += data[pos:start]
+            if kind == "clear":
+                if not (self._open and not self._text.strip("\r\n")):
+                    self._open, self._text = True, ""
+            elif self._open:
+                done.append(self._count())
+                self._open, self._text = False, ""
+            pos = end
+        if self._open and pos < len(data):
+            self._text += data[pos:]
+        return done
+
+    def finish(self) -> Optional[int]:
+        """End of run: close a screen that never reached a prompt (the
+        finale), counting everything up to EOF."""
+        if self._open:
+            self._text += self._carry
+            self._carry = ""
+            n = self._count()
+            self._open, self._text = False, ""
+            return n
+        return None
+
+    def _count(self) -> int:
+        return normalize(self._text).count("\n")
+
+
+def _find_all(data: str, needle: str) -> List[int]:
+    out: List[int] = []
+    i = data.find(needle)
+    while i >= 0:
+        out.append(i)
+        i = data.find(needle, i + len(needle))
+    return out
+
+
 ERROR_SIGNATURES = (
     "No such file or directory",
     "command not found",
@@ -145,6 +236,8 @@ def drive(
     match_cursor = 0  # absolute offset
     decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
     scan: Optional[Dict[str, object]] = None
+    heights = ScreenHeightTracker()
+    screen_heights: List[Dict[str, object]] = []
     error_signatures: List[Dict[str, str]] = []
     last_guard: Optional[Action] = None
     gate_passed = False
@@ -205,7 +298,11 @@ def drive(
             if chunk_bytes:
                 ts = time.monotonic() - start_mono
                 recorder.write_terminal(ts, "out", chunk_bytes)
-                norm_chunk = normalize(decoder.decode(chunk_bytes))
+                raw_chunk = decoder.decode(chunk_bytes)
+                norm_chunk = normalize(raw_chunk)
+                for n in heights.feed(raw_chunk):
+                    _record_height(recorder, screen_heights, start_mono,
+                                   persona, n)
                 norm_tail += norm_chunk
                 if len(norm_tail) > TAIL_CAP:
                     cut = len(norm_tail) - TAIL_CAP
@@ -336,6 +433,10 @@ def drive(
                     last_guard = None
 
             if child_eof:
+                last = heights.finish()
+                if last is not None:
+                    _record_height(recorder, screen_heights, start_mono,
+                                   persona, last)
                 break
 
             if persona.current is None and not events:
@@ -401,7 +502,30 @@ def drive(
         "duration_seconds": duration,
         "wall_clock_capped": wall_clock_capped,
         "error_signatures": error_signatures,
+        "screen_heights": screen_heights,
     }
+
+
+def _record_height(recorder, screen_heights, start_mono, persona, lines) -> None:
+    """Emit a screen-height event. Informational only (Q5): it never
+    changes the TAP result or an exit code."""
+    cur = persona.current
+    if cur is None and persona.cursor > 0:
+        cur = persona._actions[persona.cursor - 1]  # last action: finale
+    screen_id = cur.screen_id if cur is not None else ""
+    entry = {
+        "screen_id": screen_id,
+        "lines": lines,
+        "budget": SCREEN_BUDGET,
+        "over": lines > SCREEN_BUDGET,
+    }
+    screen_heights.append(entry)
+    recorder.write_event(
+        round(time.monotonic() - start_mono, 6),
+        "screen-height",
+        screen_id=screen_id,
+        payload={"lines": lines, "budget": SCREEN_BUDGET, "over": lines > SCREEN_BUDGET},
+    )
 
 
 # Recall-question and gate-task-header sentinels. A re-fire after the
