@@ -1447,8 +1447,8 @@ The same command is used for ${SUB}rename${RST}:
 ${CMD}rm${RST} deletes. ${EM}Immediately and permanently.${RST}
   ${CMD}rm backup.txt${RST}
 
-There is no Trash to recover from. There is no undo. ${EM}Type
-carefully and look before you press Enter.${RST}
+There is no Trash and no undo. ${EM}Look before you press Enter —
+you, or an assistant typing for you.${RST}
 
 ${SUB}A safety habit${RST}: list before you remove.
   ${CMD}ls${RST}
@@ -1678,7 +1678,7 @@ stage4_lesson_3() {
 ${H1}4.3 — redirection and globs${RST}
 
 A pipe sends output to ${SUB}another program${RST}. A redirect sends it
-to ${SUB}a file${RST}.
+to ${SUB}a file${RST}, and ${CMD}>${RST} replaces it without asking, whoever typed the line.
 
   ${CMD}>${RST}    write to a file (${EM}overwrites${RST} if it exists)
   ${CMD}>>${RST}   append to a file (creates if missing)
