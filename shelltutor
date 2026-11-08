@@ -27,8 +27,10 @@
 # Implementation invariants:
 #   - one bash file, bash 3.2+, no installation, no network, no privilege
 #   - tutor writes only inside $SANDBOX (default $HOME/.shelltutor)
-#   - practice subshell `cd`s to a stage-specific subdir; HISTFILE is
-#     sandboxed; PS1 is rewritten; navigation builtins are overridden
+#   - practice prompts start in $SANDBOX for stages 1-2 (the Stage 1 gate
+#     task in $SANDBOX/stage1) and in $SANDBOX/stageN for stages 3-5
+#     (contract C-003); HISTFILE is sandboxed; PS1 is rewritten;
+#     navigation builtins are overridden
 #   - the practice subshell is a real interactive bash, so the learner
 #     retains their normal account authority inside it. The welcome
 #     screen scopes the safety claim accordingly (per audit F-002)
