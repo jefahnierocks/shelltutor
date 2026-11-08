@@ -85,7 +85,6 @@ RC_QUIT=99
 # (https://no-color.org).
 # ---------------------------------------------------------------------
 
-# shellcheck disable=SC2034  # RULE is used by the panel (next commit)
 if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
     # Roles per docs/direction-decisions-2026-11.md A3.6. The tutor emits
     # the codes; the learner's terminal chooses the colours.
@@ -373,6 +372,115 @@ read_progress() {
 }
 
 # ---------------------------------------------------------------------
+# Panel chrome (A3.1-A3.3)
+#
+# Every tutor screen is a panel between two rules; the practice prompt
+# beneath it is the real shell. The runners set PANEL_STAGE (1-5, or empty
+# before Stage 1 and on the cleared screen) and PANEL_POS ("1.1", "task",
+# or empty) before each screen. Fixed 80 columns: no tput, no COLUMNS.
+# Rules are built by a loop: tr on a multibyte glyph and ${s:0:n} both
+# count bytes under LC_ALL=C. The title strings are ASCII, so ${#var}
+# is a column count; the glyph widths are added as constants.
+# ---------------------------------------------------------------------
+
+PANEL_STAGE=''
+PANEL_POS=''
+PANEL_DONE=''
+PANEL_COLS=80
+
+# panel_rule N  -> sets REPLY to N rule glyphs.
+panel_rule() {
+    local i s=''
+    for ((i = 0; i < $1; i++)); do s="$s$G_RULE"; done
+    REPLY="$s"
+}
+
+panel_title() {
+    case "$1" in
+        1) REPLY='Where am I?' ;;
+        2) REPLY='Paths and the filesystem' ;;
+        3) REPLY='Files and operations' ;;
+        4) REPLY='Commands, streams, composition' ;;
+        5) REPLY='Ready for vimtutor' ;;
+        *) REPLY='' ;;
+    esac
+}
+
+# panel_at STAGE LESSON_FUNCTION: set the globals for the next screen.
+panel_at() {
+    PANEL_STAGE=$1
+    PANEL_POS=''
+    case "$2" in
+        welcome|orientation) PANEL_STAGE='' ;;
+        stage[1-5]_lesson_[1-9]) PANEL_POS="$1.${2##*_}" ;;
+    esac
+}
+
+panel_header() {
+    local prog i title='' head tail dots='' n used
+    prog=$(read_progress)
+    # Left: "<rule> shelltutor <rule> " is 15 columns.
+    used=15
+    head="${RULE}${G_RULE}${RST} ${INSTR}shelltutor${RST} ${RULE}${G_RULE}${RST} "
+    if [ -n "$PANEL_STAGE" ]; then
+        panel_title "$PANEL_STAGE"
+        title="$REPLY"
+        head="${head}${DIM}Stage ${PANEL_STAGE} ${G_SEP} ${title}${RST} "
+        used=$((used + 11 + ${#title}))
+    fi
+    for ((i = 1; i <= 5; i++)); do
+        if [ "$i" = "$PANEL_STAGE" ]; then
+            dots="${dots}${INSTR}${G_CUR}${RST}"
+        elif [ "$i" -le "$prog" ]; then
+            dots="${dots}${OK}${G_DONE}${RST}"
+        else
+            dots="${dots}${DIM}${G_TODO}${RST}"
+        fi
+    done
+    # Right: " <5 dots>  <pos> <rule>" is 10 columns plus the position.
+    tail=" ${dots}  ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${RST}"
+    n=$((PANEL_COLS - used - 10 - ${#PANEL_POS}))
+    [ "$n" -ge 1 ] || n=1
+    panel_rule "$n"
+    printf '%s%s%s%s%s\n' "$head" "$RULE" "$REPLY" "$RST" "$tail"
+}
+
+panel_lower_rule() {
+    panel_rule "$PANEL_COLS"
+    printf '%s%s%s\n' "$RULE" "$REPLY" "$RST"
+}
+
+# footer_item VERB GLOSS -> "verb ▸ gloss", verb in KEY, rest DIM.
+footer_item() {
+    printf '%s%s%s%s %s %s%s' "$KEY" "$1" "$RST" "$DIM" "$G_HINT" "$2" "$RST"
+}
+
+# footer_bar MODE: one DIM row, the mode's verb first (A3.3).
+footer_bar() {
+    case "$1" in
+        gate)
+            printf '%s   %s   %s' \
+                "$(footer_item check 'test your work')" \
+                "$(footer_item show 'the task again')" \
+                "$(footer_item quit 'save and leave')"
+            ;;
+        cleared)
+            printf '%s   %s   %s' \
+                "$(footer_item next "Stage $((${PANEL_DONE:-0} + 1))")" \
+                "$(footer_item quit 'stop here, place saved')" \
+                "$(footer_item show 'this screen again')"
+            ;;
+        *)
+            printf '%s   %s   %s   %s' \
+                "$(footer_item next 'go on')" \
+                "$(footer_item show 'this screen again')" \
+                "$(footer_item prev 'back')" \
+                "$(footer_item quit 'save and leave')"
+            ;;
+    esac
+}
+
+# ---------------------------------------------------------------------
 # Practice subshell
 #
 # Spawns a real interactive bash with a sandboxed HISTFILE and PS1, in
@@ -388,15 +496,11 @@ practice() {
     setup_sandbox
     mkdir -p "$pd"
 
-    # Context-aware footer. At a lesson the most likely next action is
-    # `next`; at a gate it is `check`. Showing the wrong verb at the
-    # wrong time trains the learner to type the wrong thing.
+    # Context-aware footer bar (A3.3). At a lesson the most likely next
+    # action is `next`; at a gate it is `check`. Showing the wrong verb at
+    # the wrong time trains the learner to type the wrong thing.
     local footer
-    if [ "$mode" = "gate" ]; then
-        footer="(type ${CMD}check${RST}${DIM} when done — or ${RST}${CMD}show${DIM}, ${RST}${CMD}prev${DIM}, ${RST}${CMD}quit${DIM})"
-    else
-        footer="(type ${CMD}next${RST}${DIM} to advance — or ${RST}${CMD}prev${DIM}, ${RST}${CMD}show${DIM}, ${RST}${CMD}quit${DIM})"
-    fi
+    footer=$(footer_bar "$mode")
 
     # Feed the rcfile on fd 3 instead of process substitution. macOS Bash
     # 3.2 can parse <(...) here but does not reliably load it as --rcfile.
@@ -449,7 +553,7 @@ show()  { exec >/dev/null 2>&1; builtin exit 97; }
 quit()  { exec >/dev/null 2>&1; builtin exit 99; }
 exit()  { exec >/dev/null 2>&1; builtin exit 99; }
 
-printf "${DIM}${footer}${RST}\n"
+printf '%s\\n' "${footer}"
 RCFILE
     local code=$?
     if [ "$code" -eq $RC_QUIT ]; then
@@ -466,8 +570,10 @@ RCFILE
 
 show_screen() {
     clear 2>/dev/null || printf '\n'
+    panel_header
+    printf '\n'
     cat
-    echo
+    panel_lower_rule
 }
 
 # Optional directory argument: the practice prompt starts there. Stages 1
@@ -597,10 +703,11 @@ gate_escalate() {
 # learner to use one (`next`) to reach Stage 1.
 #
 # Vertical budget convention used throughout the script:
-#   24-row terminal, minus ~4 rows for the practice subshell prelude
-#   (echo blank + footer + blank + prompt line), leaves ≤20 rows for
-#   the heredoc content. Most pages target 10-18 lines; lesson screens
-#   may run up to 20.
+#   24-row terminal. The panel adds a header rule, a blank and a lower
+#   rule around the heredoc content, and the practice shell prints one
+#   footer row before the prompt (A3.1). The harness budget is 22
+#   rendered rows before the prompt, so heredoc content is at most 19
+#   rows; author to 18 to keep one row of margin. Most pages target 10-18.
 # ---------------------------------------------------------------------
 
 welcome() {
@@ -935,6 +1042,7 @@ run_stage1() {
     local lessons=(welcome orientation stage1_intro stage1_lesson_1 stage1_lesson_2 stage1_lesson_3 stage1_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
+        panel_at 1 "${lessons[$i]}"
         "${lessons[$i]}"
         local rc=$?
         case "$rc" in
@@ -952,6 +1060,7 @@ run_stage1() {
             *)         return "$rc" ;;
         esac
     done
+    PANEL_STAGE=1; PANEL_POS=task
     stage1_gate
 }
 
@@ -1162,6 +1271,7 @@ run_stage2() {
     local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
+        panel_at 2 "${lessons[$i]}"
         "${lessons[$i]}"
         local rc=$?
         case "$rc" in
@@ -1179,6 +1289,7 @@ run_stage2() {
             *)         return "$rc" ;;
         esac
     done
+    PANEL_STAGE=2; PANEL_POS=task
     stage2_gate
 }
 
@@ -1378,6 +1489,7 @@ run_stage3() {
     local lessons=(stage3_intro stage3_lesson_1 stage3_lesson_2 stage3_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
+        panel_at 3 "${lessons[$i]}"
         "${lessons[$i]}"
         local rc=$?
         case "$rc" in
@@ -1395,6 +1507,7 @@ run_stage3() {
             *)         return "$rc" ;;
         esac
     done
+    PANEL_STAGE=3; PANEL_POS=task
     stage3_gate
 }
 
@@ -1405,11 +1518,9 @@ run_stage3() {
 stage4_intro() {
     lesson "$SANDBOX/stage4" <<EOF
 ${H1}STAGE 4 — Commands, streams, composition${RST}
-
 Three lessons, then a gate. You'll read a command's structure, check
 whether a command exists, and chain commands together with pipes,
 redirects, and globs.
-
 Commands this stage:
   ${CMD}command -v${RST}   ask the shell if a program is installed
   ${CMD}wc${RST}           word, line, and character count
@@ -1649,6 +1760,7 @@ run_stage4() {
     local lessons=(stage4_intro stage4_lesson_1 stage4_lesson_2 stage4_lesson_3)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
+        panel_at 4 "${lessons[$i]}"
         "${lessons[$i]}"
         local rc=$?
         case "$rc" in
@@ -1666,6 +1778,7 @@ run_stage4() {
             *)         return "$rc" ;;
         esac
     done
+    PANEL_STAGE=4; PANEL_POS=task
     stage4_gate
 }
 
@@ -1903,7 +2016,6 @@ At the practice prompt:
   3. ${CMD}cat practice.txt${RST}        ${DIM}# should still say 'before'${RST}
 
 Then type ${CMD}check${RST}.
-
 ${DIM}I will verify the file is still exactly 'before'.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
@@ -1987,6 +2099,7 @@ run_stage5() {
     local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
+        panel_at 5 "${lessons[$i]}"
         "${lessons[$i]}"
         local rc=$?
         case "$rc" in
@@ -2004,6 +2117,7 @@ run_stage5() {
             *)         return "$rc" ;;
         esac
     done
+    PANEL_STAGE=5; PANEL_POS=task
     stage5_gate
 }
 
