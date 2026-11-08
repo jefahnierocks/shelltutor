@@ -423,6 +423,13 @@ lesson() {
 # - Returns 0 on correct answer. (Quit via Ctrl+C at the parent shell.)
 # ---------------------------------------------------------------------
 
+# Lower-case, collapse any run of whitespace to one space, trim the ends.
+# tr -s is POSIX; GNU sed's \+ is not (audit/2026-11-07/findings.md F-012).
+normalize_answer() {
+    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -s '[:space:]' ' ' \
+        | sed 's/^ //; s/ $//'
+}
+
 ask_question() {
     local prompt="$1"; shift
     local accept=("$@")
@@ -434,12 +441,10 @@ ask_question() {
             printf '\n'
             return 1
         fi
-        norm=$(printf '%s' "$ans" | tr '[:upper:]' '[:lower:]' \
-            | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]\+/ /g')
+        norm=$(normalize_answer "$ans")
         matched=0
         for ok in "${accept[@]}"; do
-            ok_norm=$(printf '%s' "$ok" | tr '[:upper:]' '[:lower:]' \
-                | sed 's/^[[:space:]]*//; s/[[:space:]]*$//; s/[[:space:]]\+/ /g')
+            ok_norm=$(normalize_answer "$ok")
             if [ "$norm" = "$ok_norm" ]; then
                 matched=1; break
             fi
