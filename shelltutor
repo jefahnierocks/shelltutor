@@ -518,6 +518,31 @@ history_since() {
     tail -n "$((total - mark))" "$SANDBOX/.shelltutor_history"
 }
 
+# gate_require_history MARK LABEL ERE [LABEL ERE ...]
+# Looks at the practice-shell commands recorded since MARK (a history_mark
+# value). Each ERE is matched with grep -E against the recorded lines.
+# Prints the "Almost — you still need to" list for every LABEL whose ERE
+# never matched and returns 1; returns 0 when everything was seen.
+gate_require_history() {
+    local mark="$1"; shift
+    local recent label pattern
+    local missing=()
+    recent=$(history_since "$mark")
+    while [ "$#" -ge 2 ]; do
+        label="$1"; pattern="$2"; shift 2
+        printf '%s\n' "$recent" | grep -qE "$pattern" || missing+=("$label")
+    done
+    # Return before expanding "${missing[@]}": on Bash 3.2 an empty array
+    # expansion is an unbound-variable error under set -u.
+    [ "${#missing[@]}" -eq 0 ] && return 0
+    printf '\n%bAlmost — you still need to:%b\n' "$EM" "$RST"
+    for label in "${missing[@]}"; do
+        printf '  %b%s%b\n' "$CMD" "$label" "$RST"
+    done
+    printf '\nDo that at the prompt below, then type %bcheck%b again.\n' "$CMD" "$RST"
+    return 1
+}
+
 # ---------------------------------------------------------------------
 # Welcome + orientation
 #
@@ -719,25 +744,10 @@ stage1_day_matches() {
 # never see "what did pwd print?" if they didn't run pwd. Argument is
 # a history-mark taken at task entry.
 stage1_check_commands_run() {
-    local hist_mark="$1"
-    local recent missing=()
-    recent=$(history_since "$hist_mark")
-
-    grep -qE '^[[:space:]]*whoami([[:space:]]|$)' <<< "$recent" || missing+=("whoami")
-    grep -qE '^[[:space:]]*pwd([[:space:]]|$)'    <<< "$recent" || missing+=("pwd")
-    grep -qE '^[[:space:]]*date([[:space:]]|$)'   <<< "$recent" || missing+=("date")
-
-    if [ "${#missing[@]}" -eq 0 ]; then
-        return 0
-    fi
-
-    printf '\n%bAlmost — you still need to run:%b\n' "$EM" "$RST"
-    local c
-    for c in "${missing[@]}"; do
-        printf '  %b%s%b\n' "$CMD" "$c" "$RST"
-    done
-    printf '\nRun the missing one(s) at the prompt below, then type %bcheck%b again.\n' "$CMD" "$RST"
-    return 1
+    gate_require_history "$1" \
+        "whoami" '^[[:space:]]*whoami([[:space:]]|$)' \
+        "pwd"    '^[[:space:]]*pwd([[:space:]]|$)' \
+        "date"   '^[[:space:]]*date([[:space:]]|$)'
 }
 
 stage1_gate() {
