@@ -13,9 +13,11 @@ priority: high
 
 **Cycle status (2026-11-08):** WP-01 to WP-07, WP-09 and WP-08 part A have
 landed; WP-08 part B waits on the Phase 2 results. New work follows
-`docs/direction-decisions-2026-11.md` (Phases A–D); its packages WP-10
-onward are written in this directory in the same form, under the evidence
-tier that document assigns them.
+`docs/direction-decisions-2026-11.md` (Phases A–D, amendment A1); its
+packages WP-10 onward are written in this directory in the same form, under
+the evidence tier that document assigns them. Phase B packages are drafted
+during Phase A and may not land (no change to `shelltutor`) until
+`audit/<date>/walkthroughs.md` exists (A1.9).
 
 This directory is the executable plan for the current cycle of
 `shelltutor` work. It was prepared on 2026-11-07 at revision `b2fdff7`
@@ -48,6 +50,9 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-06](WP-06-ci-sim-evidence.md) | Hosted Linux evidence capture (non-gating workflow) | WP-01 | **yes** — approved 2026-11-07 | **landed** a71ab76 (commits 1–2); hosted run + commit 3 with the operator |
 | [WP-07](WP-07-doc-realignment.md) | Documentation realignment sweep | WP-02–WP-05 | none | **landed** eb15e41 (2026-11-07) |
 | [WP-09](WP-09-landing-followups.md) | Landing follow-ups: F-014 practice-shell interpreter, harness provenance, fresh macOS baseline | WP-07 | none | **landed** bd841ae (2026-11-08) |
+| [WP-10](WP-10-recall-navigation-ladder.md) | Recall navigation, one three-rung ladder, hint-leak check, `second-try` recall misses, Phase A answer widening | Phase A summary | none | **drafted**; frozen until `audit/<date>/walkthroughs.md`; lands third |
+| [WP-11](WP-11-stage-cleared-screens.md) | Four stage-cleared screens, `--info` wording fixes, D-19 redaction | Phase A summary | none | **drafted**; lands first |
+| [WP-12](WP-12-agent-aware-beat.md) | Read-only lesson 1.5; two sentences in 3.3 and 4.3 | Phase A summary | none | **drafted**; lands second |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
@@ -243,6 +248,14 @@ deviate must say so in its report and get operator approval first.
   record the tutor path relative to the repository root; sandbox roots are
   temporary directories. FF-007's rule covers governance files; its intent
   covers committed evidence too.
+- **D-19 Host user name redacted from committed harness artifacts.**
+  (Decisions amendment A1.8, D9, 2026-11-08.) The harness cannot control
+  `whoami`, so the login name reaches `terminal.jsonl`, `events.jsonl` and
+  `summary.md`. The bundle writer treats it as a host input, like temp
+  paths, and replaces it with the fixed token `[user]` before writing any
+  committed file. Lands before, or in the same series as, the first new
+  bundle (WP-11). Existing bundles are not rewritten unless the operator
+  says so: a login name is not a credential.
 - **D-16 License is the operator's decision.** Decided 2026-11-07: MIT.
   WP-08 remains parameterised on the copyright line and the human Phase 2
   results. No worker executes it before those

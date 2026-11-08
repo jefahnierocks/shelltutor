@@ -176,11 +176,15 @@ documents agree with the code.
    check (`docs/phase2-walkthrough-checklist.md`). Output:
    `audit/<date>/walkthroughs.md` (findings and observations, no names, no
    transcripts). Phase B does not start before it exists.
-2. **Phase B — core dead ends (agent).** WP-10 recall navigation and ladder,
-   WP-11 stage-cleared screen and `--info` wording, WP-12 agent-aware beat,
-   written as packages under `docs/workplan/` and run to the core standard.
-3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `CHANGELOG.md` and the
-   `v0.1.0` tag inputs follow the Phase 2 closure recorded in step 1.
+2. **Phase B — core dead ends (agent; drafted, none landed).** WP-10 recall
+   navigation and ladder, WP-11 stage-cleared screens and `--info` wording,
+   WP-12 agent-aware beat, as refined by amendment A1 of the decisions
+   document. `shelltutor` is frozen until `audit/<date>/walkthroughs.md`
+   exists; landing order WP-11, WP-12, WP-10. D9 (host user name redacted
+   from committed harness artifacts) lands before the first new bundle.
+3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `v0.1.0` follows
+   Phase B and precedes Phase C (A1.10); `CHANGELOG.md` and the tag inputs
+   follow the Phase 2 closure recorded in step 1.
 4. **Phases C and D** — module infrastructure (WP-13) landing with the first
    module (`shells`, then `env`), per the decisions document.
 

@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-08
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -404,11 +404,13 @@ content and history.
 Defaults apply if unanswered.
 
 - **Q1** Recall ladder, attempt 3 and later: reveal the accepted forms,
-  or only offer `quit`? Default: no reveal.
+  or only offer `quit`? **Resolved 2026-11-08 (A1.1, A1.6):** no reveal; one
+  ladder for all fifteen questions; the attempt-3 line states three facts.
 - **Q2** First-module order: `shells` then `env`, or the reverse?
   Default: `shells`; decide after Phase A.
 - **Q3** Stage-cleared recap: commands and keys only, or also the
-  "ideas" the finale lists? Default: commands and keys, ≤ 8 lines.
+  "ideas" the finale lists? **Resolved 2026-11-08 (A1.4):** commands and
+  keys, ≤ 8 lines; four screens (stages 1–4), Stage 5 flows into the finale.
 - **Q4** Observer protocol in Phase A: the two-minute rule above, or
   another? Default as written.
 - **Q5** Rendered-height check in the harness: add it in WP-13 if under
@@ -419,6 +421,141 @@ Defaults apply if unanswered.
 1. Apply the "On commit" rows of §7.
 2. Write `docs/walkthrough-notes-template.md` (Phase A, agent).
 3. Stop. Phase B begins when `audit/<date>/walkthroughs.md` exists.
+
+## Amendments
+
+### A1 — Phase B refinements (2026-11-08)
+
+Recorded from the Phase B consult after Phase A's template landed. A1
+resolves Q1 and Q3, adds one decision (D9), and refines WP-10 to WP-12.
+Where A1 and §2 differ, A1 governs.
+
+#### A1.1 Q1 resolved: one recall ladder, no reveal, no special cases
+
+- Three rungs, identical for all fifteen recall questions: attempt 1
+  the existing message; attempt 2 the question's hint; attempt 3 and
+  later the hint plus one fixed navigation line (A1.6). No reveal of
+  accepted forms at any rung.
+- No per-question variation. Questions that list their options in the
+  question text are not re-shown their list at attempt 3; `show` does
+  that on demand. One code path, one sentinel pattern, one persona
+  behaviour.
+- The attempt counter is per question and resets at the next question.
+  `show` redisplays the question text only and does not advance the
+  counter. `quit` exits with the farewell; per-stage resume is
+  unchanged (baseline §6 item 10).
+- Every recall question gets a hint: fifteen one-line hints that name
+  the concept without using an accepted answer. An uneven ladder would
+  reproduce the asymmetry the baseline flags in §6 item 1.
+- Accepted-answer lists are widened only from the Phase A
+  rejected-answer list. WP-10 does not guess at widenings.
+
+#### A1.2 Hint-leak check
+
+A static check: for each recall question, no accepted answer string
+appears in its hint, case-insensitive. Add it to `scripts/smoke-test.sh`
+(FF-006a) or as its own fitness function; the agent picks the number
+and adds the row to `CONTRIBUTING.md` §Fitness functions. This turns
+"the hint names the concept without the word" from a copy rule into a
+gate.
+
+#### A1.3 Recall rungs in committed evidence
+
+The task ladder's rungs 2 and 3 are design intent only (baseline §7.2)
+because no persona reaches them. WP-10 does not repeat that for recall:
+`second-try` gains two deliberate misses on one recall question at one
+stage, so the hint rung and the navigation rung each appear once before
+the correct answer. The oracle asserts each sentinel exactly once
+(`run.py`, the same shape as the existing "Almost — you still need to"
+assertion).
+
+#### A1.4 Q3 resolved and WP-11 refined: four cleared screens
+
+- Stages 1 to 4 get a cleared screen; Stage 5's gate flows into the
+  finale as today, which is already the stopping point and the recap.
+  Four new sentinels, not five.
+- Content: `✓ Stage N cleared.`, then the stage's commands and keys in
+  the finale's list style, at most eight lines, then
+  `▶ Type next for Stage N+1, or quit to stop here.`
+- Rendered by one function, `stage_cleared N`, called from `main`
+  where the next stage's banner currently fires at once
+  (`shelltutor:2082-2084` at baseline), with the recap text as
+  per-stage data. Not five copies inside the `run_stageN` gates.
+- It is a lesson-mode screen: lesson footer; `show` and `prev`
+  redisplay it; `check` gives the existing one-line note.
+- WP-11 keeps the two `--info` wording fixes of §2 (baseline §6 items 3
+  and 4).
+
+#### A1.5 WP-12 confirmed: lesson 1.5 is read-only
+
+Lesson 1.5 has no commands; it ends in `▶ Type next.` The Stage 1
+walk, gate and history checks are untouched, and the density follow-up
+is one row. Watch item for the second walkthrough round, not a change
+now: two concept screens back to back (1.4, 1.5) before the Stage 1
+gate.
+
+#### A1.6 The navigation line says what happens
+
+The attempt-3 line states three facts, in whatever wording C-006 copy
+review settles on: passed stages are saved; `quit` leaves now and the
+next run starts this stage from its first lesson; `show` repeats the
+question. "The stage can be retaken" is not used: a child reads
+"retake" as losing something. The three facts are contractual under
+C-006; the wording is not.
+
+#### A1.7 Drift WP-10 must close
+
+- The code comment at `ask_question` ("No hints, no answer reveal",
+  `shelltutor:466` at baseline) and any sentence in the welcome,
+  `README.md`, `ROADMAP.md` or `docs/contracts.md` that says recall has
+  no hints become false when WP-10 lands and are corrected in the same
+  package. Baseline §6 is a list of this kind of gap; WP-10 adds none.
+- Stage 1 `pwd` comparison: trim surrounding whitespace, then accept
+  the typed path if it equals either the logical `$SANDBOX/stage1` or
+  its `pwd -P` form.
+
+#### A1.8 D9: host user name redacted from committed harness artifacts
+
+The harness fixes `HOME`, `LC_ALL`, `TERM` and geometry but cannot fix
+`whoami`, so the host login name appears in `terminal.jsonl` for every
+committed macOS bundle (hosted Linux shows `runner`). Decision: the
+bundle writer treats the host user name as a host input, like temp
+paths, and replaces it with a fixed token before writing any file that
+is committed. Lands before, or in the same series as, the first new
+bundle (WP-11). Rewriting history for existing bundles is the
+operator's call; the default is no rewrite, since the value is a login
+name and not a credential. Record the rule as a D-nn decision in
+`docs/workplan/README.md` alongside D-03.
+
+#### A1.9 Script freeze during Phase A; drafting allowed
+
+- No change to `shelltutor` lands until `audit/<date>/walkthroughs.md`
+  exists. Every Phase A walk runs on the same revision so the findings
+  are comparable; that is the premise of the evidence discipline.
+- WP-10, WP-11 and WP-12 may be drafted during Phase A. WP-10's
+  answer-list widening section is left marked "[from Phase A]". The
+  hint copy (A1.1) may be drafted now; the Phase A rejected-answer list
+  may revise it.
+- Landing order once Phase A is summarised: WP-11, WP-12, WP-10. The
+  three are independent; the order is by learner value, not by risk.
+
+#### A1.10 Release placement confirmed
+
+v0.1.0 follows Phase B and precedes Phase C: the tag is the five-stage
+core with human evidence behind it. Modules are 0.2.
+
+#### A1 — edits this amendment implies
+
+| Document | Edit | When |
+| --- | --- | --- |
+| This document §8 | Q1 and Q3 marked resolved, pointing at A1.1 and A1.4; Q2, Q4, Q5 remain | On commit of A1 |
+| `ROADMAP.md` Phase 5 | WP-11 is four screens; A1.9 freeze and landing order; D9 | On commit of A1 |
+| `STATUS.md` | Next steps: Phase A running; WP-10 to WP-12 drafted, none landed; D9 before first new bundle | On commit of A1 |
+| `docs/workplan/README.md` | D9 recorded; WP-10 to WP-12 listed as drafted | On commit of A1 |
+| `CONTRIBUTING.md` §Fitness functions | Hint-leak check row | WP-10 |
+| `docs/contracts.md` C-006 | Recall ladder: three rungs and the three facts of A1.6 are contractual; wording is not | WP-10 |
+| `scripts/sim/persona.py`, `run.py` | `second-try` recall misses and oracle (A1.3) | WP-10 |
+| `scripts/sim/` bundle writer | Host user name redaction (D9) | Before WP-11's bundle |
 
 ## Cross-references
 

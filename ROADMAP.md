@@ -475,12 +475,22 @@ rejected-but-reasonable recall answers; the drop-off risks of
 
 ### Phase B — Core dead ends (agent; core standard)
 
-WP-10 recall navigation and ladder (`show`/`quit` at recall and follow-ups,
-attempt counter with hint then exit advice, answer lists widened from
-Phase A, symlink-tolerant `pwd`, C-006 amended); WP-11 stage-cleared screen
-plus the `--info` wording fixes; WP-12 the agent-aware beat (lesson 1.5 and
-two sentences). Exit: both personas green on macOS 3.2 and 5.x and hosted
-Linux; bundles committed; `STATUS.md` updated.
+Refined by amendment A1 (2026-11-08) of the decisions document. WP-10 recall
+navigation and one three-rung ladder for all fifteen recall questions
+(`show`/`quit` at recall and follow-ups; hint at attempt 2; hint plus a
+three-fact navigation line from attempt 3; no reveal; a static hint-leak
+check; `second-try` observes the recall rungs; answer lists widened only
+from Phase A; symlink-tolerant `pwd`; C-006 amended). WP-11 four
+stage-cleared screens (stages 1–4, one `stage_cleared N` function called
+from `main`; Stage 5 flows into the finale) plus the two `--info` wording
+fixes. WP-12 the agent-aware beat (read-only lesson 1.5 and two sentences).
+D9: the host user name is redacted from committed harness artifacts before
+the first new bundle. **Script freeze**: no change to `shelltutor` lands
+until `audit/<date>/walkthroughs.md` exists; the three packages are drafted
+meanwhile and land in the order WP-11, WP-12, WP-10. Exit: both personas
+green on macOS 3.2 and 5.x and hosted Linux; bundles committed; `STATUS.md`
+updated. **Release**: `v0.1.0` follows Phase B and precedes Phase C (the
+five-stage core with human evidence); modules are 0.2.
 
 ### Phase C — Module infrastructure (agent; lands with the first module)
 
