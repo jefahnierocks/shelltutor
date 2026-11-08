@@ -94,9 +94,14 @@ covers the Stage 2 and Stage 4 gates only.
     runs send `quit` there instead).
   - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `NOT_YET` →
     `ls *.txt`, `check` → `S4_CLEARED`.
-  - Recall answers are the same as `careful-beginner`'s. TAP `ok` requires
-    the stage cleared and exactly one `not yet:` in the
-    output; zero or two means the gate's feedback changed.
+  - Recall answers are the same as `careful-beginner`'s, except Stage 2 Q1:
+    `second-try` misses it three times (WP-10, A1.3) so the recall ladder is
+    observed: the `Hint:` rung prints at miss 2 and again at miss 3 together
+    with the navigation facts (`RECALL_HINT`, `RECALL_NAV`: `Passed stages
+    are saved.`), then it answers correctly. TAP `ok` requires the stage
+    cleared, exactly one `not yet:`, and for Stage 2 exactly two `Hint:` and
+    one navigation fact in the output (Stage 4: none); any other count means
+    the ladder changed.
 
 `confused-novice` and confusion events remain deferred (Slice 3) per the
 design plan.

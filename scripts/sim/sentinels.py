@@ -94,6 +94,8 @@ SENTINELS.update(
         "MAN_LS": "LS(1)",
         "LESS_NUMBERS": "1\n2\n3\n4\n5",
         "NOT_YET": "not yet:",
+        "RECALL_HINT": "Hint:",
+        "RECALL_NAV": "Passed stages are saved.",
         "VIM_INTRO": "VIM - Vi IMproved",
         "VIM_PRACTICE": '"practice.txt"',
         "VIM_INSERT": "-- INSERT --",

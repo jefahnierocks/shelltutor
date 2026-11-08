@@ -151,11 +151,30 @@ def _intro(n: int) -> List[Action]:
     ]
 
 
-def _recall(n: int, answers: List[str]) -> List[Action]:
+def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
+    """Recall walk for stage `n`.
+
+    `misses` (second-try, Stage 2 only) answers Q1 wrong three times so
+    each rung of the recall ladder appears in the evidence (A1.3): miss 2
+    prints the hint, miss 3 the hint again plus the three navigation
+    facts. Each wait for the question text matches its re-display after
+    the previous miss.
+    """
     sid = "S%d-G" % n
     walk = [Action("S%d_GATE" % n, "", "render-gate", sid)]
     for i, ans in enumerate(answers, 1):
-        walk.append(Action("S%d_Q%d" % (n, i), ans, "answer-q%d" % i, sid))
+        q = "S%d_Q%d" % (n, i)
+        if i == 1 and misses:
+            walk += [
+                Action(q, "it lists files", "miss-q1-1", sid),
+                Action(q, "it lists files again", "miss-q1-2", sid),
+                Action("RECALL_HINT", "", "observe-recall-hint", sid),
+                Action(q, "it lists files once more", "miss-q1-3", sid),
+                Action("RECALL_NAV", "", "observe-recall-nav", sid),
+                Action(q, ans, "answer-q%d" % i, sid),
+            ]
+            continue
+        walk.append(Action(q, ans, "answer-q%d" % i, sid))
     return walk
 
 
@@ -225,7 +244,7 @@ def stage_walk(
             + _lesson(2, 2, ["ls", "ls -p", "ls -a", "ls /etc"])
             + _lesson(2, 3, ["cd /tmp", "pwd", "cd", "cd -", "cd ..", "cd " + sandbox_root])
             + _lesson(2, 4, [])
-            + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"])
+            + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"], second_try)
             + [Action("S2_TASK", "", "render-gate-task", "S2-GT")]
             + _gate_commands(
                 "S2-GT", ["mkdir practice"], ["cd practice", "pwd"], second_try

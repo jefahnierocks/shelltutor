@@ -63,6 +63,13 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
 NOT_YET_TEXT = "not yet:"
+# Recall ladder (A1.1, A1.3). second-try at Stage 2 misses Q1 three times:
+# the hint prints at miss 2 and again at miss 3 (with the navigation facts),
+# so "Hint:" appears twice and the first navigation fact once. No task
+# `Hint:` is printed because the task misses only once.
+RECALL_HINT_TEXT = "Hint:"
+RECALL_NAV_TEXT = "Passed stages are saved."
+RECALL_EXPECTED = {"2": (2, 1), "4": (0, 0)}
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -393,6 +400,22 @@ def _run_variant(
                 outcome["notes"] = (
                     "second-try expected exactly one %r, saw %d." % (NOT_YET_TEXT, seen)
                 )
+            if run_ok:
+                want_hint, want_nav = RECALL_EXPECTED.get(str(args.stage), (0, 0))
+                text = "".join(
+                    project_terminal_out(os.path.join(variant_out, "terminal.jsonl"))
+                )
+                got_hint = text.count(RECALL_HINT_TEXT)
+                got_nav = text.count(RECALL_NAV_TEXT)
+                outcome["recall_hint_count"] = got_hint
+                outcome["recall_nav_count"] = got_nav
+                if (got_hint, got_nav) != (want_hint, want_nav):
+                    run_ok = False
+                    outcome["notes"] = (
+                        "second-try expected %d %r and %d %r, saw %d and %d."
+                        % (want_hint, RECALL_HINT_TEXT, want_nav,
+                           RECALL_NAV_TEXT, got_hint, got_nav)
+                    )
         outcome["harness_exit_code"] = 0 if run_ok else 4
         if result["wall_clock_capped"]:
             outcome["notes"] = "Run hit the 5-minute wall-clock cap."
@@ -419,6 +442,7 @@ def _run_variant(
         outcome["gate_passed"]
         and outcome["progress_ok"]
         and outcome.get("not_yet_count", 1) == 1
+        and outcome["harness_exit_code"] == 0
     )
     rec.write_tap(
         ok=outcome["ok"],
