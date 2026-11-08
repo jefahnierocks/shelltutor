@@ -490,6 +490,14 @@ footer_bar() {
 #   next  -> 0   check -> 96   show -> 97   prev -> 98   quit/exit -> 99
 # ---------------------------------------------------------------------
 
+# The one farewell: used by the practice prompt's quit and by quit at a
+# recall question, so the text is a single string (C-006).
+farewell_exit() {
+    clear 2>/dev/null || true
+    echo "Bye. Run 'shelltutor' again to pick up where you left off."
+    exit 0
+}
+
 practice() {
     local pd="${1:-$SANDBOX}"
     local mode="${2:-lesson}"
@@ -561,9 +569,7 @@ printf '%s\\n' "${footer}"
 RCFILE
     local code=$?
     if [ "$code" -eq $RC_QUIT ]; then
-        clear 2>/dev/null || true
-        echo "Bye. Run 'shelltutor' again to pick up where you left off."
-        exit 0
+        farewell_exit
     fi
     return "$code"
 }
@@ -592,12 +598,18 @@ lesson() {
 # ---------------------------------------------------------------------
 # Recall-question helper
 #
-# Usage: ask_question "<prompt>" <accepted-answer>...
+# Usage: ask_question "<prompt>" "<hint>" <accepted-answer>...
+#   One argument per source line; scripts/check-hints.sh (FF-009) relies on it.
 # - Reads input from /dev/tty so it works inside the parent shell.
 # - Normalizes by lowercasing + trimming whitespace.
 # - Accepts the answer if it matches any of the trailing arguments
-#   (also normalized). Loops until correct. No hints, no answer reveal.
-# - Returns 0 on correct answer. (Quit via Ctrl+C at the parent shell.)
+#   (also normalized). Loops until correct.
+# - Ladder (A1.1): miss 1 the message; miss 2 the hint; miss 3 and later the
+#   hint plus the three navigation facts (A1.6). Hints on the second miss,
+#   navigation facts from the third; never a reveal.
+# - `show` repeats the question without counting a miss; `quit` or `exit`
+#   leaves with the farewell (passed stages are already saved).
+# - Returns 0 on correct answer.
 # ---------------------------------------------------------------------
 
 # Lower-case, collapse any run of whitespace to one space, trim the ends.
@@ -607,10 +619,18 @@ normalize_answer() {
         | sed 's/^ //; s/ $//'
 }
 
+# The three navigation facts (A1.6), in the feedback bar. Wording is not
+# contractual (C-006); the facts and their order are.
+recall_navigation() {
+    fb_note "Passed stages are saved."
+    fb_note "Type ${CMD}quit${RST} to leave now; the next run starts this stage from its first lesson."
+    fb_note "Type ${CMD}show${RST} to see the question again."
+}
+
 ask_question() {
-    local prompt="$1"; shift
+    local prompt="$1" hint="$2"; shift 2
     local accept=("$@")
-    local ans norm ok_norm matched
+    local ans norm ok_norm matched ok attempt=0
     while true; do
         printf '%b%b%b\n' "$Q" "$prompt" "$RST"
         printf '  %byour answer:%b ' "$CMD" "$RST"
@@ -619,6 +639,10 @@ ask_question() {
             return 1
         fi
         norm=$(normalize_answer "$ans")
+        case "$norm" in
+            show) continue ;;
+            quit|exit) farewell_exit ;;
+        esac
         matched=0
         for ok in "${accept[@]}"; do
             ok_norm=$(normalize_answer "$ok")
@@ -630,7 +654,15 @@ ask_question() {
             printf '  %b%s%b\n\n' "$OK" "$G_OK" "$RST"
             return 0
         fi
-        printf '  %bnot quite. try again.%b\n\n' "$EM" "$RST"
+        attempt=$((attempt + 1))
+        fb_note "${EM}not quite. try again.${RST}"
+        if [ "$attempt" -ge 2 ]; then
+            fb_note "${SUB}Hint:${RST} $hint"
+        fi
+        if [ "$attempt" -ge 3 ]; then
+            recall_navigation
+        fi
+        printf '\n'
     done
 }
 
@@ -996,10 +1028,12 @@ stage1_gate() {
 
     ask_question \
         "Q1: Which character usually ends a shell prompt? (\$, ;, :, or #)" \
+        "Guides print it before a command to show an ordinary user typed it; an administrator's mark differs." \
         '$' || return $?
 
     ask_question \
         "Q2: What does ${CMD}pwd${RST} print?" \
+        "Lesson 1.3: it answers where you are, not who you are." \
         'the current working directory' \
         'current working directory' \
         'the working directory' \
@@ -1011,6 +1045,7 @@ stage1_gate() {
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
+        "Lesson 1.4: what a program prints comes back to you, in the window you type into." \
         'stdout' \
         'standard output' \
         'the screen' \
@@ -1260,6 +1295,7 @@ EOF
 
     ask_question \
         "Q1: What does ${CMD}cd ..${RST} do?" \
+        "Lesson 2.3: two dots name the folder that contains this one." \
         'goes up one folder' \
         'go up one folder' \
         'goes up one level' \
@@ -1272,6 +1308,7 @@ EOF
 
     ask_question \
         "Q2: What does ${CMD}~${RST} mean in a path?" \
+        "It is where ${CMD}cd${RST} with nothing after it takes you." \
         'home' \
         'home folder' \
         'home directory' \
@@ -1285,6 +1322,7 @@ EOF
     # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
     ask_question \
         "Q3: If I'm in ${DIM}~/projects${RST} and I type ${CMD}cd notes${RST}, what folder am I in?" \
+        "Lesson 2.4: a relative name starts from the folder you are already in." \
         '~/projects/notes' \
         '\$home/projects/notes' \
         'projects/notes' \
@@ -1495,16 +1533,19 @@ EOF
 
     ask_question \
         "Q1: Which command creates an empty file?  (touch, mkdir, new, cat)" \
+        "It is the one that can also update a file's timestamp." \
         'touch' || return $?
 
     ask_question \
         "Q2: After ${CMD}rm important.txt${RST}, where is the file?  (~/.Trash, on disk, gone, depends)" \
+        "Lesson 3.3 said this command has no undo and no Trash." \
         'gone' \
         "it's gone" \
         'its gone' || return $?
 
     ask_question \
         "Q3: What single command renames ${DIR}old.txt${RST} to ${DIR}new.txt${RST}?" \
+        "Renaming and moving are the same action in the shell." \
         'mv' \
         'mv old.txt new.txt' \
         'mv old new' || return $?
@@ -1747,6 +1788,7 @@ EOF
 
     ask_question \
         "Q1: What does ${CMD}command -v vim${RST} print, if Vim is installed?" \
+        "It answers with the folder and name of the program file." \
         'the path to vim' \
         'path to vim' \
         'a path' \
@@ -1758,6 +1800,7 @@ EOF
 
     ask_question \
         "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
+        "One of them starts the file fresh; the other keeps what was there and adds." \
         '> overwrites, >> appends' \
         '> overwrite, >> append' \
         '> writes over, >> adds to the end' \
@@ -1768,6 +1811,7 @@ EOF
 
     ask_question \
         "Q3: Why does ${CMD}vim my notes.txt${RST} open two files instead of one?" \
+        "Look at what separates the two words after ${CMD}vim${RST}, and what quotes would have done." \
         'because of the space' \
         'spaces split arguments' \
         'spaces split words' \
@@ -2061,6 +2105,7 @@ EOF
 
     ask_question \
         "Q1: How do you exit ${CMD}man ls${RST}?" \
+        "The same single key leaves ${CMD}less${RST}." \
         'q' \
         'press q' \
         'type q' \
@@ -2068,6 +2113,7 @@ EOF
 
     ask_question \
         "Q2: After ${CMD}vim notes.txt${RST}, what makes Vim write your edit to the file?" \
+        "A colon command whose letter is the first letter of \"write\"." \
         ':w' \
         ':w<enter>' \
         ':w then enter' \
@@ -2080,6 +2126,7 @@ EOF
 
     ask_question \
         "Q3: If you open ${DIR}notes.txt${RST} in ${CMD}vim${RST}, type some letters, and quit with ${CMD}:q!${RST} — did the file on disk change?" \
+        "Lesson 5.3: the buffer is a copy; the disk only changes when you write it." \
         'no' \
         'no it did not' \
         'no it didnt' \
