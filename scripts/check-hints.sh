@@ -11,7 +11,9 @@
 #       '<accepted 2>' || return $?
 #
 # one quoted argument per line; after exact forms a bare `--` line may start
-# keyword groups (A10), one quoted `a|b|c` argument per line. This checker enforces, for each call:
+# keyword groups (A10), one quoted `a|b|c` argument per line, optionally with
+# a bare `--ordered` line first and a bare `--reject` line plus one quoted
+# phrase list last. This checker enforces, for each call:
 #   - layout: `ask_question` ends its line with a backslash and every
 #     argument sits alone on its own line (one quoted word, nothing else);
 #   - arity: one prompt, one hint and at least one accepted form;
@@ -121,6 +123,13 @@ awk_check() {
             line = $0
             bare = line
             sub(/^[[:space:]]+/, "", bare); sub(/[[:space:]]*\\$/, "", bare)
+            if (in_groups && (bare == "--ordered" || bare == "--reject")) {
+                # A10 flags: --ordered orders the groups; --reject takes the
+                # next quoted line as a |-list of voiding phrases (not groups).
+                if (bare == "--reject") in_reject = 1
+                if (line !~ /\\[[:space:]]*$/) finish()
+                next
+            }
             if (bare == "--") {
                 # A10: after the bare `--` line every argument is a keyword
                 # group (phrases separated by |), not an exact form.
@@ -131,6 +140,8 @@ awk_check() {
             unquote(line)
             if (!ok) {
                 fail("FF-009 argument is not a single quoted word on its own line: " val)
+            } else if (in_reject) {
+                in_reject = 0
             } else if (in_groups) {
                 groups[++ngroups] = val
             } else {
@@ -143,7 +154,7 @@ awk_check() {
         /^[[:space:]]*ask_question[[:space:]]*\(\)/ { next }
 
         /^[[:space:]]*ask_question[[:space:]]+\\[[:space:]]*$/ {
-            collecting = 1; nargs = 0; ngroups = 0; in_groups = 0; call_line = NR
+            collecting = 1; nargs = 0; ngroups = 0; in_groups = 0; in_reject = 0; call_line = NR
             next
         }
 

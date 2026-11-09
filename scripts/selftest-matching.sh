@@ -56,6 +56,8 @@ awk '
     collecting {
         bare = $0; sub(/^[[:space:]]+/, "", bare); sub(/[[:space:]]*\\$/, "", bare)
         if (bare == "--") { kind = "group"; if ($0 !~ /\\[[:space:]]*$/) collecting = 0; next }
+        if (bare == "--ordered") { printf "%d\tflag\tordered\n", call; next }
+        if (bare == "--reject") { kind = "reject"; next }
         n++
         k = (n == 1) ? "prompt" : (n == 2) ? "hint" : kind
         printf "%d\t%s\t%s\n", call, k, unq($0)
@@ -86,17 +88,22 @@ TAB=$(printf '\t')
 while IFS="$TAB" read -r key verdict input source; do
     case "$key" in ''|'#'*) continue ;; esac
     idx=$(key_index "$key") || { printf 'selftest-matching: unknown question key %s\n' "$key" >&2; exit 2; }
-    args=(); groups=()
+    args=(); groups=(); flags=(); reject=""
     while IFS="$TAB" read -r _ kind value; do
         case "$kind" in
             exact) args+=("$value") ;;
             group) groups+=("$value") ;;
+            flag) flags+=("--$value") ;;
+            reject) reject=$value ;;
         esac
     done <<REC
 $(awk -F'\t' -v c="$idx" '$1 == c' "$tmp/calls.tsv")
 REC
     if [ "${#groups[@]}" -gt 0 ]; then
-        args+=("--" "${groups[@]}")
+        args+=("--")
+        [ "${#flags[@]}" -eq 0 ] || args+=("${flags[@]}")
+        args+=("${groups[@]}")
+        [ -z "$reject" ] || args+=("--reject" "$reject")
     fi
     norm=$(normalize_answer "$input")
     if recall_matches "$norm" "${args[@]}"; then got=accept; else got=reject; fi
