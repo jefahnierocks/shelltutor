@@ -904,6 +904,8 @@ You'll see ${DIM}hello${RST} printed, then the prompt comes back. Now try:
   ${CMD}echo I am at the shell${RST}      ${DIM}# spaces separate words${RST}
   ${CMD}echo "I am at the shell"${RST}    ${DIM}# quotes group them into one${RST}
 
+If bash says ${CMD}command not found${RST}, you mistyped: type it again.
+
 ${CMD}echo${RST} just repeats its words back. It is the simplest command
 there is, and its shape is the shape of every command you'll meet:
 a name, then the words you hand it.
@@ -920,11 +922,11 @@ ${H1}1.2 — keyboard habits${RST}
 
 Four keys make the shell comfortable. Try each one now.
 
-  ${KEY}Tab${RST}       bash finishes a word. Type ${CMD}echo p${RST}, press ${KEY}Tab${RST}:
-            it becomes ${CMD}echo poem.txt${RST}. Several matches? The first
-            ${KEY}Tab${RST} fills in the shared part; ${KEY}Tab${RST} again lists them.
-            (Other shells and setups differ.)
-  ${KEY}↑${RST}         brings back the last command. Enter runs it again.
+  ${KEY}Tab${RST}       bash finishes a word. Several matches? The first ${KEY}Tab${RST}
+            fills in the shared part; ${KEY}Tab${RST} again lists them. (Other
+            shells and setups differ.) Try: type ${CMD}echo p${RST}, press ${KEY}Tab${RST};
+            it becomes ${CMD}echo poem.txt${RST}, then press Enter to run it.
+  ${KEY}↑${RST}         brings back the last line. Enter runs it; ${KEY}Ctrl+C${RST} throws it away.
   ${KEY}Ctrl+L${RST}    clears the screen (${CMD}clear${RST} too); ${CMD}show${RST} brings the lesson back.
   ${KEY}Ctrl+C${RST}    the escape hatch. If anything feels stuck, press it
             and you get a fresh prompt.
