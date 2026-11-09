@@ -223,11 +223,17 @@ rejection; Arthur is the first persona to clear a gate.
   `1163-1173`, `1412-1420`. *Closes when*: the operator chooses between longer
   accepted forms, containment with a negation guard, or a hint that names the
   expected shape. Sheets: maya F-1, arthur F-001, F-002.
+  **Resolved 2026-11-09 by WP-21 (A8), `6d9be96` (longer forms; punctuation
+  dropped) and `24421d9` (answer-shape line from miss 2).** No containment
+  rule; the four negation counterexamples stay rejected (table in
+  `audit/2026-11-09/wp21-recall-shape.md`).
 - **F-020 — The Q3 hint's own wording is not an accepted answer.** Severity 3.
   The hint says "in the window you type into" (`1162`); `back to me, in the
   window you type into` (arthur) is rejected and contains no accepted form
   (`window` alone is not in the list). *Closes when*: the list takes `window`
   forms or the hint uses an accepted word. Sheets: arthur F-001.
+  **Resolved 2026-11-09 by WP-21, `6d9be96`:** the hint was reworded (it no
+  longer uses the window wording) and the `window` forms are accepted.
 
 ### Observations (reproduced)
 
@@ -245,6 +251,8 @@ rejection; Arthur is the first persona to clear a gate.
   "two dots name the folder that contains this one") without saying why the
   answer failed. *Closes when*: a later miss adds information the first did not
   (the accepted shape). Sheets: leo F-a, maya F, arthur F-003.
+  **Addressed 2026-11-09 by WP-21, `24421d9`:** from miss 2 one fixed line
+  says to answer in a few words, not a full sentence.
 - **O-AA — Nav words and shell commands typed at the recall prompt (O-P
   recurs).** Reproduced: `next` at Q1 is a miss (output above), because the
   recall line takes only answers (`ask_question` `681-692`). The gate screen
@@ -254,14 +262,20 @@ rejection; Arthur is the first persona to clear a gate.
   found`; `/whoami` gives `bash: /whoami: No such file or directory`
   (reproduced); neither names the missing space or slash. O-R recurs (leo-2
   O-b). *Closes when*: 1.1 or 2.3 names the two typos. Sheets: arthur O-001, leo O-b.
+  **Addressed 2026-11-09 by WP-21, `732492e`:** 1.1 names the stray `/` and the
+  missing space; 2.3 names `cd..`.
 - **O-AC — 2.3: "go home" is not the practice folder, and there is no try-it
   line.** Reproduced: after `cd`, `pwd` printed the home folder, not the
   sandbox; 2.3 says `cd` goes home (`1358`), then that prompts start in
   `$SANDBOX` (`1365`), uses `$HOME` unexplained (`1359`) and ends "Type next to
   continue". *Closes when*: one sentence ties `cd` to home and the way back.
   Sheets: arthur O-002, O-003.
+  **Addressed 2026-11-09 by WP-21, `80fc754`:** 2.3 says `cd` goes home, outside
+  the practice area, and `cd -` comes back; `$HOME` is gone; it ends in a
+  try-it line.
 - **O-AD — `ls /etc` is host output.** `ls /etc | wc -l` printed 81 here
   (`1343`); the lesson gives no reason to read it. Sheets: arthur O-004.
+  **Addressed 2026-11-09 by WP-21, `95e2689`:** 2.2 lists `ls /` first.
 - **O-AE — Terms used before they are taught.** `cat notes.txt` in 2.4
   (`1389`; `cat` is Stage 3), hidden names `.` and `..` in 2.2 (`1337`),
   `poem.txt` named in 1.2 without its source. Sheets: arthur O-005, O-010, O-011.
