@@ -285,6 +285,9 @@ rejection; Arthur is the first persona to clear a gate.
   the sandbox in 1.3 and `.../stage1` in the task (`practice "$SANDBOX/stage1"
   gate`, `1200`; C-003). 1.3 says only "the tutor's own folder" (`950`).
   Sheets: arthur O-007.
+  **Addressed for Stage 2 2026-11-09 by WP-22, `5d5757f`:** the Stage 2 task screen says the
+  task runs in this stage's own folder and `pwd` shows it. The Stage 1 task
+  screen is unchanged.
 
 ### Recurring round-1 items
 
@@ -409,6 +412,8 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
   (Leo found `home` by shortening). Three of three sheets. *Closes when*: the
   list takes `your home folder`/`directory`, or Q2 is worded as the gloss.
   Sheets: leo F-a, F-c; maya F-b; arthur F-a.
+  **Resolved 2026-11-09 by WP-22 (A9), `37c3d07`:** the `your …` forms are accepted;
+  the hint is anchored to Lesson 2.3 (`3913a98`).
 - **F-022 — The Stage 2 gate task needs a command no earlier lesson shows, and
   the first `check` does not say so.** Severity 1 (dead end). The task asks to
   "make a folder called practice" (`1477`). Stage 2 lessons (intro to 2.4) never
@@ -426,6 +431,8 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
   `check` calls. *Closes when*: a Stage 2 screen names `mkdir`, or the task
   screen names it, or the first `check` names the missing folder.
   Sheets: leo F-b, maya F-c.
+  **Resolved 2026-11-09 by WP-22 (A9), `5d5757f`:** 2.4 teaches `mkdir`; the first
+  `check` lists both items and the `cd` item needs the folder.
 - **F-023 — Stage 4 Q1 rejects the answer the learner just saw and the hint's
   own words.** Severity 2. List (`1916-1923`): `the path to vim`, `path to vim`,
   `a path`, `the path`, `where vim is`, `vim's path`, `vims path`,
@@ -446,6 +453,9 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
   quit. *Closes when*: the list takes the hint's words and path-plus-example
   forms; a check compares the hint's words with the list.
   Sheets: maya F-a.
+  **Resolved 2026-11-09 by WP-22 (A9), `68e817e` (path forms; hint reworded) and
+  `3913a98` (FF-010 anchors every hint).** Still rejected: `a path like
+  /usr/bin/vim`, `it prints the path`.
 - **F-024 — Lesson 1.2 says Ctrl+C gets you a fresh prompt, and inside `less`
   it does nothing.** Severity 3. 1.2: "Ctrl+C the escape hatch. If anything feels
   stuck, press it and you get a fresh prompt" (`937-938`). Reproduced in 3.2:
@@ -455,6 +465,8 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
   but its `▶` line says "Try both, then next" (`1623`). Maya hit this (+2 mode
   confusion, +1 reading). *Closes when*: 1.2's sentence is limited to commands at
   the prompt, or 3.2's `▶` line names `q`. Sheets: maya O-c, O-d.
+  **Resolved 2026-11-09 by WP-22 (A9), `8c11520`:** both ways: 1.2 limits Ctrl+C to the
+  prompt and names `q`; 3.2's `▶` line names `q`.
 
 ### Observations (reproduced)
 
@@ -467,6 +479,7 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
 - **O-AI — 3.3's `▶` line does not ask to type `cp`, `mv` or `rm`.** `▶ Type next
   to take Stage 3's gate` (`1646`); Maya arrived at the gate task without having
   typed them and recovered by copying 3.1's shape. Sheets: maya O-e.
+  **Addressed 2026-11-09 by WP-22, `8c11520`:** 3.3's `▶` line asks to type `cp`, `mv`, `rm`.
 - **O-AJ — Host programs answer wrong guesses.** `make folder practice` gave
   `make: *** No rule to make target `folder'.  Stop.` and `help` printed 44 lines
   of builtin signatures with no `mkdir` (counted `help | wc -l`; `help | grep -c
@@ -475,6 +488,7 @@ the hint then fixed); the other seven rejection points are F-021 to F-023.
 - **O-AK — The Stage 2 gate screen lacks "this is not the shell".** The Stage 1
   gate has it (`1012`); the Stage 2 gate opens with "Recall (three questions…)"
   only (`1416-1422`). Leo did not mistype this time. Sheets: leo O-b.
+  **Addressed 2026-11-09 by WP-22, `5d5757f`:** the Stage 2 recall screen carries the line.
 - **O-AL — Silence and the `cd ..` / `cd -` asymmetry.** `cd ..` prints nothing,
   `cd -` prints the path; 2.3's try-it line now asks for `pwd`. Sheets: leo O-c,
   arthur O-g.

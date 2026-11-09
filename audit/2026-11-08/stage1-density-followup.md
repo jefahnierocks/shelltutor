@@ -92,4 +92,18 @@ Heredoc lines on the WP-21 branch; rendered heights identical on Bash 5.3 and
 | --- | ---: | ---: | --- |
 | S1-L1 `1.1 running commands` | 18 (was 18) | 22 (was 22) | The `command not found` line names `No such file`, a stray `/` and a missing space (O-AB); two lines, the blank above dropped. |
 | S2-L2 `2.2 ls` | 16 (was 16) | 20 (was 20) | `ls /` replaces `ls /etc` as the first outside listing; `ls /usr/bin` stays (O-AD). |
-| S2-L3 `2.3 cd` | 16 (was 18) | 22 (was 22) | `cd` goes home outside the practice area; `cd -` comes back; `cd..` named; `$HOME` removed; ends in a try-it line (O-AB, O-AC). The sandbox path line still wraps, so rendered rows stay at the budget. |
+| S2-L3 `2.3 cd` | 18 (was 18) | 22 (was 22) | `cd` goes home outside the practice area; `cd -` comes back; `cd..` named; `$HOME` removed; ends in a try-it line (O-AB, O-AC). The sandbox path line still wraps, so rendered rows stay at the budget. |
+
+## WP-22 amendment (2026-11-09)
+
+Heredoc lines on the WP-22 branch; rendered heights identical on Bash 5.3 and
+3.2.57 (A9). Correction: the WP-21 row above gave 2.3 as 16 lines; it is 18
+(unchanged by WP-21), measured per function.
+
+| Screen | Heredoc lines | Rendered | Change |
+| --- | ---: | ---: | --- |
+| S1-L2 `1.2 keyboard habits` | 15 (was 14) | 19 (was 18) | Ctrl+C is the escape hatch at a prompt; inside a full-screen program such as `less`, `q` is the way out (F-024). |
+| S2-L4 `2.4 names for places` | 18 (was 18) | 22 (was 22) | `mkdir name` line and the try-it line `Try mkdir demo, ls -p, then next`; the `cat notes.txt` paragraph became one bare-name line and the two absolute paths share a line (F-022). |
+| S2-GT `Stage 2 gate task` | 14 (was 13) | 18 (was 17) | A DIM line: the task runs in this stage's own folder, `pwd` shows it (O-AG). The recall screen gains the "this is not the shell" line (6 lines). |
+| S3-L2 `3.2 cat, less` | 18 (was 18) | 22 (was 22) | The try-it line names `q` (F-024). |
+| S3-L3 `3.3 cp, mv, rm` | 18 (was 18) | 22 (was 22) | The try-it line asks to type `cp`, `mv` and `rm` (O-AI). |

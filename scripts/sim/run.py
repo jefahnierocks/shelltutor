@@ -71,6 +71,11 @@ NOT_YET_TEXT = "not yet:"
 RECALL_HINT_TEXT = "Hint:"
 RECALL_NAV_TEXT = "Passed stages are saved."
 RECALL_SHAPE_TEXT = "Answer in a few words, like the lesson did, not a full sentence."
+# A9 (F-022): the Stage 2 gate's first check prints both items.
+# second-try makes the folder and skips the cd, so the first check shows the
+# folder item done (no "not yet:" reason) and the cd item todo.
+GATE_ITEM_FOLDER_TEXT = "no practice folder in this stage"
+GATE_ITEM_CD_TEXT = "not yet: not in your history"
 RECALL_EXPECTED = {"2": (2, 1, 1), "4": (0, 0, 0)}
 
 VARIANT_CURRENT = "current-rc"
@@ -434,6 +439,22 @@ def _run_variant(
                         % (want_hint, RECALL_HINT_TEXT, want_shape,
                            RECALL_SHAPE_TEXT, want_nav, RECALL_NAV_TEXT,
                            got_hint, got_shape, got_nav)
+                    )
+            if run_ok and str(args.stage) == "2":
+                # A9 (F-022): the first Stage 2 check lists both items.
+                # second-try has made the folder but not cd'd: the folder
+                # reason never prints, the cd reason prints once.
+                got_items = (
+                    text.count(GATE_ITEM_FOLDER_TEXT),
+                    text.count(GATE_ITEM_CD_TEXT),
+                )
+                outcome["gate_item_counts"] = list(got_items)
+                if got_items != (0, 1):
+                    run_ok = False
+                    outcome["notes"] = (
+                        "second-try expected the two-item Stage 2 checklist "
+                        "(%r never, %r once), saw %d and %d."
+                        % ((GATE_ITEM_FOLDER_TEXT, GATE_ITEM_CD_TEXT) + got_items)
                     )
         outcome["harness_exit_code"] = 0 if run_ok else 4
         if result["wall_clock_capped"]:
