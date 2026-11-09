@@ -203,7 +203,9 @@ three rungs. There
 is no reveal of an accepted form at any rung. `show` repeats the question
 without counting a miss; `quit` leaves with the same farewell as the practice
 prompt. Contractual: the rung order and the three facts. Not contractual: the
-wording. Every hint passes FF-009 (no accepted answer appears in it). The
+wording. Every hint passes FF-009 (no accepted answer appears in it) and
+FF-010 (it starts `Lesson N: ` or `Lesson N.k: `, naming where the fact was
+taught). The
 Stage 1 follow-up prompts accept `show` and `quit` but have no ladder; a
 mismatch re-asks only the failing item.
 

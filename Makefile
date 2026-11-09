@@ -6,7 +6,7 @@
 # Git 2.56+; the learner-facing tutor still needs only Bash/POSIX tools.
 #
 # Targets:
-#   check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 static analysis (default)
+#   check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 static analysis (default)
 #   lint         shellcheck shelltutor (FF-005; warns if shellcheck absent)
 #   smoke        FF-006a minimal smoke test
 #   lesson-flow  FF-006b Stage 1 PTY harness (optional; Python 3.9+; not in verify)
@@ -28,7 +28,7 @@ SIMARGS ?=
 
 help:
 	@printf 'Targets:\n'
-	@printf '  check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 static analysis (default)\n'
+	@printf '  check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 static analysis (default)\n'
 	@printf '  lint         shellcheck $(SCRIPT) (FF-005)\n'
 	@printf '  smoke        FF-006a minimal static smoke test\n'
 	@printf '  lesson-flow  FF-006b PTY harness (optional; Python 3.9+; not in verify)\n'

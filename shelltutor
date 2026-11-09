@@ -1138,7 +1138,7 @@ stage1_gate() {
 
     ask_question \
         "Q1: In a normal bash window (not this tutor), which character usually ends the prompt? (\$, ;, :, or #)" \
-        "Lesson 1.3 compared this tutor's prompt with a normal one." \
+        "Lesson 1.3: this tutor's prompt compared with a normal one." \
         '$' \
         'dollar' \
         'dollar sign' \
@@ -1442,7 +1442,7 @@ EOF
 
     ask_question \
         "Q2: What does ${CMD}~${RST} mean in a path?" \
-        "It is where ${CMD}cd${RST} with nothing after it takes you." \
+        "Lesson 2.3: where ${CMD}cd${RST} with nothing after it takes you." \
         'home' \
         'home folder' \
         'home directory' \
@@ -1676,19 +1676,19 @@ EOF
 
     ask_question \
         "Q1: Which command creates an empty file?  (touch, mkdir, new, cat)" \
-        "It is the one that can also update a file's timestamp." \
+        "Lesson 3.1: the file command that can also update a timestamp." \
         'touch' || return $?
 
     ask_question \
         "Q2: After ${CMD}rm important.txt${RST}, where is the file?  (~/.Trash, on disk, gone, depends)" \
-        "Lesson 3.3 said this command has no undo and no Trash." \
+        "Lesson 3.3: what rm does, and whether it can be undone." \
         'gone' \
         "it's gone" \
         'its gone' || return $?
 
     ask_question \
         "Q3: What single command renames ${DIR}old.txt${RST} to ${DIR}new.txt${RST}?" \
-        "Renaming and moving are the same action in the shell." \
+        "Lesson 3.3: the same command that moves a file renames it." \
         'mv' \
         'mv old.txt new.txt' \
         'mv old new' || return $?
@@ -1945,7 +1945,7 @@ EOF
 
     ask_question \
         "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
-        "One of them starts the file fresh; the other keeps what was there and adds." \
+        "Lesson 4.3: what each arrow does to a file that already exists." \
         '> overwrites, >> appends' \
         '> overwrite, >> append' \
         '> writes over, >> adds to the end' \
@@ -1956,7 +1956,7 @@ EOF
 
     ask_question \
         "Q3: Why does ${CMD}vim my notes.txt${RST} open two files instead of one?" \
-        "Look at what separates the two words after ${CMD}vim${RST}, and what quotes would have done." \
+        "Lesson 4.1: what separates the words after ${CMD}vim${RST}, and what quotes do." \
         'because of the space' \
         'spaces split arguments' \
         'spaces split words' \
@@ -2233,7 +2233,7 @@ EOF
 
     ask_question \
         "Q1: How do you exit ${CMD}man ls${RST}?" \
-        "The same single key leaves ${CMD}less${RST}." \
+        "Lesson 5.1: the same single key leaves ${CMD}less${RST}." \
         'q' \
         'press q' \
         'type q' \
@@ -2241,7 +2241,7 @@ EOF
 
     ask_question \
         "Q2: After ${CMD}vim notes.txt${RST}, what makes Vim write your edit to the file?" \
-        "A colon command whose letter is the first letter of \"write\"." \
+        "Lesson 5.3: the colon command for putting the buffer into the file." \
         ':w' \
         ':w<enter>' \
         ':w then enter' \
@@ -2640,7 +2640,7 @@ EOF
 
     ask_question \
         "Q2: What do you type to ask whether zsh is installed?" \
-        "Lesson 2 did it with two names at once; the first word of the line is 'command'." \
+        "Lesson 2: asking about two names at once." \
         'command -v zsh' \
         'command -v' \
         'which zsh' \
@@ -2939,7 +2939,7 @@ EOF
 
     ask_question \
         "Q3: You type ${CMD}PS1='me> '${RST}, then ${CMD}next${RST}. What is the prompt on the next screen?  (me> , shelltutor> )" \
-        "Each screen starts a new shell, and a new shell starts from the tutor's own setting." \
+        "Lesson 4: each screen starts a new shell." \
         'shelltutor>' \
         'shelltutor' \
         'it reverts' \
