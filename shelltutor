@@ -659,10 +659,15 @@ lesson() {
 # tr -s is POSIX; GNU sed's \+ is not (audit/2026-11-07/findings.md F-012).
 # The typographic apostrophe (U+2019) is multibyte, so it goes through sed
 # as its UTF-8 byte sequence, not through tr.
+# normalize_lines does the work one line at a time (stdin to stdout), so a
+# whole list of forms goes through one pipeline instead of one per form.
+normalize_lines() {
+    tr '[:upper:]' '[:lower:]' | tr -d "'.,!" \
+        | sed "s/$(printf '\342\200\231')//g; s/[[:space:]][[:space:]]*/ /g; s/^ //; s/ \$//"
+}
+
 normalize_answer() {
-    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -d "'.,!" \
-        | sed "s/$(printf '\342\200\231')//g" | tr -s '[:space:]' ' ' \
-        | sed 's/^ //; s/ $//'
+    printf '%s' "$1" | normalize_lines
 }
 
 # One fixed line from the second miss (A8, O-Z): the shape of answer wanted.
@@ -680,21 +685,27 @@ RECALL_NEGATIONS='not no never nowhere nothing none isnt doesnt dont wont cant w
 # Whole words: both sides are padded with spaces. Bash 3.2: no arrays of
 # arrays, no empty-array expansion under set -u.
 recall_matches() {
-    local norm="$1" a w g phrase rest hit ok_norm padded
+    local norm="$1" a w g phrase hit ok_norm padded
     shift
-    local groups=() seen_sep=0
+    local groups=() exacts=() seen_sep=0
     for a in "$@"; do
         if [ "$seen_sep" -eq 0 ] && [ "$a" = "--" ]; then
             seen_sep=1; continue
         fi
         if [ "$seen_sep" -eq 1 ]; then
-            groups+=("$a"); continue
+            groups+=("$a")
+        else
+            exacts+=("$a")
         fi
-        ok_norm=$(normalize_answer "$a")
+    done
+    # One pipeline for all exact forms, one more per group.
+    while IFS= read -r ok_norm; do
         if [ "$norm" = "$ok_norm" ]; then
             return 0
         fi
-    done
+    done <<EXACTS
+$(printf '%s\n' "${exacts[@]}" | normalize_lines)
+EXACTS
     [ "${#groups[@]}" -gt 0 ] || return 1
     padded=" $norm "
     for w in $RECALL_NEGATIONS; do
@@ -702,14 +713,12 @@ recall_matches() {
     done
     for g in "${groups[@]}"; do
         hit=0
-        rest="$g|"
-        while [ -n "$rest" ]; do
-            phrase=${rest%%|*}
-            rest=${rest#*|}
+        while IFS= read -r phrase; do
             [ -n "$phrase" ] || continue
-            phrase=$(normalize_answer "$phrase")
             case "$padded" in *" $phrase "*) hit=1; break ;; esac
-        done
+        done <<PHRASES
+$(printf '%s\n' "$g" | tr '|' '\n' | normalize_lines)
+PHRASES
         [ "$hit" -eq 1 ] || return 1
     done
     return 0
@@ -1183,7 +1192,9 @@ stage1_gate() {
         '$' \
         'dollar' \
         'dollar sign' \
-        'the dollar sign' || return $?
+        'the dollar sign' \
+        -- \
+        '$|dollar' || return $?
 
     ask_question \
         "Q2: What does ${CMD}pwd${RST} print?" \
@@ -1203,7 +1214,9 @@ stage1_gate() {
         'current directory' \
         'where i am' \
         'the folder youre in' \
-        'the folder you are in' || return $?
+        'the folder you are in' \
+        -- \
+        'folder|directory|where i am|where you are|location|path' || return $?
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
@@ -1227,7 +1240,9 @@ stage1_gate() {
         'the window' \
         'the window you type into' \
         'in the window you type into' \
-        'back to me in the window you type into' || return $?
+        'back to me in the window you type into' \
+        -- \
+        'screen|terminal|window|back to you|back to me|straight back|stdout|standard output|standard out|display' || return $?
 
     # ---- Task: run three commands, then answer three short questions
     setup_stage_dir 1
@@ -1479,7 +1494,9 @@ EOF
         'it goes to the parent folder' \
         'up to the parent folder' \
         'goes up one' \
-        'up a level' || return $?
+        'up a level' \
+        -- \
+        'up|parent|contains|above|back one' || return $?
 
     ask_question \
         "Q2: What does ${CMD}~${RST} mean in a path?" \
@@ -1498,7 +1515,9 @@ EOF
         'your home' \
         'the home' \
         'home folder of the user' \
-        'my home' || return $?
+        'my home' \
+        -- \
+        'home' || return $?
 
     # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
     ask_question \
@@ -1507,7 +1526,9 @@ EOF
         '~/projects/notes' \
         '$home/projects/notes' \
         'projects/notes' \
-        'home/projects/notes' || return $?
+        'home/projects/notes' \
+        -- \
+        '~/projects/notes|projects/notes|the notes folder|notes' || return $?
 
     local hist_mark
     hist_mark=$(history_mark)
@@ -1718,6 +1739,8 @@ EOF
     ask_question \
         "Q1: Which command creates an empty file?  (touch, mkdir, new, cat)" \
         "Lesson 3.1: the file command that can also update a timestamp." \
+        'touch' \
+        -- \
         'touch' || return $?
 
     ask_question \
@@ -1725,14 +1748,18 @@ EOF
         "Lesson 3.3: what rm does, and whether it can be undone." \
         'gone' \
         "it's gone" \
-        'its gone' || return $?
+        'its gone' \
+        -- \
+        'gone|deleted|removed|for good|permanently' || return $?
 
     ask_question \
         "Q3: What single command renames ${DIR}old.txt${RST} to ${DIR}new.txt${RST}?" \
         "Lesson 3.3: the same command that moves a file renames it." \
         'mv' \
         'mv old.txt new.txt' \
-        'mv old new' || return $?
+        'mv old new' \
+        -- \
+        'mv' || return $?
 
     # Clean slate once at gate entry. Learner state then persists across
     # in-gate `show` redisplays so a partial task can be completed.
@@ -1982,7 +2009,9 @@ EOF
         'its location' \
         'the full path' \
         'the full path to vim' \
-        'the folder and file name' || return $?
+        'the folder and file name' \
+        -- \
+        'path|location|where|/usr/bin/vim|folder' || return $?
 
     ask_question \
         "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
@@ -1993,7 +2022,10 @@ EOF
         '>> appends' \
         '> overwrites' \
         'one overwrites one appends' \
-        '> replaces >> appends' || return $?
+        '> replaces >> appends' \
+        -- \
+        'overwrite|overwrites|replace|replaces|writes over|wipes|clobber|clobbers|starts fresh|erases|truncates' \
+        'append|appends|adds|add to|end' || return $?
 
     ask_question \
         "Q3: Why does ${CMD}vim my notes.txt${RST} open two files instead of one?" \
@@ -2006,7 +2038,9 @@ EOF
         'missing quotes' \
         'because spaces' \
         'because of spaces' \
-        'the shell splits on spaces' || return $?
+        'the shell splits on spaces' \
+        -- \
+        'space|spaces|split|splits|two words|separate|separates' || return $?
 
     # Clean slate once at gate entry; setup_stage_dir seeds seed.txt so the
     # glob exercise has something to match before count.txt exists.
@@ -2278,7 +2312,9 @@ EOF
         'q' \
         'press q' \
         'type q' \
-        'the q key' || return $?
+        'the q key' \
+        -- \
+        'q' || return $?
 
     ask_question \
         "Q2: After ${CMD}vim notes.txt${RST}, what makes Vim write your edit to the file?" \
@@ -2291,7 +2327,9 @@ EOF
         ':wq then enter' \
         'write command' \
         ':write' \
-        'colon w' || return $?
+        'colon w' \
+        -- \
+        ':w|w|write' || return $?
 
     ask_question \
         "Q3: If you open ${DIR}notes.txt${RST} in ${CMD}vim${RST}, type some letters, and quit with ${CMD}:q!${RST} — did the file on disk change?" \
@@ -2677,7 +2715,9 @@ EOF
         'a program' \
         'program' \
         "it's a program" \
-        'its a program' || return $?
+        'its a program' \
+        -- \
+        'program' || return $?
 
     ask_question \
         "Q2: What do you type to ask whether zsh is installed?" \
@@ -2685,7 +2725,9 @@ EOF
         'command -v zsh' \
         'command -v' \
         'which zsh' \
-        'type zsh' || return $?
+        'type zsh' \
+        -- \
+        'command -v zsh|which zsh|type zsh|command -v' || return $?
 
     ask_question \
         "Q3: ${CMD}echo \$SHELL${RST} prints which shell?  (the running one, your login shell, the newest one)" \
@@ -2693,6 +2735,8 @@ EOF
         'login shell' \
         'your login shell' \
         'the login shell' \
+        'login' \
+        -- \
         'login' || return $?
 
     # Clean slate once at task entry; learner state then persists across
@@ -2964,6 +3008,8 @@ EOF
     ask_question \
         "Q1: Which command makes a variable visible to the programs the shell starts?  (set, export, env, echo)" \
         "Lesson 2: it is the line you typed after setting pet, before the second bash -c." \
+        'export' \
+        -- \
         'export' || return $?
 
     ask_question \
@@ -2976,7 +3022,9 @@ EOF
         'list' \
         'a list of directories' \
         'list of directories' \
-        'directories' || return $?
+        'directories' \
+        -- \
+        'folders|directories|list|places' || return $?
 
     ask_question \
         "Q3: You type ${CMD}PS1='me> '${RST}, then ${CMD}next${RST}. What is the prompt on the next screen?  (me> , shelltutor> )" \
@@ -2985,7 +3033,9 @@ EOF
         'shelltutor' \
         'it reverts' \
         'reverts' \
-        'reverted' || return $?
+        'reverted' \
+        -- \
+        'shelltutor|shelltutor>' || return $?
 
     # Clean slate once at task entry; learner state then persists across
     # in-gate `show` redisplays.
