@@ -1355,8 +1355,8 @@ Predict which names will end in ${CMD}/${RST}, then run ${CMD}ls -p${RST}. The
 tutor keeps its own hidden files here; ${CMD}ls -a${RST} shows them.
 
 Then ${CMD}ls${RST} a folder you are not in:
-  ${CMD}ls /etc${RST}       ${DIM}# system configuration${RST}
-  ${CMD}ls /usr/bin${RST}   ${DIM}# where many commands live${RST}
+  ${CMD}ls /${RST}          ${DIM}# the top of everything${RST}
+  ${CMD}ls /usr/bin${RST}   ${DIM}# long: many commands live here${RST}
 
 ${INSTR}${G_PLAY} Try a few, then ${CMD}next${INSTR}.${RST}
 EOF

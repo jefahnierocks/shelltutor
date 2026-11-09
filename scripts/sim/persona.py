@@ -241,7 +241,7 @@ def stage_walk(
         return (
             _intro(2)
             + _lesson(2, 1, ["pwd"])
-            + _lesson(2, 2, ["ls", "ls -p", "ls -a", "ls /etc"])
+            + _lesson(2, 2, ["ls", "ls -p", "ls -a", "ls /"])
             + _lesson(2, 3, ["cd /tmp", "pwd", "cd", "cd -", "cd ..", "cd " + sandbox_root])
             + _lesson(2, 4, [])
             + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"], second_try)
