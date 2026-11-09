@@ -721,3 +721,180 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
 | arthur | O-f `^[` | H-2 |
 | arthur | O-h pace | by-source table |
 | arthur | 154 inputs vs 120 | P-1 |
+
+## Synthetic sittings, round 5 (the exit test)
+
+**Exit-test result: all three personas (v0.2) reached the finale without
+quitting, with 150 or fewer turns each (final friction 0, -3 and -5); no
+sitting hit a dead end and only three inputs were rejected, one of which is a
+false rejection (F-030); one answer was a false accept (F-029).**
+Sheets `sim-sittings/{leo,maya,arthur}-5.md` ran against `7e126cf` (WP-23);
+`shelltutor` on `main` (`d88c564`) is unchanged from that revision. The tutor
+changes since round 4 are WP-23: recall answers match by exact form or by keyword
+groups with a negation guard (`recall_matches`, `shelltutor:683-720`; negation
+list `RECALL_NEGATIONS`, `675`); the shape line is gone (`RECALL_SHAPE` appears
+0 times); 3.1 teaches `echo hello > notes.txt` (`3.1`, "put words in a file");
+Part C cleaned `sitting.py` replies. Personas unchanged from round 4 (all v0.2).
+The sheets are untracked in the maintainer checkout at the time of writing; they
+are cited by name. Numbering continues at F-029 and O-AR.
+
+### Friction by source
+
+| Sheet | Final | Reading | Rejections (+2) | Mode confusion | Gates cleared | Turns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| leo-5 | 0 | 1 | 4 (two) | 0 | -5 | not stated |
+| maya-5 | -3 | 0 | 2 (one) | 0 | -5 | not stated |
+| arthur-5 | -5 | 0 | 0 | 0 | -5 | 150 of 160 |
+
+Leo's two rejections are a correct rejection of `>` at Stage 1 Q1 (a wrong guess)
+and the Stage 1 first `check` (O-AR). Maya's one is F-030. Arthur had none.
+
+### Round-4 items closed (with evidence)
+
+All reproduced through the tutor's own `recall_matches` (a probe that extracts
+the real functions and `ask_question` calls from `shelltutor`):
+
+- **F-025 closed.** Stage 1 Q3 (`1216`) now accepts `it comes straight back to
+  you`, `back to you` and `it comes back to me on the screen in the terminal
+  window`; the hint is "Lesson 1.4: whoami printed something; think about where
+  you read it." (no paraphrase). Arthur passed with `it comes back to me on the
+  screen`.
+- **F-026 closed.** Stage 4 Q2 (`2010`) accepts `> overwrites and >> appends`,
+  `overwrite append`, `overwrite vs append`, `> overwrites the file and >> appends
+  to the end`, `one replaces what is in the file and the other adds to the end of
+  it`, and `one replaces the old file and two adds to the end`. All three passed
+  Stage 4 Q2 on the first try.
+- **F-027 closed.** Stage 4 Q3 (`2024`) accepts `the space`, `the space splits it
+  into two names`, `there is a space`.
+- **F-028 closed.** 3.1 shows `echo hello > notes.txt  # put words in a file`; all
+  three ran it and cleared the Stage 3 task first try.
+- **O-AN closed.** The shape line is gone; no sheet mentions it.
+- **F-023 stays closed**: `the path /usr/bin/vim`, `its path, /usr/bin/vim`
+  accepted.
+
+### Findings (reproduced)
+
+- **F-029 — Keyword groups accept obviously wrong answers (false accept; the new
+  class).** Severity 2. Stage 2 Q3 (`1518`) has the group
+  `~/projects/notes|projects/notes|the notes folder|notes`; whole-word `notes`
+  makes the bare name pass. Leo passed with `notes`, the answer he said was
+  "obvious" without having read the sentence that teaches it. Reproduced
+  accepted: `notes`, `i am in notes`, `my notes`, `cd notes`, `projects notes`,
+  `notes folder in the home folder`; rejected: `projects`, `the projects folder`,
+  `~/notes`, `/notes`, `~`. Probing every question's groups for a wrong answer
+  that passes (negation words, such as `not`, correctly block "not notes"):
+
+  | Question (line) | Wrong answer that passes |
+  | --- | --- |
+  | Stage 1 Q1 (`1184`) | `a dollar is wrong, it is a hash` |
+  | Stage 1 Q2 (`1194`) | `the path to python`, `the user folder`, `a folder in the cloud` |
+  | Stage 1 Q3 (`1216`) | `a window in my browser`, `to a file on the screen of my phone` |
+  | Stage 2 Q1 (`1474`) | `it deletes the parent folder`, `it makes a parent folder` |
+  | Stage 2 Q2 (`1496`) | `a home page`, `the home key` |
+  | Stage 2 Q3 (`1518`) | `notes`, `i am in notes`, `projects notes` |
+  | Stage 3 Q1 (`1733`) | `touch is wrong it is mkdir` |
+  | Stage 3 Q2 (`1740`) | `gone to the trash` |
+  | Stage 3 Q3 (`1749`) | `mv is wrong use cp`, `cp then mv` |
+  | Stage 4 Q1 (`1986`) | `where`, `where is the manual` |
+  | **Stage 4 Q2 (`2010`)** | **`> appends and >> overwrites` (the two words swapped)** |
+  | Stage 4 Q3 (`2024`) | `because it splits the screen`, `a space is missing` |
+  | Stage 5 Q1 (`2303`) | `type q then delete everything`, `q is for question` |
+  | Stage 5 Q2 (`2313`) | `the w key in a game`, `write the file by deleting it` |
+  | shells Q1/Q2/Q3 (`2706`, `2716`, `2726`) | `a folder program`; `command -v bash`; `login window` |
+  | env Q1/Q2/Q3 (`3002`, `3009`, `3023`) | `export is wrong use set`; `a file name list`; `me> replaced shelltutor` |
+
+  The Stage 4 Q2 swap is the most serious: the two groups are ANDed but not
+  ordered, so a learner with the arrows reversed passes. The matcher corpus
+  (`scripts/matching-corpus.tsv`, FF-011) holds `the notes folder` as an accept
+  and no bare-`notes` or swapped-arrow reject. A one-word group
+  (`touch`, `mv`, `q`, `home`, `where`, `w`) cannot tell a right answer from a
+  wrong one that contains the word. *Closes when*: the corpus gains reject rows
+  for these (bare `notes`, swapped `> appends and >> overwrites`, `touch is wrong
+  it is mkdir`, `gone to the trash`), and the groups are tightened or the exact
+  forms carry the weight for one-word answers. Sheets: leo F-A.
+- **F-030 — Stage 5 Q2 rejects `:wq (or :w) writes the buffer to the file`.**
+  Severity 2. Group `:w|w|write` (`2313`). Whole-word matching pads the
+  normalised answer with spaces; `normalize_answer` strips only `'`, `.`, `,` and
+  `!` (`664`), so the parenthesis stays glued: the answer holds `:wq`, `(or` and
+  `:w)`, none of which equals `:w`, `w` or `write`, and `writes` is not `write`.
+  Reproduced: reject `:wq (or :w) writes the buffer to the file` and `:wq (or :w)`;
+  accept `:wq`, `:w`, `:w writes the buffer to the file`, `write`, `w`. So `:wq`
+  alone passes (Maya's hint was "Lesson 5.3: the colon command for putting the
+  buffer into the file"; she retyped `:w`). Maya +2. *Closes when*: `normalize_answer`
+  also drops `(` and `)` (and the corpus gains `:wq (or :w) writes the buffer to
+  the file` as an accept), or `writes` joins the group. Sheets: maya F-A, F-B.
+
+### Observations (reproduced)
+
+- **O-AR — The Stage 1 gate task counts only commands run after it starts.**
+  By design. `hist_mark=$(history_mark)` is taken when the task begins (`1245`),
+  and `gate_require_history` reads only lines after it (`history_since`, `767-780`).
+  Leo ran `whoami`, `pwd`, `date` in 1.3, so the first `check` printed `○ whoami
+  not yet: not in your history` for all three (+2). The task screen says "run each
+  of these once" (`1253`) and "Type check only after running all three" (`1262`);
+  neither says earlier runs do not count. Sheets: leo F-B.
+- **O-AS — The finale lists commands the learner may not have run.** The list is
+  static: `finale()` (`2471`) prints a fixed "you have met" heredoc (`commands`
+  `echo, pwd, whoami, date, clear, exit, …, vimtutor`, `2478-2480`); nothing reads
+  history or progress. Maya saw `exit` and `vimtutor` listed. Sheets: maya O-004.
+- **O-AT — The Stage 4 task verifies the file's content, not the pipeline.**
+  `stage4_verify_task` (`1968-1972`) requires `count.txt` to exist and its content
+  with whitespace removed to equal `100`; the history check requires only a `*.txt`
+  glob (`2078`). Reproduced: `seq 1 100 | wc -l > count.txt` passes; `echo 100 >
+  count.txt` passes; `seq 1 100 > count.txt` fails (its content collapses to
+  `12345…100`), so Arthur's second reading is rejected, not accepted. "Save the
+  count" admits the two readings the verifier tells apart. Sheets: maya O-005,
+  arthur O-008.
+- **O-AU — The Stage 3 gate deletes the file 3.1 made (Arthur's claim not
+  reproduced).** Arthur wrote that `notes.txt` already existed at the task and was
+  overwritten silently. Reproduced: after `echo hello > notes.txt` in 3.1, `ls`
+  shows it; at the Stage 3 gate task `ls` shows nothing, because `stage3_gate`
+  removes `notes.txt`, `backup.txt` and `done.txt` at entry (`1761`). The task text
+  "create a file notes.txt" is therefore accurate; what is true is that the lesson's
+  file disappears with no word on screen. Sheets: arthur O-006.
+- **O-AV — Recurring, unchanged.** The prompt folder changes at the Stage 1 task
+  (O-AG; three of three sheets: leo O-D, maya O-002, arthur O-001; the 1.3 sentence
+  "Here pwd shows the tutor's own folder" is not retracted). Terms used before they
+  are taught (O-AM/O-AQ): leo O-C; arthur O-002 (`bash`, `less`), O-007 (`exits 0`,
+  `^`), O-009 (`:q!` in 5.2); `bare name`; no drive letter (arthur O-004); silent
+  commands (arthur O-003, O-005); `vim --version` prints a screen of flags (maya
+  O-001); the Stage 2 Q3 sentence sits in a skipped paragraph (leo, maya O-007);
+  "(inside this stage's folder)" (maya O-003). The hint at Stage 1 Q1's first miss
+  points at 1.3 (leo O-A) and the answer is the second sentence there.
+
+### Harness (not the tutor)
+
+- **H-3 — A full-screen program on screen is one long line.** While Vim is
+  running, the reply is the drawing with cursor positioning ignored (tildes run
+  together; after Esc "no visible change"). Part C removed the residue after the
+  program exits; the live screen is unchanged. Sheets: leo O-F, maya O-006,
+  arthur O-010.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-A `notes` accepted | F-029 |
+| leo | F-B first `check` | O-AR |
+| leo | O-A, O-B | O-AV, O-T |
+| leo | O-C jargon | O-AV |
+| leo | O-D `/stage1` | O-AV (O-AG) |
+| leo | O-E no mode confusion | positive: "this is not the shell" held |
+| leo | O-F capture | H-3 |
+| maya | F-A, F-B `:wq (or :w)…` | F-030 |
+| maya | O-001 `vim --version` | O-AV |
+| maya | O-002 `/stage1` | O-AV |
+| maya | O-003 "inside this stage's folder" | O-AV |
+| maya | O-004 finale list | O-AS |
+| maya | O-005 "save the count" | O-AT |
+| maya | O-006 Esc invisible | H-3 |
+| maya | O-007 Stage 2 Q3 sentence | O-AV |
+| arthur | F none | -- |
+| arthur | O-001 `/stage1` | O-AV (O-AG) |
+| arthur | O-002, O-007, O-009 terms | O-AV |
+| arthur | O-003 Ctrl+L/Ctrl+C silence | O-AV |
+| arthur | O-004 drive letter | O-AV |
+| arthur | O-005 silent `>` | O-AV |
+| arthur | O-006 notes.txt exists | O-AU (not reproduced as stated) |
+| arthur | O-008 "count" two readings | O-AT |
+| arthur | O-010 insert mode invisible | H-3 |
