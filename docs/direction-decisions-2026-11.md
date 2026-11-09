@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.7.0
+version: 0.8.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -859,6 +859,22 @@ keep three rungs); recall rendered visibly as the tutor speaking; the 1.1
 and 1.2 mechanical traps closed. A4 is extended: reproduced synthetic
 findings are a valid source for answer-list widening. After WP-20 lands,
 the three personas are re-run as sittings `*-2`.
+
+### A8 — Answer shape, Stage 2 grounding, persona recalibration (2026-11-09)
+
+After synthetic round 2 (`audit/2026-11-09/walkthroughs.md`, F-019, F-020,
+O-Z..O-AG) the operator approved three items. (1) WP-21: longer plain
+accepted forms and the hint's own words accepted; punctuation normalised;
+the second recall miss names the expected answer shape; no containment
+rule, because the negation counterexamples in F-019 are real and shaping
+the answer is cheaper than guarding it. (2) Also in WP-21: 1.1 names the
+stray-slash and missing-space typos; 2.3 says `cd` alone goes home and
+`cd -` comes back, with a try-it line; 2.2's first outside listing is
+`ls /`. (3) Persona sheets v0.2 (simulation calibration, not tutor
+change): Maya's density charge applies only when skipped prose later
+causes a rejection; Leo reads the first sentence of each paragraph as well
+as commands. Round 3 runs after WP-21 lands with the v0.2 personas, and
+the round-3 intake states both changes so the comparison is explicit.
 
 ## Cross-references
 
