@@ -1370,19 +1370,18 @@ ${CMD}cd${RST} changes your current folder.
 
   ${CMD}cd /tmp${RST}       ${DIM}# go to /tmp${RST}
   ${CMD}pwd${RST}           ${DIM}# confirm you got there${RST}
-  ${CMD}cd${RST}            ${DIM}# go home (just 'cd' by itself)${RST}
-  ${CMD}cd ~${RST}          ${DIM}# also go home — ~ means \$HOME${RST}
-
-Two more useful ones:
-  ${CMD}cd -${RST}          ${DIM}# go back to the previous folder${RST}
+  ${CMD}cd${RST}            ${DIM}# your home folder, outside this practice area${RST}
+  ${CMD}cd ~${RST}          ${DIM}# also your home folder (~ is its short name)${RST}
+  ${CMD}cd -${RST}          ${DIM}# come back to where you were${RST}
   ${CMD}cd ..${RST}         ${DIM}# go up one level (to the parent folder)${RST}
-  ${CMD}cd..${RST} with no space is a different word; bash cannot find it.
+
+${CMD}cd..${RST} with no space is a different word; bash cannot find it.
 
 ${EM}Stages 1 and 2 start every practice prompt in${RST} ${DIR}${SANDBOX}${RST}${EM}.${RST}
 Later stages start in a stage folder inside it. If you wander off,
 ${CMD}cd ${SANDBOX}${RST} brings you back.
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to continue.${RST}
+${INSTR}${G_PLAY} Try ${CMD}cd ..${INSTR}, ${CMD}pwd${INSTR}, then ${CMD}cd -${INSTR}, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
