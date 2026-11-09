@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.9.0
+version: 0.10.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -891,6 +891,26 @@ every recall hint begins `Lesson N.k:` and names the concept; a hint never
 paraphrases the answer, since FF-009 then forbids accepting it (the shared
 cause of F-020 and F-023). (4) Arthur's persona sheet goes to v0.2 with the
 same density-on-consequence rule as Maya. Round 4 runs after WP-22 lands.
+
+### A10 — Keyword matching for recall; synthetic exit test (2026-11-09)
+
+After synthetic round 4 (`audit/2026-11-09/walkthroughs.md`, F-025..F-028,
+O-AN) the operator approved four items. (1) WP-23: recall answers are
+accepted by exact form OR by keyword groups with a negation guard; this
+reverses A8's "no containment rule": four rounds of list widening and hint
+rewording did not close the class (F-018, F-019, F-020, F-021, F-023,
+F-025, F-026, F-027), the shape line was judged unhelpful by all three
+personas, and the guard answers the counterexamples that motivated A8.
+FF-009 extends to keyword phrases; FF-011 keeps the rejected-correct corpus
+from rounds 1–4 as a regression test; the shape line is removed. (2) 3.1
+teaches `echo word > file` before the Stage 3 gate needs it (F-028; the
+dead-end class of A9). (3) Harness: the sitting client strips terminal
+control residue; the sheet template states the turn cap (160; one `send` or
+`raw` is one turn). (4) Positioning: round 5 is the synthetic exit test,
+all three personas reaching the finale on one revision. After it the
+synthetic loop pauses and effort moves to release preparation and the
+module standard. Human sittings still gate v0.1.0 (A1.10); synthetic
+results remain candidate evidence.
 
 ## Cross-references
 
