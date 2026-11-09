@@ -170,3 +170,155 @@ first mastery gate: F-017 and F-018 are two answer-list defects, O-P and O-Q
 the prompt and ladder context around them. Fixing the lists alone would not
 have kept Leo, who never read the gate screen; fixing the ladder alone would
 not have kept Arthur, whose `>` is the visible prompt.
+
+## Synthetic sittings, round 2
+
+Sheets `sim-sittings/{leo,maya,arthur}-2.md` ran against `82792b6` (WP-20).
+`shelltutor` on `main` (`25ae8c3`) is unchanged from that revision. Method as
+round 1: recall inputs through the tutor's own `normalize_answer`
+(`shelltutor:656`) against the accepted lists; wording by line; the ladder and
+Stage 2 commands driven with `sitting.py start --bash /bin/bash` (Bash 3.2.57).
+Numbering continues: F-019 and O-Z (then O-AA, O-AB, ...).
+
+**Result.** Leo quit at Stage 1 Q1 (friction 8), Maya at Stage 1 Q3 (9),
+Arthur cleared Stage 1 and quit at Stage 2 Q1 (8). All three quit on a recall
+rejection; Arthur is the first persona to clear a gate.
+
+### Round-1 items round 2 closes (with evidence)
+
+- **F-017 closed.** 1.3 now says "Your prompt here ends in `>`. A normal bash
+  window's prompt usually ends in `$`" (`953-954`); Q1 asks about "a normal bash
+  window" (`1133`). Maya and Arthur answered `$` and passed; reproduced `$`
+  accepted, `>` and `#` rejected. Leo's two Q1 misses were `next` and `ls` (see
+  O-AA), not the answer.
+- **F-018 closed for the listed forms.** Q2's list now holds `the folder`,
+  `the current directory`, `where i am`, `the folder youre in` (`1140-1158`);
+  reproduced accepted: `the folder`, `the folder I'm in`, `the current
+  directory`, `where I am`, `the folder you're in`. Maya and Arthur passed Q2 with
+  `the folder you are in`. Q3's near misses `to the screen`, `standard out`,
+  `the terminal window`, `the display` now accepted. Long answers are F-019.
+- **O-Q closed as designed.** The hint now shows on the first miss in all three
+  sittings; facts follow from miss 2 (see O-Z).
+- **O-S and O-V (Enter after Tab) closed by text.** 1.2 says "then press Enter
+  to run it" and "Enter runs it; Ctrl+C throws it away" (`928-929`). Maya and
+  Arthur ran Up then Ctrl+C or Enter; no `next` was swallowed.
+- **O-W closed for the 1.2 gap.** 1.1 now says "If bash says command not found,
+  you mistyped" (`907`); Arthur typed `dir` at 2.2 and recorded no friction.
+
+### Findings (reproduced)
+
+- **F-019 — Long plain answers that contain an accepted phrase are rejected.**
+  Severity 2. Reproduced through `normalize_answer`; "contained" means the
+  normalised accepted form appears as whole words in the normalised input:
+
+  | Input (sheet) | Exact | Accepted forms contained |
+  | --- | --- | --- |
+  | Stage 1 Q3: `it shows up on the screen` (maya) | reject | `the screen`, `screen`, `on the screen` |
+  | Stage 1 Q3: `it comes back to me on the screen` (arthur) | reject | `the screen`, `screen`, `on the screen` |
+  | Stage 2 Q1: `it goes up one level, to the parent folder` (arthur) | reject | `parent folder`, `up one`; also `goes up one level` once the comma is ignored |
+
+  A containment rule is not safe alone: `not to the screen`, `nowhere, the
+  screen stays blank`, `it does not go up one level` and `it goes down, not to
+  the parent folder` all contain accepted forms and are wrong. Lists
+  `1163-1173`, `1412-1420`. *Closes when*: the operator chooses between longer
+  accepted forms, containment with a negation guard, or a hint that names the
+  expected shape. Sheets: maya F-1, arthur F-001, F-002.
+- **F-020 — The Q3 hint's own wording is not an accepted answer.** Severity 3.
+  The hint says "in the window you type into" (`1162`); `back to me, in the
+  window you type into` (arthur) is rejected and contains no accepted form
+  (`window` alone is not in the list). *Closes when*: the list takes `window`
+  forms or the hint uses an accepted word. Sheets: arthur F-001.
+
+### Observations (reproduced)
+
+- **O-Z — The recall hint repeats and restates; the facts did appear.**
+  Reproduced two misses at Stage 1 Q1: miss 1 printed `not quite. try again.`
+  and `Hint: Lesson 1.3 compared this tutor's prompt with a normal one.`; miss 2
+  printed the same hint and then `Passed stages are saved.`, `Type quit to
+  leave now; the next run starts this stage from its first lesson.`, `Type show
+  to see the question again.`; miss 3 printed all of it again (`ask_question`
+  `700-704`). **Leo's F-a ("second miss showed the hint again, not facts") is not
+  reproduced as a ladder defect**: the facts are present from miss 2, and the
+  sheets' own transcripts record them (leo-2 second input; arthur-2 gate
+  line). What is true: the hint text is identical on every miss, and for Q3 and
+  Stage 2 Q1 it restates the learner's idea ("in the window you type into",
+  "two dots name the folder that contains this one") without saying why the
+  answer failed. *Closes when*: a later miss adds information the first did not
+  (the accepted shape). Sheets: leo F-a, maya F, arthur F-003.
+- **O-AA — Nav words and shell commands typed at the recall prompt (O-P
+  recurs).** Reproduced: `next` at Q1 is a miss (output above), because the
+  recall line takes only answers (`ask_question` `681-692`). The gate screen
+  says "Type your answer in words; this is not the shell." (`1012`); Leo skimmed
+  it. *Closes when*: a nav word at recall gets a one-line pointer. Sheets: leo O-a.
+- **O-AB — `cd..` and a leading slash.** `cd..` gives `bash: cd..: command not
+  found`; `/whoami` gives `bash: /whoami: No such file or directory`
+  (reproduced); neither names the missing space or slash. O-R recurs (leo-2
+  O-b). *Closes when*: 1.1 or 2.3 names the two typos. Sheets: arthur O-001, leo O-b.
+- **O-AC — 2.3: "go home" is not the practice folder, and there is no try-it
+  line.** Reproduced: after `cd`, `pwd` printed the home folder, not the
+  sandbox; 2.3 says `cd` goes home (`1358`), then that prompts start in
+  `$SANDBOX` (`1365`), uses `$HOME` unexplained (`1359`) and ends "Type next to
+  continue". *Closes when*: one sentence ties `cd` to home and the way back.
+  Sheets: arthur O-002, O-003.
+- **O-AD — `ls /etc` is host output.** `ls /etc | wc -l` printed 81 here
+  (`1343`); the lesson gives no reason to read it. Sheets: arthur O-004.
+- **O-AE — Terms used before they are taught.** `cat notes.txt` in 2.4
+  (`1389`; `cat` is Stage 3), hidden names `.` and `..` in 2.2 (`1337`),
+  `poem.txt` named in 1.2 without its source. Sheets: arthur O-005, O-010, O-011.
+- **O-AF — Ctrl+L leaves a blank screen; recovery is `show`.** All three
+  recovered with `show` (`930`). No friction. Sheets: leo O-d, maya O-5, arthur O-005.
+- **O-AG — The prompt folder changes at the Stage 1 gate task.** `pwd` prints
+  the sandbox in 1.3 and `.../stage1` in the task (`practice "$SANDBOX/stage1"
+  gate`, `1200`; C-003). 1.3 says only "the tutor's own folder" (`950`).
+  Sheets: arthur O-007.
+
+### Recurring round-1 items
+
+O-T (reading load) recurs: leo-2 O-c, O-f; maya-2 O-1, O-7. O-U (`#` asides and
+identical echoes, `904-905`) recurs: maya-2 O-4, arthur O-006. O-X (jargon)
+recurs: leo-2 O-e, maya-2 jargon lists, arthur O-009. O-Y (path and drive
+letter) recurs: arthur O-008, maya O-6; Arthur's own note says 2.4's "Absolute
+paths start from the root" answered it.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-a (no facts at miss 2) | not reproduced as a defect; O-Z |
+| leo | O-a mode confusion at Q1 | O-AA |
+| leo | O-b `/whoami` | O-AB (O-R) |
+| leo | O-c pace; O-f 1.5 load | O-T |
+| leo | O-d Ctrl+L blank | O-AF |
+| leo | O-e jargon | O-X |
+| maya | F-1 `it shows up on the screen` | F-019 |
+| maya | O-1 reading load; O-7 1.4 | O-T |
+| maya | O-2 Q1 answer in skipped 1.3 paragraph | F-017 closed (`953-954`) |
+| maya | O-3 Q3 wording unclear | F-019, F-020, O-Z |
+| maya | O-4 identical echoes | O-U |
+| maya | O-5 Ctrl+L blank | O-AF |
+| maya | O-6 long path | O-Y |
+| arthur | F-001, F-002 | F-019, F-020 |
+| arthur | F-003 hint restates | O-Z |
+| arthur | O-001 `cd..` | O-AB |
+| arthur | O-002, O-003 | O-AC |
+| arthur | O-004 `ls /etc` | O-AD |
+| arthur | O-005 | O-AE, O-AF |
+| arthur | O-006 identical echoes | O-U |
+| arthur | O-007 `/stage1` | O-AG |
+| arthur | O-008 drive letter | O-Y |
+| arthur | O-009 jargon | O-X |
+| arthur | O-010, O-011 | O-AE |
+
+### About the simulation, not the tutor: friction by source
+
+| Sheet | Final | Reading-limit charges | Rejections (+2 each) | Other |
+| --- | ---: | ---: | ---: | --- |
+| leo-2 | 8 | 1 | 6 (`/whoami`, `next`, `ls`) | 1 mode confusion |
+| maya-2 | 9 | 7 | 2 (Q3) | 0 |
+| arthur-2 | 8 | 1 (`ls /etc`) | 8 (Q3 twice, `cd..`, Stage 2 Q1) | -1 gate cleared |
+
+Maya's sitting ended mostly on the reading meter (7 of 9) with a single
+rejection; Leo's and Arthur's ended on rejections. The reading charge is a
+persona parameter (her four-line limit makes almost every screen cost one), so
+it measures relative density, not a tutor defect. Both kinds of point pushed
+the three sittings past 8 in under 30 inputs.
