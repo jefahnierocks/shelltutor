@@ -1659,13 +1659,12 @@ ${CMD}mkdir${RST} creates a folder.
   ${CMD}mkdir notes${RST}
   ${CMD}ls${RST}              ${DIM}# notes/ is now there${RST}
 
-To create a file ${SUB}with content${RST}, use redirection (Stage 4):
-  ${CMD}echo "first line" > greeting.txt${RST}
+To put words in a file, send ${CMD}echo${RST}'s output into it (more on ${CMD}>${RST} in Stage 4):
+  ${CMD}echo hello > notes.txt${RST}   ${DIM}# put words in a file${RST}
 
-But for now, ${CMD}touch${RST} for empty files, ${CMD}mkdir${RST} for
-folders.
+So: ${CMD}touch${RST} for empty files, ${CMD}mkdir${RST} for folders, ${CMD}>${RST} for words.
 
-${INSTR}${G_PLAY} Make a few, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Make a few, put a word in one, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 

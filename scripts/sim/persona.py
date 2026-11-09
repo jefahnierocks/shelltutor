@@ -253,7 +253,7 @@ def stage_walk(
     if n == 3:
         return (
             _intro(3)
-            + _lesson(3, 1, ["touch hello.txt", "ls", "mkdir notes", "ls"])
+            + _lesson(3, 1, ["touch hello.txt", "ls", "mkdir notes", "ls", "echo hello > notes.txt"])
             + [Action("S3_L2", "", "render-lesson-3-2", "S3-L2")]
             + _cmds("S3-L2", ["cat hello.txt", "cat ../poem.txt"])
             + [
