@@ -1211,7 +1211,7 @@ stage1_gate() {
         'the folder youre in' \
         'the folder you are in' \
         -- \
-        'folder|directory|where i am|where you are|location|path' || return $?
+        'the folder|a folder|this folder|the current folder|current folder|the directory|current directory|working directory|where i am|where you are|your location|current location|the current path|the path i am in' || return $?
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
@@ -1237,7 +1237,7 @@ stage1_gate() {
         'in the window you type into' \
         'back to me in the window you type into' \
         -- \
-        'screen|terminal|window|back to you|back to me|straight back|stdout|standard output|standard out|display' || return $?
+        'screen|terminal|the window|terminal window|back to you|back to me|straight back|stdout|standard output|standard out|display' || return $?
 
     # ---- Task: run three commands, then answer three short questions
     setup_stage_dir 1
@@ -1523,7 +1523,7 @@ EOF
         'projects/notes' \
         'home/projects/notes' \
         -- \
-        '~/projects/notes|projects/notes|the notes folder|notes' || return $?
+        '~/projects/notes|projects/notes|the notes folder|the notes folder inside projects|notes folder inside projects|notes inside projects|notes in projects' || return $?
 
     local hist_mark
     hist_mark=$(history_mark)
@@ -2005,7 +2005,7 @@ EOF
         'the full path to vim' \
         'the folder and file name' \
         -- \
-        'path|location|where|/usr/bin/vim|folder' || return $?
+        'the path|a path|its path|vims path|path to|full path|the location|its location|location of|where vim is|where the program is|where the vim program is|where the program file is|/usr/bin/vim|the folder and name of the program file|folder and file name' || return $?
 
     ask_question \
         "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
@@ -2721,7 +2721,7 @@ EOF
         'which zsh' \
         'type zsh' \
         -- \
-        'command -v zsh|which zsh|type zsh|command -v' || return $?
+        'command -v zsh|which zsh|type zsh' || return $?
 
     ask_question \
         "Q3: ${CMD}echo \$SHELL${RST} prints which shell?  (the running one, your login shell, the newest one)" \
@@ -3018,7 +3018,7 @@ EOF
         'list of directories' \
         'directories' \
         -- \
-        'folders|directories|list|places' || return $?
+        'folders|directories|a list|list of|places' || return $?
 
     ask_question \
         "Q3: You type ${CMD}PS1='me> '${RST}, then ${CMD}next${RST}. What is the prompt on the next screen?  (me> , shelltutor> )" \
