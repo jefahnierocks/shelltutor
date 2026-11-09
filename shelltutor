@@ -652,12 +652,12 @@ lesson() {
 # ---------------------------------------------------------------------
 
 # Lower-case, delete apostrophes (' and the typographic one, so "I'm" matches
-# the im forms), collapse any run of whitespace to one space, trim the ends.
+# the im forms) and commas, periods and exclamation marks, collapse any run of whitespace to one space, trim the ends.
 # tr -s is POSIX; GNU sed's \+ is not (audit/2026-11-07/findings.md F-012).
 # The typographic apostrophe (U+2019) is multibyte, so it goes through sed
 # as its UTF-8 byte sequence, not through tr.
 normalize_answer() {
-    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -d "'" \
+    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -d "'.,!" \
         | sed "s/$(printf '\342\200\231')//g" | tr -s '[:space:]' ' ' \
         | sed 's/^ //; s/ $//'
 }
@@ -1159,7 +1159,7 @@ stage1_gate() {
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
-        "Lesson 1.4: what a program prints comes back to you, in the window you type into." \
+        "Lesson 1.4: a program's output does not go into a file by itself; it comes straight back to you." \
         'stdout' \
         'standard output' \
         'the screen' \
@@ -1170,7 +1170,16 @@ stage1_gate() {
         'on the screen' \
         'standard out' \
         'the terminal window' \
-        'the display' || return $?
+        'the display' \
+        'it shows up on the screen' \
+        'shows up on the screen' \
+        'it comes back to me on the screen' \
+        'comes back on the screen' \
+        'back to me on the screen' \
+        'the window' \
+        'the window you type into' \
+        'in the window you type into' \
+        'back to me in the window you type into' || return $?
 
     # ---- Task: run three commands, then answer three short questions
     setup_stage_dir 1
@@ -1417,7 +1426,14 @@ EOF
         'go to the parent folder' \
         'parent folder' \
         'up one' \
-        'up one folder' || return $?
+        'up one folder' \
+        'it goes up one level to the parent folder' \
+        'goes up one level to the parent folder' \
+        'up one level to the parent folder' \
+        'it goes to the parent folder' \
+        'up to the parent folder' \
+        'goes up one' \
+        'up a level' || return $?
 
     ask_question \
         "Q2: What does ${CMD}~${RST} mean in a path?" \
