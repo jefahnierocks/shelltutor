@@ -70,3 +70,15 @@ above are measured on the WP-14 revision; the S1-L5 row corrects the 19
 recorded by WP-12 (the closing paragraph was cut for the chrome). Rendered
 heights on Bash 5.3.20 and 3.2.57 (identical): S1-L1 20, S1-L2 18,
 S1-L3 16, S1-L4 22, S1-L5 20. Stage 2 is in `stage2-density.md`.
+
+## WP-20 amendment (2026-11-09)
+
+Rows for the three lessons WP-20 touched (A7). Heredoc lines measured on
+the WP-20 branch; rendered heights from `careful-beginner --stage all`,
+identical on Bash 5.3 and 3.2.57. The 1.x names are the current numbering.
+
+| Screen | Heredoc lines | Rendered | Change |
+| --- | ---: | ---: | --- |
+| S1-L1 `1.1 running commands` | 18 (was 16) | 22 (was 20) | One line after the three `echo` commands: `command not found` means a mistype, so type it again. The `#` asides stay. At the 22-row budget. |
+| S1-L2 `1.2 keyboard habits` | 14 (was 14) | 18 (was 18) | Tab line ends "then press Enter to run it."; the Up line says Enter runs it and Ctrl+C throws it away. Same length. |
+| S1-L3 `1.3 where / who / when` | 15 (was 12) | 19 (was 16) | Two lines (plus a blank) naming both prompts: this tutor's ends in `>`, a normal bash window's usually in `$` (F-017). |

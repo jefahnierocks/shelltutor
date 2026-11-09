@@ -178,7 +178,7 @@ try again." (`shelltutor:500`), by design: "No hints, no answer reveal"
 answers are fixed lists per question (for example `shelltutor:806-815`,
 `1045-1075`, `1519-1550`).
 
-*Amended 2026-11 (WP-10, A1.1).* The paragraph above describes the baseline. Recall now has one three-rung ladder: the message, then the question's hint, then the hint plus three navigation facts; `show` and `quit` are accepted at every question; there is still no reveal. See C-006.
+*Amended 2026-11 (WP-10, A1.1).* The paragraph above describes the baseline. Recall now has one ladder (A7 moved the hint to the first miss): the message plus the question's hint, then from the second miss the hint plus three navigation facts; `show` and `quit` are accepted at every question; there is still no reveal. See C-006.
 
 **Gate tasks** escalate. The first failed `check` prints what the gate
 saw: the missing commands list ("Almost — you still need to:",
@@ -547,7 +547,7 @@ recovery.
 | 5 | Stage entry | stage banner with lesson count and commands (`shelltutor:631-644`, `939-959`, `1166-1187`, `1382-1405`, `1653-1667`) | `next` | — | — |
 | 6 | Lesson reading | heredoc with commands in `CMD` colour, `#` asides in `DIM`, `▶` line | try the commands, then `next` | typing `check` (one-line note, `926`); forgetting `next` | `show` redisplays; `prev` steps back |
 | 7 | Practice | `shelltutor> ` prompt, real Bash (`shelltutor:408`) | run commands freely | leaving the sandbox with `cd`; `rm` of real files; stuck in `less`/`man`/`vim` | `cd ${SANDBOX}` taught in 2.2 (`998`); `q` and `:q!` taught in 3.2, 5.1, 5.2; Ctrl+C gives a fresh prompt (`683-684`) |
-| 8 | Gate recall | three blue questions with "your answer:" (`shelltutor:482-483`) | type an accepted answer | synonym not in the accepted list; typo; wanting to leave (`quit` is read as an answer) | "not quite. try again." loops (`500`); Ctrl+C ends the script, resume restarts the stage (`105-108`) |
+| 8 | Gate recall | three blue questions with "your answer:" (`shelltutor:482-483`; since WP-20 they print in the `┃` block with "answer in words:") | type an accepted answer | synonym not in the accepted list; typo; wanting to leave (`quit` is read as an answer) | "not quite. try again." loops (`500`); Ctrl+C ends the script, resume restarts the stage (`105-108`) |
 | 9 | Gate task | task screen with numbered steps and, at stages 2–4, a hint line; footer names `check` (`373`) | do the steps, type `check` | partial work; wrong order; `check` before running anything | first failure shows what the gate saw |
 | 10 | Gate failure, ladder | "Almost — you still need to:" or expected-versus-seen, then hint, then worked example (`shelltutor:542-566`) | act on the feedback, `check` again | repeating the same mistake | third rung shows the commands; never auto-passes |
 | 11 | Stage cleared | "✓ Stage N cleared." (`shelltutor:885`, …) then the next stage's banner immediately | continue | none; there is no pause between stages | `quit` at the next banner saves progress |
@@ -582,7 +582,7 @@ Ranked by how little the design currently offers at the moment of risk.
    escalation ladder of §1.5 does not reach recall. Nothing on screen tells
    the learner that Ctrl+C is the exit or that progress to this point is
    safe.
-   *Amended 2026-11 (WP-10):* closed for the mechanism (hint on the second miss, `show`/`quit`, the navigation facts from the third). Answer-list widening from the rejected-answer record is still open.
+   *Amended 2026-11 (WP-10):* closed for the mechanism (hint on the first miss since A7, `show`/`quit`, the navigation facts from the second). Answer-list widening from the rejected-answer record is still open.
 2. **Stage 5 without Vim.** The gate cannot be passed and the course offers
    no alternative; the learner is told to install something, which the
    project otherwise never asks (`shelltutor:1707`, `1782-1787`;

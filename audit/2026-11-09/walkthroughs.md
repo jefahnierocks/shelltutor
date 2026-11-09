@@ -44,6 +44,8 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   three sittings answered with what they saw or guessed. *Closes when*: a 1.x
   screen shows and names the `$` convention, or the question is reworded to what
   the learner sees. Sheets: arthur F, maya F-b, leo O-b (Q1 stage).
+  **Resolved 2026-11-09 by WP-20 (A7), `c11e605`:** 1.3 names both prompts; Q1
+  asks about a normal bash window. `>` is still rejected by design.
 - **F-018 — Plain-language answers to a recall question are rejected, including
   one the lesson itself uses.** Severity 2. Q2's accepted list (`1132-1139`) has
   eight forms. Rejected, verified: `the folder` (Leo), `the folder I'm in`
@@ -55,6 +57,9 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   `the terminal window`, `the display` rejected. *Closes when*: the lists are
   widened from these inputs and apostrophes are normalised in
   `normalize_answer`. Sheets: leo F-a, maya F-a.
+  **Resolved 2026-11-09 by WP-20 (A7), `c803465`:** check table in
+  `audit/2026-11-09/wp20-gate-grounding.md`. `a folder` and `print working
+  directory` stay rejected (not in the approved lists).
 
 ### Observations (reproduced)
 
@@ -65,6 +70,8 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   was the same `not quite. try again.` (`697`). One sitting, plus Leo's debrief.
   *Closes when*: the recall prompt names itself (for example "answer, not a
   command"). Sheets: leo O-b.
+  **Addressed 2026-11-09 by WP-20, `08657e1`:** recall prints in the `┃` block
+  with the cue "answer in words:"; the gate screen says this is not the shell.
 - **O-Q — Ladder timing against friction.** The first rejection carries one
   message (`697`) whatever was typed (a shell command, a near miss, a wrong
   symbol); the hint arrives only on attempt 2 (`698-700`) and the navigation
@@ -73,6 +80,8 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   Q1 and passed it by guessing. Mechanism is as designed (A1.1); the evidence
   is that friction peaks before the first hint. *Closes when*: the first miss
   says what shape of answer is wanted. Sheets: leo O-f, maya F-a, arthur F.
+  **Addressed 2026-11-09 by WP-20, `ab450ff`:** the hint prints on miss 1;
+  the navigation facts from miss 2 (C-006).
 - **O-R — Leading slash.** `/echo hello` gives `bash: /echo: No such file or
   directory` (reproduced); 1.1 shows `echo hello` (`898`) and nothing connects the
   message to the slash. One sitting. Sheets: leo O-a.
@@ -82,6 +91,8 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   Lesson 1.2 says "Ctrl+L clears the screen … show brings the lesson back"
   (`926`) and "Try each key, then type next" (`930`). Related to O-K. *Closes
   when*: 1.2 says Enter or Ctrl+C clears the line first. Sheets: maya O-a.
+  **Addressed 2026-11-09 by WP-20, `f8e562f`:** the Up line says Enter runs it
+  and Ctrl+C throws it away.
 - **O-T — Stage 1 reading load.** Heredoc lines: welcome 14, orientation 17,
   intro 7, 1.1 16, 1.2 14, 1.4 18, 1.5 16. Welcome, orientation and the intro
   are three reading-only screens before the first prompt (`827-890`); 1.4 and
@@ -96,10 +107,15 @@ wording is cited by line. Line counts are heredoc lines (blanks included).
   `I am at the shell`; the claimed difference is invisible. Maya and Arthur typed
   the `#` text. *Closes when*: the asides move off the command line and the
   example shows a difference. Sheets: maya O-c, arthur O (identical output).
+  **Partly addressed 2026-11-09 by WP-20, `f8e562f`:** 1.1 gains a
+  `command not found` line; per A7 the asides stay and the identical-output
+  point is left open.
 - **O-V — Keys are not verified, and Enter is implicit.** Lessons advance on
   `next` alone (`1240`); Ctrl+L and Ctrl+C were never required (Leo). 1.2 does
   not say to press Enter after Tab (`921-925`; Arthur). By design for lessons;
   recorded as friction. Sheets: leo O-d, arthur O (Tab).
+  **Addressed 2026-11-09 by WP-20, `f8e562f`:** the Tab line ends "then press
+  Enter to run it." Keys are still not verified, by design.
 - **O-W — `cls`.** Reproduced: `bash: cls: command not found`. 1.2 says
   "(clear too)" (`926`) without saying `clear` is typed; 1.4 explains the error
   two screens later (`954-976`). Persona-specific (DOS reader). Sheets: arthur O.
