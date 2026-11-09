@@ -221,7 +221,7 @@ documents agree with the code.
    `/bin/bash` 3.2 with `echo $BASH_VERSION` recorded) and the Phase 2 items that
    need a person (Debian/Ubuntu walk, no-TTY negative test, the
    `LC_ALL=de_DE.UTF-8` day check).
-3. **Module standard going forward**: modules `shells` and `env` are in;
+2. **Module standard going forward**: modules `shells` and `env` are in;
    `processes` and `permissions` follow only after two human walks of both
    (`docs/direction-decisions-2026-11.md` §4), under the module standard in
    `CONTRIBUTING.md`.
