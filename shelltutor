@@ -1289,6 +1289,7 @@ Then type ${CMD}check${RST}.
   ${CMD}date${RST}
 
 After all three have run, I'll ask you what each one printed.
+${DIM}Only commands you type after this screen count.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} only after running all three.${RST}
 EOF
@@ -2098,8 +2099,8 @@ Work inside ${DIR}${SANDBOX}/stage4${RST}.
 
 Do these:
 
-  1. Use ${CMD}seq${RST} and a pipe to count from 1 to 100 and save
-     the count to ${DIR}count.txt${RST}.
+  1. Use ${CMD}seq${RST} and a pipe: count the lines of ${CMD}seq 1 100${RST} and
+     save that number to ${DIR}count.txt${RST}.
 
   2. Use a glob to list every ${DIR}*.txt${RST} file in this folder.
 
@@ -2521,7 +2522,7 @@ finale() {
     cat <<EOF
 ${H1}You're ready for vimtutor.${RST}
 
-Across five stages you have met:
+This course covered:
 
   ${SUB}commands${RST}    echo, pwd, whoami, date, clear, exit, ls, cd, ~, .., touch,
                 mkdir, rmdir, cat, less, cp, mv, rm, command -v, wc, seq,
