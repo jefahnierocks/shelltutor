@@ -283,3 +283,13 @@ Only synthetic harness bundles are committed; never a human transcript.
 - Synthetic evidence may be committed (`audit/<date>/sim/`); real
   human transcripts must not be committed (see
   `docs/simulation-design-plan.md` §Evidence Locations).
+
+## Known limits
+
+- **H-3 — a full-screen program on screen is one long line.** While Vim (or
+  `less`, `man`) is running, a `sitting.py` reply is the drawing with cursor
+  positioning ignored: tildes run together and, after Esc, there is "no visible
+  change". `sitting.py` removes the residue after the program exits; the live
+  screen is unchanged. A sitting persona reads such a screen by its prompts and
+  by the commands it typed, not by the drawing (audit/2026-11-09/walkthroughs.md
+  round 5).

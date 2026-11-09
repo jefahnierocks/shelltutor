@@ -812,6 +812,9 @@ the real functions and `ask_question` calls from `shelltutor`):
   for these (bare `notes`, swapped `> appends and >> overwrites`, `touch is wrong
   it is mkdir`, `gone to the trash`), and the groups are tightened or the exact
   forms carry the weight for one-word answers. Sheets: leo F-A.
+  **Resolved 2026-11-09 by WP-24 (A10), `8d8b21f` (13 reject rows; one-word groups
+  tightened), `230e5e0` (ordered groups, `--reject`; 23 more rows).** Known limit:
+  `>> overwrites and > appends` (words in order, arrows swapped) still passes.
 - **F-030 — Stage 5 Q2 rejects `:wq (or :w) writes the buffer to the file`.**
   Severity 2. Group `:w|w|write` (`2313`). Whole-word matching pads the
   normalised answer with spaces; `normalize_answer` strips only `'`, `.`, `,` and
@@ -823,6 +826,8 @@ the real functions and `ask_question` calls from `shelltutor`):
   buffer into the file"; she retyped `:w`). Maya +2. *Closes when*: `normalize_answer`
   also drops `(` and `)` (and the corpus gains `:wq (or :w) writes the buffer to
   the file` as an accept), or `writes` joins the group. Sheets: maya F-A, F-B.
+  **Resolved 2026-11-09 by WP-24, `9acbebd`:** `(`, `)` and `;` are dropped (not
+  colons); `:wq`, `writes`, `write it`, `save`, `saves` join the group.
 
 ### Observations (reproduced)
 
@@ -833,10 +838,14 @@ the real functions and `ask_question` calls from `shelltutor`):
   not yet: not in your history` for all three (+2). The task screen says "run each
   of these once" (`1253`) and "Type check only after running all three" (`1262`);
   neither says earlier runs do not count. Sheets: leo F-B.
+  **Addressed 2026-11-09 by WP-24, `e64869a`:** the task screen says only commands
+  typed after it count.
 - **O-AS — The finale lists commands the learner may not have run.** The list is
   static: `finale()` (`2471`) prints a fixed "you have met" heredoc (`commands`
   `echo, pwd, whoami, date, clear, exit, …, vimtutor`, `2478-2480`); nothing reads
   history or progress. Maya saw `exit` and `vimtutor` listed. Sheets: maya O-004.
+  **Addressed 2026-11-09 by WP-24, `e64869a`:** the list is introduced with "This
+  course covered:".
 - **O-AT — The Stage 4 task verifies the file's content, not the pipeline.**
   `stage4_verify_task` (`1968-1972`) requires `count.txt` to exist and its content
   with whitespace removed to equal `100`; the history check requires only a `*.txt`
@@ -845,6 +854,8 @@ the real functions and `ask_question` calls from `shelltutor`):
   `12345…100`), so Arthur's second reading is rejected, not accepted. "Save the
   count" admits the two readings the verifier tells apart. Sheets: maya O-005,
   arthur O-008.
+  **Addressed 2026-11-09 by WP-24, `e64869a`:** the task says to count the lines of
+  `seq 1 100` and save that number to `count.txt`.
 - **O-AU — The Stage 3 gate deletes the file 3.1 made (Arthur's claim not
   reproduced).** Arthur wrote that `notes.txt` already existed at the task and was
   overwritten silently. Reproduced: after `echo hello > notes.txt` in 3.1, `ls`
@@ -869,6 +880,7 @@ the real functions and `ask_question` calls from `shelltutor`):
   together; after Esc "no visible change"). Part C removed the residue after the
   program exits; the live screen is unchanged. Sheets: leo O-F, maya O-006,
   arthur O-010.
+  **Recorded 2026-11-09 as a known harness limit** in `scripts/sim/README.md`.
 
 ### Candidate → disposition
 

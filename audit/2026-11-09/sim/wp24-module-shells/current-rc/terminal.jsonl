@@ -1,0 +1,78 @@
+{"ts": 0.028651, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.029879, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[93m\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 244}
+{"ts": 0.029955, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.031676, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mMODULE — shells: what runs your commands\u001b[0m\r\n\r\nThree short lessons, then a gate. This module stands alone and saves\r\nnothing. Type \u001b[92mquit\u001b[0m to leave at any point.\r\n\r\nYou will look at three things:\r\n  the shell is a program you can inspect\r\n  other shells exist, and what they change\r\n  your login shell and this tutor's shell can differ\r\n\r\nEverything is read-only except one small file at the gate, written\r\ninside \u001b[94m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-5e_08xv5/shells\u001b[0m.\r\n\r\n\u001b[93m▶ Type \u001b[92mnext\u001b[93m to begin lesson 1.\u001b[0m\r\n", "len": 581}
+{"ts": 0.032103, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.048608, "dir": "out", "enc": "utf8", "data": "\u001b[95mnext\u001b[0m\u001b[90m ▸ go on\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ this screen again\u001b[0m   \u001b[95mprev\u001b[0m\u001b[90m ▸ back\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ save and leave\u001b[0m\r\n", "len": 159}
+{"ts": 0.04868, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.048748, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.048774, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.051712, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.053175, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m────────────────────────────────────────\u001b[0m \u001b[93m1 of 3\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 232}
+{"ts": 0.053229, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.055148, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mshells 1 — the shell is a program\u001b[0m\r\n\r\nThe shell reads the line you type, finds the program you named, runs\r\nit, and shows what it printed. The shell is itself a program.\r\n\r\n  \u001b[92mecho $BASH_VERSION\u001b[0m   \u001b[90m# the version of the shell running now\u001b[0m\r\n  \u001b[92mps\u001b[0m                    \u001b[90m# one line is this shell, one is ps itself\u001b[0m\r\n\r\n\u001b[92m$BASH_VERSION\u001b[0m is a \u001b[36mvariable\u001b[0m: a name that holds a value. The\r\nshell swaps \u001b[92m$name\u001b[0m for its value before it runs the line.\r\n\r\nNotice that \u001b[92mps\u001b[0m lists the shell next to the command you just ran.\r\n\r\n\u001b[93m▶ Run both commands, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n", "len": 638}
+{"ts": 0.055559, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.072353, "dir": "out", "enc": "utf8", "data": "\u001b[95mnext\u001b[0m\u001b[90m ▸ go on\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ this screen again\u001b[0m   \u001b[95mprev\u001b[0m\u001b[90m ▸ back\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ save and leave\u001b[0m\r\n", "len": 159}
+{"ts": 0.072425, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.072488, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.072512, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.075362, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.076641, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m────────────────────────────────────────\u001b[0m \u001b[93m2 of 3\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 232}
+{"ts": 0.076665, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.07838, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mshells 2 — other shells exist\u001b[0m\r\n\r\nFour shells you will meet:\r\n  \u001b[92mbash\u001b[0m   common on Linux; the shell this tutor runs\r\n  \u001b[92mzsh\u001b[0m    the default on current macOS\r\n  \u001b[92mfish\u001b[0m   a shell with its own syntax, installed separately\r\n  \u001b[92msh\u001b[0m     the minimal standard shell, used by scripts\r\n\r\nAsk which of two are installed here:\r\n  \u001b[92mcommand -v zsh fish\u001b[0m   \u001b[90m# one path per shell found\u001b[0m\r\n\r\n\u001b[36mDifferent\u001b[0m: configuration syntax, prompt, completion.\r\n\u001b[36mThe same\u001b[0m: the programs (\u001b[92mls\u001b[0m, \u001b[92mcat\u001b[0m), paths, pipes, redirection.\r\n\r\nNotice that no output means that shell is not installed. That is normal.\r\n\r\n\u001b[93m▶ Run the check, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n", "len": 713}
+{"ts": 0.078794, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.094969, "dir": "out", "enc": "utf8", "data": "\u001b[95mnext\u001b[0m\u001b[90m ▸ go on\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ this screen again\u001b[0m   \u001b[95mprev\u001b[0m\u001b[90m ▸ back\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ save and leave\u001b[0m\r\n", "len": 159}
+{"ts": 0.095016, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.095034, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.095084, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.095105, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.097644, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.098944, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m────────────────────────────────────────\u001b[0m \u001b[93m3 of 3\u001b[0m \u001b[90m─\u001b[0m\r\n\r\n", "len": 234}
+{"ts": 0.100794, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mshells 3 — your login shell and this shell\u001b[0m\r\n\r\nYour account has a \u001b[36mlogin shell\u001b[0m: the one a new terminal window\r\nstarts. It can differ from the shell running now.\r\n\r\n  \u001b[92mecho $SHELL\u001b[0m          \u001b[90m# your login shell\u001b[0m\r\n  \u001b[92mecho $BASH_VERSION\u001b[0m   \u001b[90m# the shell running now\u001b[0m\r\n\r\n\u001b[92m$SHELL\u001b[0m comes from your account. It does not change when you start\r\nanother shell from inside it.\r\n\r\nThis tutor runs its lessons in Bash whatever your login shell is, so\r\nevery learner sees the same thing. The programs you practise here\r\nbehave the same under \u001b[92mzsh\u001b[0m.\r\n\r\n\u001b[93m▶ Compare the two lines, then type \u001b[92mnext\u001b[93m to take the gate.\u001b[0m\r\n", "len": 678}
+{"ts": 0.101201, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.117091, "dir": "out", "enc": "utf8", "data": "\u001b[95mnext\u001b[0m\u001b[90m ▸ go on\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ this screen again\u001b[0m   \u001b[95mprev\u001b[0m\u001b[90m ▸ back\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ save and leave\u001b[0m\r\n", "len": 159}
+{"ts": 0.117167, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.117228, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.117252, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.120212, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.121408, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m──────────────────────────────────────────\u001b[0m \u001b[93mgate\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 236}
+{"ts": 0.121433, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.123085, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mshells — gate\u001b[0m\r\n\r\n\u001b[36mRecall\u001b[0m (three questions, all three must be correct).\r\nThen a \u001b[36mpractical task\u001b[0m.\r\n", "len": 126}
+{"ts": 0.123504, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.123572, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[96mQ1: The shell runs the programs you name. What kind of thing is the shell itself?  (a program, a file, a folder, a window)\u001b[0m\r\n", "len": 146}
+{"ts": 0.123606, "dir": "in", "enc": "utf8", "data": "a program\n", "len": 10}
+{"ts": 0.123626, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92manswer in words:\u001b[0m a program\r\n", "len": 50}
+{"ts": 0.132964, "dir": "out", "enc": "utf8", "data": "  \u001b[92m✓\u001b[0m\r\n\r\n", "len": 18}
+{"ts": 0.133029, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[96mQ2: What do you type to ask whether zsh is installed?\u001b[0m\r\n\u001b[93m┃\u001b[0m \u001b[92manswer in words:\u001b[0m ", "len": 116}
+{"ts": 0.133071, "dir": "in", "enc": "utf8", "data": "command -v zsh\n", "len": 15}
+{"ts": 0.133099, "dir": "out", "enc": "utf8", "data": "command -v zsh\r\n", "len": 16}
+{"ts": 0.142473, "dir": "out", "enc": "utf8", "data": "  \u001b[92m✓\u001b[0m\r\n\r\n", "len": 18}
+{"ts": 0.142525, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[96mQ3: \u001b[92mecho $SHELL\u001b[0m prints which shell?  (the running one, your login shell, the newest one)\u001b[0m\r\n\u001b[93m┃\u001b[0m \u001b[92manswer in words:\u001b[0m ", "len": 160}
+{"ts": 0.142574, "dir": "in", "enc": "utf8", "data": "login shell\n", "len": 12}
+{"ts": 0.142606, "dir": "out", "enc": "utf8", "data": "login shell\r\n", "len": 13}
+{"ts": 0.15179, "dir": "out", "enc": "utf8", "data": "  \u001b[92m✓\u001b[0m\r\n\r\n", "len": 18}
+{"ts": 0.161445, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.162808, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m──────────────────────────────────────────\u001b[0m \u001b[93mtask\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 236}
+{"ts": 0.162846, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.164483, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mshells — task\u001b[0m\r\n\r\nFind out whether \u001b[92mzsh\u001b[0m is installed here, and record the answer in a\r\nfile. You will work inside \u001b[94m/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-5e_08xv5/shells\u001b[0m.\r\n\r\n  1. ask the shell where \u001b[92mzsh\u001b[0m is\r\n  2. send what it prints to a file named \u001b[94mzsh.txt\u001b[0m\r\n     \u001b[90m(hint: Stage 4's \u001b[92m>\u001b[0m\u001b[90m sends output to a file)\u001b[0m\r\n\r\nIf zsh is not installed, the shell prints nothing, and the file is\r\nempty. That is a correct answer.\r\n\r\n\u001b[90mI will check: zsh.txt exists and holds exactly what \u001b[0m\u001b[92mcommand -v zsh\u001b[0m\r\n\u001b[90mprints on this machine, and your history shows you asked.\u001b[0m\r\n\r\n\u001b[93m▶ Type \u001b[92mcheck\u001b[93m when done.\u001b[0m\r\n", "len": 713}
+{"ts": 0.164897, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.18173, "dir": "out", "enc": "utf8", "data": "\u001b[95mcheck\u001b[0m\u001b[90m ▸ test your work\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ the task again\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ save and leave\u001b[0m\r\n", "len": 132}
+{"ts": 0.181789, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.181872, "dir": "in", "enc": "utf8", "data": "command -v zsh > zsh.txt\n", "len": 25}
+{"ts": 0.181911, "dir": "out", "enc": "utf8", "data": "command -v zsh > zsh.txt\r\n", "len": 26}
+{"ts": 0.181925, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.182192, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.182204, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.182226, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.182245, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.198761, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.19997, "dir": "out", "enc": "utf8", "data": "\u001b[90m─\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m─\u001b[0m \u001b[90mModule · shells\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[93m\u001b[0m \u001b[90m─\u001b[0m\r\n", "len": 244}
+{"ts": 0.200024, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.201894, "dir": "out", "enc": "utf8", "data": "\u001b[1;97m✓ shells cleared.\u001b[0m\r\n\r\nCommands and keys from this module:\r\n  \u001b[92mecho $BASH_VERSION\u001b[0m \u001b[90mthe shell running now\u001b[0m\r\n  \u001b[92mps            \u001b[0m \u001b[90mthe shell is one of the running programs\u001b[0m\r\n  \u001b[92mcommand -v NAME\u001b[0m \u001b[90mis NAME installed, and where\u001b[0m\r\n  \u001b[92mecho $SHELL   \u001b[0m \u001b[90myour login shell\u001b[0m\r\n\r\n\u001b[93m▶ Type \u001b[92mquit\u001b[93m to leave, or \u001b[92mnext\u001b[93m to start this module again.\u001b[0m\r\n", "len": 421}
+{"ts": 0.202301, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.218446, "dir": "out", "enc": "utf8", "data": "\u001b[95mnext\u001b[0m\u001b[90m ▸ start this module again\u001b[0m   \u001b[95mquit\u001b[0m\u001b[90m ▸ leave\u001b[0m   \u001b[95mshow\u001b[0m\u001b[90m ▸ this screen again\u001b[0m\r\n", "len": 134}
+{"ts": 0.218538, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.218599, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.218618, "dir": "out", "enc": "utf8", "data": "quit\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.221186, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.221343, "dir": "out", "enc": "utf8", "data": "Bye. A module saves nothing; run 'shelltutor shells' to start it again.\r\n", "len": 73}

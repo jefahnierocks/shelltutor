@@ -164,7 +164,11 @@ without the answer's words (FF-009), then **two lists**: the exact forms
 themselves negations), and after a bare `--` line the keyword groups
 (`a|b|c` per line; every group must be hit as whole words, and no negation
 word may appear). Add synonyms, never remove them; drop a phrase that lets a
-distractor from the prompt's option text through. Then add the question's key
+distractor from the prompt's option text through. Prefer multi-word phrases
+the lesson uses over one common word (`notes`, `where`, `window`). When the
+answer has two parts in a fixed order, put `--ordered` first after `--`; when
+a wrong answer shares the right words, list its tell-tale words after a
+`--reject` line (checked before the groups, never against an exact form). Then add the question's key
 to `scripts/selftest-matching.sh` and its accepted and rejected inputs to
 `scripts/matching-corpus.tsv` (FF-011 asserts the call count).
 

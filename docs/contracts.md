@@ -195,13 +195,20 @@ with no auto-pass) is part of the curriculum design.
 Recall matching (A10): an answer is accepted when it equals a normalised
 exact form, or when it holds no negation word and, for every keyword group of
 the question, at least one of the group's phrases appears in it as whole
-words. Normalising lowercases, drops apostrophes, periods, commas and
-exclamation marks, and collapses spaces. The negation words are the fixed list
+words. Normalising lowercases, drops apostrophes, periods, commas,
+exclamation marks, parentheses and semicolons (not colons, so `:w` and `:q!`
+survive), and collapses spaces. The negation words are the fixed list
 `not no never nowhere nothing none isnt doesnt dont wont cant without instead
 rather neither nor only`; the guard never touches an exact form, so a question
 whose right answer is a negation (Stage 3 Q2 `gone`, Stage 5 Q3 `no`) lists it
-exactly. Groups are written after a bare `--` line in the `ask_question` call;
-a hint never holds an exact form or a keyword phrase (FF-009). Contractual:
+exactly. Groups are written after a bare `--` line in the `ask_question` call.
+An optional bare `--ordered` line right after it makes each group's first match
+come after the previous group's (Stage 4 Q2: the overwrite word, then the
+append word). An optional last `--reject` line plus one quoted `a|b|c` list
+names phrases that void a keyword match (never an exact form), for wrong
+answers a group cannot tell apart (`trash`, `wrong`, `game`). Known limit:
+order is of words, not of arrows, so `>> overwrites and > appends` still
+passes. A hint never holds an exact form or a keyword phrase (FF-009). Contractual:
 exact-or-groups, the negation guard, whole words. Not contractual: the lists.
 
 Recall escalation: two rungs (A7; it was three under A1.1). A first miss
