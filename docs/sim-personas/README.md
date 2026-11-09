@@ -59,3 +59,78 @@ reproduces it on the real tutor, deterministically where possible
 8. **The persona never fixes the tutor.** The debrief block at the end of
    the sheet is written out of character and names sentences, not
    solutions.
+
+## Running a sitting
+
+A sitting is run by a **separate Claude Code session** (the persona
+session), not by the session that maintains the repository. The persona
+session is given exactly four things and nothing else:
+
+1. one persona sheet from this directory;
+2. the eight simulation rules above;
+3. `docs/walkthrough-notes-sim-template.md`, which it fills in;
+4. the client commands of `scripts/sim/sitting.py` (below).
+
+It must **not** read `shelltutor`, anything under `docs/` other than the
+three items above, `audit/`, or the harness source. Everything it knows
+about the tutor comes from the screens the server returns. The maintainer
+who launches the session starts the sitting and states, in the session's
+first instruction, the tutor revision, the Bash to use and the entry
+(`--arg`), which the session copies into the sheet's "Sitting" block.
+
+### Commands
+
+```
+python3 scripts/sim/sitting.py start [--bash /bin/bash] [--arg N|module] --out DIR --persona NAME
+python3 scripts/sim/sitting.py screen --out DIR
+python3 scripts/sim/sitting.py send --out DIR "<text>"        # types text and Enter
+python3 scripts/sim/sitting.py raw  --out DIR "<escape>"      # no Enter: \t  \x0c  \x1b  \x1b[A
+python3 scripts/sim/sitting.py note --out DIR <context> "<monologue>"
+python3 scripts/sim/sitting.py stop --out DIR
+```
+
+`--out` is the sitting directory; use one fresh directory per sitting
+(`start` refuses a directory that already holds a sitting or a bundle).
+`screen` and `send` return the text since the last clear sequence, with
+colour codes removed and the pending prompt line marked `[prompt] ...`.
+`send` waits until the tutor has been quiet for 0.4 s (10 s at most).
+A reply ending in `[exited N]` means the tutor has ended; run `stop`.
+
+### Per turn
+
+1. `screen` (or the reply of the previous `send`/`raw`) is the only thing
+   the persona sees. It applies the sheet's reading limit and says what it
+   skipped.
+2. Write the sheet's per-screen block: read / skimmed, jargon quoted
+   verbatim, monologue in character (two to six lines).
+3. Decide **one** input and the context the persona believes it is typing
+   into: `recall` (a question prompt), `bash` (the `shelltutor>` prompt),
+   `nav` (a navigation word such as `next`, `show`, `prev`, `quit`) or
+   `follow-up` (a question after a task).
+4. `note <context> "<monologue>"` records the monologue and the declared
+   context; it sends nothing. The next `send` or `raw` is tagged with that
+   context in `events.jsonl`.
+5. `send` or `raw` the input, then record the tutor's response, the ladder
+   rung shown and the friction total in the block.
+
+Update the friction meter after every turn (rule 6). The persona stops at
+8, on a cleared module or the finale, or when the tutor exits. Any one of
+those ends the sitting: run `stop`.
+
+### After `stop`
+
+1. Finish the sheet: the per-gate block, the end-of-sitting block (final
+   friction, what was cleared, the human-time **estimate**, candidate
+   F-nnn and O-nnn with screen ids and exact inputs, the out-of-character
+   debrief).
+2. The login name appears on screen (`whoami`, paths). Write it as
+   `[user]` in the sheet; the bundle's own files are already redacted.
+3. Save the sheet as `audit/<date>/sim-sittings/<persona>-<n>.md` and copy
+   `bundle/summary.md` and `bundle/result.tap` beside it as
+   `<persona>-<n>.summary.md` and `<persona>-<n>.result.tap`. The raw
+   `terminal.jsonl` and `events.jsonl` stay out of git unless a maintainer
+   asks for them.
+4. Report the candidates in the session's final message. **None is
+   promoted.** A maintainer reads each one, reproduces it on the real tutor
+   (by hand, or as a `second-try`-style persona step), and only then records
+   an F-nnn or O-nnn in `audit/<date>/walkthroughs.md`, citing the sheet.
