@@ -597,6 +597,8 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
   the hint's wording against the list. Arthur lost 6 points. *Closes when*: the hint
   names the concept without the answer's words, or the list takes the hint's tail;
   and a check compares the hint's words with the list. Sheets: arthur F-a, F-b.
+  **Resolved 2026-11-09 by WP-23 (A10), `d7dd48e`:** the hint is reworded; FF-009 now
+  also checks keyword phrases; the lists became keyword groups (`6257ce2`).
 - **F-026 — Stage 4 Q2 rejects the lesson's two words joined by "and".**
   Severity 2. List (`1949-1955`): `> overwrites, >> appends`, `> overwrite, >>
   append`, `> writes over, >> adds to the end`, `>> appends`, `> overwrites`,
@@ -621,6 +623,8 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
   are not accepted (`what each arrow does…`, none contained). *Closes when*: the
   list takes "and"/"vs" forms and the plain-language forms, or Q2 states the
   shape ("name what each arrow does"). Sheets: leo F-a, F-b; maya F-A.
+  **Resolved 2026-11-09 by WP-23, `6257ce2`:** two keyword groups (overwrite-words and
+  append-words); `only appends` is refused by the negation guard.
 - **F-027 — Stage 4 Q3 rejects `the space` and `the space splits it into two
   names`.** Severity 2. List (`1960-1968`): `because of the space`, `spaces split
   arguments`, `spaces split words`, `the space splits them`, `no quotes`,
@@ -631,6 +635,7 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
   what quotes do`) are not accepted. The same fact as the accepted forms,
   one word different. Leo quit on it (+2); Maya +2. *Closes when*: the list
   takes `the space` and the `into two names` forms. Sheets: leo F-c, maya F-B.
+  **Resolved 2026-11-09 by WP-23, `6257ce2`:** `space|spaces|split|...` group.
 - **F-028 — The Stage 3 gate task step 1 needs redirection, taught in 4.3
   (same class as F-022, no dead end observed).** Severity 3. Step 1 is "create a
   file `notes.txt` containing the word `hello`" (`1711`). Stage 3 teaches
@@ -643,6 +648,7 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
   it first try by copying the aside (Arthur: "Nothing printed, did I break it?").
   *Closes when*: 3.1's `▶` line asks to try the `echo … >` line, or step 1 names
   the form. Sheets: maya O-C, arthur O-a.
+  **Resolved 2026-11-09 by WP-23 (Part B), `022f78b`:** 3.1 teaches `echo hello > notes.txt`.
 
 ### Observations (reproduced)
 
@@ -657,6 +663,8 @@ from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
   rejected (F-026 table). *Closes when*: the line names a shape the list accepts
   ("repeat the lesson's words") or the lists accept short and long forms.
   Sheets: leo O-c, maya O-G, arthur F-b.
+  **Addressed 2026-11-09 by WP-23, `d7dd48e`:** the shape line is removed everywhere; short
+  and long forms are accepted by keyword groups.
 - **O-AO — Stage 2 Q3's answer is in a second sentence and the hint uses an
   unfamiliar word.** `the notes folder` rejected (Leo); 2.4 now says "In
   `~/projects`, the bare name `notes` means `~/projects/notes`" in one sentence

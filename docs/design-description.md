@@ -180,6 +180,8 @@ answers are fixed lists per question (for example `shelltutor:806-815`,
 
 *Amended 2026-11 (WP-10, A1.1).* The paragraph above describes the baseline. Recall now has one ladder (A7 moved the hint to the first miss): the message plus the question's hint, then from the second miss the hint plus three navigation facts; `show` and `quit` are accepted at every question; there is still no reveal. See C-006.
 
+*Amended 2026-11 (WP-23, A10).* Four rounds of synthetic sittings showed that fixed lists reject correct plain-language answers faster than they can be widened (F-018, F-019, F-023, F-026, F-027). Recall now accepts an answer when it equals an exact form or when it contains one phrase from every keyword group of the question and no negation word; the A8 shape line is gone. The decision record is A10; the matcher is `recall_matches` in `shelltutor`, its regression corpus is FF-011, and C-006 states the semantics.
+
 **Gate tasks** escalate. The first failed `check` prints what the gate
 saw: the missing commands list ("Almost — you still need to:",
 `shelltutor:542-546`), or the expected-versus-seen folder state

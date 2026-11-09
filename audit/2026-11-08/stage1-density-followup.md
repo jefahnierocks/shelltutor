@@ -107,3 +107,9 @@ Heredoc lines on the WP-22 branch; rendered heights identical on Bash 5.3 and
 | S2-GT `Stage 2 gate task` | 14 (was 13) | 18 (was 17) | A DIM line: the task runs in this stage's own folder, `pwd` shows it (O-AG). The recall screen gains the "this is not the shell" line (6 lines). |
 | S3-L2 `3.2 cat, less` | 18 (was 18) | 22 (was 22) | The try-it line names `q` (F-024). |
 | S3-L3 `3.3 cp, mv, rm` | 18 (was 18) | 22 (was 22) | The try-it line asks to type `cp`, `mv` and `rm` (O-AI). |
+
+## WP-23 amendment (2026-11-09)
+
+| Screen | Heredoc lines | Rendered | Change |
+| --- | ---: | ---: | --- |
+| S3-L1 `3.1 creating` | 17 (was 18) | 21 | `echo hello > notes.txt` is a taught line (more on `>` in Stage 4); the try-it line is "Make a few, put a word in one, then next" (F-028). |

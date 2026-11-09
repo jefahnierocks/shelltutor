@@ -464,6 +464,10 @@ processes, permissions and environment in as modules, users/groups,
 scripting, sysadmin, networking out (D7); pace observed by a human, no
 timing store (D8).
 
+**A10 (2026-11-09).** Recall accepts exact forms or keyword groups with a
+negation guard (FF-011 corpus); round 5 of the synthetic sittings is the exit
+test: if it passes the gate unaided, Phase 2's human sittings take over.
+
 ### Phase A — Human walkthroughs (operator)
 
 At least three observed sittings on the post-WP-09 script using

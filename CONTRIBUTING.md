@@ -157,6 +157,17 @@ evidence bundle, or a ROADMAP amendment. It stays at this standard unless the
 operator folds it into the core line. Writing a module reads `AGENTS.md`,
 this section and one existing stage block as a model, not the whole script.
 
+**Adding a recall question.** A recall question is one `ask_question` call:
+the prompt, a hint that starts `Lesson N.k: ` (FF-010) and names the concept
+without the answer's words (FF-009), then **two lists**: the exact forms
+(short, specific answers that must always pass, including answers that are
+themselves negations), and after a bare `--` line the keyword groups
+(`a|b|c` per line; every group must be hit as whole words, and no negation
+word may appear). Add synonyms, never remove them; drop a phrase that lets a
+distractor from the prompt's option text through. Then add the question's key
+to `scripts/selftest-matching.sh` and its accepted and rejected inputs to
+`scripts/matching-corpus.tsv` (FF-011 asserts the call count).
+
 **Heading convention** (binding; the harness derives its sentinels from it):
 
 | Screen | Heading |

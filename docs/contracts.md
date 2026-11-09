@@ -192,6 +192,18 @@ not. Gate feedback wording is likewise not contractual, but the escalation
 order on repeated gate failure (restatement, then hint, then worked example,
 with no auto-pass) is part of the curriculum design.
 
+Recall matching (A10): an answer is accepted when it equals a normalised
+exact form, or when it holds no negation word and, for every keyword group of
+the question, at least one of the group's phrases appears in it as whole
+words. Normalising lowercases, drops apostrophes, periods, commas and
+exclamation marks, and collapses spaces. The negation words are the fixed list
+`not no never nowhere nothing none isnt doesnt dont wont cant without instead
+rather neither nor only`; the guard never touches an exact form, so a question
+whose right answer is a negation (Stage 3 Q2 `gone`, Stage 5 Q3 `no`) lists it
+exactly. Groups are written after a bare `--` line in the `ask_question` call;
+a hint never holds an exact form or a keyword phrase (FF-009). Contractual:
+exact-or-groups, the negation guard, whole words. Not contractual: the lists.
+
 Recall escalation: two rungs (A7; it was three under A1.1). A first miss
 prints the message and the question's hint; the second and later print the
 hint and the three navigation facts (A10 removed the A8 answer-shape line;
