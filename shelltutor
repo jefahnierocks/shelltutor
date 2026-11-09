@@ -651,10 +651,14 @@ lesson() {
 # - Returns 0 on correct answer.
 # ---------------------------------------------------------------------
 
-# Lower-case, collapse any run of whitespace to one space, trim the ends.
+# Lower-case, delete apostrophes (' and the typographic one, so "I'm" matches
+# the im forms), collapse any run of whitespace to one space, trim the ends.
 # tr -s is POSIX; GNU sed's \+ is not (audit/2026-11-07/findings.md F-012).
+# The typographic apostrophe (U+2019) is multibyte, so it goes through sed
+# as its UTF-8 byte sequence, not through tr.
 normalize_answer() {
-    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -s '[:space:]' ' ' \
+    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -d "'" \
+        | sed "s/$(printf '\342\200\231')//g" | tr -s '[:space:]' ' ' \
         | sed 's/^ //; s/ $//'
 }
 
@@ -1142,7 +1146,15 @@ stage1_gate() {
         'the current folder' \
         'current folder' \
         'the folder im in' \
-        'the folder i am in' || return $?
+        'the folder i am in' \
+        'the folder' \
+        'this folder' \
+        'the directory' \
+        'the current directory' \
+        'current directory' \
+        'where i am' \
+        'the folder youre in' \
+        'the folder you are in' || return $?
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
@@ -1152,7 +1164,12 @@ stage1_gate() {
         'the screen' \
         'screen' \
         'the terminal' \
-        'terminal' || return $?
+        'terminal' \
+        'to the screen' \
+        'on the screen' \
+        'standard out' \
+        'the terminal window' \
+        'the display' || return $?
 
     # ---- Task: run three commands, then answer three short questions
     setup_stage_dir 1
