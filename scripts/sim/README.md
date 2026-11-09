@@ -120,6 +120,8 @@ design plan.
 | `recorder.py` | terminal.jsonl, events.jsonl, summary.md, result.tap writers. |
 | `env.py` | Host snapshot + CRLF/ANSI normalization helpers. |
 | `errors.py` | Typed exceptions per the dispatcher exit code table. |
+| `sitting.py` | Sitting server and client for AI-played learner sittings (WP-19). |
+| `selftest_sitting.py` | Scripted probe of `sitting.py`; skips without a pty. |
 
 ## Modules
 
@@ -144,6 +146,39 @@ types `next` at the changed prompt `me> ` and asserts the next screen is
 checks the expansion and drives a fake tutor that follows the heading
 convention through `run.py --module`; the drive needs a pseudo-terminal and
 is skipped with a message when none is available.
+
+## Synthetic sittings
+
+`sitting.py` lets an AI session play a learner persona (`docs/sim-personas/`)
+against the real tutor one screen at a time (decisions amendment A6; WP-19).
+It is not a persona driver: nothing is scripted, a person or model chooses
+every input.
+
+```
+python3 scripts/sim/sitting.py start [--bash /bin/bash] [--arg N|module] [--cols 80 --rows 24] --out DIR --persona NAME
+python3 scripts/sim/sitting.py screen|stop --out DIR
+python3 scripts/sim/sitting.py send --out DIR "<text>"      # text plus Enter
+python3 scripts/sim/sitting.py raw  --out DIR "<escape>"    # no Enter: \t \x0c \x1b \x1b[A
+python3 scripts/sim/sitting.py note --out DIR <context> "<monologue>"
+```
+
+`start` forks a server that owns one tutor under a pty (same child
+environment as `run.py`: fresh `SHELLTUTOR_HOME`, empty `HOME`, `LC_ALL=C`,
+`VIMINIT`, `PAGER`, fixed geometry; `--bash` runs `<bash> ./shelltutor`, so
+the practice shell is that binary, F-014) and listens on a Unix socket in
+`--out`. One sitting per directory. `screen` and `send` return the text
+since the last clear with colour codes removed and the pending prompt marked
+`[prompt] ...`; `send` waits for 0.4 s of quiet (10 s cap). The bundle lands in
+`DIR/bundle/` through the usual `Recorder` (D-19 redaction): `terminal.jsonl`
+(out and in), `events.jsonl` (`persona-input` rows whose `intent` is the
+context declared by the last `note`, `note` rows for monologue,
+`screen-height` rows), `summary.md` and `result.tap` (what was cleared).
+Screens returned to the client are not redacted: the learner reads and types
+its own user name. The protocol for the persona session is in
+`docs/sim-personas/README.md` §Running a sitting. Sheets are committed under
+`audit/<date>/sim-sittings/`; everything in them is a candidate until a
+maintainer reproduces it. `python3 scripts/sim/selftest_sitting.py` drives
+the commands against the real tutor and checks the bundle.
 
 ## Exit codes
 

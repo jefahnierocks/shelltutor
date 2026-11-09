@@ -161,6 +161,7 @@ privacy and retention rules.
 | Synthetic curated runs | `audit/<date>/sim/` | Committable when sanitized by construction. |
 | Real human walkthroughs | `$SHELLTUTOR_HOME/.sessions/<run-id>/` | Never committed. |
 | Redacted human findings | `audit/<date>/findings.md` | Hand-written summaries only. |
+| Synthetic sittings | `audit/<date>/sim-sittings/` | Committable; candidates only. |
 | Local development scratch | `notes/` | Local/untracked only. |
 
 Real human terminal transcripts should not be committed. If a human run
@@ -239,6 +240,13 @@ namespace such as `guide.echo`.
 LLM-generated personas are not acceptance evidence. They may generate
 candidate traces, but maintainers must convert useful traces into
 deterministic scripts before they count.
+
+The three learner personas in `docs/sim-personas/` (Arthur, Maya, Leo) are
+LLM-played through `scripts/sim/sitting.py` (WP-19) and are distinct from the
+deterministic harness personas above (`careful-beginner`, `second-try`).
+Their sheets yield candidate findings only; a candidate is promoted to
+`audit/<date>/walkthroughs.md` after a maintainer reproduces it on the real
+tutor (decisions amendment A6).
 
 ## Practice-Shell Hardening Sequence
 
