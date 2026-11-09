@@ -556,7 +556,28 @@ def _emit(text: str) -> None:
     sys.stdout.write(text if text.endswith("\n") else text + "\n")
 
 
+def resolve_bash(value: str) -> Optional[str]:
+    """Absolute path of the interpreter named by --bash, or None.
+
+    A name without a slash is looked up on PATH (`--bash bash`); a path must
+    be an executable file.
+    """
+    value = os.path.expanduser(value)
+    if os.sep in value:
+        path = os.path.abspath(value)
+        return path if os.path.isfile(path) and os.access(path, os.X_OK) else None
+    return shutil.which(value, path=os.environ.get("PATH"))
+
+
 def cmd_start(args: argparse.Namespace) -> int:
+    if args.bash:
+        resolved = resolve_bash(args.bash)
+        if resolved is None:
+            print("sitting: --bash %r does not name an executable (not on PATH, "
+                  "or not an executable file); nothing was started" % args.bash,
+                  file=sys.stderr)
+            return 2
+        args.bash = resolved
     out = os.path.abspath(args.out)
     if os.path.exists(os.path.join(out, SOCKET_NAME)):
         print("sitting: a sitting already exists in %s (stop it, or use another --out)" % out,

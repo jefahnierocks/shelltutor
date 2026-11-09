@@ -48,8 +48,15 @@ def main():
         print("selftest_sitting: skip - login name too short to redact")
         return 0
     out = os.path.join(tempfile.mkdtemp(prefix="selftest-sitting-"), "s")
+    # A missing interpreter is refused before anything is created.
+    rc, _, err = run(out, "start", "--out", out, "--bash", "no-such-bash-xyz")
+    if rc != 2 or "does not name an executable" not in err or os.path.exists(out):
+        return fail("missing --bash: rc=%s err=%r exists=%s" % (rc, err, os.path.exists(out)))
+    rc, _, err = run(out, "start", "--out", out, "--bash", "/no/such/bash")
+    if rc != 2 or os.path.exists(out):
+        return fail("missing --bash path: rc=%s err=%r" % (rc, err))
     try:
-        rc, text, err = run(out, "start", "--out", out, "--persona", "probe")
+        rc, text, err = run(out, "start", "--out", out, "--persona", "probe", "--bash", "bash")
         if rc != 0 or "SHELLTUTOR" not in text:
             return fail("start rc=%s err=%r text=%r" % (rc, err, text[:200]))
         if "[prompt] shelltutor> " not in text:
