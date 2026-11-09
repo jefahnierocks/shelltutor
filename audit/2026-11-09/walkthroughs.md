@@ -336,3 +336,183 @@ rejection; Leo's and Arthur's ended on rejections. The reading charge is a
 persona parameter (her four-line limit makes almost every screen cost one), so
 it measures relative density, not a tutor defect. Both kinds of point pushed
 the three sittings past 8 in under 30 inputs.
+
+## Synthetic sittings, round 3
+
+Sheets `sim-sittings/{leo,maya,arthur}-3.md` ran against `5d1d689` (WP-21);
+`shelltutor` on `main` (`757d0a6`) is unchanged from that revision.
+
+**Two things changed between round 2 and round 3, so comparisons are read
+against both.** (1) The tutor: WP-21 (longer plain accepted forms; hint words
+accepted; the second recall miss adds the shape line `Answer in a few words,
+like the lesson did, not a full sentence.`, `shelltutor:668`, `709`; 1.1 names
+the stray-slash and missing-space typos; 2.3 says `cd` goes home and `cd -`
+comes back and ends in a try-it line; 2.2 lists `ls /`). (2) The persona
+sheets: Leo and Maya ran on **v0.2** (Maya's density charge only on
+consequence; Leo also reads each paragraph's first sentence), Arthur on
+**v0.1**. Method as before; numbering continues at F-021 and O-AH.
+
+**Result.** Leo quit at the Stage 2 gate task (friction 8), Maya at the Stage 4
+gate recall Q1 after clearing Stages 1 to 3 (8), Arthur at Stage 2 gate Q2 (9).
+Round 3 reached further than rounds 1 and 2: Maya cleared three gates.
+
+### Friction by source
+
+| Sheet (persona version) | Final | Reading charges | Rejections (+2) | Mode confusion | Gates cleared |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| leo-3 (v0.2) | 8 | 1 | 8 (four) | 0 | -1 |
+| maya-3 (v0.2) | 8 | 1 | 8 (four) | 2 | -3 (unfloored) |
+| arthur-3 (v0.1) | 9 | 8 | 2 (one) | 0 | -1 |
+
+Under v0.2 the reading charge falls from 7 (maya-2) to 1; the sittings now end
+on rejections. Arthur still pays 8 reading points because his sheet is
+unchanged. Leo's `notes` at Stage 2 Q3 is a correct rejection (a wrong answer
+the hint then fixed); the other seven rejection points are F-021 to F-023.
+
+### Round-2 items closed (with evidence)
+
+- **F-019 closed.** Reproduced accepted: `it shows up on the screen`, `it
+  comes back to me on the screen`, `it goes up one level, to the parent folder`
+  and the comma-less form; `not to the screen` still rejected. Arthur's
+  `it comes back to me on the screen` and Maya's `back to me on the screen`
+  passed Stage 1 Q3 in round 3.
+- **F-020 closed.** `back to me, in the window you type into` (the hint's words)
+  is accepted at Stage 1 Q3. The same gap recurs at Stage 4 Q1 (F-023).
+- **O-Z closed for the shape line.** Miss 2 now prints the shape line
+  (reproduced at Stage 2 Q2 and seen by Maya at Stage 4 Q1). The hint text is
+  still the same on every miss.
+- **O-AB closed.** 2.3 says "`cd..` with no space is a different word"; no
+  sheet typed `cd..` or `/echo`.
+- **O-AC and O-AD closed.** 2.3's `cd` is "your home folder, outside this
+  practice area" with a try-it line (`1373-1385`); 2.2 lists `ls /`. Arthur ran
+  `cd ..`, `pwd`, `cd -` with no friction.
+- **O-AF closed.** Arthur ran Ctrl+L with no charge.
+
+### Findings (reproduced)
+
+- **F-021 — Stage 2 Q2 rejects "your home folder", the lessons' own gloss.**
+  Severity 2. 2.3 says "`cd`  # your home folder" (`1373`), 2.4 and the intro
+  say "~ your home folder" (`1317`, `1395`); the list (`1446-1455`) holds `home`,
+  `home folder`, `my home folder`, `the home folder` and directory forms, not
+  `your`. Reproduced through `normalize_answer`:
+
+  | Input | Exact | Accepted forms contained |
+  | --- | --- | --- |
+  | `your home folder` (leo, maya, arthur) | reject | `home`, `home folder` |
+  | `a home folder` | reject | `home`, `home folder` |
+  | `your home directory` | reject | `home`, `home directory` |
+  | `your home` | reject | `home` |
+  | `home`, `the home folder` | accept | |
+
+  The hint "It is where `cd` with nothing after it takes you" (`1445`) names a
+  different fact, so all three could not tell why `your home folder` failed
+  (Leo found `home` by shortening). Three of three sheets. *Closes when*: the
+  list takes `your home folder`/`directory`, or Q2 is worded as the gloss.
+  Sheets: leo F-a, F-c; maya F-b; arthur F-a.
+- **F-022 — The Stage 2 gate task needs a command no earlier lesson shows, and
+  the first `check` does not say so.** Severity 1 (dead end). The task asks to
+  "make a folder called practice" (`1477`). Stage 2 lessons (intro to 2.4) never
+  mention `mkdir`; its first appearance is the Stage 3 intro (`1569`) and 3.1
+  (`1583`). The gate checks the history pattern `cd` first
+  (`gate_require_history`, `1494-1496`), so the first `check` prints only
+  `○ cd into it (cd practice) not yet: not in your history` (reproduced, scratch
+  sitting). The hint with `mkdir` comes at attempt 2 (`gate_escalate`, `1500`;
+  reproduced: second `check` printed `○ practice folder not yet: no practice
+  folder in this stage's folder` and `Hint: mkdir makes the folder; cd moves into
+  it; pwd shows where you are.`). Also reproduced: a failed `cd practice`
+  (`bash: cd: practice: No such file or directory`) satisfied the `cd` check, so
+  the learner advanced to the second message by typing it. Leo quit here
+  (`make practice`, `new folder practice`, +4); Maya took three guesses and two
+  `check` calls. *Closes when*: a Stage 2 screen names `mkdir`, or the task
+  screen names it, or the first `check` names the missing folder.
+  Sheets: leo F-b, maya F-c.
+- **F-023 — Stage 4 Q1 rejects the answer the learner just saw and the hint's
+  own words.** Severity 2. List (`1916-1923`): `the path to vim`, `path to vim`,
+  `a path`, `the path`, `where vim is`, `vim's path`, `vims path`,
+  `/usr/bin/vim`. Reproduced:
+
+  | Input | Exact | Accepted forms contained |
+  | --- | --- | --- |
+  | `the path /usr/bin/vim` (maya) | reject | `the path`, `/usr/bin/vim` |
+  | `the folder and name of the program file` (maya; the hint, `1915`) | reject | none |
+  | `a path like /usr/bin/vim` | reject | `a path`, `/usr/bin/vim` |
+  | `it prints the path` | reject | `the path` |
+  | `the full path` | reject | none |
+  | `the path`, `/usr/bin/vim` | accept | |
+
+  FF-009 (`scripts/check-hints.sh`) checks only that no accepted form appears
+  inside the hint (the leak test); it does not check that the hint's own words
+  would be accepted, which is why F-020's gap recurs. Maya lost 4 points here and
+  quit. *Closes when*: the list takes the hint's words and path-plus-example
+  forms; a check compares the hint's words with the list.
+  Sheets: maya F-a.
+- **F-024 — Lesson 1.2 says Ctrl+C gets you a fresh prompt, and inside `less`
+  it does nothing.** Severity 3. 1.2: "Ctrl+C the escape hatch. If anything feels
+  stuck, press it and you get a fresh prompt" (`937-938`). Reproduced in 3.2:
+  after `less ../numbers.txt`, raw Ctrl+C left the pager (`:` prompt still
+  showing); typing `next` reached `less` ("No next tag (press RETURN)"); only `q`
+  returned to `shelltutor>`. 3.2 does give `q` (`1617-1619`, fifth prose line),
+  but its `▶` line says "Try both, then next" (`1623`). Maya hit this (+2 mode
+  confusion, +1 reading). *Closes when*: 1.2's sentence is limited to commands at
+  the prompt, or 3.2's `▶` line names `q`. Sheets: maya O-c, O-d.
+
+### Observations (reproduced)
+
+- **O-AH — `show` at a recall question echoes as an answer line but is not
+  an attempt.** Reproduced at Stage 1 Q1: `show` printed `┃ answer in words: show`
+  and redrew the question; the next real miss (`ls`) printed one message and the
+  hint only, with no shape line or facts, so `show` did not count (`ask_question`
+  `691`). Maya's candidate F-d is not a defect. *Closes when*: the echoed line is
+  not shown as an answer (cosmetic). Sheets: maya F-d.
+- **O-AI — 3.3's `▶` line does not ask to type `cp`, `mv` or `rm`.** `▶ Type next
+  to take Stage 3's gate` (`1646`); Maya arrived at the gate task without having
+  typed them and recovered by copying 3.1's shape. Sheets: maya O-e.
+- **O-AJ — Host programs answer wrong guesses.** `make folder practice` gave
+  `make: *** No rule to make target `folder'.  Stop.` and `help` printed 44 lines
+  of builtin signatures with no `mkdir` (counted `help | wc -l`; `help | grep -c
+  mkdir` is 0), both reproduced. Neither says what to type. Sheets: maya O-a, O-b;
+  leo (`make practice`).
+- **O-AK — The Stage 2 gate screen lacks "this is not the shell".** The Stage 1
+  gate has it (`1012`); the Stage 2 gate opens with "Recall (three questions…)"
+  only (`1416-1422`). Leo did not mistype this time. Sheets: leo O-b.
+- **O-AL — Silence and the `cd ..` / `cd -` asymmetry.** `cd ..` prints nothing,
+  `cd -` prints the path; 2.3's try-it line now asks for `pwd`. Sheets: leo O-c,
+  arthur O-g.
+- **O-AM — Terms used before they are taught (O-AE recurs) and drive letters.**
+  `cat` and `~/projects` in 2.4 (`1389`), "root" undefined, `vimtutor` undefined
+  (welcome), "bash" in 1.1. Arthur looked for a drive letter twice. Sheets:
+  arthur O-a, O-c, O-d, O-e, O-h.
+
+### Recurring
+
+O-AG (`pwd` ends `…/stage1` at the Stage 1 task, `practice "$SANDBOX/stage1"
+gate`, `1215`, and `…/stage2` at the Stage 2 task, `1490`, while 2.1 draws the
+root) is now on three of three sheets (leo-3 1.3; maya O-g; arthur O-f). The
+reading load (O-T) is Arthur's v0.1 cost (8 charges); under v0.2 it is 1. The
+answer-format line of the shape hint has no example in the lessons (maya O-f).
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-a, F-c `your home folder` | F-021 |
+| leo | F-b gate task dead end | F-022 |
+| leo | O-a three reading-only screens | O-T (1 point under v0.2) |
+| leo | O-b Stage 2 gate screen | O-AK |
+| leo | O-c silent `cd ..` | O-AL |
+| leo | O-d Q1 answer in unread 1.3 | F-017 closed; guess accepted |
+| maya | F-a Stage 4 Q1 | F-023 |
+| maya | F-b `your home folder` | F-021 |
+| maya | F-c `mkdir` not taught | F-022 |
+| maya | F-d `show` echo | O-AH (not a defect) |
+| maya | O-a `make folder practice` | O-AJ |
+| maya | O-b `help` | O-AJ |
+| maya | O-c 3.2 exit key; O-d Ctrl+C | F-024 |
+| maya | O-e 3.3 `▶` line | O-AI |
+| maya | O-f shape example | recurring note |
+| maya | O-g position shifts | O-AG |
+| arthur | F-a `your home folder` | F-021 |
+| arthur | O-a vimtutor; O-c, O-d, O-e, O-h | O-AM |
+| arthur | O-b density (8 of 15) | O-T (v0.1 persona cost) |
+| arthur | O-f stage1 pwd | O-AG |
+| arthur | O-g silence | O-AL |
