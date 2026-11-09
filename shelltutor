@@ -909,8 +909,8 @@ You'll see ${DIM}hello${RST} printed, then the prompt comes back. Now try:
 
   ${CMD}echo I am at the shell${RST}      ${DIM}# spaces separate words${RST}
   ${CMD}echo "I am at the shell"${RST}    ${DIM}# quotes group them into one${RST}
-
-If bash says ${CMD}command not found${RST}, you mistyped: type it again.
+If bash says ${CMD}command not found${RST} or ${CMD}No such file${RST}, you mistyped: a stray
+${CMD}/${RST} in front, or a missing space. Type it again.
 
 ${CMD}echo${RST} just repeats its words back. It is the simplest command
 there is, and its shape is the shape of every command you'll meet:
@@ -1376,6 +1376,7 @@ ${CMD}cd${RST} changes your current folder.
 Two more useful ones:
   ${CMD}cd -${RST}          ${DIM}# go back to the previous folder${RST}
   ${CMD}cd ..${RST}         ${DIM}# go up one level (to the parent folder)${RST}
+  ${CMD}cd..${RST} with no space is a different word; bash cannot find it.
 
 ${EM}Stages 1 and 2 start every practice prompt in${RST} ${DIR}${SANDBOX}${RST}${EM}.${RST}
 Later stages start in a stage folder inside it. If you wander off,
