@@ -25,6 +25,7 @@ reproduces them (decisions amendment A6).
 - Date:
 - Persona (file in `docs/sim-personas/`) and learner role:
 - Persona sheet version:
+- Turn cap: 160. One turn = one `send` or one `raw`. Turns used:
 - Simulation rules confirmed (zero forward knowledge, reading limit,
   friction meter):
 - Tutor revision (`git rev-parse --short HEAD`) and invocation

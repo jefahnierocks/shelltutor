@@ -27,6 +27,9 @@ shell is that same binary (F-014). The bundle (`terminal.jsonl`,
 `recorder.Recorder`, so D-19 redaction replaces the login name with
 `[user]`. Screens returned to the client are NOT redacted: the learner has
 to be able to read and type its own user name.
+Screens returned to the client are also cleaned of terminal control residue
+(CSI/OSC/DCS sequences, DEC private modes, a finished alternate screen, stray
+ESC and `^[`); `terminal.jsonl` stays raw.
 
 Python 3.9+, standard library only.
 """
@@ -73,6 +76,20 @@ _RAW_RE = re.compile(r"\\x([0-9a-fA-F]{2})|\\([tnre\\])")
 _CLEARED_RE = re.compile(r"(Stage [1-5] cleared\.|[a-z]+ cleared\.)")
 _RAW_NAMES = {"t": b"\t", "n": b"\n", "r": b"\r", "e": b"\x1b", "\\": b"\\"}
 
+# Client-facing reply text only (the recorded terminal.jsonl stays raw).
+# A finished full-screen program (man, less, Vim) leaves its alternate-screen
+# drawing in the stream; once the program has left the alternate screen that
+# drawing is dropped. A program still on it is kept so the persona can read it.
+_ALT_SWITCH_RE = re.compile(r"\x1b\[\?(?:1049|1047|47)([hl])")
+_ALT_BLOCK_RE = re.compile(r"\x1b\[\?(?:1049|1047|47)h.*?\x1b\[\?(?:1049|1047|47)l", re.S)
+# Vim's showcmd area prints the typed Esc as the two characters `^[` right
+# after a cursor-position sequence; that is control residue, not output.
+_SHOWCMD_ESC_RE = re.compile(r"(\x1b\[[0-9;]*H)\^\[")
+# DCS / APC / PM / SOS strings (Vim's terminal probes, e.g. ESC P z z ESC \\).
+_STRING_RE = re.compile(r"\x1b[P_^X][^\x1b\x07]*(?:\x1b\\|\x07)")
+_ESC_REST_RE = re.compile(r"\x1b[@-Z\\-_]|\x1b[ -/][ -~]|\x1b")
+_CTRL_RE = re.compile("[\x00-\x08\x0b\x0e-\x1f\x7f\u0080-\u009f\ufffd]")
+
 
 def default_out() -> str:
     return os.path.join(tempfile.gettempdir(), "shelltutor-sitting")
@@ -91,6 +108,19 @@ def parse_raw(text: str) -> bytes:
         pos = m.end()
     out += text[pos:].encode("utf-8")
     return bytes(out)
+
+
+def client_text(raw: str) -> str:
+    """Text shown to the persona for the bytes since the last clear: CSI,
+    OSC, DEC private modes and DCS strings removed, a finished alternate
+    screen dropped, no ESC left (and so no `^[`), other control characters
+    and decoder replacement characters removed. Newlines and tabs survive."""
+    text = _ALT_BLOCK_RE.sub("", raw)
+    text = _SHOWCMD_ESC_RE.sub(r"\1", text)
+    text = _STRING_RE.sub("", text)
+    text = sim_env.normalize(text)
+    text = _ESC_REST_RE.sub("", text)
+    return _CTRL_RE.sub("", text)
 
 
 def mark_prompt(text: str) -> str:
@@ -154,6 +184,7 @@ class Sitting:
         )
         self.decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
         self.since_clear = ""
+        self.pre_alt: Optional[str] = None
         self.heights = ScreenHeightTracker()
         self.screen_heights: List[Dict[str, Any]] = []
         self.cleared: List[str] = []
@@ -231,14 +262,7 @@ class Sitting:
         self.rec.write_terminal(ts, "out", data)
         raw = self.decoder.decode(data)
         self.last_byte = time.monotonic()
-        self.since_clear += raw
-        last = None
-        for m in _CLEAR_RE.finditer(self.since_clear):
-            last = m
-        if last is not None:
-            self.since_clear = self.since_clear[last.end():]
-        if len(self.since_clear) > BUFFER_CAP:
-            self.since_clear = self.since_clear[-BUFFER_CAP:]
+        self._append_screen(raw)
         text = sim_env.normalize(self.since_clear)
         for m in _CLEARED_RE.finditer(sim_env.normalize(raw)):
             label = m.group(1)
@@ -252,6 +276,33 @@ class Sitting:
             self.rec.write_event(round(ts, 6), "screen-height", screen_id=sid,
                                  payload={"lines": lines, "budget": SCREEN_BUDGET,
                                           "over": lines > SCREEN_BUDGET})
+
+    def _append_screen(self, raw: str) -> None:
+        """Add decoded output to the text since the last clear. A program that
+        enters the alternate screen (man, less, Vim) is remembered by the text
+        before it; when it leaves, that text is restored and the program's
+        drawing is dropped (client-facing only; terminal.jsonl is untouched)."""
+        pos = 0
+        for m in _ALT_SWITCH_RE.finditer(raw):
+            self._append_plain(raw[pos:m.start()])
+            if m.group(1) == "h":
+                if self.pre_alt is None:
+                    self.pre_alt = self.since_clear
+            elif self.pre_alt is not None:
+                self.since_clear = self.pre_alt
+                self.pre_alt = None
+            pos = m.end()
+        self._append_plain(raw[pos:])
+
+    def _append_plain(self, raw: str) -> None:
+        self.since_clear += raw
+        last = None
+        for m in _CLEAR_RE.finditer(self.since_clear):
+            last = m
+        if last is not None:
+            self.since_clear = self.since_clear[last.end():]
+        if len(self.since_clear) > BUFFER_CAP:
+            self.since_clear = self.since_clear[-BUFFER_CAP:]
 
     def pump(self, timeout: float) -> bool:
         """Read pending pty output for up to `timeout` s; True if any came."""
@@ -302,7 +353,7 @@ class Sitting:
     # -- views -----------------------------------------------------------
 
     def screen(self) -> str:
-        text = mark_prompt(sim_env.normalize(self.since_clear))
+        text = mark_prompt(client_text(self.since_clear))
         if self.eof:
             text = text.rstrip("\n") + "\n[exited %s]\n" % self.child_exit
         return text

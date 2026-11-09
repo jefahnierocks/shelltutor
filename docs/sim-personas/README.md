@@ -130,6 +130,9 @@ python3 scripts/sim/sitting.py note --out DIR <context> "<monologue>"
 python3 scripts/sim/sitting.py stop --out DIR
 ```
 
+**Turn cap: 160. One turn = one `send` or one `raw`.** Stop at the cap at the end
+of the current screen; record the count in the sheet's Sitting block.
+
 `--out` is the sitting directory; use one fresh directory per sitting
 (`start` refuses a directory that already holds a sitting or a bundle).
 `screen` and `send` return the text since the last clear sequence, with

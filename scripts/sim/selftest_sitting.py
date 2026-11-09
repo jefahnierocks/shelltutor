@@ -34,7 +34,55 @@ def fail(msg):
     return 1
 
 
+# Bytes captured from a real run (Bash 3.2.57 on macOS, Stage 5 practice
+# prompt): `man ls` then `q`, and the start of `vim practice.txt` with the
+# typed Esc echoed by Vim's showcmd as `^[`. The man page is cut short by the
+# pager; the escape sequences are verbatim.
+CAPTURED_MAN = b'shelltutor> man ls\r\n\x1b[?1049h\x1b[24;1H\x1b[?1h\x1b=\rLS(1)                       General Commands Manual                      LS(1)\r\n\r\n\x1b[1mNAME\x1b[0m\r\n     \x1b[1mls\x1b[0m - list directory contents\r\n\r\n\x1b[1mSYNOPSIS\x1b[0m\r\n     \x1b[1mls\x1b[0m [\x1b[1m-@ABCFGHILOPRSTUWabcdefghiklmnopqrstuvwxy1%,\x1b[0m] [\x1b[1m--color\x1b[0m=\x1b[4mwhen\x1b[24m]\r\n        [\x1b[1m-D\x1b[0m \x1b[4mformat\x1b[24m] [\x1b[4mfile\x1b[24m \x1b[4m...\x1b[24m]\r\n\r\n\x1b[1mDESCRIPTION\x1b[0m\r\n     For each operand that names a \x1b[4mfile\x1b[24m of a type other than directory, \x1b[1mls\x1b[0m\r\n     displays its name as well as any requested, associated information.  For\r\n     each operand that names a \x1b[4mfile\x1b[24m of type directory, \x1b[1mls\x1b[0m displays the names\r\n     of files contained within that directory, as well as any requested,\r\n     associated information.\r\n\r\n     If no operands are given, the contents of the current directory are\r\n     displayed.  If more than one operand is given, non-directory operands are\r\n     displayed first; directory and non-directory operands are sorted\r\n     separately and in lexicographical order.\r\n\r\n     The following options are available:\r\n\r\n:\x1b[K\r\x1b[K\x1b[?1l\x1b>\x1b[?1049lshelltutor> '
+CAPTURED_VIM = b'vim practice.txt\r\n\x1b[?1049h\x1b[>4;2m\x1b[?1h\x1b=\x1b[?2004h\x1b[?1004h\x1b[1;24r\x1b[?12h\x1b[?12l\x1b[22;2t\x1b[22;1t\x1b[27m\x1b[23m\x1b[29m\x1b[m\x1b[H\x1b[2J\x1b[?25l\x1b[24;1H"practice.txt" 1L, 7B\x1b[2;1H\xbd\x1b[6n\x1b[2;1H  \x1b[3;1H\x1bPzz\x1b\\\x1b[0%m\x1b[6n\x1b[3;1H           \x1b[1;1H\x1b[>c\x1b]11;?\x07\x1b]10;?\x07\x1b[1;1Hbefore\r\n\x1b[94m~                                                                               \x1b[3;1H~                                                                               \x1b[4;1H~         \x1b[24;70H^[\x1b[1;1H\x1b[?25h\x1b[?25l\x1b[24;1H:q!\x1b[?1049lshelltutor> '
+
+
+def check_client_text():
+    """The persona-facing reply drops control residue (H-1, H-2)."""
+    sys.path.insert(0, os.path.dirname(os.path.dirname(HERE)))
+    from scripts.sim.sitting import client_text
+
+    man = CAPTURED_MAN.decode("utf-8", "replace")
+    inside = client_text(man[: man.index("\x1b[?1049l")])
+    if "LS(1)" not in inside or "NAME" not in inside or "\x1b" in inside:
+        return fail("man still on the alternate screen must stay readable: %r" % inside[:120])
+    done = client_text(man)
+    if "LS(1)" in done or "\x1b" in done or not done.endswith("shelltutor> "):
+        return fail("finished man screen must be dropped: %r" % done)
+    vim_raw = CAPTURED_VIM.decode("utf-8", "replace")
+    if client_text(vim_raw) != "vim practice.txt\nshelltutor> ":
+        return fail("a finished vim screen must leave only the shell lines")
+    vim = client_text(vim_raw[: vim_raw.index("\x1b[?1049l")])
+    for bad in ("Pzz", "^[", "\x1b", "\ufffd", "[6n", "11;?"):
+        if bad in vim:
+            return fail("vim reply still holds %r: %r" % (bad, vim[:160]))
+    if 'practice.txt" 1L, 7B' not in vim or "before" not in vim:
+        return fail("vim reply lost its text: %r" % vim[:160])
+    # The alternate screen is dropped even when the program clears it (Vim
+    # sends ESC[H ESC[2J), because the text before it is restored on exit.
+    import types
+    from scripts.sim import sitting as sit
+
+    stub = types.SimpleNamespace(since_clear="", pre_alt=None)
+    stub._append_plain = types.MethodType(sit.Sitting._append_plain, stub)
+    for chunk in ("shelltutor> vim x\r\n\x1b[?1049h\x1b[H\x1b[2Jtildes ~ ~", " drawing", "\x1b[?1049lshelltutor> "):
+        sit.Sitting._append_screen(stub, chunk)
+    if client_text(stub.since_clear) != "shelltutor> vim x\nshelltutor> " or stub.pre_alt is not None:
+        return fail("alternate screen with a clear must be dropped on exit: %r" % stub.since_clear)
+    if client_text("a\x1b\x07b\r\n\tc\x00") != "a" + "b\n\tc":
+        return fail("lone ESC and control characters must go, newline and tab stay")
+    return 0
+
+
 def main():
+    rc = check_client_text()
+    if rc:
+        return rc
     try:
         import pty
         m, s = pty.openpty()
