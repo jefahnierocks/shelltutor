@@ -61,7 +61,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-13](WP-13-module-infrastructure.md) | Module entry by name, module standard, harness tables and screen-height check | WP-10, WP-14 | none | **landed**: A–B f47fa01, C–D 486e7ac (2026-11-08) |
 | [WP-18](WP-18-stages-3-5-to-budget.md) | Stages 3–5 and the finale trimmed or split to the 22-row budget (O-J, A5) | — | approved 2026-11-08 | **landed** f372da1 (2026-11-08) |
 | [WP-19](WP-19-synthetic-sittings.md) | Synthetic sittings: sitting server/client, three learner personas, telemetry sheet (A6) | — | none | ready |
-| [WP-20](WP-20-stage1-gate-grounding.md) | Stage 1 gate grounding: Q1 taught, plain answers, hint on first recall miss, recall as the tutor, 1.1/1.2 traps (A7) | — | approved 2026-11-09 | ready |
+| [WP-20](WP-20-stage1-gate-grounding.md) | Stage 1 gate grounding: Q1 taught, plain answers, hint on first recall miss, recall as the tutor, 1.1/1.2 traps (A7) | — | approved 2026-11-09 | **landed** 82792b6 (2026-11-09) |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
