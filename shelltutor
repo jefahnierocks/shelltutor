@@ -675,8 +675,8 @@ ask_question() {
     local accept=("$@")
     local ans norm ok_norm matched ok attempt=0
     while true; do
-        printf '%b%b%b\n' "$Q" "$prompt" "$RST"
-        printf '  %byour answer:%b ' "$CMD" "$RST"
+        fb_note "${Q}${prompt}${RST}"
+        printf '%s%s%s %sanswer in words:%s ' "$INSTR" "$G_BAR" "$RST" "$CMD" "$RST"
         if ! IFS= read -r ans < /dev/tty; then
             printf '\n'
             return 1
@@ -1007,6 +1007,7 @@ stage1_gate_screen() {
 ${H1}STAGE 1 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
 
 Then a ${SUB}practical task${RST}: run a few commands and tell me what
 they printed. The script verifies your answers.
@@ -1094,8 +1095,8 @@ stage1_check_commands_run() {
 stage1_followup() {
     local var="$1" prompt="$2" ans norm
     while true; do
-        printf '%b%b%b\n' "$Q" "$prompt" "$RST"
-        printf '  %byour answer:%b ' "$CMD" "$RST"
+        fb_note "${Q}${prompt}${RST}"
+        printf '%s%s%s %syour answer:%s ' "$INSTR" "$G_BAR" "$RST" "$CMD" "$RST"
         IFS= read -r ans < /dev/tty || return 1
         norm=$(normalize_answer "$ans")
         case "$norm" in
