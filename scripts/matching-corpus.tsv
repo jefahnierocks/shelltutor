@@ -1,0 +1,188 @@
+# FF-011 corpus: KEY<TAB>accept|reject<TAB>input<TAB>source
+# KEY = the question, by order in shelltutor: S1Q1..S5Q3 (core), SHQ1..SHQ3 (shells), ENQ1..ENQ3 (env).
+# accept = a correct answer the matcher must take (rounds 1-4 rejected-correct inputs, A10);
+# reject = a distractor from the prompt's own option text or a negation counterexample.
+S1Q1	accept	$	F-017
+S1Q1	accept	dollar	F-017
+S1Q1	accept	dollar sign	F-017
+S1Q1	accept	the dollar sign	F-017
+S1Q1	accept	a $ sign	F-017
+S1Q1	reject	>	F-017
+S1Q1	reject	#	F-017
+S1Q1	reject	ls	F-017
+S1Q1	reject	;	F-017
+S1Q1	reject	:	F-017
+S1Q1	reject	not $	F-017
+S1Q1	reject	it is not a dollar sign	F-017
+S1Q2	accept	the folder	F-018
+S1Q2	accept	the folder I'm in	F-018
+S1Q2	accept	the folder you're in	F-018
+S1Q2	accept	the current directory	F-018
+S1Q2	accept	the directory	F-018
+S1Q2	accept	where I am	F-018
+S1Q2	accept	a folder	F-018
+S1Q2	accept	print working directory	F-018
+S1Q2	accept	the working directory	F-018
+S1Q2	accept	the folder you’re in	F-018
+S1Q2	reject	who I am	F-018
+S1Q2	reject	the time	F-018
+S1Q2	reject	not the folder	F-018
+S1Q3	accept	to the screen	F-018
+S1Q3	accept	standard out	F-018
+S1Q3	accept	the terminal window	F-018
+S1Q3	accept	the display	F-018
+S1Q3	accept	stdout	F-018
+S1Q3	accept	it shows up on the screen	F-019
+S1Q3	accept	it comes back to me on the screen	F-019
+S1Q3	accept	back to me, in the window you type into	F-020
+S1Q3	accept	it comes straight back to you	F-025
+S1Q3	accept	back to you	F-025
+S1Q3	accept	it comes back to me on the screen in the terminal window	F-025
+S1Q3	accept	the screen	F-025
+S1Q3	reject	not to the screen	F-019
+S1Q3	reject	nowhere, the screen stays blank	F-019
+S1Q3	reject	it goes into a file	F-019
+S1Q3	reject	it is saved in a file	F-019
+S1Q3	reject	nothing is shown on the screen	F-019
+S2Q1	accept	it goes up one level, to the parent folder	F-019
+S2Q1	accept	goes up one folder	F-019
+S2Q1	accept	up a level	F-019
+S2Q1	accept	goes to the parent folder	F-019
+S2Q1	reject	it does not go up one level	F-019
+S2Q1	reject	it goes down, not to the parent folder	F-019
+S2Q1	reject	it lists files	F-019
+S2Q1	reject	it lists files again	F-019
+S2Q1	reject	it goes down one level	F-019
+S2Q2	accept	your home folder	F-021
+S2Q2	accept	your home directory	F-021
+S2Q2	accept	your home	F-021
+S2Q2	accept	a home folder	F-021
+S2Q2	accept	home	F-021
+S2Q2	accept	the home folder	F-021
+S2Q2	reject	the root folder	F-021
+S2Q2	reject	not home	F-021
+S2Q2	reject	the current folder	F-021
+S2Q3	accept	~/projects/notes	round-1
+S2Q3	accept	projects/notes	round-1
+S2Q3	accept	the notes folder	round-1
+S2Q3	reject	~/projects	round-1
+S2Q3	reject	the projects folder	round-1
+S2Q3	reject	not notes	round-1
+S3Q1	accept	touch	round-1
+S3Q1	accept	touch it	round-1
+S3Q1	reject	mkdir	prompt options
+S3Q1	reject	new	prompt options
+S3Q1	reject	cat	prompt options
+S3Q1	reject	not touch	prompt options
+S3Q2	accept	gone	round-1
+S3Q2	accept	it's gone	round-1
+S3Q2	accept	deleted for good	round-1
+S3Q2	accept	removed permanently	round-1
+S3Q2	reject	~/.Trash	prompt options
+S3Q2	reject	in the trash	prompt options
+S3Q2	reject	on disk	prompt options
+S3Q2	reject	depends	prompt options
+S3Q2	reject	not gone	prompt options
+S3Q2	reject	it is not deleted	prompt options
+S3Q3	accept	mv	round-1
+S3Q3	accept	mv old.txt new.txt	round-1
+S3Q3	accept	use mv	round-1
+S3Q3	reject	cp	round-1
+S3Q3	reject	rename	round-1
+S3Q3	reject	not mv	round-1
+S4Q1	accept	the path /usr/bin/vim	F-023
+S4Q1	accept	the folder and name of the program file	F-023
+S4Q1	accept	a path like /usr/bin/vim	F-023
+S4Q1	accept	it prints the path	F-023
+S4Q1	accept	the full path	F-023
+S4Q1	accept	the path	F-023
+S4Q1	accept	/usr/bin/vim	F-023
+S4Q1	reject	it prints nothing	F-023
+S4Q1	reject	not the path	F-023
+S4Q1	reject	the date	F-023
+S4Q2	accept	> overwrites and >> appends	F-026
+S4Q2	accept	> overwrites the file and >> appends to the end	F-026
+S4Q2	accept	overwrite append	F-026
+S4Q2	accept	overwrite vs append	F-026
+S4Q2	accept	one replaces what is in the file and the other adds to the end of it	F-026
+S4Q2	accept	one replaces the old file and two adds to the end	F-026
+S4Q2	accept	>> appends	F-026
+S4Q2	accept	> overwrites	F-026
+S4Q2	accept	> overwrites, >> appends	F-026
+S4Q2	reject	only appends	F-026
+S4Q2	reject	>> appends only	F-026
+S4Q2	reject	they do the same thing	F-026
+S4Q2	reject	not overwrite	F-026
+S4Q2	reject	one prints one sorts	F-026
+S4Q3	accept	the space	F-027
+S4Q3	accept	the space splits it into two names	F-027
+S4Q3	accept	there is a space	F-027
+S4Q3	accept	the space splits them	F-027
+S4Q3	accept	the shell splits on spaces	F-027
+S4Q3	reject	no space	F-027
+S4Q3	reject	it is not split	F-027
+S4Q3	reject	because of the colour	F-027
+S4Q3	reject	the file is large	F-027
+S5Q1	accept	q	round-1
+S5Q1	accept	press q	round-1
+S5Q1	accept	type q	round-1
+S5Q1	accept	the q key	round-1
+S5Q1	reject	not q	round-1
+S5Q1	reject	ctrl+c	round-1
+S5Q1	reject	exit	round-1
+S5Q1	reject	quit it	round-1
+S5Q2	accept	:w	round-1
+S5Q2	accept	:wq	round-1
+S5Q2	accept	write	round-1
+S5Q2	accept	write command	round-1
+S5Q2	accept	type :w	round-1
+S5Q2	reject	:q	round-1
+S5Q2	reject	:q!	round-1
+S5Q2	reject	not write	round-1
+S5Q2	reject	quit	round-1
+S5Q3	accept	no	round-1
+S5Q3	accept	no it did not	round-1
+S5Q3	accept	unchanged	round-1
+S5Q3	reject	yes	round-1
+S5Q3	reject	it did change	round-1
+S5Q3	reject	the file changed	round-1
+SHQ1	accept	a program	module
+SHQ1	accept	program	module
+SHQ1	accept	it is a program	module
+SHQ1	reject	a file	prompt options
+SHQ1	reject	a folder	prompt options
+SHQ1	reject	a window	prompt options
+SHQ1	reject	not a program	prompt options
+SHQ2	accept	command -v zsh	module
+SHQ2	accept	which zsh	module
+SHQ2	accept	type zsh	module
+SHQ2	reject	zsh	module
+SHQ2	reject	install zsh	module
+SHQ2	reject	ls zsh	module
+SHQ3	accept	login shell	module
+SHQ3	accept	your login shell	module
+SHQ3	accept	the login shell	module
+SHQ3	reject	the running one	prompt options
+SHQ3	reject	the newest one	prompt options
+SHQ3	reject	not the login shell	prompt options
+ENQ1	accept	export	module
+ENQ1	accept	you use export	module
+ENQ1	reject	set	prompt options
+ENQ1	reject	env	prompt options
+ENQ1	reject	echo	prompt options
+ENQ1	reject	not export	prompt options
+ENQ2	accept	a list of folders	module
+ENQ2	accept	folders	module
+ENQ2	accept	a list	module
+ENQ2	accept	list of directories	module
+ENQ2	accept	a list of places	module
+ENQ2	reject	one folder	prompt options
+ENQ2	reject	a file name	prompt options
+ENQ2	reject	not a list	prompt options
+ENQ3	accept	shelltutor>	module
+ENQ3	accept	shelltutor	module
+ENQ3	accept	it reverts	module
+ENQ3	accept	reverted to shelltutor>	module
+ENQ3	reject	me>	prompt options
+ENQ3	reject	me> 	prompt options
+ENQ3	reject	it stays me>	prompt options

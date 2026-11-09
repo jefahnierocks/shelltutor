@@ -6,7 +6,7 @@
 # Git 2.56+; the learner-facing tutor still needs only Bash/POSIX tools.
 #
 # Targets:
-#   check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 static analysis (default)
+#   check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 + FF-011 static analysis (default)
 #   lint         shellcheck shelltutor (FF-005; warns if shellcheck absent)
 #   smoke        FF-006a minimal smoke test
 #   lesson-flow  FF-006b Stage 1 PTY harness (optional; Python 3.9+; not in verify)
@@ -16,7 +16,7 @@
 #   self-test    run checker self-tests against built-in fixtures
 #   help         list targets
 
-.PHONY: help check check-safety check-governance check-portability check-posix-tools check-hints lint smoke lesson-flow sim verify self-test manifest-check manifest-self-test
+.PHONY: help check check-safety check-governance check-portability check-posix-tools check-hints check-matching lint smoke lesson-flow sim verify self-test manifest-check manifest-self-test
 
 SCRIPT := shelltutor
 PYTHON ?= python3
@@ -28,7 +28,7 @@ SIMARGS ?=
 
 help:
 	@printf 'Targets:\n'
-	@printf '  check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 static analysis (default)\n'
+	@printf '  check        FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 + FF-011 static analysis (default)\n'
 	@printf '  lint         shellcheck $(SCRIPT) (FF-005)\n'
 	@printf '  smoke        FF-006a minimal static smoke test\n'
 	@printf '  lesson-flow  FF-006b PTY harness (optional; Python 3.9+; not in verify)\n'
@@ -38,7 +38,7 @@ help:
 	@printf '  manifest-self-test  declaration-check regression tests\n'
 	@printf '  self-test    run checker self-tests\n'
 
-check: check-safety check-governance check-portability check-posix-tools check-hints
+check: check-safety check-governance check-portability check-posix-tools check-hints check-matching
 
 check-safety:
 	@./scripts/check-safety.sh
@@ -54,6 +54,9 @@ check-posix-tools:
 
 check-hints:
 	@./scripts/check-hints.sh
+
+check-matching:
+	@./scripts/selftest-matching.sh
 
 lint:
 	@if command -v shellcheck >/dev/null 2>&1; then \

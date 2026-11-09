@@ -39,7 +39,7 @@ first; `make verify` refuses unavailable declaration prerequisites. CI runs the
 same gate on every push and pull request. The learner runtime remains Bash-only.
 
 ```bash
-make check       # FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 static analysis (always runs)
+make check       # FF-001 + FF-002 + FF-004 + FF-007 + FF-008 + FF-009 + FF-010 + FF-011 static analysis (always runs)
 make lint        # shellcheck shelltutor (FF-005; skips quietly if absent)
 make smoke       # FF-006a minimal static smoke test
 make verify      # released manifest check/tests + check + lint + smoke
@@ -62,8 +62,9 @@ with the rules it describes.
 | `check-safety`       | FF-002          | every write target resolves to a path under `$SANDBOX` or `$PROGRESS_FILE`; system paths are blocked — see `scripts/check-safety.sh` |
 | `check-portability`  | FF-004          | lesson heredocs do not teach platform-specific paths (`/proc/`, `/sys/`) or platform-specific runtime commands (`free -`, `vm_stat`, `systemctl`, `launchctl`); install hints (`brew install`, `dnf install`, etc.) are allowed by nature; lesson heredocs also do not hardcode the default sandbox path (`~/.shelltutor`, `$HOME/.shelltutor`) — they render `${SANDBOX}` or a relative path — see `scripts/check-portability.sh` |
 | `check-posix-tools`  | FF-008          | script code outside lesson heredocs uses no GNU-only text-tool syntax (`sed` repetition/alternation escapes such as `\+` and `\?`, `\L` `\U` `\s` `\w` `\d`, `sed -i`, `grep -P`, `readlink -f`, `date -d`, `stat -c`); `# nofitness:posix` exempts a line — see `scripts/check-posix-tools.sh` |
-| `check-hints`        | FF-009          | for every `ask_question` call, no accepted answer appears in the hint (case-insensitive); the call has exactly one prompt, one hint and at least one accepted form, one argument per line; `show`, `quit` and `exit` are never accepted forms — see `scripts/check-hints.sh` |
+| `check-hints`        | FF-009          | for every `ask_question` call, no accepted answer appears in the hint (case-insensitive), and, since A10, no keyword-group phrase appears in it as whole words; the call has exactly one prompt, one hint and at least one accepted form, one argument per line; `show`, `quit` and `exit` are never accepted forms — see `scripts/check-hints.sh` |
 | `check-hints`        | FF-010          | the hint of every `ask_question` call starts `Lesson N: ` or `Lesson N.k: ` (colour variables ignored). A hint says where the fact was taught and names the concept; it never paraphrases the answer, because a paraphrase invites the learner to type it back and FF-009 then forbids accepting it — same script, `scripts/check-hints.sh` |
+| `check-matching`     | FF-011          | the recall matcher corpus: `scripts/selftest-matching.sh` sources the real `normalize_answer` and `recall_matches` and the 21 `ask_question` calls from `shelltutor`, then checks every line of `scripts/matching-corpus.tsv` — correct answers from the rejected-answer tables of rounds 1–4 must be accepted; distractors from a question's option text and the negation counterexamples must be rejected. A new recall question needs its key in the script and corpus lines (the call count is asserted) |
 | `check-governance`   | FF-007          | tracked governance Markdown contains no operator-private absolute paths — see `scripts/check-governance.sh` |
 | `lint`               | FF-005          | `shellcheck -s bash -S warning shelltutor` clean (when shellcheck installed) |
 | `smoke`              | FF-006a         | `./shelltutor -h` runs cleanly and the script's structural invariants hold |
