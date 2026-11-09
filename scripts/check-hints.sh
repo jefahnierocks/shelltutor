@@ -10,7 +10,8 @@
 #       '<accepted 1>' \
 #       '<accepted 2>' || return $?
 #
-# one quoted argument per line. This checker enforces, for each call:
+# one quoted argument per line; after exact forms a bare `--` line may start
+# keyword groups (A10), one quoted `a|b|c` argument per line. This checker enforces, for each call:
 #   - layout: `ask_question` ends its line with a backslash and every
 #     argument sits alone on its own line (one quoted word, nothing else);
 #   - arity: one prompt, one hint and at least one accepted form;
@@ -92,9 +93,20 @@ awk_check() {
 
         collecting {
             line = $0
+            bare = line
+            sub(/^[[:space:]]+/, "", bare); sub(/[[:space:]]*\\$/, "", bare)
+            if (bare == "--") {
+                # A10: after the bare `--` line every argument is a keyword
+                # group (phrases separated by |), not an exact form.
+                in_groups = 1
+                if (line !~ /\\[[:space:]]*$/) finish()
+                next
+            }
             unquote(line)
             if (!ok) {
                 fail("FF-009 argument is not a single quoted word on its own line: " val)
+            } else if (in_groups) {
+                groups[++ngroups] = val
             } else {
                 args[++nargs] = val
             }
@@ -105,7 +117,7 @@ awk_check() {
         /^[[:space:]]*ask_question[[:space:]]*\(\)/ { next }
 
         /^[[:space:]]*ask_question[[:space:]]+\\[[:space:]]*$/ {
-            collecting = 1; nargs = 0; call_line = NR
+            collecting = 1; nargs = 0; ngroups = 0; in_groups = 0; call_line = NR
             next
         }
 
@@ -181,8 +193,18 @@ ask_question \
     'x' || return $?
 FIX
 
+    cat > "$dir/groups" <<'FIX'
+ask_question \
+    "Q1: Where does it go?" \
+    "Lesson 1.4: whoami printed something; think about where you read it." \
+    'stdout' \
+    -- \
+    'screen|terminal' \
+    'back to you' || return $?
+FIX
+
     local name want
-    for name in clean:0 leak:1 letter:1 oneline:1 reserved:1 noaccept:1 unanchored:1 nocolon:1 colour:0; do
+    for name in clean:0 leak:1 letter:1 oneline:1 reserved:1 noaccept:1 unanchored:1 nocolon:1 colour:0 groups:0; do
         want="${name##*:}"; name="${name%%:*}"
         printf 'self-test: %-9s should %-4s ... ' "$name" "$([ "$want" = 0 ] && echo pass || echo fail)"
         if awk_check "$dir/$name" >/dev/null 2>&1; then got=0; else got=1; fi

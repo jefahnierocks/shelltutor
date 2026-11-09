@@ -637,12 +637,14 @@ lesson() {
 # ---------------------------------------------------------------------
 # Recall-question helper
 #
-# Usage: ask_question "<prompt>" "<hint>" <accepted-answer>...
+# Usage: ask_question "<prompt>" "<hint>" <exact-form>... [-- <group>...]
 #   One argument per source line; scripts/check-hints.sh (FF-009) relies on it.
 # - Reads input from /dev/tty so it works inside the parent shell.
 # - Normalizes by lowercasing + trimming whitespace.
-# - Accepts the answer if it matches any of the trailing arguments
-#   (also normalized). Loops until correct.
+# - Accepts the answer (A10) when EITHER it equals a normalized exact form,
+#   OR it holds no negation word AND, for every keyword group, at least one
+#   of the group's |-separated phrases appears in it as whole words. Loops
+#   until correct. See recall_matches.
 # - Ladder (A7, replacing A1.1): miss 1 the message plus the hint; miss 2 and
 #   later the hint, the answer-shape line (A8) and the three navigation facts
 #   (A1.6). Recall only; the
@@ -667,6 +669,52 @@ normalize_answer() {
 # The same words for every question (A1.1); not contractual (C-006).
 RECALL_SHAPE='Answer in a few words, like the lesson did, not a full sentence.'
 
+# Words that void a keyword match (A10; C-006). A fixed list, one place.
+# Questions whose right answer is itself a negation (Stage 3 Q2, Stage 5 Q3)
+# rely on their exact forms, which this guard never touches.
+RECALL_NEGATIONS='not no never nowhere nothing none isnt doesnt dont wont cant without instead rather neither nor only'
+
+# recall_matches NORM EXACT... [-- GROUP...]: succeed when NORM (already
+# normalised) equals a normalised exact form, or holds no negation word and
+# hits every GROUP (a |-separated list of phrases, whole-word containment).
+# Whole words: both sides are padded with spaces. Bash 3.2: no arrays of
+# arrays, no empty-array expansion under set -u.
+recall_matches() {
+    local norm="$1" a w g phrase rest hit ok_norm padded
+    shift
+    local groups=() seen_sep=0
+    for a in "$@"; do
+        if [ "$seen_sep" -eq 0 ] && [ "$a" = "--" ]; then
+            seen_sep=1; continue
+        fi
+        if [ "$seen_sep" -eq 1 ]; then
+            groups+=("$a"); continue
+        fi
+        ok_norm=$(normalize_answer "$a")
+        if [ "$norm" = "$ok_norm" ]; then
+            return 0
+        fi
+    done
+    [ "${#groups[@]}" -gt 0 ] || return 1
+    padded=" $norm "
+    for w in $RECALL_NEGATIONS; do
+        case "$padded" in *" $w "*) return 1 ;; esac
+    done
+    for g in "${groups[@]}"; do
+        hit=0
+        rest="$g|"
+        while [ -n "$rest" ]; do
+            phrase=${rest%%|*}
+            rest=${rest#*|}
+            [ -n "$phrase" ] || continue
+            phrase=$(normalize_answer "$phrase")
+            case "$padded" in *" $phrase "*) hit=1; break ;; esac
+        done
+        [ "$hit" -eq 1 ] || return 1
+    done
+    return 0
+}
+
 # The three navigation facts (A1.6), in the feedback bar. Wording is not
 # contractual (C-006); the facts and their order are.
 recall_navigation() {
@@ -678,7 +726,7 @@ recall_navigation() {
 ask_question() {
     local prompt="$1" hint="$2"; shift 2
     local accept=("$@")
-    local ans norm ok_norm matched ok attempt=0
+    local ans norm attempt=0
     while true; do
         fb_note "${Q}${prompt}${RST}"
         printf '%s%s%s %sanswer in words:%s ' "$INSTR" "$G_BAR" "$RST" "$CMD" "$RST"
@@ -691,14 +739,7 @@ ask_question() {
             show) continue ;;
             quit|exit) farewell_exit ;;
         esac
-        matched=0
-        for ok in "${accept[@]}"; do
-            ok_norm=$(normalize_answer "$ok")
-            if [ "$norm" = "$ok_norm" ]; then
-                matched=1; break
-            fi
-        done
-        if [ "$matched" -eq 1 ]; then
+        if recall_matches "$norm" "${accept[@]}"; then
             printf '  %b%s%b\n\n' "$OK" "$G_OK" "$RST"
             return 0
         fi
