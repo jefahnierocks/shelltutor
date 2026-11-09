@@ -232,3 +232,8 @@ ENQ3	reject	me> replaced shelltutor	F-029 (round-5 probe)
 S4Q2	accept	overwrite vs append	F-029 (ordered group keeps it)
 S4Q2	accept	replaces the old file and adds to the end	F-029 (ordered group keeps it)
 S4Q2	accept	> overwrites then >> appends	F-029 (ordered group keeps it)
+S5Q2	accept	:wq (or :w) writes the buffer to the file	F-030
+S5Q2	accept	:w writes the buffer to the file	F-030
+S5Q2	accept	:wq	F-030
+S5Q2	accept	:wq (or :w)	F-030
+S5Q2	accept	(:w) writes it	F-030 (parentheses)

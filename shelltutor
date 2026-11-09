@@ -655,14 +655,15 @@ lesson() {
 # ---------------------------------------------------------------------
 
 # Lower-case, delete apostrophes (' and the typographic one, so "I'm" matches
-# the im forms) and commas, periods and exclamation marks, collapse any run of whitespace to one space, trim the ends.
+# the im forms), commas, periods, exclamation marks, parentheses and
+# semicolons (not colons, so :w and :q! survive), collapse any run of whitespace to one space, trim the ends.
 # tr -s is POSIX; GNU sed's \+ is not (audit/2026-11-07/findings.md F-012).
 # The typographic apostrophe (U+2019) is multibyte, so it goes through sed
 # as its UTF-8 byte sequence, not through tr.
 # normalize_lines does the work one line at a time (stdin to stdout), so a
 # whole list of forms goes through one pipeline instead of one per form.
 normalize_lines() {
-    tr '[:upper:]' '[:lower:]' | tr -d "'.,!" \
+    tr '[:upper:]' '[:lower:]' | tr -d "'.,!();" \
         | sed "s/$(printf '\342\200\231')//g; s/[[:space:]][[:space:]]*/ /g; s/^ //; s/ \$//"
 }
 
@@ -2368,7 +2369,7 @@ EOF
         ':write' \
         'colon w' \
         -- \
-        ':w|w|write' \
+        ':w|:wq|w|write|writes|write it|save|saves' \
         --reject \
         'game|delete|deleting|deletes|erase' || return $?
 
