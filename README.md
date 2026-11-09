@@ -70,6 +70,8 @@ shelltutor/
 │   ├── direction-decisions-2026-11.md  # Directive: decisions D1–D8, Phases A–D, module standard
 │   ├── design-direction-2026-11.md  # Superseded record of the operator's stated direction
 │   ├── walkthrough-notes-template.md   # Phase A observer sheet (one sitting per copy)
+│   ├── walkthrough-notes-sim-template.md  # Synthetic sitting telemetry (AI-played personas)
+│   ├── sim-personas/                   # Learner personas and the sitting protocol (WP-19)
 │   ├── workplan/     # Current cycle plan: decisions + worker-executable packages
 │   ├── audit/        # Audit-spec authority package + reference docs
 │   └── audit/references/  # Curriculum reference: shell-research.md

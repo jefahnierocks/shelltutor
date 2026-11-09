@@ -186,6 +186,14 @@ documents agree with the code.
   change has been made yet on its account; the first are WP-10 to WP-12 in
   Phase B.
 
+### Synthetic sittings (A6, 2026-11-09)
+
+- With no human learners available, AI-played learner personas
+  (`docs/sim-personas/`) will walk the real tutor through a project-owned
+  pseudo-terminal (WP-19) and record `docs/walkthrough-notes-sim-template.md`
+  sheets. Their findings are candidates until a maintainer reproduces them;
+  Phase A's human exit still stands.
+
 ## Immediate Next Steps
 
 1. **Phase A — human walkthroughs (operator).** Sitting 1 is recorded

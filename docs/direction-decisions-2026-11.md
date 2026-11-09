@@ -3,8 +3,8 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.5.0
-last_updated: 2026-11-08
+version: 0.6.0
+last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
 ---
@@ -823,6 +823,28 @@ no gate, and runs at the core standard. It lands before sittings 2 and 3
 so the sittings see finished screens. Operator actions are no longer
 reserved for the push and the hosted-evidence intake: the agent performs
 them.
+
+### A6 — Synthetic sittings (2026-11-09)
+
+Operator direction: no human learners are available for sittings 2 and 3
+for now. A new evidence source is added, **synthetic sittings**: an AI
+session plays one of three learner personas (`docs/sim-personas/`:
+Arthur `dos-literalist`, Maya `search-first-skimmer`, Leo
+`gamer-brute-forcer`) against the real tutor through a project-owned
+pseudo-terminal (`scripts/sim/sitting.py`, WP-19), under rules that
+remove the model's expert knowledge (zero forward knowledge, reading
+limits, a friction meter that quits at 8), and records a telemetry sheet
+(`docs/walkthrough-notes-sim-template.md`) instead of clock time.
+
+Evidence status: synthetic sittings yield **candidate** F-nnn and O-nnn.
+A candidate is recorded in `audit/<date>/walkthroughs.md` only after a
+maintainer reproduces it on the real tutor, deterministically where
+possible (the simulation plan's rule that LLM-generated personas are not
+acceptance evidence stands). D8 stands: pace is not measured in minutes;
+the sheet's time line is an estimate. Phase A's exit (three human
+sittings, one on Bash 3.2) is **not** satisfied by synthetic sittings;
+it waits for people. Synthetic sittings run now, on the current script,
+and may open a second round of core fixes under the core standard.
 
 ## Cross-references
 
