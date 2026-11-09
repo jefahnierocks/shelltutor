@@ -783,6 +783,7 @@ checklist); the course teaches every item and measures all but the last.
 | fitness function (FF-nnn) | `audit/2026-05-21/10-fitness-functions.md`; `CONTRIBUTING.md:61-69` | architectural fitness function; static gate | full |
 | contract (C-nnn) | `docs/contracts.md` | interface specification (informal), stability commitment | partial: no schema; grep-level checks |
 | density audit | `audit/2026-05-23/stage1-density.md` | cognitive-load review per screen | full |
+| synthetic sitting | `audit/2026-11-09/walkthroughs.md`; `audit/2026-11-09/sim-sittings/` | an AI-played learner persona against the real tutor; candidate evidence until a maintainer reproduces it | partial: no human learner, no real pace or motivation |
 | hint ladder / escalation | `gate_escalate`, `shelltutor:554-566` | graded scaffolding on failure; feedback escalation | full |
 | finale | `shelltutor:1991-2029` | win screen; handoff pointer | partial: "handoff" is a pointer, not a launch |
 

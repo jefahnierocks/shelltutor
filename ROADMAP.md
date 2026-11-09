@@ -531,6 +531,36 @@ budget (observation O-J). 3.3, 4.1, 4.2, 5.1, 5.2 and the finale are trimmed;
 the buffer idea and the practice (Stage 5 has five, vimtutor becomes 5.5). No
 command is removed and no gate or verifier changes.
 
+### Synthetic sittings, rounds 1–5 (2026-11-09; A6–A10)
+
+With no human learners available, three AI-played learner personas walked the
+real tutor through `scripts/sim/sitting.py` (WP-19, `d0faa48`). Five rounds ran
+on 2026-11-09; each round's candidates were reproduced by a maintainer before
+becoming findings (`audit/2026-11-09/walkthroughs.md`).
+
+| Round | Script | Leo | Maya | Arthur | Package it produced (the round's findings) |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `a25caf7` | quit at the Stage 1 gate | quit at the Stage 1 gate | quit at the Stage 1 gate | WP-20, `82792b6` (F-017, F-018, O-P..O-Y) |
+| 2 | `82792b6` | quit at the Stage 1 gate | quit at the Stage 1 gate | cleared Stage 1, quit at Stage 2 | WP-21, `5d1d689` (F-019, F-020, O-Z..O-AG) |
+| 3 | `5d1d689` | cleared 1, quit at the Stage 2 task | cleared 1–3, quit at Stage 4 | cleared 1, quit at Stage 2 | WP-22, `13847ef` (F-021..F-024, O-AH..O-AM) |
+| 4 | `13847ef` | cleared 1–3, quit at Stage 4 | finale | finale | WP-23, `7e126cf` (F-025..F-028, O-AN..O-AQ, H-1, H-2, P-1) |
+| 5 | `7e126cf` | finale | finale | finale | WP-24, ready (F-029, F-030, O-AR..O-AV, H-3) |
+
+**What the loop showed.** Two structural blockers: recall answered by exact
+match (rounds 1–4 rejected correct plain-language answers, which WP-20 to WP-23
+widened and WP-23 replaced with keyword groups and a negation guard), and gate
+tasks that needed a command no earlier lesson taught (`mkdir` at Stage 2,
+redirection at Stage 3; WP-22, WP-23). Round 5 then showed the cost of keyword
+groups: false accepts (F-029), which WP-24 addresses.
+
+**What it cannot show.** Reading pace, motivation and drop-off over a real
+sitting, anything a real child does, and whether the 45–60 minute estimate
+holds; the personas have no clock (D8) and their friction meter is a model.
+
+**Standing.** Synthetic results are candidate evidence only. Phase A's human
+exit stands, and human sittings still gate `v0.1.0` (A1.10). The loop is paused
+after the exit test and resumes only when a package changes lesson content.
+
 ### Phase C — Module infrastructure (agent; lands with the first module)
 
 WP-13: C-001 module argument, C-003 `$SANDBOX/<module>/`, modules save

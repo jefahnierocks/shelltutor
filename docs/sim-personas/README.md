@@ -101,6 +101,26 @@ own version in the sitting block ("Persona sheet version").
   wrong turn, because eight of Arthur's nine round-3 points came from the
   14-line limit before Stage 2 began. Round 4 states the change.
 
+- **Round 4** (`audit/2026-11-09/walkthroughs.md`, WP-22 tutor, script
+  `13847ef`; all three on v0.2). Friction by source:
+
+  | Sheet | Final | Reading charges | Rejections (+2 each) | Mode confusion | Gates cleared |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | leo-4 | 8 (quit) | 1 | 10 | 0 | -3 |
+  | maya-4 | 3 (finale) | 0 | 8 | 0 | -5 |
+  | arthur-4 | 1 (finale) | 0 | 6 | 0 | -5 |
+
+- **Round 5, the exit test** (WP-23 tutor, script `7e126cf`; all v0.2). All
+  three reached the finale. Friction by source:
+
+  | Sheet | Final | Reading charges | Rejections (+2 each) | Mode confusion | Gates cleared |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | leo-5 | 0 | 1 | 4 | 0 | -5 |
+  | maya-5 | -3 | 0 | 2 | 0 | -5 |
+  | arthur-5 | -5 | 0 | 0 | 0 | -5 |
+
+  The loop is paused after round 5 (A10 item 4). Persona sheets stay at v0.2.
+
 ## Running a sitting
 
 A sitting is run by a **separate Claude Code session** (the persona

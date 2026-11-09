@@ -3,8 +3,8 @@ title: shelltutor Status
 category: status
 component: project-status
 status: active
-version: 0.4.0
-last_updated: 2026-11-08
+version: 0.5.0
+last_updated: 2026-11-09
 tags: [status, posture, deferrals]
 priority: high
 ---
@@ -33,6 +33,21 @@ Current truth for the `shelltutor` repository.
 
 ## What Is True Now
 
+### Current state (2026-11-09)
+
+- The five-stage core, the finale at the screen budget (WP-18) and the modules
+  `shells` and `env` are on `main`; recall answers match by exact form or keyword
+  groups with a negation guard (WP-23).
+- `make check` runs FF-001 to FF-011; the matcher corpus (FF-011) and the hint
+  rules (FF-009, FF-010) guard the recall questions.
+- Synthetic sittings, rounds 1–5: all three personas reach the finale at `7e126cf`.
+  They are candidate evidence only (`audit/2026-11-09/walkthroughs.md`); Phase A's
+  human exit (three sittings, one on Bash 3.2) is still open, one of three recorded.
+- The synthetic loop is paused (2026-11-09) and resumes only when a package
+  changes lesson content (ROADMAP Phase 5).
+- Open: WP-24 (matcher tightening, F-029, F-030); WP-08 part B (CHANGELOG,
+  `v0.1.0`), which human sittings gate (A1.10).
+
 ### The 2026-11 cycle, in one place
 
 The work plan (`docs/workplan/README.md`, adopted 2026-11-07) ran in the
@@ -55,13 +70,13 @@ documents agree with the code.
 | WP-09 | `bd841ae` | F-014 fixed: the practice shell runs under the outer script's own Bash (`"$BASH"`); the harness records the Bash path and version; post-WP-04/05 macOS baseline `all-current`. |
 | WP-12 | `48c8355` | Stage 1 lesson 1.5 (read-only agent beat) and one sentence each in 3.3 and 4.3, net zero lines. |
 | WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
-| WP-18 | branch `wp/18-budget` | Stages 3–5 and the finale to the screen budget (A5, O-J): every screen at most 18 heredoc lines and 22 rendered rows; 4.3 split (Stage 4 has four lessons), 5.3 split (Stage 5 has five); no command removed, gates unchanged. |
+| WP-18 | `f372da1` | Stages 3–5 and the finale to the screen budget (A5, O-J): every screen at most 18 heredoc lines and 22 rendered rows; 4.3 split (Stage 4 has four lessons), 5.3 split (Stage 5 has five); no command removed, gates unchanged. |
 | WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
-| WP-23 (A, B) | branch `wp/23-keyword-matching` | Keyword matching for recall (A10; F-025..F-028, O-AN): `ask_question` takes exact forms or keyword groups with a negation guard, groups for all 21 questions, FF-009 extended to keyword phrases, six hints reworded, shape line removed, **FF-011** matcher corpus (184 cases) in `make check`; 3.1 teaches `echo hello > notes.txt`. Part C (sitting hygiene) is a6's. Bundles `audit/2026-11-09/sim/wp23-*`. |
-| WP-22 | branch `wp/22-stage2-sequencing` | Stage 2 sequencing and defect fixes (A9; F-021..F-024, O-AG, O-AI, O-AK): 2.4 teaches `mkdir`; the first gate `check` lists both items and needs the folder; `~` and Stage 4 Q1 take the lessons' words; Ctrl+C truth in 1.2, `q` in 3.2's try-it, 3.3 asks to type `cp`/`mv`/`rm`; **FF-010** (every recall hint starts `Lesson N: `) in `make check`, eleven hints reworded. Bundles `audit/2026-11-09/sim/wp22-*`. |
-| WP-21 | branch `wp/21-recall-shape` | Recall answer shape and small Stage 1–2 grounding (A8; F-019, F-020, O-Z, O-AB, O-AC, O-AD): longer plain forms and punctuation dropped (no containment rule); one fixed answer-shape line from the second miss; typo lines in 1.1/2.3; 2.3 `cd` home and `cd -`; 2.2 `ls /`. Bundles `audit/2026-11-09/sim/wp21-*`. |
-| WP-20 | branch `wp/20-gate-grounding` | Stage 1 gate grounding (A7; F-017, F-018, O-P, O-Q, O-S, O-U, O-V): Q1 taught in 1.3 and asked about a normal bash window; plain answers and apostrophes accepted at Q2/Q3; recall ladder hint on miss 1, facts from miss 2; recall in the `┃` block as "answer in words"; 1.1/1.2 mechanical lines. Bundles `audit/2026-11-09/sim/wp20-*`. |
-| WP-17 | branch `wp/17-env` | Module `env` (variables, `export`, `PATH`, the prompt): five lessons, a recall gate and an export-and-child task; the persona observes the `PS1` revert across screens. The real `~/.bashrc` and `~/.zshrc` are named in text only. Bundle `audit/2026-11-08/sim/module-env/` (macOS only; hosted Linux pending). |
+| WP-23 | `7e126cf` | Keyword matching for recall (A10; F-025..F-028, O-AN): `ask_question` takes exact forms or keyword groups with a negation guard, groups for all 21 questions, FF-009 extended to keyword phrases, six hints reworded, shape line removed, **FF-011** matcher corpus (184 cases) in `make check`; 3.1 teaches `echo hello > notes.txt`. Part C (sitting hygiene) is a6's. Bundles `audit/2026-11-09/sim/wp23-*`. |
+| WP-22 | `13847ef` | Stage 2 sequencing and defect fixes (A9; F-021..F-024, O-AG, O-AI, O-AK): 2.4 teaches `mkdir`; the first gate `check` lists both items and needs the folder; `~` and Stage 4 Q1 take the lessons' words; Ctrl+C truth in 1.2, `q` in 3.2's try-it, 3.3 asks to type `cp`/`mv`/`rm`; **FF-010** (every recall hint starts `Lesson N: `) in `make check`, eleven hints reworded. Bundles `audit/2026-11-09/sim/wp22-*`. |
+| WP-21 | `5d1d689` | Recall answer shape and small Stage 1–2 grounding (A8; F-019, F-020, O-Z, O-AB, O-AC, O-AD): longer plain forms and punctuation dropped (no containment rule); one fixed answer-shape line from the second miss; typo lines in 1.1/2.3; 2.3 `cd` home and `cd -`; 2.2 `ls /`. Bundles `audit/2026-11-09/sim/wp21-*`. |
+| WP-20 | `82792b6` | Stage 1 gate grounding (A7; F-017, F-018, O-P, O-Q, O-S, O-U, O-V): Q1 taught in 1.3 and asked about a normal bash window; plain answers and apostrophes accepted at Q2/Q3; recall ladder hint on miss 1, facts from miss 2; recall in the `┃` block as "answer in words"; 1.1/1.2 mechanical lines. Bundles `audit/2026-11-09/sim/wp20-*`. |
+| WP-17 | `6331ff2` | Module `env` (variables, `export`, `PATH`, the prompt): five lessons, a recall gate and an export-and-child task; the persona observes the `PS1` revert across screens. The real `~/.bashrc` and `~/.zshrc` are named in text only. Bundle `audit/2026-11-08/sim/module-env/` (macOS only; hosted Linux pending). |
 
 ### Curriculum and tutor
 
@@ -200,29 +215,18 @@ documents agree with the code.
 
 ## Immediate Next Steps
 
-1. **Phase A — human walkthroughs (operator).** Sitting 1 is recorded
-   (`audit/2026-11-08/walkthroughs.md`); sittings 2 and 3 run on the
-   post-Phase-B script (A4), one learner each, notes on
-   `docs/walkthrough-notes-template.md`; one sitting on macOS `/bin/bash`
-   3.2 with `echo $BASH_VERSION` recorded at the first prompt (closes the
-   F-014 repeat). Also the Phase 2 items that need a human: the Debian/Ubuntu
-   walk, the no-TTY negative test, and the `LC_ALL=de_DE.UTF-8` Stage 1 day
-   check (`docs/phase2-walkthrough-checklist.md`). Output:
-   `audit/<date>/walkthroughs.md` (findings and observations, no names, no
-   transcripts). Phase B does not start before it exists.
-2. **Phase B — core changes (agent; drafted, none landed).** WP-15 screen
-   chrome, WP-11 stage-cleared screens and `--info` wording, WP-12
-   agent-aware beat, WP-14 Stages 1–2 grounding, WP-10 recall navigation
-   and ladder (amendments A1–A3). The freeze was lifted by
-   amendment A4 (2026-11-08): the packages land in the order WP-15, WP-11,
-   WP-12, WP-14, WP-10 as each passes review, and sittings 2 and 3 run on
-   the updated script. D-19 (host user name
-   redacted from committed harness artifacts) has landed.
-3. **Release inputs (ROADMAP Phase 4, WP-08 part B)** — `v0.1.0` follows
-   Phase B and precedes Phase C (A1.10); `CHANGELOG.md` and the tag inputs
-   follow the Phase 2 closure recorded in step 1.
-4. **Phases C and D** — module infrastructure (WP-13) landing with the first
-   module (`shells`, then `env`), per the decisions document.
+1. **WP-24 — matcher tightening** (`docs/workplan/WP-24-matcher-tightening.md`,
+   ready): reject rows for F-029's wrong-but-passing answers, tightened groups,
+   the F-030 forms, three screen lines. It closes the synthetic loop's last round.
+2. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
+   tag waits for human evidence (A1.10): the Phase A sittings (one on macOS
+   `/bin/bash` 3.2 with `echo $BASH_VERSION` recorded) and the Phase 2 items that
+   need a person (Debian/Ubuntu walk, no-TTY negative test, the
+   `LC_ALL=de_DE.UTF-8` day check).
+3. **Module standard going forward**: modules `shells` and `env` are in;
+   `processes` and `permissions` follow only after two human walks of both
+   (`docs/direction-decisions-2026-11.md` §4), under the module standard in
+   `CONTRIBUTING.md`.
 
 ## Deferrals
 
