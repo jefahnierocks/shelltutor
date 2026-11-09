@@ -63,10 +63,10 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
 NOT_YET_TEXT = "not yet:"
-# Recall ladder (A1.1, A1.3). second-try at Stage 2 misses Q1 three times:
-# the hint prints at miss 2 and again at miss 3 (with the navigation facts),
-# so "Hint:" appears twice and the first navigation fact once. No task
-# `Hint:` is printed because the task misses only once.
+# Recall ladder (A7). second-try at Stage 2 misses Q1 twice: the hint prints
+# at miss 1 and again at miss 2 (with the navigation facts), so "Hint:"
+# appears twice and the first navigation fact once. No task `Hint:` is
+# printed because the task misses only once.
 RECALL_HINT_TEXT = "Hint:"
 RECALL_NAV_TEXT = "Passed stages are saved."
 RECALL_EXPECTED = {"2": (2, 1), "4": (0, 0)}

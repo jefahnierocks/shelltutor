@@ -643,9 +643,9 @@ lesson() {
 # - Normalizes by lowercasing + trimming whitespace.
 # - Accepts the answer if it matches any of the trailing arguments
 #   (also normalized). Loops until correct.
-# - Ladder (A1.1): miss 1 the message; miss 2 the hint; miss 3 and later the
-#   hint plus the three navigation facts (A1.6). Hints on the second miss,
-#   navigation facts from the third; never a reveal.
+# - Ladder (A7, replacing A1.1): miss 1 the message plus the hint; miss 2 and
+#   later the hint plus the three navigation facts (A1.6). Recall only; the
+#   task ladder keeps its three rungs. Never a reveal.
 # - `show` repeats the question without counting a miss; `quit` or `exit`
 #   leaves with the farewell (passed stages are already saved).
 # - Returns 0 on correct answer.
@@ -699,10 +699,8 @@ ask_question() {
         fi
         attempt=$((attempt + 1))
         fb_note "${EM}not quite. try again.${RST}"
+        fb_note "${SUB}Hint:${RST} $hint"
         if [ "$attempt" -ge 2 ]; then
-            fb_note "${SUB}Hint:${RST} $hint"
-        fi
-        if [ "$attempt" -ge 3 ]; then
             recall_navigation
         fi
         printf '\n'

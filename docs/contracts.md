@@ -192,10 +192,12 @@ not. Gate feedback wording is likewise not contractual, but the escalation
 order on repeated gate failure (restatement, then hint, then worked example,
 with no auto-pass) is part of the curriculum design.
 
-Recall escalation: three rungs. A first miss prints the message; a second
-adds the question's hint; the third and later print the hint and the three
-navigation facts (passed stages are saved; `quit` leaves now and the next run
-starts this stage from its first lesson; `show` repeats the question). There
+Recall escalation: two rungs (A7; it was three under A1.1). A first miss
+prints the message and the question's hint; the second and later print the
+hint and the three navigation facts (passed stages are saved; `quit` leaves
+now and the next run starts this stage from its first lesson; `show` repeats
+the question). The task ladder (restatement, hint, worked example) keeps its
+three rungs. There
 is no reveal of an accepted form at any rung. `show` repeats the question
 without counting a miss; `quit` leaves with the same farewell as the practice
 prompt. Contractual: the rung order and the three facts. Not contractual: the

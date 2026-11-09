@@ -154,11 +154,11 @@ def _intro(n: int) -> List[Action]:
 def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
     """Recall walk for stage `n`.
 
-    `misses` (second-try, Stage 2 only) answers Q1 wrong three times so
-    each rung of the recall ladder appears in the evidence (A1.3): miss 2
-    prints the hint, miss 3 the hint again plus the three navigation
-    facts. Each wait for the question text matches its re-display after
-    the previous miss.
+    `misses` (second-try, Stage 2 only) answers Q1 wrong twice so each
+    rung of the recall ladder appears in the evidence (A7): miss 1 prints
+    the hint, miss 2 the hint again plus the three navigation facts. Each
+    wait for the question text matches its re-display after the previous
+    miss.
     """
     sid = "S%d-G" % n
     walk = [Action("S%d_GATE" % n, "", "render-gate", sid)]
@@ -169,7 +169,6 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
                 Action(q, "it lists files", "miss-q1-1", sid),
                 Action(q, "it lists files again", "miss-q1-2", sid),
                 Action("RECALL_HINT", "", "observe-recall-hint", sid),
-                Action(q, "it lists files once more", "miss-q1-3", sid),
                 Action("RECALL_NAV", "", "observe-recall-nav", sid),
                 Action(q, ans, "answer-q%d" % i, sid),
             ]
