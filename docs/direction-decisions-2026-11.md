@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.8.0
+version: 0.9.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -875,6 +875,22 @@ change): Maya's density charge applies only when skipped prose later
 causes a rejection; Leo reads the first sentence of each paragraph as well
 as commands. Round 3 runs after WP-21 lands with the v0.2 personas, and
 the round-3 intake states both changes so the comparison is explicit.
+
+### A9 — Stage 2 sequencing, defect fixes anywhere, hint rule, Arthur v0.2 (2026-11-09)
+
+After synthetic round 3 (`audit/2026-11-09/walkthroughs.md`, F-021..F-024,
+O-AH..O-AM) the operator approved four items. (1) WP-22: Stage 2 teaches
+`mkdir` before its gate needs it; the first `check` lists both items and
+the `cd` item requires the folder; `~` accepts the lessons' own gloss; the
+Stage 2 gate screen carries the "not the shell" line and names the task
+folder. (2) Rejected correct answers and false statements are defects and
+are fixed wherever they sit, including Stages 3–5, which are otherwise not
+re-sequenced (qualifies A2): Stage 4 Q1 forms and hint; Ctrl+C versus `q`
+in 1.2 and 3.2; 3.3 asks the learner to type its commands. (3) FF-010:
+every recall hint begins `Lesson N.k:` and names the concept; a hint never
+paraphrases the answer, since FF-009 then forbids accepting it (the shared
+cause of F-020 and F-023). (4) Arthur's persona sheet goes to v0.2 with the
+same density-on-consequence rule as Maya. Round 4 runs after WP-22 lands.
 
 ## Cross-references
 
