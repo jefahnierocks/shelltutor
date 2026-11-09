@@ -934,8 +934,9 @@ Four keys make the shell comfortable. Try each one now.
             it becomes ${CMD}echo poem.txt${RST}, then press Enter to run it.
   ${KEY}↑${RST}         brings back the last line. Enter runs it; ${KEY}Ctrl+C${RST} throws it away.
   ${KEY}Ctrl+L${RST}    clears the screen (${CMD}clear${RST} too); ${CMD}show${RST} brings the lesson back.
-  ${KEY}Ctrl+C${RST}    the escape hatch. If anything feels stuck, press it
-            and you get a fresh prompt.
+  ${KEY}Ctrl+C${RST}    the escape hatch at a prompt: if a command feels stuck,
+            press it and you get a fresh prompt. Inside a full-screen
+            program like ${CMD}less${RST} (Stage 3), ${KEY}q${RST} is the way out.
 
 ${INSTR}${G_PLAY} Try each key, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1630,7 +1631,7 @@ ${KEY}q${RST} to exit. (More on full-screen programs in Stage 5.)
 ${EM}Important:${RST} when ${CMD}less${RST} takes over, the prompt is
 gone. You're inside a program. ${KEY}q${RST} returns you to the shell.
 
-${INSTR}${G_PLAY} Try both, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try both; ${KEY}q${INSTR} leaves ${CMD}less${INSTR}; then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
@@ -1653,7 +1654,7 @@ you, or an assistant typing for you.${RST}
 
 ${SUB}A safety habit${RST}: ${CMD}ls${RST} first, then ${CMD}rm <only-now-that-you-are-sure>${RST}.
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 3's gate.${RST}
+${INSTR}${G_PLAY} Try ${CMD}cp${INSTR}, ${CMD}mv${INSTR} and ${CMD}rm${INSTR} on the practice files, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
