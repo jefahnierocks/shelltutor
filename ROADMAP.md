@@ -155,7 +155,7 @@ original design record.*
 
 Gate recall (all three required):
 
-- Q1. Which character typically ends a shell prompt? (`$`, `;`, `:`, `#`)
+- Q1. In a normal bash window (not this tutor), which character usually ends the prompt? (`$`, `;`, `:`, `#`)
 - Q2. What does `pwd` print?
 - Q3. After a command runs, where does its output go by default?
 

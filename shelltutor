@@ -946,6 +946,9 @@ Three commands that ask the system about itself.
 Here ${CMD}pwd${RST} shows the tutor's own folder, because that is where
 this practice prompt starts. Stage 2 is all about folders.
 
+Your prompt here ends in ${CMD}>${RST}. A normal bash window's prompt
+usually ends in ${CMD}\$${RST}; same idea, different decoration.
+
 ${INSTR}${G_PLAY} Run all three, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
@@ -1122,9 +1125,12 @@ stage1_gate() {
     stage1_gate_screen
 
     ask_question \
-        "Q1: Which character usually ends a shell prompt? (\$, ;, :, or #)" \
-        "Guides print it before a command to show an ordinary user typed it; an administrator's mark differs." \
-        '$' || return $?
+        "Q1: In a normal bash window (not this tutor), which character usually ends the prompt? (\$, ;, :, or #)" \
+        "Lesson 1.3 compared this tutor's prompt with a normal one." \
+        '$' \
+        'dollar' \
+        'dollar sign' \
+        'the dollar sign' || return $?
 
     ask_question \
         "Q2: What does ${CMD}pwd${RST} print?" \

@@ -29,7 +29,7 @@ SENTINELS = {
     "LESSON_1_4": "1.4 — the shell, caught in the act",
     "LESSON_1_5": "1.5 — who else types here",
     "GATE_HEADER": "STAGE 1 — GATE",
-    "GATE_Q1": "Q1: Which character usually ends a shell prompt",
+    "GATE_Q1": "Q1: In a normal bash window (not this tutor), which character usually ends the prompt",
     "GATE_Q2": "Q2: What does pwd print?",
     "GATE_Q3": "Q3: After whoami runs, where does its output go?",
     "GATE_TASK_HEADER": "STAGE 1 — GATE TASK",
