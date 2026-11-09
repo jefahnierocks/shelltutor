@@ -98,6 +98,7 @@ SENTINELS.update(
         "NOT_YET": "not yet:",
         "RECALL_HINT": "Hint:",
         "RECALL_NAV": "Passed stages are saved.",
+        "RECALL_SHAPE": "Answer in a few words, like the lesson did, not a full sentence.",
         "VIM_INTRO": "VIM - Vi IMproved",
         "VIM_PRACTICE": '"practice.txt"',
         "VIM_INSERT": "-- INSERT --",

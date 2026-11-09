@@ -169,6 +169,7 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
                 Action(q, "it lists files", "miss-q1-1", sid),
                 Action(q, "it lists files again", "miss-q1-2", sid),
                 Action("RECALL_HINT", "", "observe-recall-hint", sid),
+                Action("RECALL_SHAPE", "", "observe-recall-shape", sid),
                 Action("RECALL_NAV", "", "observe-recall-nav", sid),
                 Action(q, ans, "answer-q%d" % i, sid),
             ]

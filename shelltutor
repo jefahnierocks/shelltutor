@@ -644,7 +644,8 @@ lesson() {
 # - Accepts the answer if it matches any of the trailing arguments
 #   (also normalized). Loops until correct.
 # - Ladder (A7, replacing A1.1): miss 1 the message plus the hint; miss 2 and
-#   later the hint plus the three navigation facts (A1.6). Recall only; the
+#   later the hint, the answer-shape line (A8) and the three navigation facts
+#   (A1.6). Recall only; the
 #   task ladder keeps its three rungs. Never a reveal.
 # - `show` repeats the question without counting a miss; `quit` or `exit`
 #   leaves with the farewell (passed stages are already saved).
@@ -661,6 +662,10 @@ normalize_answer() {
         | sed "s/$(printf '\342\200\231')//g" | tr -s '[:space:]' ' ' \
         | sed 's/^ //; s/ $//'
 }
+
+# One fixed line from the second miss (A8, O-Z): the shape of answer wanted.
+# The same words for every question (A1.1); not contractual (C-006).
+RECALL_SHAPE='Answer in a few words, like the lesson did, not a full sentence.'
 
 # The three navigation facts (A1.6), in the feedback bar. Wording is not
 # contractual (C-006); the facts and their order are.
@@ -701,6 +706,7 @@ ask_question() {
         fb_note "${EM}not quite. try again.${RST}"
         fb_note "${SUB}Hint:${RST} $hint"
         if [ "$attempt" -ge 2 ]; then
+            fb_note "${DIM}${RECALL_SHAPE}${RST}"
             recall_navigation
         fi
         printf '\n'
