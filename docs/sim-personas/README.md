@@ -83,8 +83,23 @@ own version in the sitting block ("Persona sheet version").
   length charges that measured her four-line limit, not a tutor defect. Leo:
   he also reads the first sentence of each paragraph, because skipping all
   prose made him miss the one sentence ("this is not the shell") that
-  separated recall from the shell. Arthur is unchanged. Round 3 states both
-  changes so the comparison with rounds 1 and 2 is explicit.
+  separated recall from the shell. Arthur stayed at v0.1 for rounds 1 to 3.
+  Round 3 states both changes so the comparison with rounds 1 and 2 is
+  explicit.
+
+- **Round 3** (`audit/2026-11-09/walkthroughs.md`, WP-21 tutor; Leo and Maya on
+  v0.2, Arthur on v0.1). Friction by source:
+
+  | Sheet (persona version) | Final | Reading charges | Rejections (+2 each) | Mode confusion | Gates cleared |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | leo-3 (v0.2) | 8 | 1 | 8 | 0 | -1 |
+  | maya-3 (v0.2) | 8 | 1 | 8 | 2 | -3 (unfloored) |
+  | arthur-3 (v0.1) | 9 | 8 | 2 | 0 | -1 |
+
+- **Arthur v0.2** (amendment A9, simulation calibration only). The density
+  charge applies only when a long screen's content later causes a rejection or
+  wrong turn, because eight of Arthur's nine round-3 points came from the
+  14-line limit before Stage 2 began. Round 4 states the change.
 
 ## Running a sitting
 

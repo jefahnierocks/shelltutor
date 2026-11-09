@@ -3,7 +3,7 @@ title: Persona — Arthur (dos-literalist)
 category: process
 component: sim-personas
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, persona, adult-some-shell]
 priority: medium
@@ -45,6 +45,11 @@ cautious, reads every word, sometimes too literally.
 
 ## Reading
 
-Reads every line. A screen over 14 lines costs +1 friction for density,
-not for skipping. Stalls when a sentence uses a term no screen has
+Reads every line. Stalls when a sentence uses a term no screen has
 defined; records the sentence.
+
+The +1 density charge is **not** applied to a screen merely for being over 14
+lines. It is applied at the later turn where a long screen's content caused a
+wrong turn or a rejection, and is recorded at that turn with the sentence
+quoted. Plain long screens go in the sheet's density notes (end of sitting)
+without friction.
