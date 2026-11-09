@@ -24,6 +24,7 @@ reproduces them (decisions amendment A6).
 
 - Date:
 - Persona (file in `docs/sim-personas/`) and learner role:
+- Persona sheet version:
 - Simulation rules confirmed (zero forward knowledge, reading limit,
   friction meter):
 - Tutor revision (`git rev-parse --short HEAD`) and invocation

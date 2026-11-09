@@ -3,7 +3,7 @@ title: Synthetic learner personas
 category: process
 component: sim-personas
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, personas, synthetic-learner, evidence]
 priority: high
@@ -51,7 +51,8 @@ reproduces it on the real tutor, deterministically where possible
    `follow-up`). It never reads the script, the docs, or the harness.
 6. **Friction meter.** Start at 0. +2 for a rejected input the persona does
    not understand; +1 for a screen whose prose exceeds the persona's
-   reading limit; +1 for a mode confusion (typing to the wrong prompt);
+   reading limit (the charge follows each persona's own Reading section);
+   +1 for a mode confusion (typing to the wrong prompt);
    −1 for a gate cleared; **quit at 8**, recording the screen.
 7. **No wall clock.** Synthetic sittings record attempts, stalls and
    friction, never minutes; the sheet converts those to an equivalent at
@@ -59,6 +60,31 @@ reproduces it on the real tutor, deterministically where possible
 8. **The persona never fixes the tutor.** The debrief block at the end of
    the sheet is written out of character and names sentences, not
    solutions.
+
+## Calibration history
+
+The sheets are tuned from evidence, and each change is dated so a round's
+numbers are read against the version that produced them. A sheet records its
+own version in the sitting block ("Persona sheet version").
+
+- **v0.1, rounds 1 and 2** (`audit/2026-11-09/walkthroughs.md`). Round 1 ended
+  at friction 8 (Leo), 9 (Maya) and 9 (Arthur), all at the Stage 1 gate. Round 2
+  friction by source:
+
+  | Sheet | Final | Reading-limit charges | Rejections (+2 each) | Other |
+  | --- | ---: | ---: | ---: | --- |
+  | leo-2 | 8 | 1 | 6 | 1 mode confusion |
+  | maya-2 | 9 | 7 | 2 | 0 |
+  | arthur-2 | 8 | 1 | 8 | -1 gate cleared |
+
+- **v0.2** (amendment A8, simulation calibration only; no tutor change).
+  Maya: the density charge applies only when a skipped line later causes a
+  rejection or wrong turn, because seven of her nine round-2 points were
+  length charges that measured her four-line limit, not a tutor defect. Leo:
+  he also reads the first sentence of each paragraph, because skipping all
+  prose made him miss the one sentence ("this is not the shell") that
+  separated recall from the shell. Arthur is unchanged. Round 3 states both
+  changes so the comparison with rounds 1 and 2 is explicit.
 
 ## Running a sitting
 

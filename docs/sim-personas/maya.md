@@ -3,7 +3,7 @@ title: Persona — Maya (search-first-skimmer)
 category: process
 component: sim-personas
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, persona, adult-beginner]
 priority: medium
@@ -46,3 +46,9 @@ fearless, visual, impatient with dense text.
 Reads at most four lines of prose per screen before skipping to the
 commands; records which lines were skipped. Bold words and `▶` lines are
 read even inside skipped prose.
+
+The +1 reading charge is **not** applied to a screen merely for being long.
+It is applied at the later turn where a skipped line causes a rejection or a
+wrong turn, and is recorded at that turn with the skipped sentence quoted.
+Plain over-length screens are noted in the sheet's density notes (end of
+sitting) without friction.

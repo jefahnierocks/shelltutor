@@ -3,7 +3,7 @@ title: Persona — Leo (gamer-brute-forcer)
 category: process
 component: sim-personas
 status: active
-version: 0.1.0
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, persona, child]
 priority: medium
@@ -46,6 +46,7 @@ video tutorials to install shader packs, with no idea what they do.
 
 ## Reading
 
-Reads only commands, `▶` lines and anything in the command colour unless
-a screen is under eight lines; records "did not read" per screen. Friction
-+1 per reading-only screen after the second in a row.
+Reads commands, `▶` lines, anything in the command colour, and the first
+sentence of each paragraph, unless a screen is under eight lines (then he
+reads all of it); everything else is recorded as "did not read" per screen.
+Friction +1 per reading-only screen after the second in a row.
