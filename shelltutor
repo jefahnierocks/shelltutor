@@ -1398,26 +1398,24 @@ A ${SUB}path${RST} names a place. ${SUB}Relative${RST} paths start where you are
   ${DIM}practice/notes.txt${RST}   a file inside a subfolder
   ${DIM}../notes.txt${RST}         a file in the parent folder
 ${SUB}Absolute${RST} paths start from the root, ${KEY}/${RST}:
-  ${DIM}/etc/hosts${RST}
-  ${DIM}/usr/bin/vim${RST}
+  ${DIM}/etc/hosts${RST}   ${DIM}/usr/bin/vim${RST}
 
-${EM}Predict before you act.${RST}  In ${DIM}~/projects${RST}, ${CMD}cat notes.txt${RST}
-reads ${DIM}~/projects/notes.txt${RST}. For another folder, name it.
+${EM}Predict before you act.${RST}  In ${DIM}~/projects${RST}, the bare name ${DIM}notes${RST} means ${DIM}~/projects/notes${RST}.
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 2's gate.${RST}
+  ${CMD}mkdir name${RST}    ${DIM}# make a folder called name, right here${RST}
+
+${INSTR}${G_PLAY} Try ${CMD}mkdir demo${INSTR}, ${CMD}ls -p${INSTR}, then ${CMD}next${INSTR}.${RST}
 EOF
 }
 
-stage2_verify_task() {
-    [ -d "$SANDBOX/stage2/practice" ] || return 1
-    return 0
-}
 
 stage2_gate() {
     show_screen <<EOF
 ${H1}STAGE 2 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${SUB}practical task${RST}.
 EOF
 
@@ -1481,6 +1479,7 @@ Inside the practice prompt, do these (in any order):
 Then type ${CMD}check${RST}.
 
 ${DIM}I will check that the folder exists, and how you got there.${RST}
+${DIM}The task runs in this stage's own folder; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
@@ -1491,26 +1490,31 @@ EOF
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
-                if ! gate_require_history "$hist_mark" \
-                    "cd into it (cd practice)" '(^|[;&|])[[:space:]]*cd([[:space:]]|$)'; then
-                    # Helper printed what is missing. Re-enter the practice
-                    # prompt without redisplaying the task screen, so the
-                    # message stays visible (same pattern as Stage 1).
-                    attempt=$((attempt + 1))
-                    gate_escalate "$attempt" \
-                        "mkdir makes the folder; cd moves into it; pwd shows where you are." \
-                        "mkdir practice" "cd practice" "pwd"
-                    skip_screen=1
-                    continue
+                # Both items, every time (F-022): the folder exists, and a
+                # `cd` was typed after it did (a failed cd does not count).
+                local have_dir=0 have_cd=0
+                [ -d "$SANDBOX/stage2/practice" ] && have_dir=1
+                if history_since "$hist_mark" \
+                    | grep -qE '(^|[;&|])[[:space:]]*cd([[:space:]]|$)'; then
+                    have_cd=1
                 fi
-                if stage2_verify_task; then
+                if [ "$have_dir" -eq 1 ] && [ "$have_cd" -eq 1 ]; then
                     save_progress 2
                     return 0
                 fi
                 attempt=$((attempt + 1))
                 fb_begin
-                fb_todo "practice folder" "no practice folder in this stage's folder"
-                fb_note "Make it at the prompt, then type ${CMD}check${RST} again."
+                if [ "$have_dir" -eq 1 ]; then
+                    fb_ok "folder exists"
+                else
+                    fb_todo "folder exists" "no practice folder in this stage's folder"
+                fi
+                if [ "$have_dir" -eq 0 ]; then
+                    fb_todo "cd into it" "make the folder first, then cd into it"
+                else
+                    fb_todo "cd into it" "not in your history"
+                fi
+                fb_note "Run the ones marked ${G_TODO}, then type ${CMD}check${RST} again."
                 gate_escalate "$attempt" \
                     "mkdir makes the folder; cd moves into it; pwd shows where you are." \
                     "mkdir practice" "cd practice" "pwd"
