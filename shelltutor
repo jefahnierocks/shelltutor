@@ -1922,7 +1922,7 @@ EOF
 
     ask_question \
         "Q1: What does ${CMD}command -v vim${RST} print, if Vim is installed?" \
-        "It answers with the folder and name of the program file." \
+        "Lesson 4.1: it answers the question 'where does this program live?' with one line." \
         'the path to vim' \
         'path to vim' \
         'a path' \
@@ -1930,7 +1930,17 @@ EOF
         'where vim is' \
         "vim's path" \
         'vims path' \
-        '/usr/bin/vim' || return $?
+        '/usr/bin/vim' \
+        'the path /usr/bin/vim' \
+        'the path to the vim program' \
+        'where the vim program is' \
+        'where the program file is' \
+        'the location of vim' \
+        "vim's location" \
+        'its location' \
+        'the full path' \
+        'the full path to vim' \
+        'the folder and file name' || return $?
 
     ask_question \
         "Q2: What is the difference between ${CMD}>${RST} and ${CMD}>>${RST}?" \
