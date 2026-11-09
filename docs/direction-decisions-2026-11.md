@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.6.0
+version: 0.7.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -845,6 +845,20 @@ the sheet's time line is an estimate. Phase A's exit (three human
 sittings, one on Bash 3.2) is **not** satisfied by synthetic sittings;
 it waits for people. Synthetic sittings run now, on the current script,
 and may open a second round of core fixes under the core standard.
+
+### A7 — Stage 1 gate grounding approved (2026-11-09)
+
+After the first three synthetic sittings all quit at the Stage 1 gate
+recall (`audit/2026-11-09/walkthroughs.md`, F-017, F-018, O-P..O-Y), the
+operator approved all five items of the coordinator's decision set as
+WP-20: Q1 taught in 1.3 and asked about a normal bash window; Q2/Q3
+accepted lists widened from the reproduced inputs with apostrophes
+normalised; the recall ladder shows the hint on the first miss and the
+navigation facts from the second (this amends A1.1 for recall only; tasks
+keep three rungs); recall rendered visibly as the tutor speaking; the 1.1
+and 1.2 mechanical traps closed. A4 is extended: reproduced synthetic
+findings are a valid source for answer-list widening. After WP-20 lands,
+the three personas are re-run as sittings `*-2`.
 
 ## Cross-references
 
