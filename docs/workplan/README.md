@@ -64,7 +64,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-20](WP-20-stage1-gate-grounding.md) | Stage 1 gate grounding: Q1 taught, plain answers, hint on first recall miss, recall as the tutor, 1.1/1.2 traps (A7) | — | approved 2026-11-09 | **landed** 82792b6 (2026-11-09) |
 | [WP-21](WP-21-recall-shape-and-stage2-grounding.md) | Recall answer shape, Q3/Stage 2 Q1 long forms, typo lines, 2.3 home/`cd -`, `ls /` (A8) | — | approved 2026-11-09 | **landed** 5d1d689 (2026-11-09) |
 | [WP-22](WP-22-stage2-sequencing-and-hint-rule.md) | Stage 2 teaches mkdir and checks both items; `~` and Stage 4 Q1 forms; Ctrl+C/`q`; FF-010 hint anchors (A9) | — | approved 2026-11-09 | **landed** 13847ef (2026-11-09) |
-| [WP-23](WP-23-keyword-matching.md) | Keyword-group matching with negation guard; FF-011 corpus; shape line removed; 3.1 redirection; harness hygiene (A10) | — | approved 2026-11-09 | ready |
+| [WP-23](WP-23-keyword-matching.md) | Keyword-group matching with negation guard; FF-011 corpus; shape line removed; 3.1 redirection; harness hygiene (A10) | — | approved 2026-11-09 | **landed** 7e126cf (2026-11-09) |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Execution order: WP-01 → WP-02 → WP-03 → WP-04, with WP-05 after WP-02
