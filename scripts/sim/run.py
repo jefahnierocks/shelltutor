@@ -64,19 +64,17 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 SECOND_TRY_STAGES = ("2", "4")
 NOT_YET_TEXT = "not yet:"
 # Recall ladder (A7). second-try at Stage 2 misses Q1 twice: the hint prints
-# at miss 1 and again at miss 2 (with the answer-shape line, A8, and the
-# navigation facts), so "Hint:" appears twice and the shape line and the
-# first navigation fact once each. No task `Hint:` is
-# printed because the task misses only once.
+# at miss 1 and again at miss 2 (with the navigation facts), so "Hint:"
+# appears twice and the first navigation fact once. No task `Hint:` is
+# printed because the task misses only once. (A10 removed the A8 shape line.)
 RECALL_HINT_TEXT = "Hint:"
 RECALL_NAV_TEXT = "Passed stages are saved."
-RECALL_SHAPE_TEXT = "Answer in a few words, like the lesson did, not a full sentence."
 # A9 (F-022): the Stage 2 gate's first check prints both items.
 # second-try makes the folder and skips the cd, so the first check shows the
 # folder item done (no "not yet:" reason) and the cd item todo.
 GATE_ITEM_FOLDER_TEXT = "no practice folder in this stage"
 GATE_ITEM_CD_TEXT = "not yet: not in your history"
-RECALL_EXPECTED = {"2": (2, 1, 1), "4": (0, 0, 0)}
+RECALL_EXPECTED = {"2": (2, 1), "4": (0, 0)}
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -420,25 +418,20 @@ def _run_variant(
                     "second-try expected exactly one %r, saw %d." % (NOT_YET_TEXT, seen)
                 )
             if run_ok:
-                want_hint, want_nav, want_shape = RECALL_EXPECTED.get(
-                    str(args.stage), (0, 0, 0)
-                )
+                want_hint, want_nav = RECALL_EXPECTED.get(str(args.stage), (0, 0))
                 text = "".join(
                     project_terminal_out(os.path.join(variant_out, "terminal.jsonl"))
                 )
                 got_hint = text.count(RECALL_HINT_TEXT)
                 got_nav = text.count(RECALL_NAV_TEXT)
-                got_shape = text.count(RECALL_SHAPE_TEXT)
-                outcome["recall_shape_count"] = got_shape
                 outcome["recall_hint_count"] = got_hint
                 outcome["recall_nav_count"] = got_nav
-                if (got_hint, got_nav, got_shape) != (want_hint, want_nav, want_shape):
+                if (got_hint, got_nav) != (want_hint, want_nav):
                     run_ok = False
                     outcome["notes"] = (
-                        "second-try expected %d %r, %d %r and %d %r, saw %d, %d and %d."
-                        % (want_hint, RECALL_HINT_TEXT, want_shape,
-                           RECALL_SHAPE_TEXT, want_nav, RECALL_NAV_TEXT,
-                           got_hint, got_shape, got_nav)
+                        "second-try expected %d %r and %d %r, saw %d and %d."
+                        % (want_hint, RECALL_HINT_TEXT, want_nav,
+                           RECALL_NAV_TEXT, got_hint, got_nav)
                     )
             if run_ok and str(args.stage) == "2":
                 # A9 (F-022): the first Stage 2 check lists both items.

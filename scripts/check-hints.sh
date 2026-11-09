@@ -16,7 +16,8 @@
 #     argument sits alone on its own line (one quoted word, nothing else);
 #   - arity: one prompt, one hint and at least one accepted form;
 #   - leak: no accepted form appears inside the hint, case-insensitive
-#     (colour-variable references such as ${CMD} are ignored);
+#     (colour-variable references such as ${CMD} are ignored), and, since
+#     A10, no keyword-group phrase appears in it as whole words;
 #   - reserved words: `show`, `quit` and `exit` are never accepted forms;
 #   - anchor (FF-010): the hint starts `Lesson N: ` or `Lesson N.k: `
 #     (colour variables ignored): it says where the fact was taught and
@@ -62,7 +63,18 @@ awk_check() {
             return val
         }
 
-        function finish(    i, h, a, norm) {
+        # Lower-case, drop apostrophes, periods, commas and bangs, collapse
+        # spaces, pad with one space each side: the same shape the matcher gives an answer (whole words).
+        function wordpad(t) {
+            t = tolower(t)
+            gsub(/\$\{[A-Za-z_]+\}/, "", t)
+            gsub(/[\047.,!]/, "", t)
+            gsub(/[[:space:]]+/, " ", t)
+            sub(/^ /, "", t); sub(/ $/, "", t)
+            return " " t " "
+        }
+
+        function finish(    i, j, h, a, norm, hp, np, phrase, parts) {
             if (!collecting) return
             collecting = 0
             if (nargs < 3) {
@@ -83,6 +95,20 @@ awk_check() {
                     fail("FF-009 reserved word accepted as an answer: " args[i])
                 if (a != "" && index(h, a) > 0)
                     fail("FF-009 hint contains accepted answer \"" args[i] "\": " args[2])
+            }
+            # A10: keyword phrases are accepted answers too (whole words).
+            hp = wordpad(args[2])
+            for (i = 1; i <= ngroups; i++) {
+                np = split(groups[i], parts, "|")
+                for (j = 1; j <= np; j++) {
+                    phrase = wordpad(parts[j])
+                    if (phrase == "  ") continue
+                    norm = phrase; gsub(/^ | $/, "", norm)
+                    if (norm == "show" || norm == "quit" || norm == "exit")
+                        fail("FF-009 reserved word in a keyword group: " groups[i])
+                    if (index(hp, phrase) > 0)
+                        fail("FF-009 hint contains keyword phrase \"" parts[j] "\": " args[2])
+                }
             }
         }
 
@@ -203,8 +229,25 @@ ask_question \
     'back to you' || return $?
 FIX
 
+    cat > "$dir/groupleak" <<'FIX'
+ask_question \
+    "Q1: Where does it go?" \
+    "Lesson 1.4: it comes straight back to you." \
+    'stdout' \
+    -- \
+    'screen|back to you' || return $?
+FIX
+    cat > "$dir/groupword" <<'FIX'
+ask_question \
+    "Q1: Where does it go?" \
+    "Lesson 1.4: whoami printed something; think about where you read it." \
+    'stdout' \
+    -- \
+    'screens|reads|end' || return $?
+FIX
+
     local name want
-    for name in clean:0 leak:1 letter:1 oneline:1 reserved:1 noaccept:1 unanchored:1 nocolon:1 colour:0 groups:0; do
+    for name in clean:0 leak:1 letter:1 oneline:1 reserved:1 noaccept:1 unanchored:1 nocolon:1 colour:0 groups:0 groupleak:1 groupword:0; do
         want="${name##*:}"; name="${name%%:*}"
         printf 'self-test: %-9s should %-4s ... ' "$name" "$([ "$want" = 0 ] && echo pass || echo fail)"
         if awk_check "$dir/$name" >/dev/null 2>&1; then got=0; else got=1; fi

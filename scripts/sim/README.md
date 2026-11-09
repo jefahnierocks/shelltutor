@@ -97,11 +97,11 @@ covers the Stage 2 and Stage 4 gates only.
   - Recall answers are the same as `careful-beginner`'s, except Stage 2 Q1:
     `second-try` misses it twice (WP-10, A1.3; A7) so the recall ladder is
     observed: the `Hint:` rung prints at miss 1 and again at miss 2 together
-    with the answer-shape line (`RECALL_SHAPE`, A8) and the navigation facts
+    with the navigation facts
     (`RECALL_HINT`, `RECALL_NAV`: `Passed stages
     are saved.`), then it answers correctly. TAP `ok` requires the stage
     cleared, exactly one `not yet:`, and for Stage 2 exactly two `Hint:` and
-    one shape line and one navigation fact in the output (Stage 4: none); any other count means
+    one navigation fact in the output (Stage 4: none); any other count means
     the ladder changed.
 
 `confused-novice` and confusion events remain deferred (Slice 3) per the

@@ -194,9 +194,8 @@ with no auto-pass) is part of the curriculum design.
 
 Recall escalation: two rungs (A7; it was three under A1.1). A first miss
 prints the message and the question's hint; the second and later print the
-hint, one fixed answer-shape line (A8: "Answer in a few words, like the
-lesson did, not a full sentence."; the same for every question; wording not
-contractual) and the three navigation facts (passed stages are saved; `quit` leaves
+hint and the three navigation facts (A10 removed the A8 answer-shape line;
+passed stages are saved; `quit` leaves
 now and the next run starts this stage from its first lesson; `show` repeats
 the question). The task ladder (restatement, hint, worked example) keeps its
 three rungs. There
