@@ -530,3 +530,186 @@ answer-format line of the shape hint has no example in the lessons (maya O-f).
 | arthur | O-b density (8 of 15) | O-T (v0.1 persona cost) |
 | arthur | O-f stage1 pwd | O-AG |
 | arthur | O-g silence | O-AL |
+
+## Synthetic sittings, round 4
+
+Sheets `sim-sittings/{leo,maya,arthur}-4.md` ran against `13847ef` (WP-22);
+`shelltutor` on `main` (`fc46228`) is unchanged from that revision. **All three
+personas ran on v0.2** (density and reading charges only on consequence; Leo
+reads first sentences). The tutor changes since round 3 are WP-22: 2.4 teaches
+`mkdir name` with a try-it line; the Stage 2 `check` lists both items; 1.2 limits
+Ctrl+C to the prompt; 3.2's `▶` line names `q`; Stage 4 Q1 takes path forms; hints
+are anchored `Lesson N:` (FF-010). Numbering continues at F-025 and O-AN.
+
+**Result.** Maya and Arthur reached the finale (they are the first to clear all
+five gates); Leo cleared Stages 1 to 3 and quit at Stage 4 Q3. Every
+rejection in round 4 is on a recall question: Stage 1 Q3, Stage 2 Q3 and
+Stage 4 Q2 and Q3.
+
+### Friction by source (all v0.2)
+
+| Sheet | Final | Reading | Rejections (+2) | Mode confusion | Gates cleared |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| leo-4 | 8 (quit) | 1 | 10 (five) | 0 | -3 |
+| maya-4 | 3 (finale) | 0 | 8 (four) | 0 | -5 |
+| arthur-4 | 1 (finale) | 0 | 6 (three) | 0 | -5 |
+
+Reading and mode-confusion charges are near zero under v0.2. Maya's gross
+positive friction reached 8 but her meter is unfloored and gate refunds kept the
+net at 3; her sheet records that she did not quit. All 24 rejection points came
+from recall questions: F-025 (6), F-026 (12), F-027 (4) and O-AO (2).
+
+### Round-3 items closed (with evidence)
+
+- **F-021 closed.** `your home folder` accepted at Stage 2 Q2 for all three
+  (also reproduced); the list now takes `your` forms.
+- **F-022 closed.** 2.4 says `mkdir name` and "Try `mkdir demo`" (`1406`,
+  `▶`); all three cleared the Stage 2 task first try. Reproduced the first
+  `check`: `○ folder exists not yet: no practice folder…` and `○ cd into it not
+  yet: make the folder first, then cd into it` (both items shown).
+- **F-023 closed.** Stage 4 Q1 list (`1926-1944`) takes `the path /usr/bin/vim`,
+  `the full path` and path forms; all three passed it (`/usr/bin/vim`, `the path
+  to vim`, `the path`).
+- **F-024 closed.** 1.2: "the escape hatch at a prompt … inside a full-screen
+  program like `less` (Stage 3), `q` is the way out" (`937-939`); 3.2's `▶` says
+  "`q` leaves `less`" (`1634`). Leo and Maya pressed `q`.
+- **O-AI closed.** All three typed `cp`, `mv`, `rm` in 3.3.
+- **O-AG recurs** (Maya O-B, Arthur O-e): the Stage 1 task `pwd` ends `/stage1`;
+  the 1.3 and 2.1 `pwd` do not.
+
+### Findings (reproduced)
+
+- **F-025 — Stage 1 Q3's hint paraphrases the answer, and its own words are
+  rejected (F-020's class, recurring after a rewording).** Severity 2. The hint
+  is "Lesson 1.4: a program's output does not go into a file by itself; it
+  comes straight back to you." (`1169`). Reproduced through `normalize_answer`
+  (the list holds 20 forms):
+
+  | Input (sheet) | Exact | Accepted forms contained |
+  | --- | --- | --- |
+  | `it comes straight back to you` (arthur; the hint) | reject | none |
+  | `back to you` (arthur) | reject | none |
+  | `it comes back to me on the screen in the terminal window` (arthur) | reject | 8, among them `the screen`, `the terminal window`, `on the screen` |
+  | `the screen` (arthur, accepted last) | accept | |
+
+  F-020 was closed by accepting the old hint's words; WP-22's new hint reintroduces
+  the gap, and FF-010 (anchor check only, `check-hints.sh:74`) does not look at
+  the hint's wording against the list. Arthur lost 6 points. *Closes when*: the hint
+  names the concept without the answer's words, or the list takes the hint's tail;
+  and a check compares the hint's words with the list. Sheets: arthur F-a, F-b.
+- **F-026 — Stage 4 Q2 rejects the lesson's two words joined by "and".**
+  Severity 2. List (`1949-1955`): `> overwrites, >> appends`, `> overwrite, >>
+  append`, `> writes over, >> adds to the end`, `>> appends`, `> overwrites`,
+  `one overwrites one appends`, `> replaces >> appends`. `normalize_answer`
+  (`661`) lowercases, strips only `'`, `.`, `,` and `!`, and collapses spaces:
+  `>` and `>>` survive, so punctuation stripping does not affect them; it also
+  turns the accepted `> overwrites, >> appends` into `> overwrites >> appends`,
+  which is why the comma form passes. Reproduced:
+
+  | Input (sheet) | Exact | Accepted forms contained |
+  | --- | --- | --- |
+  | `> overwrites and >> appends` (leo) | reject | `>> appends`, `> overwrites` |
+  | `> overwrites the file and >> appends to the end` (maya) | reject | `>> appends`, `> overwrites` |
+  | `overwrite append` (leo) | reject | none |
+  | `overwrite vs append` (maya) | reject | none |
+  | `one replaces what is in the file and the other adds to the end of it` (maya) | reject | none |
+  | `one replaces the old file and two adds to the end` (leo) | reject | none |
+  | `>> appends`, `> overwrites, >> appends` | accept | |
+
+  Leo lost 6 points and Maya 6 here. The hint "Lesson 4.3: what each arrow does
+  to a file that already exists" (`1948`) is the same on every miss and its words
+  are not accepted (`what each arrow does…`, none contained). *Closes when*: the
+  list takes "and"/"vs" forms and the plain-language forms, or Q2 states the
+  shape ("name what each arrow does"). Sheets: leo F-a, F-b; maya F-A.
+- **F-027 — Stage 4 Q3 rejects `the space` and `the space splits it into two
+  names`.** Severity 2. List (`1960-1968`): `because of the space`, `spaces split
+  arguments`, `spaces split words`, `the space splits them`, `no quotes`,
+  `missing quotes`, `because spaces`, `because of spaces`, `the shell splits on
+  spaces`. Reproduced reject: `the space` (leo), `the space splits it into two
+  names` (maya), `there is a space`; accept: `the space splits them`, `the shell
+  splits on spaces`. The hint's words (`what separates the words after vim, and
+  what quotes do`) are not accepted. The same fact as the accepted forms,
+  one word different. Leo quit on it (+2); Maya +2. *Closes when*: the list
+  takes `the space` and the `into two names` forms. Sheets: leo F-c, maya F-B.
+- **F-028 — The Stage 3 gate task step 1 needs redirection, taught in 4.3
+  (same class as F-022, no dead end observed).** Severity 3. Step 1 is "create a
+  file `notes.txt` containing the word `hello`" (`1711`). Stage 3 teaches
+  `touch` (empty files) and gives redirection only as an aside, "To create a file
+  with content, use redirection (Stage 4): `echo "first line" > greeting.txt`"
+  (3.1, `1606`); the lesson `▶` line says "Make a few". The first `check`
+  (reproduced) marks `○ done.txt has hello not yet: no done.txt in this folder`
+  but not how; `echo hello > notes.txt` is spelled first in the attempt-2 hint
+  (`1754`) and attempt-3 worked example (`1755`). All three round-4 sheets cleared
+  it first try by copying the aside (Arthur: "Nothing printed, did I break it?").
+  *Closes when*: 3.1's `▶` line asks to try the `echo … >` line, or step 1 names
+  the form. Sheets: maya O-C, arthur O-a.
+
+### Observations (reproduced)
+
+- **O-AN — The shape line does not predict the working answer.**
+  "Answer in a few words, like the lesson did, not a full sentence."
+  (`RECALL_SHAPE`, `668`) prints from miss 2 (`709`). Three quotes: Leo, "implies
+  length was the problem, but `overwrite append` (two words) was also rejected";
+  Maya, "the first sentence that told Maya how the matcher wanted to be answered,
+  and it arrived after one rejection had already been scored"; Arthur, "the
+  ladder never moved past the hint through four attempts". Reproduced: the line
+  is the same on every later miss, and the two-word `overwrite append` is
+  rejected (F-026 table). *Closes when*: the line names a shape the list accepts
+  ("repeat the lesson's words") or the lists accept short and long forms.
+  Sheets: leo O-c, maya O-G, arthur F-b.
+- **O-AO — Stage 2 Q3's answer is in a second sentence and the hint uses an
+  unfamiliar word.** `the notes folder` rejected (Leo); 2.4 now says "In
+  `~/projects`, the bare name `notes` means `~/projects/notes`" in one sentence
+  after "Predict before you act"; the hint says "a relative name". Sheets: leo O-a.
+- **O-AP — 4.4 ends `▶ Type next to take Stage 4's gate` with no command to try**
+  (`1902`); Leo and Maya typed no glob before the gate (Arthur typed `ls *.txt`).
+  Sheets: leo O-d.
+- **O-AQ — Recurring, unchanged:** `#` asides on 1.1's command lines (arthur
+  O-c; O-U); undefined terms (arthur O-d: `less`, `root`, `exits 0`, `grep ^a`,
+  `discard form`, `PATH`, `vimtutor`; O-AM); silent commands (arthur O-g); Ctrl+L
+  blanks the lesson and `show` recovers (arthur O-b). No density charge was
+  applied; screens over the limit caused no wrong turn.
+
+### Harness and protocol (not the tutor)
+
+- **H-1 — Terminal residue after `man` and `vim`.** Reproduced in a scratch
+  sitting (`man ls`, raw `q`; `vim practice.txt`): the returned screen text shows
+  the pager `:` prompt, and Vim's redraw as `Pzz\`, run-together tilde rows and
+  `"practice.txt" 1L, 7B�`. `sitting.py` strips colour codes and keeps the screen
+  text since the last clear; Vim and `less` redraw without a clear. The only
+  reliable cue is the `[prompt] shelltutor>` marker. Maya F-C. Not a tutor defect.
+- **H-2 — `^[` after Esc.** Reproduced: after raw Esc the Vim line reads `--
+  INSERT --^[`; the ESC byte is kept in the returned text. Arthur O-f. Not a tutor
+  defect.
+- **P-1 — Turn cap.** Arthur ran 154 persona inputs against a 120-turn cap, about
+  45 of them raw single keystrokes in Vim, `less` and `man`. Round 1 recorded a
+  90-turn cap; no cap value appears in `docs/sim-personas/README.md`, the
+  sitting template or `sitting.py`. Protocol note: state the cap and whether a raw
+  keystroke counts in the sheet template.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-a, F-b (Q2) | F-026, O-AN |
+| leo | F-c (Q3 `the space`) | F-027 |
+| leo | O-a Stage 2 Q3 | O-AO |
+| leo | O-b three reading-only screens | O-T (1 point) |
+| leo | O-c shape line | O-AN |
+| leo | O-d 4.4 | O-AP |
+| leo | O-e 3.3 `mv hi.txt notes/` needs 3.1's folder | O-AQ (no sitting hit it) |
+| maya | F-A (Q2) | F-026 |
+| maya | F-B (Q3) | F-027 |
+| maya | F-C raw residue | H-1 |
+| maya | O-A, O-E, O-F | O-AQ (no consequence) |
+| maya | O-B `/stage1` | O-AG |
+| maya | O-C Stage 3 redirection | F-028 |
+| maya | O-D 4.1 skipped sentence | F-027 context; no charge |
+| maya | O-G shape line from miss 2 | O-AN |
+| arthur | F-a, F-b (Stage 1 Q3) | F-025, O-AN |
+| arthur | O-a Stage 3 redirection | F-028 |
+| arthur | O-b, O-c, O-d, O-g | O-AQ |
+| arthur | O-e `/stage1` | O-AG |
+| arthur | O-f `^[` | H-2 |
+| arthur | O-h pace | by-source table |
+| arthur | 154 inputs vs 120 | P-1 |
