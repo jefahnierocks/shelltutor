@@ -1450,7 +1450,13 @@ EOF
         'the home folder' \
         'the home directory' \
         '$home' \
-        'home dir' || return $?
+        'home dir' \
+        'your home folder' \
+        'your home directory' \
+        'your home' \
+        'the home' \
+        'home folder of the user' \
+        'my home' || return $?
 
     # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
     ask_question \
