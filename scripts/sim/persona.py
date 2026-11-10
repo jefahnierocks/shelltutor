@@ -254,19 +254,20 @@ def stage_walk(
     if n == 3:
         return (
             _intro(3)
-            + _lesson(3, 1, ["touch hello.txt", "ls", "mkdir notes", "ls", "echo hello > notes.txt"])
-            + [Action("S3_L2", "", "render-lesson-3-2", "S3-L2")]
-            + _cmds("S3-L2", ["cat hello.txt", "cat ../poem.txt"])
+            + _lesson(3, 1, ["touch hello.txt", "echo hi > words.txt", "mkdir notes", "ls -p"])
+            + _lesson(3, 2, ["cat words.txt", "cat hello.txt", "cat ../poem.txt"])
             + [
-                Action(PROMPT, "less ../numbers.txt", "run-less", "S3-L2"),
-                Action("LESS_NUMBERS", "q", "leave-less-pager", "S3-L2", raw=True),
-                Action(PROMPT, "next", "leave-lesson-3-2", "S3-L2"),
+                Action("S3_L3", "", "render-lesson-3-3", "S3-L3"),
+                Action(PROMPT, "less ../numbers.txt", "run-less", "S3-L3"),
+                Action("LESS_NUMBERS", "q", "leave-less-pager", "S3-L3", raw=True),
+                Action(PROMPT, "next", "leave-lesson-3-3", "S3-L3"),
             ]
             + _lesson(
                 3,
-                3,
-                ["cp hello.txt backup.txt", "mv hello.txt hi.txt", "mv hi.txt notes/", "rm backup.txt"],
+                4,
+                ["cp hello.txt backup.txt", "mv hello.txt hi.txt", "mv hi.txt notes/", "ls -p notes"],
             )
+            + _lesson(3, 5, ["ls", "rm backup.txt", "ls"])
             + _recall(3, ["touch", "gone", "mv"])
             + [Action("S3_TASK", "", "render-gate-task", "S3-GT")]
             + _cmds(

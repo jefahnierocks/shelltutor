@@ -1831,93 +1831,99 @@ run_stage2() {
 
 stage3_intro() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}STAGE 3 — Files and operations${RST}
+${H1}Stage 3: Files${RST}
 
-Three lessons, then a gate. You'll create, read, copy, move, and remove
-files. ${EM}rm is immediate.${RST} It does not move things to a trash.
-We'll do everything inside ${SANDBOX}/stage3${RST} so practice is
-contained.
+Five short lessons, then a task. You'll make, read, copy, move and
+remove files. One warning now: ${EM}rm removes for good.${RST} There is no Trash.
 
-Commands this stage:
-  ${CMD}touch${RST}   create an empty file (or update its timestamp)
-  ${CMD}mkdir${RST}   create a folder
-  ${CMD}rmdir${RST}   remove an EMPTY folder
-  ${CMD}cat${RST}     print a text file
-  ${CMD}less${RST}    page through a long file (exit with ${BOLD}q${RST})
-  ${CMD}cp${RST}      copy
-  ${CMD}mv${RST}      move (or rename — same command)
-  ${CMD}rm${RST}      remove a file (${EM}immediate${RST})
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 3.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 3.1.${RST}
 EOF
+    return $?
 }
 
 stage3_lesson_1() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}Creating: touch, mkdir${RST}
+${H1}Making files${RST}
 
-${CMD}touch${RST} creates an empty file (or updates the timestamp of
-an existing one).
-  ${CMD}touch hello.txt${RST}
-  ${CMD}ls${RST}              ${DIM}# you should see hello.txt${RST}
+The tutor put poem.txt and numbers.txt one folder up. Now make your
+own beside them.
 
-${CMD}mkdir${RST} creates a folder.
-  ${CMD}mkdir notes${RST}
-  ${CMD}ls${RST}              ${DIM}# notes/ is now there${RST}
+  ${CMD}touch hello.txt${RST}            ${DIM}# an empty file${RST}
+  ${CMD}echo hi > words.txt${RST}        ${DIM}# a file with the word hi in it${RST}
+  ${CMD}mkdir notes${RST}                ${DIM}# a folder${RST}
+  ${CMD}ls -p${RST}                      ${DIM}# all three are there${RST}
 
-To put words in a file, send ${CMD}echo${RST}'s output into it (more on ${CMD}>${RST} in Stage 4):
-  ${CMD}echo hello > notes.txt${RST}   ${DIM}# put words in a file${RST}
+${CMD}>${RST} sends what ${CMD}echo${RST} prints into a file instead of the screen. It prints
+nothing when it works. More on ${CMD}>${RST} in Stage 4.
 
-So: ${CMD}touch${RST} for empty files, ${CMD}mkdir${RST} for folders, ${CMD}>${RST} for words.
-
-${INSTR}${G_PLAY} Make a few, put a word in one, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Make all three, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage3_lesson_2() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}Reading: cat, less${RST}
+${H1}Reading a file${RST}
 
-${CMD}cat${RST} prints the entire file at once.
-  ${CMD}cat hello.txt${RST}                ${DIM}# probably empty${RST}
+${CMD}cat${RST} prints a whole file at once.
+
+  ${CMD}cat words.txt${RST}          ${DIM}# the word you put there${RST}
+  ${CMD}cat hello.txt${RST}          ${DIM}# nothing: the file is empty${RST}
   ${CMD}cat ../poem.txt${RST}        ${DIM}# the tutor's poem, one folder up${RST}
 
-For a long file, ${CMD}cat${RST} floods the screen. Use ${CMD}less${RST}
-to page through it:
-  ${CMD}less ../numbers.txt${RST}    ${DIM}# 50 lines — more than one screen${RST}
-
-Inside ${CMD}less${RST}, the screen takes over. Press ${BOLD}Space${RST}
-or ${BOLD}f${RST} to page down, ${BOLD}b${RST} to page back, and
-${BOLD}q${RST} to exit. (More on full-screen programs in Stage 5.)
-
-${EM}Important:${RST} when ${CMD}less${RST} takes over, the prompt is
-gone. You're inside a program. ${BOLD}q${RST} returns you to the shell.
-
-${INSTR}${G_PLAY} Try both; ${BOLD}q${INSTR} leaves ${CMD}less${INSTR}; then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage3_lesson_3() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}Copy, move, delete${RST}
+${H1}Reading a long file${RST}
 
-${CMD}cp${RST} copies. The original stays.
-  ${CMD}cp hello.txt backup.txt${RST}
+${CMD}less${RST} shows a long file one screen at a time. While it runs, the
+prompt is gone: you are inside a program.
 
-${CMD}mv${RST} moves; the same command ${BOLD}renames${RST}:
-  ${CMD}mv hello.txt hi.txt${RST}            ${DIM}# rename${RST}
-  ${CMD}mv hi.txt notes/${RST}               ${DIM}# move into a folder${RST}
+  ${CMD}less ../numbers.txt${RST}    ${DIM}# 50 lines, more than one screen${RST}
 
-${CMD}rm${RST} deletes. ${EM}Immediately and permanently.${RST}
-  ${CMD}rm backup.txt${RST}
+${BOLD}Space${RST} pages down, ${BOLD}b${RST} pages back, ${BOLD}q${RST} leaves. ${BOLD}Ctrl+C${RST} does nothing
+here; ${BOLD}q${RST} is the way out.
 
-There is no Trash and no undo. ${EM}Look before you press Enter —
-you, or an assistant typing for you.${RST}
-
-${BOLD}A safety habit${RST}: ${CMD}ls${RST} first, then ${CMD}rm <only-now-that-you-are-sure>${RST}.
-
-${INSTR}${G_PLAY} Try ${CMD}cp${INSTR}, ${CMD}mv${INSTR} and ${CMD}rm${INSTR} on the practice files, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Open it, page down, press ${BOLD}q${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
+}
+
+stage3_lesson_4() {
+    lesson "$SANDBOX/stage3" <<EOF
+${H1}Copy and move${RST}
+
+${CMD}cp${RST} copies and leaves the original. ${CMD}mv${RST} moves; the same command renames.
+
+  ${CMD}cp hello.txt backup.txt${RST}      ${DIM}# now there are two${RST}
+  ${CMD}mv hello.txt hi.txt${RST}          ${DIM}# rename${RST}
+  ${CMD}mv hi.txt notes/${RST}             ${DIM}# move into the folder${RST}
+  ${CMD}ls -p notes${RST}                  ${DIM}# hi.txt is inside${RST}
+
+${INSTR}${G_PLAY} Try all four, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage3_lesson_5() {
+    lesson "$SANDBOX/stage3" <<EOF
+${H1}Removing${RST}
+
+${CMD}rm${RST} removes a file at once and for good. There is no Trash and no undo.
+
+  ${CMD}ls${RST}                 ${DIM}# look first${RST}
+  ${CMD}rm backup.txt${RST}      ${DIM}# remove it${RST}
+  ${CMD}ls${RST}                 ${DIM}# it is gone${RST}
+
+List before you remove: you, or an assistant typing for you.
+
+${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
 }
 
 stage3_verify_task() {
@@ -1949,7 +1955,7 @@ EOF
 
     ask_question \
         "Q2: After ${CMD}rm important.txt${RST}, where is the file?  (~/.Trash, on disk, gone, depends)" \
-        "Lesson 3.3: what rm does, and whether it can be undone." \
+        "Lesson 3.5: what rm does, and whether it can be undone." \
         'gone' \
         "it's gone" \
         'its gone' \
@@ -1960,7 +1966,7 @@ EOF
 
     ask_question \
         "Q3: What single command renames old.txt${RST} to new.txt${RST}?" \
-        "Lesson 3.3: the same command that moves a file renames it." \
+        "Lesson 3.4: the same command that moves a file renames it." \
         'mv' \
         'mv old.txt new.txt' \
         'mv old new' \
@@ -1980,19 +1986,15 @@ EOF
             show_screen gate <<EOF
 ${H1}STAGE 3 — GATE TASK${RST}
 
-You will work inside ${SANDBOX}/stage3${RST}.
-
 Do these, in order:
-
-  1. create a file notes.txt${RST} containing the word ${BOLD}hello${RST}
-  2. copy notes.txt${RST} to backup.txt${RST}
-  3. rename notes.txt${RST} to done.txt${RST}
-  4. remove backup.txt${RST}
+  1. create a file notes.txt containing the word ${BOLD}hello${RST}
+  2. copy notes.txt to backup.txt
+  3. rename notes.txt to done.txt
+  4. remove backup.txt
 
 Then type ${CMD}check${RST}. The script will look at the folder.
-
 ${DIM}I will check: done.txt exists with 'hello' in it; notes.txt and${RST}
-${DIM}backup.txt are gone.${RST}
+${DIM}backup.txt are gone. This task runs in ${SANDBOX}/stage3; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
@@ -2040,7 +2042,7 @@ EOF
 
 run_stage3() {
     setup_stage_dir 3
-    local lessons=(stage3_intro stage3_lesson_1 stage3_lesson_2 stage3_lesson_3)
+    local lessons=(stage3_intro stage3_lesson_1 stage3_lesson_2 stage3_lesson_3 stage3_lesson_4 stage3_lesson_5)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 3 "${lessons[$i]}"
