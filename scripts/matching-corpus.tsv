@@ -237,3 +237,14 @@ S5Q2	accept	:w writes the buffer to the file	F-030
 S5Q2	accept	:wq	F-030
 S5Q2	accept	:wq (or :w)	F-030
 S5Q2	accept	(:w) writes it	F-030 (parentheses)
+S5Q3	accept	no the changes were thrown away	F-031 (round 6)
+S5Q3	accept	no it is unchanged	F-031 (round 6)
+S5Q3	accept	no it did not	F-031 (round 6)
+S5Q3	accept	no it did not change	F-031 (round 6)
+S5Q3	accept	the file did not change	F-031 (round 6)
+S5Q3	accept	it did not change	F-031 (round 6)
+S5Q3	accept	unchanged	F-031 (round 6)
+S5Q3	accept	no nothing changed	F-031 (round 6)
+S5Q3	reject	yes it changed	F-031 (round 6)
+S5Q3	reject	it changed	F-031 (round 6)
+S5Q3	reject	yes	F-031 (round 6)

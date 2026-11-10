@@ -2553,7 +2553,12 @@ EOF
         'no the file did not change' \
         'no, the file did not change' \
         'unchanged' \
-        'it did not change' || return $?
+        'it did not change' \
+        'no the changes were thrown away' \
+        'no it is unchanged' \
+        'no it did not change' \
+        'the file did not change' \
+        'no nothing changed' || return $?
 
     # Phase 1: open, edit, discard. File must still read 'before' afterward.
     local skip_screen=0 attempt=0
@@ -2759,14 +2764,13 @@ stage_recap() {
             can_line 'say something back' echo
             can_line 'find where you are' pwd
             can_line 'find out who you are, when' whoami date
-            can_line 'clear the screen' clear Ctrl+L
             can_line 'finish a name, reuse a line' Tab Up
             can_line 'stop a running command' Ctrl+C
             ;;
         2)
             can_line 'find where you are' pwd
             can_line 'see what is here' ls 'ls -p' 'ls -a'
-            can_line 'move' cd 'cd ..' 'cd ~' 'cd -'
+            can_line 'move' cd 'cd ..' 'cd -'
             can_line 'make a folder' mkdir
             ;;
         3)
