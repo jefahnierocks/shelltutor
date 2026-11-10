@@ -1140,3 +1140,17 @@ All reproduced through `recall_matches` on `main`:
 | arthur | O-9 try both | O-BD |
 | arthur | O-10 folder never named | O-BG |
 | arthur | O-12 INSERT rendering | H-3 |
+
+## Harness note (2026-11-10, WP-28)
+
+- **H-4 — The harness child inherited the operator's whole environment.**
+  Found by the WP-28 worker when the `env` module's `env | head` printed
+  host variables into a bundle. `run.py` now passes the child a short
+  allowlist (PATH, USER, LOGNAME, SHELL, TMPDIR, TERM, plus what it sets
+  itself). Checked by the coordinator before landing: of the tracked
+  bundles, only the three WP-28 `env` bundles contain an environment
+  listing, all made with the allowlist; the earlier `env` bundles
+  (`wp23`..`wp26`, `wp29`) contain no listing, the 2026-11-08 ones hold
+  only summaries, and no tracked audit file contains a token-, key- or
+  secret-named variable. No history rewrite is needed. The D-19 login-name
+  redaction covers `USER=` and `LOGNAME=` lines (`selftest_redaction.py`).
