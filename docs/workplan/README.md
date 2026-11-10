@@ -69,7 +69,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-25](WP-25-chrome-v2.md) | Screen chrome v2 from the consultant response: footer above the rule, 19-row panel, reduced palette, `(gloss)` footer, `?` recall prompt, `[✓]/[ ]` checklist, welcome box and identity line, capability-first cleared/finale (A11) | — | approved 2026-11-09 | **landed** dd297d2 (2026-11-09) |
 | [WP-26](WP-26-lesson-skeleton.md) | Lesson skeleton: one typeable block, body ≤ 12 rows (content; A11) | WP-25 | approved 2026-11-09 (A13) | **landed** 2cb3f53 (2026-11-09) |
 | [WP-27](WP-27-welcome-map-and-vocabulary.md) | Welcome map inside the box; "practice folder" on screen; sandbox row removed (A12; O-AW, O-AX) | WP-25 | approved 2026-11-09 | **landed** be9e86c (2026-11-09) |
-| [WP-29](WP-29-round6-copy-fixes.md) | Round-6 copy fixes: 2.3–2.5, terms, stage-folder line, Stage 5 Q3 forms, Leo persona v0.3 (F-031, O-AY..O-BG) | WP-26 | approved 2026-11-09 (A14) | ready |
+| [WP-29](WP-29-round6-copy-fixes.md) | Round-6 copy fixes: 2.3–2.5, terms, stage-folder line, Stage 5 Q3 forms, Leo persona v0.3 (F-031, O-AY..O-BG) | WP-26 | approved 2026-11-09 (A14) | **landed** b4f76a7 (2026-11-09) |
 | [WP-28](WP-28-modules-skeleton.md) | Modules to the lesson skeleton; `env` gains the `SHELLTUTOR_HOME` lesson (A12, A13) | WP-29 | operator approval | drafted |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
