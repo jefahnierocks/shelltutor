@@ -943,3 +943,190 @@ lesson can use it; the `/var/folders/...` path in the screenshot came from
 the coordinator's suggested `SHELLTUTOR_HOME=$(mktemp -d)` run command, not
 from a learner default. Note the default is a dot-folder, hidden from plain
 `ls`, which the Stage 2 `ls -a` lesson can use.
+
+## Synthetic sittings, round 6
+
+**Result: all three personas (v0.2) reached the finale with every gate task
+passing on the first `check`; one recall answer was rejected (F-031); the
+screens produced seven observations, led by `ls ..` and `ls ~` in 2.5 (O-AY).**
+What changed since round 5: WP-25 (chrome v2, rendering only, `dd297d2`), WP-27
+(welcome map in the box, "practice folder" on screen, `be9e86c`) and WP-26 (the
+lesson skeleton: the course is now 28 lessons, `2cb3f53`); the sheets ran against
+`2cb3f53` with the turn cap raised to 220. Round 5's WP-24 also landed (`7489d50`).
+`shelltutor` on `main` (`224fa42`) is unchanged from the sheets' script. The
+matcher, gates and recall questions are unchanged apart from renumbered hints.
+Numbering continues at F-031 and O-AY.
+
+### Friction by source
+
+| Sheet | Final | Reading | Rejections (+2) | Mode confusion | Gates cleared | Turns | Lessons typed | Screens with skipped prose |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: |
+| leo-6 | -4 | 1 | 0 | 0 | -5 | 166 of 220 | 24 full, 2 partial (1.2, 1.4), 2 reading-only (1.5, 5.3) | 8 |
+| maya-6 | -5 | 0 | 0 | 0 | -5 | 171 of 220 | 24 full, 1 partial (5.2), 1 none (5.6), 2 reading-only * | 4 (orientation, 1.4, 2.5, finale) |
+| arthur-6 | -3 | 0 | 2 (one) | 0 | -5 | 179 of 220 | 25 full, 1 partial (5.2), 2 reading-only * | 0 |
+
+Leo's lesson counts are his sheet's own. Starred counts are derived by reading the
+sheets (a lesson counts as typed when every listed command appears in the
+inputs), so treat them as approximate; the sheets do not report them. Leo's
+"skipped prose" figure counts the blocks his sheet marks skimmed or skipped, which
+his reading rule produces by design. The only rejection of the round is
+Arthur's Stage 5 Q3.
+
+### Round-5 items closed (with evidence)
+
+All reproduced through `recall_matches` on `main`:
+
+- **F-029 closed for what it named.** Stage 2 Q3 `notes`, `i am in notes` and
+  `projects notes` are rejected; the swapped `> appends and >> overwrites`,
+  `touch is wrong it is mkdir`, `a window in my browser` and `to a file on the
+  screen of my phone` are rejected. The corpus (235 cases) carries them.
+  `the notes folder` is still accepted, as the corpus intends.
+- **F-030 closed.** `:wq (or :w) writes the buffer to the file` and `typing :w or
+  :wq writes the copy back to the file` are accepted at Stage 5 Q2.
+- **O-AR closed in practice.** All three passed the Stage 1 task on the first
+  `check`, running the three commands after the task began.
+- **O-AS closed.** The finale's list was cut with the lessons (WP-26,
+  `1c569b9`); the cleared lists are a separate item, O-BC.
+- **O-AW and O-AX closed** by WP-27 (the sheets show the new welcome without
+  complaint).
+
+### Findings (reproduced)
+
+- **F-031 — Stage 5 Q3 rejects `no, the changes were thrown away`.** Severity 2.
+  Q3 (`2537`) is exact-only by design (A10: a correct answer that is itself a
+  negation is not run through the keyword guard). Its exact forms are `no`,
+  `no it did not`, `no it didnt`, `no it didn't`, `no the file did not change`,
+  `no, the file did not change`, `unchanged` and `it did not change`.
+  Reproduced:
+
+  | Input | Result |
+  | --- | --- |
+  | `no` | accept |
+  | `no the file did not change` | accept |
+  | `no, the changes were thrown away` (arthur) | reject |
+  | `no, it is unchanged` | reject |
+  | `the file did not change` | reject |
+  | `not changed`, `it stayed the same`, `the changes were thrown away` | reject |
+  | `no, it changed`, `no, the file was written` | reject |
+
+  The reply was "not quite" with the hint "Lesson 5.4: the working copy is a copy;
+  the disk only changes when you write it." Arthur's answer agrees with the hint
+  and was rejected; the one-word `no` passed. *What a keyword or prefix rule would
+  need*: the guard in `recall_matches` (`748`) rejects any answer containing `no`,
+  `not` and similar, so a plain keyword group cannot apply. Two options: (a) a
+  prefix rule `no` plus a group of "unchanged" phrases (`unchanged`, `did not
+  change`, `thrown away`, `discarded`, `still before`, `stayed the same`) with the
+  guard run on the answer after those phrases are removed; (b) longer exact forms.
+  The risk of (a) is contradiction: `no, it changed` must stay rejected (no
+  phrase), but `no, thrown away then written` would pass; the risk of (b) is
+  that the list grows without end. *Closes when*: the corpus gains the rows above
+  and one of these is chosen. Sheets: arthur F-1.
+
+### Observations (reproduced)
+
+- **O-AY — 2.5 `ls ..` and `ls ~` print things the lesson does not prepare for.**
+  The lines are "look one level up without moving" and "look at home without
+  moving" (`1626-1627`). What I ran: a pseudo-terminal driver (not `sitting.py`,
+  which fixes its own home) with `HOME=/tmp/claude-501/probehome` (containing
+  `Documents/`, `Downloads/`, `notes.txt`, `.zshrc`) and `SHELLTUTOR_HOME=$HOME/.shelltutor`
+  (the default's shape), `/bin/bash ./shelltutor 2`, five `next`, then the commands.
+  With the default layout, `pwd` is `~/.shelltutor`; `ls ..` printed `Documents
+  Downloads notes.txt` and `ls ~` printed the same three names (the sandbox is a
+  dot-folder, hidden from plain `ls`; `ls -a ~` shows `.shelltutor`). A learner
+  with the default `~/.shelltutor` therefore sees their own home folder twice,
+  identical, and nothing explains that `..` and `~` coincide. With the sim home
+  (`sitting.py`, sandbox under the host temp directory): `ls .. | wc -l` printed
+  554 (the host temp folder) and `ls ~ | wc -l` printed 0 (an empty stand-in home).
+  The sheets' "hundreds of names" and "prints nothing" are therefore artefacts of
+  the sim layout; the default learner's version is the home listing, which may be
+  long or personal. *Closes when*: the lesson says that `..` of the practice folder
+  and `~` can be the same place, or the command is changed to one with a stable
+  result. Sheets: leo O-001, maya O-a, O-b, arthur O-1, O-2.
+- **O-AZ — The 2.4 `cd <folder>` line wraps for a long path.** The line is
+  `  cd ${SANDBOX}  # come back, using the folder's full name` (`1605`); with the
+  colour codes removed its fixed part is 48 columns. Width: 72 for
+  `/Users/alice/.shelltutor` (24 characters), 73 for `/home/learner/.shelltutor`
+  (25), 108 for a 60-character path, and 125 for the sim path (77 characters).
+  The longest path that keeps the line within 80 columns is 32 characters. So
+  the default fits and a long `SHELLTUTOR_HOME` wraps. Sheets: maya O-c, arthur.
+- **O-BA — 3.1 says "beside them" and the files land one folder away.** 3.1 says
+  "The tutor put poem.txt and numbers.txt one folder up. Now make your own beside
+  them." (`1835-1836`). Reproduced: the prompt starts in `stage3`; `pwd` ends
+  `/stage3`; after `touch hello.txt`, `ls -p` shows `hello.txt` and `ls -p ..`
+  shows `numbers.txt poem.txt stage3/`. Sheets: arthur O-3.
+- **O-BB — 2.3 says `cd` "prints nothing" and `cd -` prints a path.** 2.3
+  (`1583`) lists `cd ..`, `pwd`, `cd -`. Reproduced: `cd -` printed the previous
+  folder. Bash prints it. Sheets: arthur O-6.
+- **O-BC — The cleared lists name two commands no lesson types.** `can_line`
+  rows in `stage_recap` (`2747-2780`) compared with the commands in each stage's
+  lesson blocks: Stage 1 lists `clear` (`2753`; 1.2 teaches `Ctrl+L`, the word
+  `clear` is not in any lesson); Stage 2 lists `cd ~` (`2760`; 2.4 types `cd` and
+  `cd <folder>`, 2.5 types `ls ~`, never `cd ~`). Every other entry in the four
+  lists is typed in a lesson of its stage (Stage 4's `sort` and `head` appear in
+  the 4.3 pipeline; the keys `Tab`, `Up`, `Ctrl+C`, `Ctrl+L` are taught in 1.2).
+  Sheets: arthur O-5, O-8.
+- **O-BD — 5.3 ends "Type next to try both" with nothing to try.** (`2413`.) The
+  tries are in 5.4 and 5.5. Sheets: leo O-002, arthur O-9.
+- **O-BE — Four words used before a lesson defines them.** `seq`: described only
+  by the comment "wc counted seq's lines" (`2116`) and named in the Stage 4 task
+  (`2270`); `glob`: in the Stage 4 task twice (`2272`, `2276`) and in the hint
+  (`2293`), while 4.6 teaches `*` without the word (`2166`); `streams`: in the
+  Stage 4 title and `-h` (`156`, `423`, `2063`) and in no lesson; `brew` and
+  "package": 5.6 (`2463`) and the finale (`2706`). Also 1.2's "full-screen
+  program" ("you'll meet one in Stage 3") and `~` introduced in 2.4 before a
+  command uses it. Sheets: arthur O-4, O-8, O-11, and the "terms met before
+  defined" list.
+- **O-BF — 1.3 says `pwd` "printed" before the learner has run it.** (`1180`:
+  "`pwd` printed the full name of your practice folder.") Sheets: arthur O-7.
+- **O-BG — The lessons never name the current folder in Stages 4 and 5.**
+  `ls` in 4.2 shows a `seed.txt` the learner did not make (the stage seeds it
+  at entry, `setup_stage_dir`); the gate task lines now name the folder, the
+  lessons do not. Sheets: arthur O-10.
+
+### Harness (not the tutor)
+
+- **H-3 recurs** (maya O-d and O-e; arthur O-12): after Esc the mode line still
+  reads `-- INSERT --`, and the Vim splash and mode text run together, because the
+  live screen is the drawing with cursor positioning ignored (see round 5).
+
+### About the simulation
+
+- **Leo's sheet departs from his persona rules.** The persona (`docs/sim-personas/leo.md`)
+  says: "Leading slashes. `/pwd`, `/cd` at first; confused by the error";
+  "Brute-force guessing. A rejected answer is not re-read; he mashes variations
+  (`ls`, `/ls`, …) until a hint rung appears"; and "Boredom threshold. Three
+  reading screens without a practice prompt and he types `next` or Enter without
+  reading, arriving at the gate blind and leaning on the ladder." The round-6
+  sheet records no leading slash, no mashed variations (nothing was rejected, so
+  the second rule had no trigger) and no blind arrival: Leo read the Stage 1
+  intro (his sheet: "Read: all") and typed the listed commands in 24 of 28
+  lessons. The first and third are departures; the sheet's own O-006 and debrief
+  admit "the model playing Leo knows the commands … could not honestly produce
+  the leading-slash or mode-confusion errors". Round 6 is therefore a weak test
+  of the child persona, and its "no rejection" result for Leo should not be read
+  as evidence that a child would not hit one.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | O-001 `ls ..` wall | O-AY (sim layout; default differs) |
+| leo | O-002 5.3 "try both" | O-BD |
+| leo | O-003 Ctrl+C/Ctrl+L untried | O-V (unchanged, by design) |
+| leo | O-004 numbers unexplained, O-005 jargon | O-AV/O-BE (no stall) |
+| leo | O-006 persona departure | simulation note |
+| maya | O-a `ls ..`; O-b `ls ~` | O-AY |
+| maya | O-c cd line wraps | O-AZ |
+| maya | O-d Esc mode text; O-e splash | H-3 |
+| maya | O-f Q3 unknown word list | not a defect: accepted; recall lists are by design unseen |
+| maya | O-g density | none |
+| arthur | F-1 Stage 5 Q3 | F-031 |
+| arthur | O-1, O-2 | O-AY |
+| arthur | O-3 beside | O-BA |
+| arthur | O-4, O-11, terms list | O-BE |
+| arthur | O-5, O-8 | O-BC |
+| arthur | O-6 `cd -` | O-BB |
+| arthur | O-7 past tense | O-BF |
+| arthur | O-9 try both | O-BD |
+| arthur | O-10 folder never named | O-BG |
+| arthur | O-12 INSERT rendering | H-3 |
