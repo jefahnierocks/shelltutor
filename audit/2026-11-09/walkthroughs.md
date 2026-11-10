@@ -4,7 +4,7 @@ category: audit
 component: walkthroughs
 status: active
 version: 0.1.0
-last_updated: 2026-11-09
+last_updated: 2026-11-10
 tags: [phase-a, walkthrough, synthetic-sittings, findings, a6]
 priority: high
 ---
@@ -1154,3 +1154,215 @@ All reproduced through `recall_matches` on `main`:
   only summaries, and no tracked audit file contains a token-, key- or
   secret-named variable. No history rewrite is needed. The D-19 login-name
   redaction covers `USER=` and `LOGNAME=` lines (`selftest_redaction.py`).
+
+## Synthetic sittings, round 7
+
+**Result: three core sittings and two module sittings ran against `a7cd1ac`
+(WP-29 copy fixes, WP-28 harness allowlist). Maya and Arthur reached the finale
+with every gate task passing on the first `check`; Leo, with v0.3's scripted
+errors, quit at the Stage 1 gate (friction 9) after two real rejections at
+Q2; the `env` and `shells` modules both cleared. The sheets surface two
+findings (F-032, F-033) and no harness finding.** Sitting server: environment
+from the shared allowlist (H-4, `40c11cf`). `shelltutor` on `main` (`d802729`) is
+unchanged from the sheets' script. Persona versions: Leo 0.3.0, Maya and Arthur
+0.2.0 (Arthur's module sitting too). Numbering continues at F-032, O-BH and H-5.
+
+### Friction by source (five sittings)
+
+| Sheet | Final | Reading | Rejections (+2) | Mode confusion | Gates cleared | Turns | Notes |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| leo-7 | 9 (quit) | 1 | 8 (four) | 0 | 0 | 20 of 240 | scripted (a) `/echo hello`, (b) `dtae` performed; (c) not reached |
+| maya-7 | -5 | 0 | 0 | 0 | -5 | 169 of 240 | finale |
+| arthur-7 | -3 | 0 | 2 (one) | 0 | -5 | 187 of 240 | finale |
+| maya-env-7 | -2 | 0 | 0 | 0 | -2 | 30 of 90 | `env` cleared |
+| arthur-shells-7 | -2 | 0 | 0 | 0 | -2 | 16 of 70 | `shells` cleared |
+
+### Round-6 items closed (with evidence)
+
+Read from the script and checked on the sheets:
+
+- **F-031 closed.** `no, the changes were thrown away` and `the file did not
+  change` are now accepted at Stage 5 Q3 (`2553`; probed); `no, it changed` stays
+  rejected. Maya and Arthur passed Q3.
+- **O-AY closed.** 2.5 now types `cd stage1`, `ls ..` ("your practice folder"),
+  `cd ..` and `echo ~`; the sheets show no wall of names or empty listing.
+- **O-BA closed.** 3.1 says "This stage has a folder of its own. Make your files
+  here." No sheet was misled.
+- **O-BB closed.** 2.3 says `cd` "usually prints nothing" and `cd -` "prints the
+  place".
+- **O-BC closed.** The Stage 1 cleared list no longer names `clear` and the Stage 2
+  list no longer names `cd ~` (`stage_recap`).
+- **O-BD half-closed.** 5.3's line now reads "Type next to try them in Vim"
+  (`2429`), which is still not what `next` does (O-BI).
+- **O-BF closed.** 1.3 now says `pwd` "prints" in the present tense.
+- **O-BE partly closed.** `seq` now has a gloss ("seq prints 1 to 100; wc -l counts
+  the lines", `2129`); `glob` and `streams` remain (O-BE stands for those two).
+
+### Findings (reproduced)
+
+- **F-032 — Stage 1 Q2 rejects the one-word answers a child gives, and its hint
+  steers to one of them.** Severity 2. Leo typed `folder` (true to what `pwd`
+  printed) and then `where`, "following the hint literally"; both were rejected
+  with the same hint twice. The hint is "Lesson 1.3: pwd answers a where question,
+  not a who question." (`1372`; F-020 and F-025's class: a hint whose own word is
+  rejected). Reproduced through `recall_matches` (`1370`; exact forms are phrases;
+  the group needs `the folder`, `a folder`, `the directory`, `where i am`,
+  `where you are`, ... and a `--reject` list `cloud|python|user|browser|phone`):
+
+  | Input | Result |
+  | --- | --- |
+  | `folder`, `where`, `directory`, `path`, `here`, `a directory`, `location`, `the place` | reject |
+  | `the folder`, `a folder`, `where you are`, `the directory`, `current folder` | accept |
+
+  WP-24 removed bare words to close F-029, which is why they fail. Which could
+  return without reopening a false accept (probed by adding each bare word and
+  testing wrong answers that contain it): **as exact forms all of them**, because
+  an exact form matches only the whole answer: `folder`, `where`, `directory`,
+  `path`, `here`, `a directory`, `location` as exact forms accept only themselves and
+  leave `where the program is`, `where is the manual`, `the path of the program`,
+  `directory of files` rejected. **As group words (containment) three would
+  reopen it**: `where` newly accepts `where the program is`, `where is the manual`,
+  `where the file is`; `path` newly accepts `the path of the program` and `a path to
+  a file`; `directory` newly accepts `directory of files`. `folder`, `here` and
+  `location` add nothing new to the group (`folder` alone accepts only itself).
+  Residual false accepts already present at this question: `the folder of the
+  manual`, `a file in a folder`, `the date and the folder`, `the directory
+  listing`. *Closes when*: the bare words go in as exact forms (not group words),
+  the hint stops naming a word to type, and the corpus gains the residual
+  rejects. Sheets: leo F-a, F-b.
+- **F-033 — The `shells` lesson's `ps -o pid,comm` claims are not true.**
+  Severity 2. Lesson 1/3 (`2870-2872`) says the command shows "the programs on
+  this terminal, by name" and "Two of those lines are shells: the tutor's own, and
+  the one you are typing into"; the cleared list repeats the first claim (`3048`).
+  Arthur's sitting printed 96 rows. Findings, no listing pasted:
+  - **Controlling terminal (H-5 is not a finding).** `sitting.py` and `run.py`'s
+    driver open the pty identically: `pty.openpty()`, then in the child `os.setsid()`
+    and `ioctl(TIOCSCTTY)` (`sitting.py:239-240`, `driver.py:247-249`); `ps -o tty=
+    -p $$` in the practice shell names the pty under `sitting.py`. Both have a
+    controlling terminal. Run through `run.py --module shells` with extra lesson
+    commands and through `sitting.py`: `ps -o pid,comm | wc -l` and plain `ps | wc -l`
+    each printed 89 on this macOS host (27.0.1) under both; selecting the tutor's own
+    terminal with `ps -o pid,tty,comm -t <tty>` printed 5 rows (header, two `/bin/bash`
+    rows, `ps`, `cut`/`wc`) under both.
+  - **What a macOS learner sees.** The BSD `ps` on macOS with no selection lists
+    all of the user's processes that have a controlling terminal, on every
+    terminal window and tab, not only the invoking one. The row count equals the
+    count on this machine: about ninety here because many other sessions are open;
+    a learner with one terminal window would see the rows of that window plus any
+    other terminals they have. In a launch from a parent zsh (a pty driver that starts
+    the tutor from `zsh -c`, as a terminal window does) the tty-selected shell rows
+    were named `-zsh` (the login shell, leading dash) and `/bin/bash` twice (the tutor
+    and the practice shell): three shells, not two. Plain `ps` printed 91 there.
+  - **Linux (reasoned from POSIX, not run).** procps `ps` with no selection lists the
+    processes with the same effective user and the same controlling terminal, so the
+    first claim holds; the shell rows are the login shell that started the tutor, the
+    tutor and the practice shell, named `bash` (or `zsh`) each: three, so the second
+    claim is false there too. Under `sitting.py` and `run.py` there is no parent shell
+    on the pty (the tutor is the session leader), which is why `-t` selects exactly
+    two and the claim looks true in the harness.
+  *Closes when*: the lesson selects the terminal (`ps -t "$(ps -o tty= -p $$)"`) and
+  says "three" or does not count shells, or uses a command with a bounded output.
+  Sheets: arthur-shells F-a, O-a.
+
+### Observations (reproduced)
+
+- **O-BH — The `/echo hello` reply never names the slash.** Reproduced: `bash:
+  /echo: No such file or directory`. 1.4 explains it three screens later ("A
+  stray / in front or a missing space earns the same kind of message: read it,
+  then type the line again", `1205-1206`). Leo recovered by comparing with the
+  screen; this is O-R's history (rounds 1 and 2). Sheets: leo O-a.
+- **O-BI — 5.3 says "Type next to try them in Vim", and `next` opens no Vim.**
+  (`2429`; `next` moves to 5.4 where the tries are.) The round-6 rewording kept
+  the mismatch. Sheets: maya F-001.
+- **O-BJ — The env 5/6 aside covers only the unset case.** The lesson (`3192-3200`)
+  says of `echo "[$SHELLTUTOR_HOME]"`: "[] means: not set, so the default is used".
+  Reproduced with the variable unset before launch (a pty driver, `HOME` a scratch
+  folder, `SHELLTUTOR_HOME` removed from the environment): the line printed `[]` and `pwd`
+  was `<home>/.shelltutor/env`. A default learner therefore sees `[]` and the
+  aside holds. A learner who sets it, including by the lesson's own example
+  `SHELLTUTOR_HOME=~/practice ./shelltutor`, and every harness run (the harness
+  sets it) sees a path, which the aside does not describe. Sheets: maya-env F-a.
+- **O-BK — Two typos the lessons do not cover.** Reproduced in the practice shell:
+  `cd .\practice` → `bash: cd: .practice: No such file or directory` (the
+  backslash vanishes), and `:q<Enter>` typed literally in Vim → `E488: Trailing
+  characters: <Enter>` (Vim's splash prints `:q<Enter>`; 5.2 says "type :q and
+  press Enter"). Sheets: arthur O-001, O-002.
+- **O-BL — "each screen is a new shell" arrives before its explanation.** env 2
+  (`3137`, comment "set it again: each screen is a new shell") precedes env 6
+  ("The prompt went back because each screen starts a fresh shell"). Sheets:
+  maya-env O-a.
+- **O-BM — A passing `check` shows no checklist.** Reproduced on `shells`: the
+  passing `check` goes straight to the cleared screen; a failing one prints the
+  `[ ]`/`[✓]` list (the Stage 3 first `check` printed `[ ] done.txt has hello`,
+  `[✓] notes.txt gone`, `[✓] backup.txt gone`). Sheets: maya-env O-f,
+  arthur-shells O-c.
+- **O-BN — "Home" is not used for two folders in the lessons.** 2.1 never says
+  home; 2.4 says "home is outside your practice folder". The two meanings Maya
+  saw are the harness's folder names (`...sim-home...` for the practice folder and
+  `...sim-userhome...` for the stand-in home). Not reproduced as wording; a layout
+  artefact. Sheets: maya O-002.
+- **O-BO — The 2.4 `cd <folder>` line still wraps with the sim path.** The line is now
+  `  cd <practice folder>` (5 columns plus the path): 82 columns for the 77-character
+  sim path, within 80 for the default `~/.shelltutor`. Note only (expected). Sheets:
+  arthur O-008.
+- **O-BP — `touch my notes.txt` in 3.1 succeeds silently and 4.2 explains it a stage
+  later.** Reproduced: it creates `my` and `notes.txt`. Sheets: maya O-001.
+
+### Persona calibration (simulation, not the tutor)
+
+Rule 6 (`docs/sim-personas/README.md`): "+2 for a rejected input the persona does
+not understand; … −1 for a gate cleared; **quit at 8**". Leo v0.3 (a): "The first
+command of each stage is typed with a leading slash, and he retypes it correctly
+only after reading the error"; (b): "The first recall answer at each gate is a
+one-word guess taken from the last command he typed. It is scored per rule 6 (a
+rejection he does not understand costs +2; an accepted guess costs nothing)."
+leo-7 applied both: `/echo hello` +2 and `dtae` +2, each recovered in one further
+input, then `folder` +2 and `where` +2, with one reading +1 = 9. The sheet followed
+the text. If scripted errors that recover within one input scored 0, Leo's
+friction would be 1 (reading) + 4 (`folder`, `where`) = 5 when he quit, below the
+threshold of 8: he would have reached Q3 and the task and performed (c). Whether
+the two scripted charges should be 0 is a rules choice for the calibration
+history; the sitting is not wrong under the current text. (c) was mandatory but
+not reached because the sitting ended first.
+
+### Not reproduced
+
+- **maya F-003** (the Stage 3 task step "create notes.txt" satisfied by a stray
+  `notes.txt`). `stage3_gate` removes `notes.txt`, `backup.txt` and `done.txt` at
+  gate entry (the `rm -f` in `stage3_gate`, `1978`; round 5, O-AU). Reproduced
+  now: after `touch my notes.txt` in 3.1, `ls -p` at the task shows only `my` (the
+  `notes.txt` is gone; `my` stays), and the first `check` with nothing done lists `[ ]
+  done.txt has hello` with `notes.txt gone` and `backup.txt gone` ticked. So the stray
+  `notes.txt` satisfies nothing; the stray `my` remains harmlessly.
+- **maya O-006** (a copy of `poem.txt` in each stage folder): true by design
+  (`setup_stage_dir` seeds stage 4 and later); no lesson contradicts it.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-a, F-b (Q2 `folder`, `where`) | F-032 |
+| leo | O-a `/echo hello` | O-BH |
+| leo | O-b Q1 hint to an unopenable lesson; O-c reading charge; O-d "in words" vs symbols | O-AV (recurring); no new item |
+| maya | F-001 5.3 "try them in Vim" | O-BI |
+| maya | F-002 Vim capture | H-3 |
+| maya | F-003 stray notes.txt | not reproduced |
+| maya | O-001 spaces in names | O-BP |
+| maya | O-002 two "home" folders | O-BN |
+| maya | O-003 shell moved between tasks | O-AG/O-AV (recurring) |
+| maya | O-004 Stage 2 Q3 fact in a skipped paragraph | O-AV (recurring) |
+| maya | O-005 keys unchecked | O-V (by design) |
+| maya | O-006 poem copy per stage | not reproduced (by design) |
+| arthur | O-001 `cd .\practice`; O-002 `:q<Enter>` | O-BK |
+| arthur | O-003 `.`/`..` before 2.5; O-004 `streams`; O-006 install terms | O-BE/O-AV (recurring) |
+| arthur | O-005 Esc invisible | H-3 |
+| arthur | O-007 task folder ambiguity | O-AV (recurring) |
+| arthur | O-008 2.4 line wraps | O-BO |
+| maya-env | F-a `[]` aside | O-BJ |
+| maya-env | O-a new shell; O-f no checklist | O-BL; O-BM |
+| maya-env | O-b, O-c, O-d, O-e | O-AV (quoting, login shell, "in words"; no new item) |
+| arthur-shells | F-a `ps -o pid,comm` | F-033 |
+| arthur-shells | O-a "two shells" | F-033 |
+| arthur-shells | O-b `pipes` undefined | O-BE (terms) |
+| arthur-shells | O-c silent `>`, no pass line | O-BM |
+| arthur-shells | O-d "a window" option | not a defect (option list by design) |
