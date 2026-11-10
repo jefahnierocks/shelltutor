@@ -910,3 +910,30 @@ the real functions and `ask_question` calls from `shelltutor`):
 | arthur | O-006 notes.txt exists | O-AU (not reproduced as stated) |
 | arthur | O-008 "count" two readings | O-AT |
 | arthur | O-010 insert mode invisible | H-3 |
+
+## Operator review of the rendered welcome (2026-11-09, after WP-25)
+
+Human review by the operator of the welcome screen at `dd297d2` (macOS, 80
+columns). Full text: `docs/operator-review-welcome-2026-11-09.md`.
+
+- **O-AW — The course-map row under the welcome box runs together.** Five
+  stage names separated by double spaces read as one sentence, and the dots
+  have no label (`shelltutor` welcome, the row after the box). The consultant
+  response §5.3 proposed it; the proposal does not fit 80 columns with
+  findable separators. *Closes when*: the map is vertical, inside the box,
+  one stage per row with its own dot (WP-27).
+- **O-AX — The sandbox path row is jargon on the welcome and a missed
+  lesson.** A `Sandbox:` row with a long path sits under the box; "sandbox"
+  is undefined for a beginner and over-claims isolation. *Closes when*: the
+  row leaves the welcome, on-screen copy says "practice folder" (WP-27), and
+  the practice folder becomes a recurring teaching object in Stage 1 `pwd`,
+  the Stage 2 tree and `cd`, Stage 3 and the `env` module (WP-26 and the
+  `env` follow-up). Relates to O-AG/O-AV (the prompt folder changes at gate
+  tasks without a word).
+
+Check requested by the review: the default practice folder is
+`$HOME/.shelltutor` (`shelltutor:62`), so it sits under home and the `~`
+lesson can use it; the `/var/folders/...` path in the screenshot came from
+the coordinator's suggested `SHELLTUTOR_HOME=$(mktemp -d)` run command, not
+from a learner default. Note the default is a dot-folder, hidden from plain
+`ls`, which the Stage 2 `ls -a` lesson can use.

@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.11.0
+version: 0.12.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -931,6 +931,33 @@ and go to WP-26, drafted now, scheduled after WP-25 with one synthetic
 round as its evidence. A3's 20/22-row budgets are superseded by the
 19-row panel (body ≤ 12) once WP-26 has brought the over-budget screens
 down; until then WP-25 enforces a 21-row cap and reports the excess.
+
+### A12 — Operator review of the welcome; the practice-folder thread (2026-11-09)
+
+Recorded from `docs/operator-review-welcome-2026-11-09.md` (O-AW, O-AX in
+`audit/2026-11-09/walkthroughs.md`). Where A12 differs from the consultant
+response as adopted by A11, A12 governs.
+
+- **Welcome (WP-27, rendering).** The course map is vertical, inside the
+  box, one stage per row with its own dot; the dots-and-names row and the
+  `Sandbox:` row under the box are removed; the lead-in, safety and no-score
+  sentences are as the review's mock-up. On resume, passed stages show `●`
+  in the map (adopted, not optional: it is cheap and gives the header dots
+  their meaning).
+- **Vocabulary.** On screen the folder is the "practice folder", never the
+  "sandbox". `sandbox` stays in code (`$SANDBOX`), contracts and docs. `-h`
+  and `--info` labels follow; the path stays in `--info`.
+- **Curriculum thread (WP-26 and the `env` module).** The practice folder
+  is a recurring teaching object: discovered with `pwd` in Stage 1; named as
+  the "you are here" folder's full path at the Stage 2 tree; returned to by
+  full name and by `~` in the `cd` lesson; shown to hold the tutor's files
+  and the learner's own in Stage 3; and configured through
+  `SHELLTUTOR_HOME` in `env`. The default is `$HOME/.shelltutor`, a hidden
+  folder under home, which the `ls -a` lesson may use. The thread also closes
+  O-AG/O-AV: every gate task says in one line which folder it runs in.
+- **Process.** The coordinator's suggested review command now uses the
+  default folder or a path under `$HOME`, not `mktemp`, so what the operator
+  sees is what a learner sees.
 
 ## Cross-references
 

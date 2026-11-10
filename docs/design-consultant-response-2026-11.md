@@ -214,6 +214,11 @@ shelltutor>
 
 ### 5.3 Welcome — identity line and course map
 
+> Superseded 2026-11-09 by `docs/operator-review-welcome-2026-11-09.md`
+> (O-AW, O-AX; amendment A12): the course map is vertical and inside the
+> box, the dots row and the sandbox row are removed, and on-screen copy says
+> "practice folder". The mock-up below is kept as the record of the proposal.
+
 ```text
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │  shelltutor                                         working in a Unix shell  │
@@ -398,6 +403,11 @@ shelltutor>
 ```
 
 ### 6.3 Welcome
+
+> Superseded 2026-11-09 by `docs/operator-review-welcome-2026-11-09.md`
+> (O-AW, O-AX; amendment A12): the course map is vertical and inside the
+> box, the dots row and the sandbox row are removed, and on-screen copy says
+> "practice folder". The mock-up below is kept as the record of the proposal.
 
 ```text
 +------------------------------------------------------------------------------+
