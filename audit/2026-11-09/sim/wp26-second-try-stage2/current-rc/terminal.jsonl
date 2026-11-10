@@ -1,0 +1,244 @@
+{"ts": 0.031708, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.033165, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m \u001b[90m──\u001b[0m\r\n\r\n", "len": 282}
+{"ts": 0.033245, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mStage 2: Paths\u001b[0m\r\n\r\nSix short lessons, then a task. The shell is always standing in one\r\nfolder. You'll learn to see where, look around, and move.\r\n\r\n\u001b[93m▶ Type \u001b[92mnext\u001b[93m for lesson 2.1.\u001b[0m\r\n\r\n", "len": 211}
+{"ts": 0.03643, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.036708, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.049925, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.050015, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.050042, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.054643, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.055974, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.1\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.056001, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.056083, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mWhere you are\u001b[0m\r\n\r\nYou are always standing in one folder: the \u001b[1mcurrent directory\u001b[0m. Here\r\n", "len": 104}
+{"ts": 0.056113, "dir": "out", "enc": "utf8", "data": "is your practice folder, drawn as a tree:\r\n  /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2  \u001b[93m◀ you are here\u001b[0m\r\n  ├── poem.txt\r\n  ├── numbers.txt\r\n  ├── stage1/\r\n  └── stage2/\r\n\r\n  \u001b[92mpwd\u001b[0m        \u001b[90m# predict what it prints, then run it\u001b[0m\r\nThe line \u001b[92mpwd\u001b[0m prints is the full name of the \"you are here\" folder.\r\n\r\n\u001b[93m▶ Run \u001b[92mpwd\u001b[93m, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 452}
+{"ts": 0.059154, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.059428, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.072215, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.072305, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.072327, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.07234, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2\r\n", "len": 79}
+{"ts": 0.072418, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.072442, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.072478, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.072497, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.076944, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.078247, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.2\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.078275, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.078344, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mWhat is here\u001b[0m\r\n\r\n\u001b[92mls\u001b[0m lists the names in the folder you are standing in.\r\n", "len": 91}
+{"ts": 0.078373, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mls\u001b[0m            \u001b[90m# the names\u001b[0m\r\n  \u001b[92mls -p\u001b[0m         \u001b[90m# the same, with / after each folder\u001b[0m\r\n  \u001b[92mls -a\u001b[0m         \u001b[90m# also the hidden names, which start with a dot\u001b[0m\r\n  \u001b[92mls /\u001b[0m          \u001b[90m# a folder you are not in: the top of everything\u001b[0m\r\n\r\nNotice stage1/ in the second listing: the slash means a folder you\r\ncould step into.\r\n\r\n\u001b[93m▶ Try all four, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 434}
+{"ts": 0.081567, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.081847, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.094732, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.094804, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.094824, "dir": "out", "enc": "utf8", "data": "ls\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.096971, "dir": "out", "enc": "utf8", "data": "numbers.txt\tpoem.txt\tstage1\t\tstage2\r\n", "len": 37}
+{"ts": 0.09724, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.097278, "dir": "in", "enc": "utf8", "data": "ls -p\n", "len": 6}
+{"ts": 0.097297, "dir": "out", "enc": "utf8", "data": "ls -p\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.099139, "dir": "out", "enc": "utf8", "data": "numbers.txt\tpoem.txt\tstage1/\t\tstage2/\r\n", "len": 39}
+{"ts": 0.099385, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.099411, "dir": "in", "enc": "utf8", "data": "ls -a\n", "len": 6}
+{"ts": 0.099429, "dir": "out", "enc": "utf8", "data": "ls -a\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.101171, "dir": "out", "enc": "utf8", "data": ".\t\t\tnumbers.txt\t\tstage2\r\n..\t\t\tpoem.txt\r\n.shelltutor_history\tstage1\r\n", "len": 68}
+{"ts": 0.101382, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.101393, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.101416, "dir": "in", "enc": "utf8", "data": "ls /\n", "len": 5}
+{"ts": 0.101432, "dir": "out", "enc": "utf8", "data": "ls /\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.10323, "dir": "out", "enc": "utf8", "data": "Applications\tVolumes\t\tetc\t\tprivate\t\tvar\r\nLibrary\t\tbin\t\thome\t\tsbin\r\nSystem\t\tcores\t\topt\t\ttmp\r\nUsers\t\tdev\t\tpkg\t\tusr\r\n", "len": 114}
+{"ts": 0.10349, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.103556, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.103603, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.109324, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.110828, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.3\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.110871, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.110927, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mMoving\u001b[0m\r\n\r\n\u001b[92mcd\u001b[0m changes the folder you are standing in. It prints nothing; \u001b[92mpwd\u001b[0m\r\n", "len": 106}
+{"ts": 0.110963, "dir": "out", "enc": "utf8", "data": "shows that it worked.\r\n\r\n  \u001b[92mcd ..\u001b[0m      \u001b[90m# up one level, to the folder that contains this one\u001b[0m\r\n  \u001b[92mpwd\u001b[0m        \u001b[90m# see where you are now\u001b[0m\r\n  \u001b[92mcd -\u001b[0m       \u001b[90m# back to where you just were\u001b[0m\r\n\r\n\u001b[92mcd..\u001b[0m with no space is a different word, and bash cannot find it.\r\n\r\n\u001b[93m▶ Try all three, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 364}
+{"ts": 0.114353, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.114642, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.127844, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.127963, "dir": "in", "enc": "utf8", "data": "cd ..\n", "len": 6}
+{"ts": 0.127992, "dir": "out", "enc": "utf8", "data": "cd ..\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.128108, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.128122, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.128168, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.128187, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.1282, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T\r\n", "len": 50}
+{"ts": 0.128272, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.128333, "dir": "in", "enc": "utf8", "data": "cd -\n", "len": 5}
+{"ts": 0.128361, "dir": "out", "enc": "utf8", "data": "cd -\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.12838, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2\r\n", "len": 79}
+{"ts": 0.128443, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.128456, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.128482, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.128502, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.133753, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.1351, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.4\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.135134, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.135205, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mHome and back\u001b[0m\r\n\r\nEvery user has a home folder. \u001b[1m~\u001b[0m is its short name.\r\n", "len": 88}
+{"ts": 0.135241, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mcd\u001b[0m                 \u001b[90m# with nothing after it: go home\u001b[0m\r\n  \u001b[92mpwd\u001b[0m                \u001b[90m# home is outside your practice folder\u001b[0m\r\n  \u001b[92mcd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2\u001b[0m  \u001b[90m# come back, using the folder's full name\u001b[0m\r\n\r\nA full name works from anywhere. That is what makes it a full name.\r\n\r\n\u001b[93m▶ Go home and come back, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 437}
+{"ts": 0.138372, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.138661, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.151551, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.15165, "dir": "in", "enc": "utf8", "data": "cd\n", "len": 3}
+{"ts": 0.151676, "dir": "out", "enc": "utf8", "data": "cd\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.151789, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.151803, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.151832, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.151849, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.151861, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-userhome-iipdpp_4\r\n", "len": 83}
+{"ts": 0.151926, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.151937, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.151964, "dir": "in", "enc": "utf8", "data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2\n", "len": 81}
+{"ts": 0.152081, "dir": "out", "enc": "utf8", "data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-ho\rome-q6eaxor2\r\n", "len": 84}
+{"ts": 0.152096, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.152185, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.152196, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.152218, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.152234, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.156998, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.158458, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.5\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.158488, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.15856, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mNames for places\u001b[0m\r\n\r\nA \u001b[1mpath\u001b[0m names a place. Three short names:\r\n", "len": 81}
+{"ts": 0.158585, "dir": "out", "enc": "utf8", "data": "  \u001b[1m.\u001b[0m     here, the current directory\r\n  \u001b[1m..\u001b[0m    one level up\r\n  \u001b[1m~\u001b[0m     your home folder\r\n\r\nA \u001b[1mrelative\u001b[0m path starts where you are: in ~/projects, the name notes\r\nmeans ~/projects/notes. An \u001b[1mabsolute\u001b[0m path starts from /, the top:\r\n/usr/bin is the same place wherever you stand.\r\n  \u001b[92mls ..\u001b[0m      \u001b[90m# look one level up without moving\u001b[0m\r\n  \u001b[92mls ~\u001b[0m       \u001b[90m# look at home without moving\u001b[0m\r\n\r\n\u001b[93m▶ Try both, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 493}
+{"ts": 0.161608, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.161887, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.174375, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.174442, "dir": "in", "enc": "utf8", "data": "ls ..\n", "len": 6}
+{"ts": 0.174462, "dir": "out", "enc": "utf8", "data": "ls ..\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.18661, "dir": "out", "enc": "utf8", "data": "AudioComponentRegistrar\r\nAudioConverterService\r\nCSExattrCryptoService\r\nCrashHandlerService\r\nD3837827-1856-4A41-8FD5-2179C1974599.png\r\nReportCrashService\r\nRtmp83au9Y\r\nRtmpT8IMUH\r\nRtmpTA59fU\r\nRtmpjfVP3u\r\n", "len": 202}
+{"ts": 0.18665, "dir": "out", "enc": "utf8", "data": "RtmpuPrSzi\r\nRtmpxwjNVr\r\nSandboxHelper\r\nStatusKitAgent\r\nTemporaryItems\r\nall-wp12-bash32\r\nassessmentagent\r\nb32\r\nb32-1\r\nb32-all\r\nbase\r\nbase-cms.yml\r\nbase-deploy.yml\r\nbefore202.status\r\nbetaenrollmentagent\r\nbody.md\r\nbuild.log\r\nbunx-501-biome@latest\r\nbunx-501-prettier@latest\r\nbunx-501-vitest@latest\r\nc1\r\nc1.out\r\nc2\r\nc2.out\r\ncall\r\nccd-ssh.501\r\ncheck.log\r\ncitadel-pr-integration-cyuk3ug0\r\ncitadel-pr249-delivery-ve7x8wz9\r\ncitadel-pr249-integrate-6g_1jctb\r\ncitadel-pr249-verify-viu1v6ns\r\ncitadel-pr269-verify-890taoe4\r\ncitadel-pr275-verify-_984si_m\r\ncitadel-substrate-ay8cjpey\r\ncline\r\ncmpl.txt\r\ncom.1password.1password\r\n", "len": 612}
+{"ts": 0.186669, "dir": "out", "enc": "utf8", "data": "com.agilebits.op.501\r\ncom.apple.AppSSOAgent\r\ncom.apple.Archetype.textcontextd\r\ncom.apple.AuthenticationServices.ASConfigurationSubscriber\r\ncom.apple.BiomeAgent\r\ncom.apple.CloudDocs.iCloudDriveFileProvider\r\ncom.apple.CloudDocsDaemon.container-metadata-extractor\r\ncom.apple.CoreGraphics.CGPDFService\r\ncom.apple.FaceTime.FTConversationService\r\ncom.apple.FeatureAccessAgent\r\ncom.apple.GameController.gamecontrolleragentd\r\ncom.apple.GamePolicyAgent\r\ncom.apple.GenerativeFunctions.agentstored\r\n", "len": 488}
+{"ts": 0.186691, "dir": "out", "enc": "utf8", "data": "com.apple.GenerativeFunctions.generativeexperiencesd\r\ncom.apple.MTLCompilerService\r\ncom.apple.ManagedSettingsAgent\r\ncom.apple.Maps.mapssyncd\r\ncom.apple.PrintKit.PrinterTool\r\ncom.apple.ProtectedCloudKeySyncing\r\ncom.apple.RemoteManagementAgent\r\ncom.apple.SafariLaunchAgent\r\ncom.apple.ScopedBookmarkAgent\r\ncom.apple.SetStoreUpdateService\r\ncom.apple.TelephonyUtilities\r\ncom.apple.TestFlight.ServiceExtension\r\ncom.apple.ThreadCommissionerService\r\ncom.apple.TrustedPeersHelper\r\ncom.apple.WebKit.GPU+com.apple.quicklook.thumbnail.WebExtension\r\n", "len": 537}
+{"ts": 0.186707, "dir": "out", "enc": "utf8", "data": "com.apple.WebKit.GPU+com.apple.textkit.nsattributedstringagent\r\ncom.apple.WebKit.GPU+us.zoom.xos\r\ncom.apple.WebKit.Networking+com.apple.Safari.CacheDeleteExtension\r\ncom.apple.WebKit.Networking+com.apple.quicklook.thumbnail.WebExtension\r\ncom.apple.WebKit.Networking+com.apple.textkit.nsattributedstringagent\r\ncom.apple.WebKit.Networking+com.google.GeminiMacOS\r\ncom.apple.WebKit.Networking+us.zoom.xos\r\ncom.apple.WebKit.WebContent+com.apple.textkit.nsattributedstringagent\r\ncom.apple.WebKit.WebContent+us.zoom.xos\r\n", "len": 513}
+{"ts": 0.186724, "dir": "out", "enc": "utf8", "data": "com.apple.WebKit.WebContent.EnhancedSecurity+com.apple.quicklook.thumbnail.WebExtension\r\ncom.apple.WindowManager\r\ncom.apple.WorkflowKit.BackgroundShortcutRunner\r\ncom.apple.accessibility.mediaaccessibilityd\r\ncom.apple.adprivacyd\r\ncom.apple.akd\r\ncom.apple.amp.mediasharingd\r\ncom.apple.amsaccountsd\r\ncom.apple.amsengagementd\r\ncom.apple.amsondevicestoraged\r\ncom.apple.analyticsagent\r\ncom.apple.ap.adprivacyd\r\n", "len": 405}
+{"ts": 0.186748, "dir": "out", "enc": "utf8", "data": "com.apple.ap.promotedcontentd\r\ncom.apple.appleaccountd\r\ncom.apple.appleaccounttransparencyd\r\ncom.apple.appplaceholdersync\r\ncom.apple.appstoreagent\r\ncom.apple.asktod\r\ncom.apple.avatarsd\r\ncom.apple.avconferenced\r\ncom.apple.backgroundassets.managed.helper.service\r\ncom.apple.biomesyncd\r\ncom.apple.bird\r\ncom.apple.bluetoothuserd\r\ncom.apple.businessservicesd\r\ncom.apple.calaccessd\r\ncom.apple.campo\r\ncom.apple.chrono\r\ncom.apple.ciphermld\r\ncom.apple.cksharingmanagementd\r\ncom.apple.cloudd\r\ncom.apple.cloudkit.upload-request.cache\r\n", "len": 524}
+{"ts": 0.186766, "dir": "out", "enc": "utf8", "data": "com.apple.cmfsyncagent\r\ncom.apple.communicationtrustd\r\ncom.apple.corespeechd\r\ncom.apple.dataaccess\r\ncom.apple.devicecheckd\r\ncom.apple.dmd\r\ncom.apple.donotdisturbd\r\ncom.apple.email.maild\r\ncom.apple.facetimemessagestored\r\ncom.apple.familycircled\r\ncom.apple.filederivatived\r\ncom.apple.fileproviderd\r\ncom.apple.financed\r\ncom.apple.findmy.findmylocateagent\r\n", "len": 353}
+{"ts": 0.186786, "dir": "out", "enc": "utf8", "data": "com.apple.frauddefensed\r\ncom.apple.fskit.fskit_agent\r\ncom.apple.geoanalyticsd\r\ncom.apple.homeenergyd\r\ncom.apple.homeeventsd\r\ncom.apple.hybridsearchd\r\ncom.apple.iCloudNotificationAgent\r\ncom.apple.icloud.searchpartyuseragent\r\ncom.apple.iconservicesagent\r\ncom.apple.identityservicesd\r\ncom.apple.imagent\r\ncom.apple.imdpersistence.IMDPersistenceAgent\r\ncom.apple.imtranscoding.IMTranscoderAgent\r\ncom.apple.imtransferservices.IMTransferAgent\r\ncom.apple.inputanalyticsd\r\n", "len": 463}
+{"ts": 0.18681, "dir": "out", "enc": "utf8", "data": "com.apple.intelligenceflow.intelligencecontextd\r\ncom.apple.intelligenceflow.intelligenceflowd\r\ncom.apple.intelligenceplatform.IntelligencePlatformComputeService\r\ncom.apple.intelligenceplatformd\r\ncom.apple.intelligencetasksd\r\ncom.apple.intelligentroutingd\r\ncom.apple.jetpackassetd\r\ncom.apple.keychainsharingmessagingd\r\ncom.apple.knowledgeconstructiond\r\ncom.apple.linkd\r\ncom.apple.lockdownmoded\r\ncom.apple.managedappdistributionagent\r\ncom.apple.messagesescrowd\r\ncom.apple.milod\r\ncom.apple.naturallanguaged\r\ncom.apple.news.widgetintents\r\ncom.apple.nsurlsessiond\r\n", "len": 560}
+{"ts": 0.18683, "dir": "out", "enc": "utf8", "data": "com.apple.parsec-fbf\r\ncom.apple.parsecd\r\ncom.apple.passd\r\ncom.apple.pluginkit\r\ncom.apple.printtool.agent\r\ncom.apple.privatecloudcomputed\r\ncom.apple.proactiveeventtrackerd\r\ncom.apple.progressd\r\ncom.apple.quicklook.ThumbnailsAgent\r\ncom.apple.quicklook.qlmanage\r\ncom.apple.quicklook.satellite.general\r\ncom.apple.remindd\r\ncom.apple.remotemanagement.AccountSubscriber\r\ncom.apple.remotemanagement.DeviceConfigurationSubscriber\r\ncom.apple.remotemanagement.ExtensibleSSOSubscriber\r\n", "len": 474}
+{"ts": 0.18685, "dir": "out", "enc": "utf8", "data": "com.apple.remotemanagement.InteractiveLegacyProfilesSubscriber\r\ncom.apple.remotemanagement.LegacyProfilesSubscriber\r\ncom.apple.remotemanagement.ManagedAppsSubscriber\r\ncom.apple.remotemanagement.ManagedSettingsSubscriber\r\ncom.apple.remotemanagement.ManagementTestSubscriber\r\ncom.apple.remotemanagement.NetworkExtensionSubscriber\r\ncom.apple.remotemanagement.PasscodeSettingsSubscriber\r\ncom.apple.remotemanagement.ScreenSharingSubscriber\r\ncom.apple.remotemanagement.SecuritySubscriber\r\ncom.apple.remotespatialpreviewd\r\ncom.apple.replayd\r\ncom.apple.replicatord\r\ncom.apple.secureelementservice\r\n", "len": 590}
+{"ts": 0.186868, "dir": "out", "enc": "utf8", "data": "com.apple.securityuploadd\r\ncom.apple.sessionkit\r\ncom.apple.settings.search.indexing\r\ncom.apple.sharingd\r\ncom.apple.shazameventsd\r\ncom.apple.siri-distributed-evaluation\r\ncom.apple.siri.SuggestionsBookkeepingService\r\ncom.apple.siriactionsd\r\ncom.apple.siriappintents.siriappintentsd\r\ncom.apple.siriinferenced\r\ncom.apple.sirittsd\r\ncom.apple.sociallayerd\r\ncom.apple.speech.localspeechrecognition\r\ncom.apple.speechmaintenanced\r\n", "len": 422}
+{"ts": 0.186888, "dir": "out", "enc": "utf8", "data": "com.apple.stickersd\r\ncom.apple.storekit\r\ncom.apple.studentd\r\ncom.apple.syncdefaultsd\r\ncom.apple.tccd\r\ncom.apple.textcomposerd\r\ncom.apple.textunderstandingd\r\ncom.apple.tipsd\r\ncom.apple.translationd\r\ncom.apple.transparencyd\r\ncom.apple.trial.TrialArchivingService\r\ncom.apple.triald\r\ncom.apple.trustd\r\ncom.apple.useractivityd\r\ncom.apple.usernotificationsd\r\ncom.apple.weatherd\r\n", "len": 373}
+{"ts": 0.186906, "dir": "out", "enc": "utf8", "data": "com.exafunction.windsurf.ShipIt.VCcRonB1\r\ncom.google.Chrome.oIzRdI\r\ncom.google.GeminiMacOS\r\ncom.microsoft.VSCode.ShipIt.2eGVlf7t\r\ncom.openai.codex.1ZkY8W\r\ncom.openai.codex.2fcdSs\r\ncom.openai.codex.3ZdGPA\r\ncom.openai.codex.6g3y0X\r\ncom.openai.codex.AWUoxS\r\ncom.openai.codex.Amnlcb\r\ncom.openai.codex.CLeZel\r\ncom.openai.codex.EqQ45n\r\ncom.openai.codex.GZSzCQ\r\ncom.openai.codex.IlzxVU\r\ncom.openai.codex.JrsZ4D\r\n", "len": 405}
+{"ts": 0.186922, "dir": "out", "enc": "utf8", "data": "com.openai.codex.MXhFVR\r\ncom.openai.codex.TWGeCx\r\ncom.openai.codex.ULaqiY\r\ncom.openai.codex.XaKbpU\r\ncom.openai.codex.XmJiDA\r\ncom.openai.codex.ZcTLPG\r\ncom.openai.codex.bVHilk\r\ncom.openai.codex.bWIiVb\r\ncom.openai.codex.eVnfCy\r\ncom.openai.codex.kXdsDN\r\ncom.openai.codex.lzlnZz\r\ncom.openai.codex.mpCKOh\r\ncom.openai.codex.oAQpbS\r\n", "len": 325}
+{"ts": 0.186939, "dir": "out", "enc": "utf8", "data": "com.openai.codex.spgXAD\r\ncom.openai.codex.uatePv\r\ncom.openai.codex.wX5rMY\r\ncom.openai.codex.zQ1wFH\r\ncom.openai.sky.CUAService\r\ncom.todesktop.230313mzl4w4u92.ShipIt.bpGO7Mjd\r\ncom.todesktop.230313mzl4w4u92.ShipIt.eGO5lbSc\r\ncommit.out\r\ncontentlinkingd\r\ncst\r\ncursor-sandbox-cache\r\ndiagnosticextensionsd\r\nduetexpertd\r\ne2e.log\r\n", "len": 322}
+{"ts": 0.186956, "dir": "out", "enc": "utf8", "data": "ed.sh\r\nf-build.log\r\nf-policy:check.log\r\nf-validate:all.log\r\nf1.out\r\nf2.out\r\nfresh\r\ng-policy:check.log\r\ng-validate:all.log\r\ng1.out\r\ng2.log\r\ng2.out\r\ng3.log\r\ngate-aider-analytics.log\r\ngate-llm-boundary.log\r\ngate-summary.txt\r\n", "len": 222}
+{"ts": 0.186973, "dir": "out", "enc": "utf8", "data": "gate.log\r\ngate2.log\r\ngate3.log\r\ngate4.log\r\ngate5.log\r\ngate6.log\r\ngate7.log\r\ngitkraken\r\ngw.bak\r\nheard\r\nhk\r\nhomed\r\nhosted1\r\nhosted2\r\niTerm2.instance.com.googlecode.iterm2.lock\r\nicdd\r\nitem4-out-l6nuswoc\r\n", "len": 201}
+{"ts": 0.18699, "dir": "out", "enc": "utf8", "data": "item4-sandbox-jwgtd8gi\r\nitem4-userhome-ou4rujt9\r\nitunescloudd\r\nlg-act-4-build2.log\r\nlg-act-4-node-adapter.log\r\nlg-act-4-pr-body.md\r\nlg-act-4-stream.log\r\nlg9b-build2.log\r\nlg9b-e2e2.log\r\nlg9b-integ2.log\r\nllmgw-observe-3bkxWC\r\nllmgw-observe-6kpCWm\r\nm15-quarantine-feed-01frcmcm\r\nm15-quarantine-feed-0e17l0gh\r\n", "len": 306}
+{"ts": 0.187007, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-0ea98soi\r\nm15-quarantine-feed-0mfnkr_5\r\nm15-quarantine-feed-0rb_g38m\r\nm15-quarantine-feed-1dwh1aua\r\nm15-quarantine-feed-1t6fmj7p\r\nm15-quarantine-feed-2kpf7way\r\nm15-quarantine-feed-2tdsd9w4\r\nm15-quarantine-feed-2vqinnch\r\nm15-quarantine-feed-4ozed5o3\r\nm15-quarantine-feed-4qliqhwf\r\nm15-quarantine-feed-4swgwj07\r\nm15-quarantine-feed-4x20kjdz\r\nm15-quarantine-feed-5u1yq7lq\r\n", "len": 390}
+{"ts": 0.187028, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-67lsgzk4\r\nm15-quarantine-feed-6ea2z57d\r\nm15-quarantine-feed-6pqqxjqn\r\nm15-quarantine-feed-87fv58sk\r\nm15-quarantine-feed-8cs9tfy6\r\nm15-quarantine-feed-8ig8zsvp\r\nm15-quarantine-feed-9u4wrh2y\r\nm15-quarantine-feed-_mmvrf2q\r\nm15-quarantine-feed-abyq1_98\r\nm15-quarantine-feed-bqrcepu4\r\nm15-quarantine-feed-bwrxx5mo\r\nm15-quarantine-feed-bxmmgktm\r\nm15-quarantine-feed-ce2esdw9\r\nm15-quarantine-feed-ci2d54jf\r\nm15-quarantine-feed-cng7brwg\r\nm15-quarantine-feed-cq_1ozoh\r\n", "len": 480}
+{"ts": 0.187051, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-d23iio23\r\nm15-quarantine-feed-db1wtnhj\r\nm15-quarantine-feed-dbojhphc\r\nm15-quarantine-feed-dpr49oqf\r\nm15-quarantine-feed-e59hapnw\r\nm15-quarantine-feed-eqxvdog9\r\nm15-quarantine-feed-esm8ymmw\r\nm15-quarantine-feed-etsb3hsn\r\nm15-quarantine-feed-f8092npw\r\nm15-quarantine-feed-fcejcs2d\r\nm15-quarantine-feed-fpsmps8o\r\nm15-quarantine-feed-g88o34yh\r\nm15-quarantine-feed-giimpgo5\r\nm15-quarantine-feed-gqefxw1s\r\nm15-quarantine-feed-h59c9sij\r\nm15-quarantine-feed-hbiirx99\r\nm15-quarantine-feed-hona0rw_\r\n", "len": 510}
+{"ts": 0.187069, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-hz_dwkta\r\nm15-quarantine-feed-j0lhezs7\r\nm15-quarantine-feed-jgxcn4hy\r\nm15-quarantine-feed-lhcug51s\r\nm15-quarantine-feed-lu_p1zhx\r\nm15-quarantine-feed-ms45ubpn\r\nm15-quarantine-feed-n5qoswsp\r\nm15-quarantine-feed-ne1bmind\r\nm15-quarantine-feed-nl97jk27\r\nm15-quarantine-feed-nr54lvd0\r\nm15-quarantine-feed-o8opnai_\r\nm15-quarantine-feed-o9ukjlzu\r\nm15-quarantine-feed-oheuwzbe\r\nm15-quarantine-feed-onps1usn\r\n", "len": 420}
+{"ts": 0.187086, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-p96bbsee\r\nm15-quarantine-feed-pu3f3ayo\r\nm15-quarantine-feed-rnxjm3qg\r\nm15-quarantine-feed-rqoh8bw9\r\nm15-quarantine-feed-s5_8z3j4\r\nm15-quarantine-feed-s__w9990\r\nm15-quarantine-feed-sa5ws4un\r\nm15-quarantine-feed-sv7w8l77\r\nm15-quarantine-feed-t0i78ka0\r\nm15-quarantine-feed-u3wq0kr6\r\nm15-quarantine-feed-ud2k3m6f\r\nm15-quarantine-feed-xa0jdmsu\r\nm15-quarantine-feed-xob9ounf\r\n", "len": 390}
+{"ts": 0.187102, "dir": "out", "enc": "utf8", "data": "m15-quarantine-feed-xvbh9xh3\r\nm15-quarantine-feed-xx6rb8vq\r\nm15-quarantine-feed-y0rfg5bk\r\nm15-quarantine-feed-y2npokng\r\nm15-quarantine-feed-yk8qe24z\r\nm15-quarantine-feed-z177ldv9\r\nm15-quarantine-feed-za_f9tx4\r\nm15-quarantine-feed-zfh2cjr0\r\nm15-quarantine-feed-zfip69xn\r\nmcp-3PZ6Wu\r\nmcp-ou92wX\r\nmcp-slaRgC\r\nmediaanalysisd-access\r\nmetrickitd\r\n", "len": 341}
+{"ts": 0.18712, "dir": "out", "enc": "utf8", "data": "mobiletimerd\r\nmsg.txt\r\nmsg2.txt\r\nnet.whatsapp.WhatsApp.ServiceExtension\r\nnode-compile-cache\r\norbstack-vmgr.501.lock\r\norig\r\nphase2-mac-1794106292\r\nphase2-mac-1794106373\r\npolicy.log\r\npolicy:check.log\r\npr1-gate.log\r\nptpcamerad\r\npurge.json\r\npytest-of-[user]\r\n", "len": 255}
+{"ts": 0.187137, "dir": "out", "enc": "utf8", "data": "python-languageserver-cancellation\r\nq1.log\r\nq2.log\r\nqualify:audit.log\r\nqualify:check.log\r\nqualify:setup.log\r\nrc\r\nrc-ctrl-l\r\nrc-ctrl-l2\r\nrot\r\nrot2\r\nrouter.bak\r\ns1\r\nsA\r\nschema.json\r\nselftest-matching.D18jEZ\r\nseq.sh\r\n", "len": 214}
+{"ts": 0.187154, "dir": "out", "enc": "utf8", "data": "shelltutor-sim-home-q6eaxor2\r\nshelltutor-sim-userhome-iipdpp_4\r\nshelltutor-sim-userhome-xp09rkvb\r\nshelltutor.full\r\nsim-linux-42439453955\r\nsrt-mux-14027-0.sock\r\nsrt-mux-14590-0.sock\r\nsrt-mux-26359-0.sock\r\nsrt-mux-27805-0.sock\r\nsrt-mux-29997-0.sock\r\nsrt-mux-3655-0.sock\r\nsrt-mux-3901-0.sock\r\nsrt-mux-47869-0.sock\r\nsrt-mux-48140-0.sock\r\nsrt-mux-51596-0.sock\r\n", "len": 356}
+{"ts": 0.187172, "dir": "out", "enc": "utf8", "data": "srt-mux-53663-0.sock\r\nsrt-mux-56327-0.sock\r\nsrt-mux-59371-0.sock\r\nsrt-mux-59817-0.sock\r\nsrt-mux-68966-0.sock\r\nsrt-mux-70248-0.sock\r\nsrt-mux-75488-0.sock\r\nsrt-mux-7786-0.sock\r\nsrt-mux-7795-0.sock\r\nsrt-mux-7808-0.sock\r\nsrt-mux-7818-0.sock\r\nsrt-mux-80359-0.sock\r\nsrt-mux-8771-0.sock\r\nsrt-mux-91250-0.sock\r\n", "len": 303}
+{"ts": 0.18719, "dir": "out", "enc": "utf8", "data": "ssh-askpass-242e2842-3d05-44e4-beb2-3bbe405b245a.sock\r\nssh-askpass-88b674b7-9a23-439a-81ce-b59e05da0ad0.sock\r\nssh-askpass-e34d2249-c2ac-406e-b8c3-b6010ffd740d.sock\r\nst2\r\nst2-32\r\nst2-53\r\nst_full\r\nstudentd\r\ntalagent\r\ntest:e2e.log\r\ntest:integration.log\r\ntmp.3459xXJnnY\r\ntmp.9vlHAJaPSY\r\ntmp.C8hvX9G6aw\r\ntmp.Gff7uwNnzC\r\ntmp.MugjlS5alV\r\n", "len": 331}
+{"ts": 0.187212, "dir": "out", "enc": "utf8", "data": "tmp.N4pws6FNNu\r\ntmp.OwUkQr0a2P\r\ntmp.UwBRkhaUY0\r\ntmp.VeJIgeYZTp\r\ntmp.dxYTHTnbFD\r\ntmp.f56Dh5NhfL\r\ntmp.gaZy8uyC40\r\ntmp.i4viQv9CEh\r\ntmp.nnOSxQLE5n\r\ntmp.pl8O683EP7\r\ntmp.s5fAe6nVm6\r\ntmp.system-update.1QmiU6\r\ntmp.system-update.zw5GPu\r\ntmp.ziek7fymha\r\ntmp3ytzd293\r\ntmp4e1znjjp\r\ntmp54bzdi00\r\ntmp6p3_jx41\r\ntmp9ifmzuta\r\ntmpbdx866qi\r\n", "len": 322}
+{"ts": 0.187229, "dir": "out", "enc": "utf8", "data": "tmpgs2lq2_i\r\ntmphnxdnegm\r\ntmpl__qpiyg\r\ntmplonkgfkn\r\ntmplw_lxbn_\r\ntmpmmgcrlq8\r\ntmpn8fjpzs5\r\ntmppqrg_ihg\r\ntmppzdp8hec\r\ntmpqosim20o\r\ntmprfd2e5v5\r\ntmpsj48fbka\r\ntmpt12s7urj\r\ntmpwb2cewbp\r\ntmpxsaubd0c\r\ntombstone\r\n", "len": 206}
+{"ts": 0.187245, "dir": "out", "enc": "utf8", "data": "ts-node-cfe8504694db97c98b21ccfe2de39e8c78c644bc47d8c011cd2f3489a1cafe1a\r\nunit.log\r\nunleash-backup-codeium-extension.json\r\nunleash-repo-schema-v1-codeium-language-server.json\r\nus.zoom.xos\r\nuv-0bd94ba0dba970be.lock\r\nuv-1bb5f6799e18e066.lock\r\nuv-2601c49aa38a6257.lock\r\nuv-29daaf172c415a00.lock\r\nuv-2d0a4cd40ad3fbbc.lock\r\nuv-3856855183c3d2cd.lock\r\nuv-3cd05e9f2a040929.lock\r\n", "len": 371}
+{"ts": 0.187263, "dir": "out", "enc": "utf8", "data": "uv-3d35fe989ba2c69b.lock\r\nuv-533331f19aee83c5.lock\r\nuv-55ea194e8c3683e6.lock\r\nuv-6e95f13aa1d84cdf.lock\r\nuv-9f51c38102d578f7.lock\r\nuv-af092ec740d85b8b.lock\r\nuv-c02d6af735beae1f.lock\r\nuv-c39ba80f72655a06.lock\r\nuv-d4bffca494aa00ea.lock\r\nuv-ddd23e29dd86513c.lock\r\nuv-f199bae663354760.lock\r\nuv-f258427543f4b4d2.lock\r\nuv-f61041b5e86ab7c0.lock\r\nuv-f68cf5a1715675a0.lock\r\n", "len": 364}
+{"ts": 0.187281, "dir": "out", "enc": "utf8", "data": "validate.log\r\nvalidate:all.log\r\n[user]-code-zsh\r\n[user]-cursor-zsh\r\nvscode-ah-3fd3e27dfc65\r\nvscode-git-0b047aee65.sock\r\nvscode-git-23a2707425.sock\r\nvscode-git-42f4de9085.sock\r\nvscode-git-6d38f0260c.sock\r\nvscode-git-7ff8799f64.sock\r\nvscode-git-892fa6d8f0.sock\r\nvscode-git-8cc5343f34.sock\r\nvscode-git-a2dfac2bd6.sock\r\nvscode-git-cffa85e8a4.sock\r\nvscode-git-e89f19221d.sock\r\n", "len": 372}
+{"ts": 0.187299, "dir": "out", "enc": "utf8", "data": "vscode-git-f4251e2425.sock\r\nvscode-git-f829d930dc.sock\r\nvscode-typescript501\r\nxcrun_db\r\n", "len": 88}
+{"ts": 0.187673, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.187812, "dir": "in", "enc": "utf8", "data": "ls ~\n", "len": 5}
+{"ts": 0.187836, "dir": "out", "enc": "utf8", "data": "ls ~\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.189985, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.190045, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.190073, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.194838, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.19615, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.6\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.19619, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.19624, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mMaking a folder\u001b[0m\r\n\r\n\u001b[92mmkdir\u001b[0m makes a new folder inside the one you are standing in.\r\n", "len": 101}
+{"ts": 0.19628, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mmkdir demo\u001b[0m     \u001b[90m# make it\u001b[0m\r\n  \u001b[92mls -p\u001b[0m          \u001b[90m# demo/ is in the list\u001b[0m\r\n  \u001b[92mcd demo\u001b[0m        \u001b[90m# step into it\u001b[0m\r\n  \u001b[92mpwd\u001b[0m            \u001b[90m# its full name ends in /demo\u001b[0m\r\n\r\nYou'll do exactly this in the task that follows.\r\n\r\n\u001b[93m▶ Try all four, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 334}
+{"ts": 0.199331, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.199585, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.199601, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.212171, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.212246, "dir": "in", "enc": "utf8", "data": "mkdir demo\n", "len": 11}
+{"ts": 0.212266, "dir": "out", "enc": "utf8", "data": "mkdir demo\r\n", "len": 12}
+{"ts": 0.212283, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.214372, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.21441, "dir": "in", "enc": "utf8", "data": "ls -p\n", "len": 6}
+{"ts": 0.214429, "dir": "out", "enc": "utf8", "data": "ls -p\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.216284, "dir": "out", "enc": "utf8", "data": "demo/\t\tnumbers.txt\tpoem.txt\tstage1/\t\tstage2/\r\n", "len": 46}
+{"ts": 0.216499, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.216516, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.216549, "dir": "in", "enc": "utf8", "data": "cd demo\n", "len": 8}
+{"ts": 0.216569, "dir": "out", "enc": "utf8", "data": "cd demo\r\n\u001b[?2004l\r", "len": 18}
+{"ts": 0.216655, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.216667, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.216691, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.216708, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.216721, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2/demo\r\n", "len": 84}
+{"ts": 0.216777, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.216788, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.21681, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.216831, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.2214, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.222854, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93mtask\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 283}
+{"ts": 0.222883, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.222902, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mSTAGE 2 — GATE\u001b[0m\r\n\r\n\u001b[1mRecall\u001b[0m (three questions, all three must be correct).\r\n", "len": 93}
+{"ts": 0.222929, "dir": "out", "enc": "utf8", "data": "First, three questions. Type your answer in words; this is not the shell.\r\n\r\nThen a \u001b[1mpractical task\u001b[0m.\r\n\r\n", "len": 111}
+{"ts": 0.225143, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mshow\u001b[0m \u001b[90m(the question again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 91}
+{"ts": 0.225419, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.22544, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.229268, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 1 of 3   What does \u001b[92mcd ..\u001b[0m do?\r\n", "len": 52}
+{"ts": 0.229313, "dir": "in", "enc": "utf8", "data": "it lists files\n", "len": 15}
+{"ts": 0.229337, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m it lists files\r\n", "len": 45}
+{"ts": 0.243745, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[91mnot quite.\u001b[0m \u001b[90mhint:\u001b[0m Lesson 2.3: the two dots are the name of one particular other folder.\r\n\u001b[93m┃ ?\u001b[0m ", "len": 134}
+{"ts": 0.243808, "dir": "in", "enc": "utf8", "data": "it lists files again\n", "len": 21}
+{"ts": 0.243835, "dir": "out", "enc": "utf8", "data": "it lists files again\r\n", "len": 22}
+{"ts": 0.257878, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[91mnot quite.\u001b[0m \u001b[90mhint:\u001b[0m Lesson 2.3: the two dots are the name of one particular other folder.\r\n\u001b[93m┃\u001b[0m Passed stages are saved.\r\n", "len": 158}
+{"ts": 0.257947, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m Type \u001b[92mquit\u001b[0m to leave now; the next run starts this stage from its first lesson.\r\n\u001b[93m┃\u001b[0m Type \u001b[92mshow\u001b[0m to see the question again.\r\n\u001b[93m┃ ?\u001b[0m ", "len": 176}
+{"ts": 0.257981, "dir": "in", "enc": "utf8", "data": "goes up one folder\n", "len": 19}
+{"ts": 0.258003, "dir": "out", "enc": "utf8", "data": "goes up one folder\r\n", "len": 20}
+{"ts": 0.266955, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.270226, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 2 of 3   What does \u001b[92m~\u001b[0m mean in a path?\r\n", "len": 60}
+{"ts": 0.270268, "dir": "in", "enc": "utf8", "data": "home folder\n", "len": 12}
+{"ts": 0.270287, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m home folder\r\n", "len": 42}
+{"ts": 0.279625, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.282908, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 3 of 3   If I'm in \u001b[90m~/projects\u001b[0m and I type \u001b[92mcd notes\u001b[0m, what folder am I in?\r\n", "len": 104}
+{"ts": 0.282981, "dir": "in", "enc": "utf8", "data": "~/projects/notes\n", "len": 17}
+{"ts": 0.283009, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m ~/projects/notes\r\n", "len": 47}
+{"ts": 0.291865, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.298413, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.299801, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93mtask\u001b[0m \u001b[90m──\u001b[0m\r\n\r\n", "len": 285}
+{"ts": 0.300363, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mSTAGE 2 — GATE TASK\u001b[0m\r\n\r\nInside the practice prompt, do these (in any order):\r\n\r\n  1. make a folder called practice\u001b[0m (inside this stage's folder)\r\n  2. cd into it\r\n  3. confirm you're inside it with \u001b[92mpwd\u001b[0m\r\n\r\nThen type \u001b[92mcheck\u001b[0m.\r\n\r\n\u001b[90mI will check that the folder exists, and how you got there.\u001b[0m\r\n\u001b[90mThis task runs in /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2/stage2; \u001b[92mpwd\u001b[90m shows it.\u001b[0m\r\n\r\n\u001b[93m▶ Type \u001b[92mcheck\u001b[93m when done.\u001b[0m\r\n\r\n", "len": 516}
+{"ts": 0.303569, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mcheck\u001b[0m \u001b[90m(test your work)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(the task again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 132}
+{"ts": 0.303889, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.321587, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.321709, "dir": "in", "enc": "utf8", "data": "mkdir practice\n", "len": 15}
+{"ts": 0.321752, "dir": "out", "enc": "utf8", "data": "mkdir practice\r\n", "len": 16}
+{"ts": 0.32177, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.324441, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.324474, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.324502, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.330762, "dir": "out", "enc": "utf8", "data": "\r\n\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m folder exists\r\n", "len": 45}
+{"ts": 0.330842, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[90m[ ]\u001b[0m cd into it                     \u001b[90mseen: no cd in your history\u001b[0m\r\n\u001b[93m┃\u001b[0m Finish the step marked [ ], then type \u001b[92mcheck\u001b[0m again.\r\n\r\n", "len": 171}
+{"ts": 0.345578, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.345674, "dir": "in", "enc": "utf8", "data": "cd practice\n", "len": 12}
+{"ts": 0.345715, "dir": "out", "enc": "utf8", "data": "cd practice\r\n", "len": 13}
+{"ts": 0.345734, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.345886, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.345899, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.345923, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.345942, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.345957, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-q6eaxor2/stage2/practice\r\n", "len": 95}
+{"ts": 0.346028, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.346073, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.346097, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.359871, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.361322, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────\u001b[0m \u001b[92m●\u001b[0m\u001b[92m●\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 280}
+{"ts": 0.361361, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.361433, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mStage 2 cleared\u001b[0m\r\n\r\nYou can now\r\n\r\n", "len": 45}
+{"ts": 0.36148, "dir": "out", "enc": "utf8", "data": "  find where you are           \u001b[92mpwd\u001b[0m\r\n  see what is here             \u001b[92mls       \u001b[0m \u001b[92mls -p    \u001b[0m \u001b[92mls -a\u001b[0m\r\n  move                         \u001b[92mcd       \u001b[0m \u001b[92mcd ..    \u001b[0m \u001b[92mcd ~     \u001b[0m \u001b[92mcd -\u001b[0m\r\n  make a folder                \u001b[92mmkdir\u001b[0m\r\n\r\nNext: Stage 3 · Files\r\n\r\n\u001b[93m▶ Type \u001b[92mnext\u001b[93m to go on, or \u001b[92mquit\u001b[93m to stop here. Your place is saved.\u001b[0m\r\n\r\n", "len": 407}
+{"ts": 0.36416, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(Stage 3)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(stop here, place saved)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m\r\n", "len": 135}
+{"ts": 0.364424, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.379114, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.379201, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.379223, "dir": "out", "enc": "utf8", "data": "quit\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.381792, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.381963, "dir": "out", "enc": "utf8", "data": "Bye. Run 'shelltutor' again to pick up where you left off.\r\n", "len": 60}

@@ -127,10 +127,11 @@ carry no `N.k —` prefix. The runners set `PANEL_STAGE` and `PANEL_POS` first.
 
 **Budget.** The panel (header through rule) is at most 19 rows; the harness
 counts 20 rendered rows (the blank under the rule included), so the prompt
-lands on row 21 of a 24-row terminal. Until WP-26 cuts the bodies, a lesson
-may run to a hard cap of 21 panel rows: `show_screen` squeezes interior blank
-rows (never words) to stay under it. Rules are built by a loop at a fixed 80
-columns; never `tr` on a multibyte glyph or `${s:0:n}`, and never `tput`.
+lands on row 21 of a 24-row terminal. The harness fails a core stage run when
+a screen passes the budget (the welcome box may take one more row). A lesson is
+a model of at most two lines, one typeable block of one to four commands, a
+notice of at most three lines and the `▶` line (WP-26, A13). Rules are built
+by a loop at a fixed 80 columns; never `tr` on a multibyte glyph or `${s:0:n}`, and never `tput`.
 
 **Footer.** Words in bold grey (`NAVW`) with the gloss in parentheses: glosses
 through Stage 1, in modules and on cleared screens, words only from Stage 2.

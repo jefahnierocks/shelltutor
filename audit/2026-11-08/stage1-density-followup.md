@@ -129,3 +129,11 @@ input to WP-26.
 | Screen | Rendered | Change |
 | --- | ---: | --- |
 | S1-W `welcome` | 21 (was 19) | The course map moves inside the box, one stage per row with a dot each (O-AW); the dots-and-names row and the `Sandbox:` row under the box go (O-AX). 17 box rows, all exactly 80 columns in both glyph forms; the review allows 22. |
+
+## WP-26 amendment (2026-11-09)
+
+The lesson skeleton (A13) replaces 21 lessons by 28 and holds every core
+screen to the 19-row panel. The rendered height of every screen, before and
+after, is in `audit/2026-11-09/wp26-lesson-skeleton.md`; the squeeze is gone and
+the harness enforces the budget. Stage intros are at most four lines and list
+no commands; the cleared screen carries the command list.
