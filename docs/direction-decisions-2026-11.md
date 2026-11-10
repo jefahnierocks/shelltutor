@@ -3,8 +3,8 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.14.0
-last_updated: 2026-11-09
+version: 0.15.0
+last_updated: 2026-11-10
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
 ---
@@ -981,6 +981,22 @@ intros, the cleared-list corrections, the Stage 5 Q3 exact forms, and Leo
 persona v0.3 with a scripted error schedule (round 6 was a weak test of
 the child persona). WP-28 (modules, `SHELLTUTOR_HOME` beat) follows, and
 one synthetic round covers both packages.
+
+### A15 — Module package approved with review corrections (2026-11-10)
+
+The operator approved `docs/workplan/WP-28-modules-skeleton.md` subject to
+a twelve-point review, all adopted and written into the package: no bare
+brackets in a child's `echo`; the harness follows the prompt change in
+env 4; `SHELLTUTOR_HOME` reaches the practice shell as the learner's own
+value, never the normalised one (C-004, C-007); the env task requires
+`export` in the history; no path placeholder on task screens;
+`ps -o pid,comm` in shells 1; module titles lose the position prefix and
+the header shows `<module>  k/n`; both intros carry an assumption line;
+env 6 shows the prompt line. The module standard is amended from three to
+five lesson screens to three to six. Review rule recorded for future
+module packages: module content gets a shell-detail read (globbing,
+quoting, what a command really prints, what the harness waits for) before
+approval.
 
 ## Cross-references
 

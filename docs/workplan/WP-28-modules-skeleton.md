@@ -1,9 +1,9 @@
 ---
-title: WP-28 — Modules to the lesson skeleton; the SHELLTUTOR_HOME beat — awaiting operator approval
+title: WP-28 — Modules to the lesson skeleton; the SHELLTUTOR_HOME beat
 category: planning
 component: workplan
-status: drafted
-version: 0.1.0
+status: ready
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [workplan, modules, shells, env, content, a12, a13]
 priority: medium
@@ -14,7 +14,7 @@ priority: medium
 **Governing text**: A13's skeleton rule applied to the `shells` and `env`
 modules; A12's last thread beat (`SHELLTUTOR_HOME` in `env`);
 `audit/2026-11-09/wp26-lesson-skeleton.md` (module screens at 21–23 rows
-since the squeeze was removed). **Status**: drafted for operator approval.
+since the squeeze was removed). **Status**: approved by the operator on 2026-11-10 with the review corrections of §Review (A15); the copy below already carries them.
 **Tier**: module standard, plus one synthetic round shared with WP-29.
 
 ## What changes
@@ -39,22 +39,24 @@ Three short lessons, then a task. This module stands alone and saves
 nothing. You'll look at the shell as a program, at other shells, and
 at the difference between your login shell and this one.
 
+Assumes the five stages, or that you know ls, cd and >.
+
 ▶ Type next for lesson 1.
 ```
 
 ### shells 1 — the shell is a program
 
 ```text
-shells 1 — the shell is a program
+The shell is a program
 
 The shell reads your line, finds the program you named, and runs it.
 It is itself a program, and you can look at it.
 
   echo $BASH_VERSION     # the version of the shell running now
-  ps                     # the programs running here: bash, and ps
+  ps -o pid,comm         # the programs on this terminal, by name
 
-$BASH_VERSION is a variable: a name that holds a value. The shell
-swaps $name for its value before it runs the line.
+Two of those lines are shells: the tutor's own, and the one you are
+typing into. $BASH_VERSION is a variable: a name that holds a value.
 
 ▶ Run both, then type next.
 ```
@@ -62,7 +64,7 @@ swaps $name for its value before it runs the line.
 ### shells 2 — other shells exist
 
 ```text
-shells 2 — other shells exist
+Other shells exist
 
 bash is common on Linux and is what this tutor runs. zsh is the
 default on macOS. fish is another, installed separately.
@@ -79,7 +81,7 @@ the same in all of them.
 ### shells 3 — your login shell and this shell
 
 ```text
-shells 3 — your login shell and this shell
+Your login shell and this shell
 
 Your login shell is the one a new terminal window starts. It can
 differ from the shell running now.
@@ -104,7 +106,7 @@ Find out whether zsh is installed, and keep the answer in a file.
   2. Send what it prints into a file named zsh.txt.
 
 If zsh is not installed the file is empty, and that is a right answer.
-This task runs in <practice folder>/shells; pwd shows it.
+This task runs in the module's own folder; pwd shows it.
 
 ▶ Do both steps, then type check.
 ```
@@ -118,13 +120,15 @@ Six short lessons, then a task. This module stands alone and saves
 nothing. Everything stays inside this practice shell; your own setup
 files are not touched.
 
+Assumes the five stages, or that you know ls, cd and >.
+
 ▶ Type next for lesson 1.
 ```
 
 ### env 1 — variables
 
 ```text
-env 1 — variables
+Variables
 
 A variable is a name that holds a value. The shell swaps $name for
 the value before it runs the line.
@@ -142,15 +146,15 @@ pet is not in that list yet. The next lesson shows why.
 ### env 2 — export
 
 ```text
-env 2 — export
+Export
 
 A program the shell starts is a child. It receives only the variables
 you exported.
 
   pet=owl                    # set it again: each screen is a new shell
-  bash -c 'echo [$pet]'      # [] : the child sees nothing
+  bash -c 'echo pet=$pet'    # pet=    : the child sees nothing
   export pet                 # mark it for children
-  bash -c 'echo [$pet]'      # [owl]
+  bash -c 'echo pet=$pet'    # pet=owl
 
 The single quotes matter: they leave $pet for the child to fill in.
 
@@ -160,14 +164,14 @@ The single quotes matter: they leave $pet for the child to fill in.
 ### env 3 — PATH is a list
 
 ```text
-env 3 — PATH is a list
+PATH is a list
 
 PATH holds folders separated by colons. When you type a command name,
 the shell looks in those folders, in order, and runs the first match.
 
   echo "$PATH"                  # one long line
   echo "$PATH" | tr : '\n'      # one folder per line
-  command -v ls                 # the folder where ls was found
+  command -v ls                 # the full name of ls: its folder, then ls
 
 A program in a folder that is not on the list is not found by name.
 
@@ -177,7 +181,7 @@ A program in a folder that is not on the list is not found by name.
 ### env 4 — the prompt is a variable
 
 ```text
-env 4 — the prompt is a variable
+The prompt is a variable
 
 The text before your cursor is the variable PS1. Change it and the
 prompt changes at once.
@@ -185,7 +189,8 @@ prompt changes at once.
   PS1='me> '        # the prompt is now me>
   PS1='$ '          # and now a plain dollar sign
 
-Watch the prompt on the next screen: it will be back to shelltutor>.
+That last one is the prompt most terminals show. Watch the next
+screen: the prompt will be back to shelltutor>.
 
 ▶ Change it twice, then type next.
 ```
@@ -193,13 +198,13 @@ Watch the prompt on the next screen: it will be back to shelltutor>.
 ### env 5 — a program that reads a variable (new)
 
 ```text
-env 5 — a program that reads a variable
+A program that reads a variable
 
 This tutor is configured the same way. It reads SHELLTUTOR_HOME to
 decide where your practice folder goes.
 
-  echo "[$SHELLTUTOR_HOME]"     # [] means: not set, the default is used
-  pwd                           # where the practice folder really is
+  echo "[$SHELLTUTOR_HOME]"     # [] means: not set, so the default is used
+  pwd                           # where you are now, inside the practice folder
 
 To put the folder somewhere else, set the variable on the line that
 starts the tutor:   SHELLTUTOR_HOME=~/practice ./shelltutor
@@ -210,7 +215,7 @@ starts the tutor:   SHELLTUTOR_HOME=~/practice ./shelltutor
 ### env 6 — where this lives for real (nothing to type)
 
 ```text
-env 6 — where this lives for real
+Where this lives for real
 
 The prompt went back because each screen starts a fresh shell. A real
 terminal reads one file when it starts, and settings there last:
@@ -219,8 +224,8 @@ terminal reads one file when it starts, and settings there last:
   ~/.zshrc      if it is zsh
   ~/.bash_profile   on macOS with bash
 
-A line like  export PATH="$HOME/bin:$PATH"  belongs in that file. Edit
-it in a normal terminal, not here; the tutor never touches it.
+A line like  PS1='me> '  in that file gives you your own prompt every
+time. Edit it in a normal terminal, not here; the tutor never touches it.
 
 ▶ Type next for the task.
 ```
@@ -236,21 +241,62 @@ Show that a child program can see a variable you exported.
   2. Export it.
   3. Run a child with bash -c that prints $TOPIC into seen.txt.
 
-This task runs in <practice folder>/env; pwd shows it.
+This task runs in the module's own folder; pwd shows it.
 
 ▶ Do the steps, then type check.
 ```
 
-## Notes for the worker (after approval)
+## Review (A15) — corrections carried above, and the rules behind them
 
-- Check whether `SHELLTUTOR_HOME` reaches the practice shell (C-007 scrub
-  list). If it is scrubbed, pass it through and record the change in
-  C-007; `echo "[$SHELLTUTOR_HOME]"` must print the real value or `[]`.
-- Hints: the two removed "(hint: …)" lines become each task's attempt-2
-  hint if they are not already; FF-010 anchors renumbered for `env`
-  (lesson 6 was 5); FF-009 clean.
-- Recall questions unchanged; `env` Q3's lesson anchor stays lesson 4.
-- Cleared lists follow the copy (`env` keeps `env`; nothing lists `grep`).
+1. **No bare brackets in a child's `echo`** (`[owl]` is a glob in the
+   child): env 2 prints `pet=` and `pet=owl`.
+2. **env 4 changes the prompt, and the harness must follow it**: the
+   persona types both `PS1=` lines and the sentinel table for that screen
+   expects `me> ` and then `$ ` as prompts, in order. The walk does not
+   skip the commands.
+3. **`SHELLTUTOR_HOME` in the practice shell is the learner's own value,
+   never the normalised one**: unset stays unset (so `[]` is true and the
+   aside is true); a value the learner set is passed through as typed.
+   Check C-004 (normalisation) and the C-007 scrub list, implement that
+   rule, and record it in both contracts.
+4. **The env task verifier requires `export` of `TOPIC` in the history as
+   well as `shell` in `seen.txt`**; without it a double-quoted
+   `bash -c "echo $TOPIC"` passes with no export. The gate cannot tell
+   single from double quotes in the `bash -c` line; it checks what it can,
+   and the report says so.
+5. **No path placeholder on task screens**: "the module's own folder".
+6. **shells 1 uses `ps -o pid,comm`** (POSIX; FF-008 must pass). macOS
+   prints `comm` as a full path, Linux as a bare name; the notice is true
+   for both.
+7. env 3's aside says what `command -v ls` prints.
+8. Both intros carry the assumption line.
+9. **Module titles lose the position prefix; the header shows
+   `<module>  k/n`** (for example `shells  1/3`), `task` at the task.
+   Sentinels and `selftest_modules` follow.
+10. env 1 and env 2 have four-command blocks: within the skeleton's 1–4,
+    recorded as "one family" in the density rows.
+11. **Module standard amended**: three to six lesson screens (was three to
+    five), in `docs/direction-decisions-2026-11.md` §module standard, same
+    commit series.
+12. env 6 shows the prompt line a learner wants to take home.
+
+Notes also carried: env 4 says the `$` prompt is the one most terminals
+show; the shells task is verified by file content (what `command -v zsh`
+prints on this host, or empty), so `which zsh > zsh.txt` passes, and the
+history check for that task is dropped or widened to either command;
+a script comment at env 2 says `bash -c` resolves `bash` through `PATH`
+and need not be the practice shell's binary (not F-014); before any module
+bundle is committed, confirm the D-19 redaction replaces the login name
+across the whole bundle (`env | head` prints `USER=` and `LOGNAME=`), and
+add a self-test case if it does not.
+
+## Notes for the worker
+
+- Hints: the removed "(hint: …)" lines become each task's attempt-2 hint
+  if they are not already; FF-010 anchors renumbered for `env`; FF-009
+  clean.
+- Recall questions unchanged; `env` Q3's anchor stays lesson 4.
+- Cleared lists follow the copy (`ps -o pid,comm`; nothing lists `grep`).
 - Harness: module personas type the new blocks; the 20-row budget is
   enforced for module runs; Linux evidence via the workflow.
 
@@ -258,4 +304,6 @@ This task runs in <practice folder>/env; pwd shows it.
 
 1. `feat(shells): three lessons and the task to the skeleton (A13)`
 2. `feat(env): six lessons — grep lines out, the SHELLTUTOR_HOME lesson in (A12, A13)`
-3. `chore(sim): module personas, sentinels, budget for modules; hints; density rows; C-007 if changed; STATUS`
+3. `feat(modules): header shows k/n; titles without prefix; assumption line; SHELLTUTOR_HOME passed through as typed (C-004, C-007)`
+4. `fix(env): task requires export in history; shells task verified by content`
+5. `chore(sim): module personas and prompt sentinels for env 4; budget for modules; redaction check; hints; density rows; module standard three to six; STATUS`
