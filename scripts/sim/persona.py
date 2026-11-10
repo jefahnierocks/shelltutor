@@ -155,10 +155,10 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
     """Recall walk for stage `n`.
 
     `misses` (second-try, Stage 2 only) answers Q1 wrong twice so each
-    rung of the recall ladder appears in the evidence (A7): miss 1 prints
-    the hint, miss 2 the hint again plus the three navigation facts. Each
-    wait for the question text matches its re-display after the previous
-    miss.
+    rung of the recall ladder appears in the evidence (A11): miss 1 prints
+    "not quite. try again.", miss 2 the hint plus the three navigation
+    facts. The question is printed once; after the second miss the persona
+    waits for the next `? ` prompt.
     """
     sid = "S%d-G" % n
     walk = [Action("S%d_GATE" % n, "", "render-gate", sid)]
@@ -167,10 +167,10 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
         if i == 1 and misses:
             walk += [
                 Action(q, "it lists files", "miss-q1-1", sid),
-                Action(q, "it lists files again", "miss-q1-2", sid),
+                Action("RECALL_TRY", "it lists files again", "miss-q1-2", sid),
                 Action("RECALL_HINT", "", "observe-recall-hint", sid),
                 Action("RECALL_NAV", "", "observe-recall-nav", sid),
-                Action(q, ans, "answer-q%d" % i, sid),
+                Action("RECALL_PROMPT", ans, "answer-q%d" % i, sid),
             ]
             continue
         walk.append(Action(q, ans, "answer-q%d" % i, sid))
@@ -183,8 +183,8 @@ def _gate_commands(
     """Gate-task commands followed by `check`.
 
     careful-beginner runs `first + rest` and checks once. `second-try`
-    runs only `first`, checks, observes the gate's "not yet:" feedback
-    (sentinel NOT_YET), then runs `rest` and checks again. It never improvises: the missing step is the one the gate named.
+    runs only `first`, checks, observes the gate's "seen:" feedback
+    (sentinel NOT_YET, "seen:"), then runs `rest` and checks again. It never improvises: the missing step is the one the gate named.
     """
     if not second_try:
         return _cmds(screen_id, first + rest) + [
@@ -416,7 +416,7 @@ def module_walk(
         lesson   ``<name> <k> — ``            (prefix, no title text)
         gate     ``<name> — gate``
         task     ``<name> — task``
-        cleared  ``✓ <name> cleared.``
+        cleared  ``<name> cleared.``
 
     `gate` is ``{"recall": [answers...], "task": [commands...]}``; either
     list may be empty. Recall answers wait for ``Q<i>:``. A non-empty task
@@ -462,13 +462,13 @@ def module_walk(
             pending["text"] = prompt_after[k]
     walk.append(Action("%s — gate" % name, "", "render-gate", "M-G"))
     for i, answer in enumerate(recall, 1):
-        walk.append(Action("Q%d:" % i, answer, "answer-q%d" % i, "M-G"))
+        walk.append(Action("%d of 3" % i, answer, "answer-q%d" % i, "M-G"))
     if task:
         walk.append(Action("%s — task" % name, "", "render-task", "M-GT"))
         for cmd in task:
             walk.append(Action(prompt(), cmd, "run-" + cmd.split()[0], "M-GT"))
         walk.append(Action(prompt(), "check", "run-check", "M-GT"))
-    walk.append(Action("✓ %s cleared." % name, "", "module-cleared", "M-C"))
+    walk.append(Action("%s cleared." % name, "", "module-cleared", "M-C"))
     walk.append(Action(PROMPT, "quit", "quit-tutor", "M-C"))
     return walk
 

@@ -102,13 +102,12 @@ if [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
     INSTR=$'\e[93m'          # the action line, header name, feedback bar
     DIM=$'\e[90m'            # asides, footer hints, unreached dots
     OK=$'\e[92m'             # a passed check, a finished stage
-    Q=$'\e[96m'              # a recall question
     RULE=$'\e[90m'           # box drawing only, never text
     RST=$'\e[0m'
 else
     # shellcheck disable=SC1007  # multiple empty assignments on one line are intentional
     BOLD=''; NAVW=''
-    H1=''; SUB=''; CMD=''; EM=''; DIR=''; INSTR=''; DIM=''; OK=''; Q=''; RULE=''; RST=''
+    H1=''; SUB=''; CMD=''; EM=''; DIR=''; INSTR=''; DIM=''; OK=''; RULE=''; RST=''
 fi
 
 # Glyphs (A3.7). ASCII substitutes are chosen by the same plain-text
@@ -117,14 +116,14 @@ fi
 # LC_ALL=C and its sentinels contain the UTF-8 glyphs.
 # shellcheck disable=SC2034  # the full glyph set is defined here; not every one is used yet
 if [ ! -t 1 ] || [ -n "${NO_COLOR:-}" ] || [ "${SHELLTUTOR_ASCII:-}" = "1" ]; then
-    G_PLAY='>'; G_OK='ok'; G_DONE='#'; G_CUR='*'; G_TODO='-'
-    G_HINT='>'; G_BACK='<'; G_SEP='-'; G_DOT_SEP=':'; G_GLOSS_L='('
+    G_PLAY='>'; G_BOX_OK='[x]'; G_BOX_TODO='[ ]'; G_DONE='#'; G_CUR='*'; G_TODO='-'
+    G_BACK='<'; G_DOT_SEP=':'; G_GLOSS_L='('
     G_RULE='-'; G_VBAR='|'; G_BAR='|'
     G_TEE_L='+'; G_BL='+'; G_RTL='+'; G_RTR='+'; G_RBL='+'; G_RBR='+'
     G_TL='+'; G_TR='+'; G_BR='+'
 else
-    G_PLAY='▶'; G_OK='✓'; G_DONE='●'; G_CUR='◉'; G_TODO='○'
-    G_HINT='▸'; G_BACK='◀'; G_SEP='·'; G_DOT_SEP='·'; G_GLOSS_L='('
+    G_PLAY='▶'; G_BOX_OK='[✓]'; G_BOX_TODO='[ ]'; G_DONE='●'; G_CUR='◉'; G_TODO='○'
+    G_BACK='◀'; G_DOT_SEP='·'; G_GLOSS_L='('
     G_RULE='─'; G_VBAR='│'; G_BAR='┃'
     G_TEE_L='├'; G_BL='└'; G_RTL='╭'; G_RTR='╮'; G_RBL='╰'; G_RBR='╯'
     G_TL='┌'; G_TR='┐'; G_BR='┘'
@@ -838,33 +837,95 @@ recall_navigation() {
     fb_note "Type ${CMD}show${RST} to see the question again."
 }
 
+# recall_say TEXT: one bar row, the tutor speaking.
+recall_say() { fb_note "$1"; }
+
+# recall_bar_blank: a bar row with nothing after it.
+recall_bar_blank() { printf '%s%s%s\n' "$INSTR" "$G_BAR" "$RST"; }
+
+# recall_show_question PROMPT (A11 C6): "┃ 1 of 3   <question>" wrapped at
+# 76 columns under the bar, any trailing "(a, b, c)" options on their own
+# row, then a bar-only row. PROMPT starts "Qn: ". The text is wrapped by
+# awk, which strips the colour codes when it measures a word.
+recall_show_question() {
+    local prompt="$1" n text opts='' line first=1
+    n=${prompt%%:*}; n=${n#Q}
+    text=${prompt#*: }
+    case "$text" in
+        *")")
+            opts=${text##* (}
+            if [ "$opts" != "$text" ]; then
+                text=${text% (*}
+                text=${text%" "}
+                opts=${opts%)}
+            else
+                opts=''
+            fi
+            ;;
+    esac
+    while IFS= read -r line; do
+        if [ "$first" = 1 ]; then
+            printf '%s%s%s %s of 3   %s\n' "$INSTR" "$G_BAR" "$RST" "$n" "$line"
+            first=0
+        else
+            printf '%s%s%s          %s\n' "$INSTR" "$G_BAR" "$RST" "$line"
+        fi
+    done <<WRAP
+$(printf '%s\n' "$text" | awk -v w=65 '
+    {
+        nw = split($0, words, " "); line = ""; len = 0
+        for (i = 1; i <= nw; i++) {
+            v = words[i]; gsub(/\033\[[0-9;]*m/, "", v); vl = length(v)
+            if (len > 0 && len + 1 + vl > w) { print line; line = words[i]; len = vl }
+            else { line = (len > 0 ? line " " : "") words[i]; len += (len > 0 ? 1 : 0) + vl }
+        }
+        print line
+    }')
+WRAP
+    if [ -n "$opts" ]; then
+        printf '%s%s%s          %s\n' "$INSTR" "$G_BAR" "$RST" \
+            "$(printf '%s\n' "$opts" | awk -F',' '{
+                for (i = 1; i <= NF; i++) {
+                    g = $i; sub(/^ +/, "", g); sub(/ +$/, "", g); sub(/^or /, "", g)
+                    out = out (i > 1 ? "    " : "") g
+                }
+                print out }')"
+    fi
+    recall_bar_blank
+}
+
+# recall_prompt: the input row, "┃ ? ".
+recall_prompt() {
+    printf '%s%s ?%s ' "$INSTR" "$G_BAR" "$RST"
+}
+
 ask_question() {
     local prompt="$1" hint="$2"; shift 2
     local accept=("$@")
     local ans norm attempt=0
+    recall_show_question "$prompt"
     while true; do
-        fb_note "${Q}${prompt}${RST}"
-        printf '%s%s%s %sanswer in words:%s ' "$INSTR" "$G_BAR" "$RST" "$CMD" "$RST"
+        recall_prompt
         if ! IFS= read -r ans < /dev/tty; then
             printf '\n'
             return 1
         fi
         norm=$(normalize_answer "$ans")
         case "$norm" in
-            show) continue ;;
+            show) recall_show_question "$prompt"; continue ;;
             quit|exit) farewell_exit ;;
         esac
         if recall_matches "$norm" "${accept[@]}"; then
-            printf '  %b%s%b\n\n' "$OK" "$G_OK" "$RST"
+            printf '%s%s%s %s%s%s\n\n' "$INSTR" "$G_BAR" "$RST" "$OK" "$G_BOX_OK" "$RST"
             return 0
         fi
         attempt=$((attempt + 1))
-        fb_note "${EM}not quite. try again.${RST}"
-        fb_note "${SUB}Hint:${RST} $hint"
         if [ "$attempt" -ge 2 ]; then
+            fb_note "${EM}not quite.${RST} ${DIM}hint:${RST} $hint"
             recall_navigation
+        else
+            fb_note "${EM}not quite.${RST} try again."
         fi
-        printf '\n'
     done
 }
 
@@ -903,15 +964,22 @@ fb_note() {
     printf '%s%s%s %s\n' "$INSTR" "$G_BAR" "$RST" "$1"
 }
 
-# fb_ok LABEL
+# fb_ok LABEL  -> "┃ [✓] LABEL"
 fb_ok() {
-    printf '%s%s%s %s%-2s%s %s\n' "$INSTR" "$G_BAR" "$RST" "$OK" "$G_OK" "$RST" "$1"
+    printf '%s%s%s %s%s%s %s\n' "$INSTR" "$G_BAR" "$RST" "$OK" "$G_BOX_OK" "$RST" "$1"
 }
 
-# fb_todo LABEL WHY
+# fb_todo LABEL SEEN  -> "┃ [ ] LABEL      seen: SEEN". The reason is what the
+# gate observed, never an instruction (A11 C7); the instruction is the hint
+# rung's job.
 fb_todo() {
-    printf '%s%s%s %s%-2s%s %-14s %s%s%s\n' "$INSTR" "$G_BAR" "$RST" \
-        "$DIM" "$G_TODO" "$RST" "$1" "$DIM" "not yet: $2" "$RST"
+    printf '%s%s%s %s%s%s %-30s %sseen: %s%s\n' "$INSTR" "$G_BAR" "$RST" \
+        "$DIM" "$G_BOX_TODO" "$RST" "$1" "$DIM" "$2" "$RST"
+}
+
+# fb_close  -> the standard closing line of a checklist.
+fb_close() {
+    fb_note "Finish the step marked ${G_BOX_TODO}, then type ${CMD}check${RST} again."
 }
 
 # gate_require_history MARK LABEL ERE [LABEL ERE ...]
@@ -943,11 +1011,11 @@ gate_require_history() {
         if [ "${seen[$i]}" = 1 ]; then
             fb_ok "$label"
         else
-            fb_todo "$label" "not in your history"
+            fb_todo "$label" "none typed since the task began"
         fi
         i=$((i + 1))
     done
-    fb_note "Run the ones marked ${G_TODO}, then type ${CMD}check${RST} again."
+    fb_close
     return 1
 }
 
@@ -1259,8 +1327,8 @@ stage1_check_commands_run() {
 stage1_followup() {
     local var="$1" prompt="$2" ans norm
     while true; do
-        fb_note "${Q}${prompt}${RST}"
-        printf '%s%s%s %syour answer:%s ' "$INSTR" "$G_BAR" "$RST" "$CMD" "$RST"
+        fb_note "$prompt"
+        recall_prompt
         IFS= read -r ans < /dev/tty || return 1
         norm=$(normalize_answer "$ans")
         case "$norm" in
@@ -1277,15 +1345,15 @@ stage1_followup() {
 }
 
 stage1_ask_whoami() {
-    stage1_followup TASK_S1_WHOAMI "What did ${CMD}whoami${RST}${Q} print? (just the username)"
+    stage1_followup TASK_S1_WHOAMI "What did ${CMD}whoami${RST} print? (just the username)"
 }
 
 stage1_ask_pwd() {
-    stage1_followup TASK_S1_PWD "What did ${CMD}pwd${RST}${Q} print? (paste the full path)"
+    stage1_followup TASK_S1_PWD "What did ${CMD}pwd${RST} print? (paste the full path)"
 }
 
 stage1_ask_day() {
-    stage1_followup TASK_S1_DAY "What day of the week did ${CMD}date${RST}${Q} show? Type just the day, for example Sat."
+    stage1_followup TASK_S1_DAY "What day of the week did ${CMD}date${RST} show? Type just the day, for example Sat."
 }
 
 stage1_gate() {
@@ -1412,12 +1480,12 @@ EOF
                     # Name which answer failed, never the expected value.
                     fb_begin
                     if stage1_verify_whoami; then fb_ok "whoami answer"
-                    else fb_todo "whoami answer" "that is not what whoami printed"; fi
+                    else fb_todo "whoami answer" "your answer differs from the whoami line"; fi
                     if stage1_verify_pwd; then fb_ok "pwd answer"
-                    else fb_todo "pwd answer" "that is not what pwd printed"; fi
+                    else fb_todo "pwd answer" "your answer differs from the pwd line"; fi
                     if stage1_day_matches "${TASK_S1_DAY:-}"; then fb_ok "day answer"
-                    else fb_todo "day answer" "that is not the day date printed"; fi
-                    fb_note "Look back at what each command printed, then answer the ones marked ${G_TODO} again."
+                    else fb_todo "day answer" "your answer differs from the date line"; fi
+                    fb_note "Look back at what each command printed, then answer the one marked ${G_BOX_TODO} again."
                     gate_escalate "$fattempt" \
                         "Each answer is exactly what that command printed: your user name, the full folder path, the day."
                     stage1_verify_whoami || { stage1_ask_whoami || return 1; printf '\n'; }
@@ -1692,14 +1760,14 @@ EOF
                 if [ "$have_dir" -eq 1 ]; then
                     fb_ok "folder exists"
                 else
-                    fb_todo "folder exists" "no practice folder in this stage's folder"
+                    fb_todo "folder exists" "no practice folder in the stage folder"
                 fi
                 if [ "$have_dir" -eq 0 ]; then
-                    fb_todo "cd into it" "make the folder first, then cd into it"
+                    fb_todo "cd into it" "no folder to be inside yet"
                 else
-                    fb_todo "cd into it" "not in your history"
+                    fb_todo "cd into it" "no cd in your history"
                 fi
-                fb_note "Run the ones marked ${G_TODO}, then type ${CMD}check${RST} again."
+                fb_close
                 gate_escalate "$attempt" \
                     "mkdir makes the folder; cd moves into it; pwd shows where you are." \
                     "mkdir practice" "cd practice" "pwd"
@@ -1938,7 +2006,7 @@ EOF
                 else
                     fb_ok "backup.txt gone"
                 fi
-                fb_note "Fix the ones marked ${G_TODO}, then type ${CMD}check${RST} again."
+                fb_close
                 gate_escalate "$attempt" \
                     "echo hello > notes.txt writes a file; cp copies; mv renames; rm removes." \
                     "echo hello > notes.txt" "cp notes.txt backup.txt" \
@@ -2225,7 +2293,7 @@ EOF
                 else
                     fb_todo "count.txt exists" "no count.txt in this folder"
                 fi
-                fb_note "Make it hold 100, then type ${CMD}check${RST} again."
+                fb_close
                 gate_escalate "$attempt" \
                     "A pipe feeds seq into wc -l; > saves the count; *.txt is the glob." \
                     "seq 1 100 | wc -l > count.txt" "ls *.txt"
@@ -2503,7 +2571,7 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage5_verify_phase1; then
-                    printf '\n%b%s Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$G_OK" "$RST"
+                    printf '\n%b%s Phase 1 verified — the file was unchanged.%b\n\n' "$OK" "$G_BOX_OK" "$RST"
                     break
                 fi
                 attempt=$((attempt + 1))
@@ -2550,8 +2618,8 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if stage5_verify_phase2; then
-                    printf '\n%b%s Phase 2 verified — the file was written.%b\n\n' "$OK" "$G_OK" "$RST"
-                    printf '%b%s Stage 5 cleared.%b\n\n' "$OK" "$G_OK" "$RST"
+                    printf '\n%b%s Phase 2 verified — the file was written.%b\n\n' "$OK" "$G_BOX_OK" "$RST"
+                    printf '%b%s Stage 5 cleared.%b\n\n' "$OK" "$G_BOX_OK" "$RST"
                     save_progress 5
                     return 0
                 fi
@@ -2699,12 +2767,12 @@ stage_cleared() {
     next_title="$REPLY"
     PANEL_STAGE=''; PANEL_POS=''; PANEL_DONE=$n
     show_screen cleared <<RECAP
-${H1}${G_OK} Stage ${n} cleared.${RST}
+${H1}Stage ${n} cleared.${RST}
 
 You can now:
 $(stage_recap "$n")
 
-${DIM}Next: Stage ${next} ${G_SEP} ${next_title}${RST}
+${DIM}Next: Stage ${next} ${G_DOT_SEP} ${next_title}${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage ${next}, or ${CMD}quit${INSTR} to stop here. Your place is saved.${RST}
 RECAP
@@ -2947,7 +3015,7 @@ EOF
 module_shells_cleared() {
     PANEL_POS=''
     show_screen module-cleared <<EOF
-${H1}${G_OK} shells cleared.${RST}
+${H1}shells cleared.${RST}
 
 Commands and keys from this module:
 $(recap_line 'echo $BASH_VERSION' 'the shell running now')
@@ -3245,7 +3313,7 @@ EOF
 module_env_cleared() {
     PANEL_POS=''
     show_screen module-cleared <<EOF
-${H1}${G_OK} env cleared.${RST}
+${H1}env cleared.${RST}
 
 Commands and keys from this module:
 $(recap_line 'name=value' 'set a variable in this shell')

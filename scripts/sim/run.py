@@ -62,19 +62,19 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # second-try fails the first gate check on purpose; only the Stage 2 and
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
-NOT_YET_TEXT = "not yet:"
-# Recall ladder (A7). second-try at Stage 2 misses Q1 twice: the hint prints
-# at miss 1 and again at miss 2 (with the navigation facts), so "Hint:"
-# appears twice and the first navigation fact once. No task `Hint:` is
-# printed because the task misses only once. (A10 removed the A8 shape line.)
-RECALL_HINT_TEXT = "Hint:"
+NOT_YET_TEXT = "seen: "
+# Recall ladder (A11). second-try at Stage 2 misses Q1 twice: miss 1 prints
+# "not quite. try again.", miss 2 prints "hint:" with the navigation facts,
+# so "hint:" appears once and the first navigation fact once. The task
+# ladder keeps its own "Hint:" (capital), which this count ignores.
+RECALL_HINT_TEXT = "hint:"
 RECALL_NAV_TEXT = "Passed stages are saved."
 # A9 (F-022): the Stage 2 gate's first check prints both items.
 # second-try makes the folder and skips the cd, so the first check shows the
-# folder item done (no "not yet:" reason) and the cd item todo.
-GATE_ITEM_FOLDER_TEXT = "no practice folder in this stage"
-GATE_ITEM_CD_TEXT = "not yet: not in your history"
-RECALL_EXPECTED = {"2": (2, 1), "4": (0, 0)}
+# folder item done (no "seen:" reason) and the cd item todo.
+GATE_ITEM_FOLDER_TEXT = "seen: no practice folder"
+GATE_ITEM_CD_TEXT = "seen: no cd in your history"
+RECALL_EXPECTED = {"2": (1, 1), "4": (0, 0)}
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -223,7 +223,7 @@ def _build_actions(
 
 def _final_gate_id(stage: str) -> str:
     if recorder.is_module(stage):
-        return "✓ %s cleared." % stage[len("module:"):]
+        return "%s cleared." % stage[len("module:"):]
     if stage == "1":
         return "STAGE_CLEARED"
     return "S5_CLEARED" if stage == "all" else "S%s_CLEARED" % stage

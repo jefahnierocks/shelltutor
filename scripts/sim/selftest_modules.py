@@ -57,10 +57,10 @@ clr; printf '%s 2 — Lesson title\n\nbody\n\n' "$name"
 read -r -p "p2> " line || exit 1   # changed prompt for the first command only
 prompt_until next
 clr; printf '%s — gate\n\n' "$name"
-for i in 1 2 3; do read -r -p "Q$i: question? " ans || exit 1; done
+for i in 1 2 3; do read -r -p "$i of 3   question? " ans || exit 1; done
 clr; printf '%s — task\n\nTask: run echo hi then check\n\n' "$name"
 while :; do read -r -p "shelltutor> " line || exit 1; case "$line" in check) break;; esac; done
-clr; printf '✓ %s cleared.\n\nrecap\n\n▶ Type quit to leave.\n\n' "$name"; prompt_until quit
+clr; printf '%s cleared.\n\nrecap\n\n▶ Type quit to leave.\n\n' "$name"; prompt_until quit
 exit 0
 """
 
@@ -81,13 +81,13 @@ def check_expansion() -> int:
         ("demo 2 — ", "", "M-L2"),
         (P.PROMPT, "next", "M-L2"),
         ("demo — gate", "", "M-G"),
-        ("Q1:", "a", "M-G"),
-        ("Q2:", "b", "M-G"),
-        ("Q3:", "c", "M-G"),
+        ("1 of 3", "a", "M-G"),
+        ("2 of 3", "b", "M-G"),
+        ("3 of 3", "c", "M-G"),
         ("demo — task", "", "M-GT"),
         (P.PROMPT, "echo hi", "M-GT"),
         (P.PROMPT, "check", "M-GT"),
-        ("✓ demo cleared.", "", "M-C"),
+        ("demo cleared.", "", "M-C"),
         (P.PROMPT, "quit", "M-C"),
     ]
     if got != want:
@@ -95,7 +95,7 @@ def check_expansion() -> int:
     print("ok - expansion (%d actions)" % len(got))
 
     empty = [a.wait_for for a in P.module_walk("m", 0, {})]
-    if empty != ["MODULE — m:", P.PROMPT, "m — gate", "✓ m cleared.", P.PROMPT]:
+    if empty != ["MODULE — m:", P.PROMPT, "m — gate", "m cleared.", P.PROMPT]:
         return _fail("empty-gate expansion differs: %r" % (empty,))
     print("ok - empty gate spec expands")
 
@@ -112,7 +112,7 @@ def check_expansion() -> int:
         ("p2> ", "echo x"),
         (P.PROMPT, "next"),
         ("m — gate", ""),
-        ("✓ m cleared.", ""),
+        ("m cleared.", ""),
         (P.PROMPT, "quit"),
     ]
     if got != want:
@@ -131,7 +131,7 @@ def check_expansion() -> int:
         (P.PROMPT, "PS1='x> '"),
         ("\nx> ", "next"),
         ("m — gate", ""),
-        ("✓ m cleared.", ""),
+        ("m cleared.", ""),
         (P.PROMPT, "quit"),
     ]
     if got != want:

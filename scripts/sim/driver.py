@@ -62,6 +62,7 @@ _LESSON_SCREEN_RE = re.compile(r"^S[1-5]-L[0-9]$")
 # screen over SCREEN_BUDGET.
 SCREEN_BUDGET = 20
 _CLEAR_RE = re.compile(r"\x1b\[(?:H|2J|3J)")
+_RECALL_Q_RE = re.compile(r"^(GATE|S[2-5])_Q[123]$")
 _PARTIAL_ESC_RE = re.compile(r"\x1b(?:\[[0-9;?]*)?$")
 
 
@@ -398,6 +399,11 @@ def drive(
                     # next sentinel matches, the gate rejected us.
                     if last_guard is not None:
                         gpat = _resolve_pattern(last_guard.wait_for)
+                        # A recall question is printed once (A11): a rejected
+                        # answer shows as "not quite." under the prompt, not
+                        # as the question again.
+                        if _RECALL_Q_RE.match(last_guard.wait_for):
+                            gpat = "not quite."
                         if norm_tail.find(gpat, max(0, match_cursor - tail_base)) >= 0:
                             recorder.write_event(
                                 round(time.monotonic() - start_mono, 6),
