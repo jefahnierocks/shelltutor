@@ -282,27 +282,20 @@ def stage_walk(
     if n == 4:
         return (
             _intro(4)
+            + _lesson(4, 1, ["wc -l poem.txt", 'echo "hello world"', "command -v vim"])
+            + _lesson(4, 2, ["touch my notes.txt", "ls", 'touch "my notes.txt"', "ls"])
+            + _lesson(4, 3, ["seq 1 100 | wc -l", "ls /usr/bin | wc -l", "ls /usr/bin | sort | head"])
             + _lesson(
                 4,
-                1,
-                ["ls -l /etc", "wc -l poem.txt", 'echo "hello world"', "command -v ls", "command -v vim"],
+                4,
+                ["echo first > greeting.txt", "echo second >> greeting.txt", "cat greeting.txt"],
             )
             + _lesson(
                 4,
-                2,
-                ["seq 1 100 | wc -l", "ls /usr/bin | sort | head", "ls /usr/bin | grep ^a | wc -l"],
+                5,
+                ["ls /usr/bin | wc -l > count-of-programs.txt", "cat count-of-programs.txt"],
             )
-            + _lesson(
-                4,
-                3,
-                [
-                    "echo first > greeting.txt",
-                    "echo second >> greeting.txt",
-                    "cat greeting.txt",
-                    "wc -w < poem.txt",
-                ],
-            )
-            + _lesson(4, 4, ["ls *.txt"])
+            + _lesson(4, 6, ["ls *.txt", "wc -l *.txt"])
             + _recall(4, ["the path to vim", "> overwrites, >> appends", "because of the space"])
             + [Action("S4_TASK", "", "render-gate-task", "S4-GT")]
             + _gate_commands(
