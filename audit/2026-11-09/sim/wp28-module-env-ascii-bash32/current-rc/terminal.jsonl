@@ -1,0 +1,212 @@
+{"ts": 0.028036, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.029371, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m--\u001b[0m \u001b[90mModule : env\u001b[0m \u001b[90m-----------------------------------------------\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 136}
+{"ts": 0.029442, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.029467, "dir": "out", "enc": "utf8", "data": "\u001b[1;97menv: variables and the prompt\u001b[0m\r\n\r\nSix short lessons, then a task. This module stands alone and saves\r\nnothing. Everything stays inside this practice shell; your own setup\r\nfiles are not touched.\r\n\r\nAssumes the five stages, or that you know \u001b[92mls\u001b[0m, \u001b[92mcd\u001b[0m and \u001b[92m>\u001b[0m.\r\n\r\n\u001b[93m> Type \u001b[92mnext\u001b[93m for lesson 1.\u001b[0m\r\n\r\n", "len": 342}
+{"ts": 0.032853, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.033092, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.043307, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.043446, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.043478, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.048542, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.049926, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  1/6\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.049985, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.050031, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mVariables\u001b[0m\r\n\r\nA \u001b[1mvariable\u001b[0m is a name that holds a value. The shell swaps \u001b[92m$name\u001b[0m for\r\nthe value before it runs the line.\r\n\r\n", "len": 147}
+{"ts": 0.050053, "dir": "out", "enc": "utf8", "data": "  \u001b[92mecho $HOME\u001b[0m        \u001b[90m# one the shell already has\u001b[0m\r\n  \u001b[92mpet=owl\u001b[0m           \u001b[90m# set your own: no spaces around =\u001b[0m\r\n  \u001b[92mecho $pet\u001b[0m         \u001b[90m# prints owl\u001b[0m\r\n  \u001b[92menv | head\u001b[0m        \u001b[90m# some of the variables programs receive\u001b[0m\r\n\r\n\u001b[92mpet\u001b[0m is not in that list yet. The next lesson shows why.\r\n\r\n\u001b[93m> Try all four, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 397}
+{"ts": 0.053278, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.053513, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n", "len": 91}
+{"ts": 0.05353, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.063892, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.064, "dir": "in", "enc": "utf8", "data": "echo $HOME\n", "len": 11}
+{"ts": 0.064033, "dir": "out", "enc": "utf8", "data": "echo $HOME\r\n", "len": 12}
+{"ts": 0.064047, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-userhome-860ij3np\r\n", "len": 83}
+{"ts": 0.064121, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.064144, "dir": "in", "enc": "utf8", "data": "pet=owl\n", "len": 8}
+{"ts": 0.064163, "dir": "out", "enc": "utf8", "data": "pet=ow", "len": 6}
+{"ts": 0.064193, "dir": "out", "enc": "utf8", "data": "l\r\n", "len": 3}
+{"ts": 0.064234, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.064254, "dir": "in", "enc": "utf8", "data": "echo $pet\n", "len": 10}
+{"ts": 0.064271, "dir": "out", "enc": "utf8", "data": "echo $pet", "len": 9}
+{"ts": 0.064282, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.064291, "dir": "out", "enc": "utf8", "data": "owl\r\n", "len": 5}
+{"ts": 0.064333, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.064353, "dir": "in", "enc": "utf8", "data": "env | head\n", "len": 11}
+{"ts": 0.06437, "dir": "out", "enc": "utf8", "data": "env | he", "len": 8}
+{"ts": 0.06438, "dir": "out", "enc": "utf8", "data": "ad\r\n", "len": 4}
+{"ts": 0.066853, "dir": "out", "enc": "utf8", "data": "SHELL=/bin/zsh\r\nTERM=xterm-256color\r\nTMPDIR=/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/\r\nOLDPWD=/Users/[user]/Organizations/jefahnierocks/shelltutor/.claude/worktrees/wp-28\r\nLC_ALL=C\r\nUSER=[user]\r\n", "len": 203}
+{"ts": 0.066877, "dir": "out", "enc": "utf8", "data": "VIMINIT=set nocompatible\r\nBASH_SILENCE_DEPRECATION_WARNING=1\r\nCOLUMNS=80\r\nPAGER=less\r\n", "len": 86}
+{"ts": 0.067071, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.067094, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.067115, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.071635, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.073212, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  2/6\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.073267, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.073322, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mExport\u001b[0m\r\n\r\nA program the shell starts is a \u001b[1mchild\u001b[0m. It receives only the variables\r\n", "len": 100}
+{"ts": 0.073343, "dir": "out", "enc": "utf8", "data": "you \u001b[1mexported\u001b[0m.\r\n\r\n  \u001b[92mpet=owl\u001b[0m                    \u001b[90m# set it again: each screen is a new shell\u001b[0m\r\n  \u001b[92mbash -c 'echo pet=$pet'\u001b[0m    \u001b[90m# pet=    : the child sees nothing\u001b[0m\r\n  \u001b[92mexport pet\u001b[0m                 \u001b[90m# mark it for children\u001b[0m\r\n  \u001b[92mbash -c 'echo pet=$pet'\u001b[0m    \u001b[90m# pet=owl\u001b[0m\r\n\r\nThe single quotes matter: they leave \u001b[92m$pet\u001b[0m for the child to fill in.\r\n\r\n\u001b[93m> Run all four in order, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 473}
+{"ts": 0.076439, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.076671, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.086223, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.086309, "dir": "in", "enc": "utf8", "data": "pet=owl\n", "len": 8}
+{"ts": 0.086333, "dir": "out", "enc": "utf8", "data": "pet=owl\r\n", "len": 9}
+{"ts": 0.086409, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.086433, "dir": "in", "enc": "utf8", "data": "bash -c 'echo pet=$pet'\n", "len": 24}
+{"ts": 0.086451, "dir": "out", "enc": "utf8", "data": "bash -c 'e", "len": 10}
+{"ts": 0.086462, "dir": "out", "enc": "utf8", "data": "cho pe", "len": 6}
+{"ts": 0.086472, "dir": "out", "enc": "utf8", "data": "t=$pet", "len": 6}
+{"ts": 0.086482, "dir": "out", "enc": "utf8", "data": "'\r\n", "len": 3}
+{"ts": 0.08885, "dir": "out", "enc": "utf8", "data": "pet=\r\n", "len": 6}
+{"ts": 0.089215, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.089261, "dir": "in", "enc": "utf8", "data": "export pet\n", "len": 11}
+{"ts": 0.089285, "dir": "out", "enc": "utf8", "data": "export pet\r\n", "len": 12}
+{"ts": 0.089357, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.089381, "dir": "in", "enc": "utf8", "data": "bash -c 'echo pet=$pet'\n", "len": 24}
+{"ts": 0.0894, "dir": "out", "enc": "utf8", "data": "bash -c 'e", "len": 10}
+{"ts": 0.089411, "dir": "out", "enc": "utf8", "data": "cho pe", "len": 6}
+{"ts": 0.089422, "dir": "out", "enc": "utf8", "data": "t=$pet", "len": 6}
+{"ts": 0.089432, "dir": "out", "enc": "utf8", "data": "'\r\n", "len": 3}
+{"ts": 0.091607, "dir": "out", "enc": "utf8", "data": "pet=owl\r\n", "len": 9}
+{"ts": 0.091958, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.091998, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.092019, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.097263, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.098493, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  3/6\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.098535, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.0986, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mPATH is a list\u001b[0m\r\n\r\n\u001b[92mPATH\u001b[0m holds folders separated by colons. When you type a command name,\r\nthe shell looks in those folders, in order, and runs the first match.\r\n", "len": 180}
+{"ts": 0.098616, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mecho \"$PATH\"\u001b[0m                  \u001b[90m# one long line\u001b[0m\r\n  \u001b[92mecho \"$PATH\" | tr : '\\n'\u001b[0m      \u001b[90m# one folder per line\u001b[0m\r\n  \u001b[92mcommand -v ls\u001b[0m                 \u001b[90m# the full name of ls: its folder, then ls\u001b[0m\r\n\r\nA program in a folder that is not on the list is not found by name.\r\n\r\n\u001b[93m> Run all three, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 364}
+{"ts": 0.101534, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.101761, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n", "len": 91}
+{"ts": 0.101774, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.11165, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.111741, "dir": "in", "enc": "utf8", "data": "echo \"$PATH\"\n", "len": 13}
+{"ts": 0.111763, "dir": "out", "enc": "utf8", "data": "echo \"$PAT", "len": 10}
+{"ts": 0.111776, "dir": "out", "enc": "utf8", "data": "H\"\r\n", "len": 4}
+{"ts": 0.111799, "dir": "out", "enc": "utf8", "data": "/bin:/Users/[user]/.local/share/mise/installs/pnpm/latest:/Users/[user]/.local/share/mise/installs/node/24/bin:/Users/[user]/.local/share/mise/installs/bun/latest/bin:/Users/[user]/.local/share/mise/installs/python/3.13/bin:/Users/[user]/.local/share/mise/installs/java/temurin-21/bin:/Users/[user]/.local/share/mise/installs/uv/latest/uv-aarch64-apple-darwin:/Users/[user]/.local/share/mise/installs/npm-tsx/latest/node_modules/.bin:/Users/[user]/.local/share/mise/shims:/Users/[user]/.npm-global/bin:/Users/[user]/.local/bin:/Users/[user]/.cargo/bin:/Users/[user]/Library/Android/sdk/emulator:/Users/[user]/Library/Android/sdk/platform-tools:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bi", "len": 998}
+{"ts": 0.111831, "dir": "out", "enc": "utf8", "data": "n:/Library/Apple/usr/bin:/Library/TeX/texbin:/Applications/Wireshark.app/Contents/MacOS:/Applications/quarto/bin:/Applications/iTerm.app/Contents/Resources/utilities\r\n", "len": 167}
+{"ts": 0.111888, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.111912, "dir": "in", "enc": "utf8", "data": "echo \"$PATH\" | tr : '\\n'\n", "len": 25}
+{"ts": 0.11193, "dir": "out", "enc": "utf8", "data": "echo \"$PA", "len": 9}
+{"ts": 0.11194, "dir": "out", "enc": "utf8", "data": "TH\" | ", "len": 6}
+{"ts": 0.111951, "dir": "out", "enc": "utf8", "data": "tr : '", "len": 6}
+{"ts": 0.11196, "dir": "out", "enc": "utf8", "data": "\\n'\r\n", "len": 5}
+{"ts": 0.114898, "dir": "out", "enc": "utf8", "data": "/bin\r\n/Users/[user]/.local/share/mise/installs/pnpm/latest\r\n/Users/[user]/.local/share/mise/installs/node/24/bin\r\n/Users/[user]/.local/share/mise/installs/bun/latest/bin\r\n/Users/[user]/.local/share/mise/installs/python/3.13/bin\r\n", "len": 229}
+{"ts": 0.114929, "dir": "out", "enc": "utf8", "data": "/Users/[user]/.local/share/mise/installs/java/temurin-21/bin\r\n/Users/[user]/.local/share/mise/installs/uv/latest/uv-aarch64-apple-darwin\r\n/Users/[user]/.local/share/mise/installs/npm-tsx/latest/node_modules/.bin\r\n/Users/[user]/.local/share/mise/shims\r\n/Users/[user]/.npm-global/bin\r\n/Users/[user]/.local/bin\r\n/Users/[user]/.cargo/bin\r\n/Users/[user]/Library/Android/sdk/emulator\r\n/Users/[user]/Library/Android/sdk/platform-tools\r\n/opt/homebrew/bin\r\n/opt/homebrew/sbin\r\n/usr/local/bin\r\n/System/Cryptexes/App/usr/bin\r\n/usr/bin\r\n/bin\r\n/usr/sbin\r\n/sbin\r\n", "len": 549}
+{"ts": 0.114951, "dir": "out", "enc": "utf8", "data": "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin\r\n/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin\r\n/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin\r\n/pkg/env/global/bin\r\n/Library/Apple/usr/bin\r\n/Library/TeX/texbin\r\n/Applications/Wireshark.app/Contents/MacOS\r\n/Applications/quarto/bin\r\n/Applications/iTerm.app/Contents/Resources/utilities\r\n", "len": 417}
+{"ts": 0.115217, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.115242, "dir": "in", "enc": "utf8", "data": "command -v ls\n", "len": 14}
+{"ts": 0.11526, "dir": "out", "enc": "utf8", "data": "command ", "len": 8}
+{"ts": 0.115271, "dir": "out", "enc": "utf8", "data": "-v ls\r\n", "len": 7}
+{"ts": 0.1153, "dir": "out", "enc": "utf8", "data": "/bin/ls\r\n", "len": 9}
+{"ts": 0.115351, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.11537, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.115388, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.120017, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.121196, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  4/6\u001b[0m \u001b[90m--\u001b[0m\r\n\r\n", "len": 129}
+{"ts": 0.121283, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mThe prompt is a variable\u001b[0m\r\n\r\nThe text before your cursor is the variable \u001b[92mPS1\u001b[0m. Change it and the\r\nprompt changes at once.\r\n", "len": 141}
+{"ts": 0.121305, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mPS1='me> '\u001b[0m        \u001b[90m# the prompt is now me>\u001b[0m\r\n  \u001b[92mPS1='$ '\u001b[0m          \u001b[90m# and now a plain dollar sign\u001b[0m\r\n\r\nThat last one is the prompt most terminals show. Watch the next\r\nscreen: the prompt will be back to shelltutor>.\r\n\r\n\u001b[93m> Change it twice, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 309}
+{"ts": 0.124386, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.124615, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n", "len": 91}
+{"ts": 0.124631, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.134744, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.134836, "dir": "in", "enc": "utf8", "data": "PS1='me> '\n", "len": 11}
+{"ts": 0.13486, "dir": "out", "enc": "utf8", "data": "PS1='me> '", "len": 10}
+{"ts": 0.134873, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.134955, "dir": "out", "enc": "utf8", "data": "me> ", "len": 4}
+{"ts": 0.134976, "dir": "in", "enc": "utf8", "data": "PS1='$ '\n", "len": 9}
+{"ts": 0.134994, "dir": "out", "enc": "utf8", "data": "PS1='$ '", "len": 8}
+{"ts": 0.135004, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.135057, "dir": "out", "enc": "utf8", "data": "$ ", "len": 2}
+{"ts": 0.135075, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.135091, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.140094, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.141419, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  5/6\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.141465, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.141519, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mA program that reads a variable\u001b[0m\r\n\r\nThis tutor is configured the same way. It reads \u001b[92mSHELLTUTOR_HOME\u001b[0m to\r\ndecide where your practice folder goes.\r\n", "len": 164}
+{"ts": 0.141536, "dir": "out", "enc": "utf8", "data": "\r\n  \u001b[92mecho \"[$SHELLTUTOR_HOME]\"\u001b[0m     \u001b[90m# [] means: not set, so the default is used\u001b[0m\r\n  \u001b[92mpwd\u001b[0m                           \u001b[90m# where you are now, inside the practice folder\u001b[0m\r\n\r\nTo put the folder somewhere else, set the variable on the line that\r\nstarts the tutor:   \u001b[92mSHELLTUTOR_HOME=~/practice ./shelltutor\u001b[0m\r\n\r\n\u001b[93m> Run both, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 389}
+{"ts": 0.144854, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.145092, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.155954, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.156044, "dir": "in", "enc": "utf8", "data": "echo \"[$SHELLTUTOR_HOME]\"\n", "len": 26}
+{"ts": 0.156067, "dir": "out", "enc": "utf8", "data": "echo \"[$SHE", "len": 11}
+{"ts": 0.15608, "dir": "out", "enc": "utf8", "data": "LLTUTOR_", "len": 8}
+{"ts": 0.156092, "dir": "out", "enc": "utf8", "data": "HOME]\"", "len": 6}
+{"ts": 0.156102, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.156112, "dir": "out", "enc": "utf8", "data": "[/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-7ie9td9c]\r\n", "len": 81}
+{"ts": 0.156195, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156215, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.156231, "dir": "out", "enc": "utf8", "data": "pwd\r\n", "len": 5}
+{"ts": 0.156241, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-7ie9td9c/env\r\n", "len": 83}
+{"ts": 0.156287, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156307, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.156333, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.161708, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.163243, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m----------------------------------------------------------\u001b[0m \u001b[93menv  6/6\u001b[0m \u001b[90m--\u001b[0m\r\n\r\n", "len": 129}
+{"ts": 0.163333, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mWhere this lives for real\u001b[0m\r\n\r\nThe prompt went back because each screen starts a fresh shell. A real\r\nterminal reads one file when it starts, and settings there last:\r\n", "len": 177}
+{"ts": 0.163354, "dir": "out", "enc": "utf8", "data": "\r\n  ~/.bashrc     if your login shell is bash\r\n  ~/.zshrc      if it is zsh\r\n  ~/.bash_profile   on macOS with bash\r\n\r\nA line like  \u001b[92mPS1='me> '\u001b[0m  in that file gives you your own prompt every\r\ntime. Edit it in a normal terminal, not here; the tutor never touches it.\r\n\r\n\u001b[93m> Type \u001b[92mnext\u001b[93m for the task.\u001b[0m\r\n\r\n", "len": 324}
+{"ts": 0.166492, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(go on)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m   \u001b[1;90mprev\u001b[0m \u001b[90m(back)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 159}
+{"ts": 0.166731, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.176531, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.176628, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.176654, "dir": "out", "enc": "utf8", "data": "next\r\n", "len": 6}
+{"ts": 0.181927, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.183284, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m---------------------------------------------------------\u001b[0m \u001b[93menv  gate\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.183311, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.183343, "dir": "out", "enc": "utf8", "data": "\u001b[1;97menv — gate\u001b[0m\r\n\r\n\u001b[36mRecall\u001b[0m (three questions, all three must be correct).\r\n", "len": 90}
+{"ts": 0.183389, "dir": "out", "enc": "utf8", "data": "First, three questions. Type your answer in words; this is not the shell.\r\n\r\nThen a \u001b[36mpractical task\u001b[0m.\r\n\r\n", "len": 112}
+{"ts": 0.185283, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mshow\u001b[0m \u001b[90m(the question again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 91}
+{"ts": 0.185516, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n", "len": 91}
+{"ts": 0.185534, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.189382, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m 1 of 3   Which command makes a variable visible to the programs the shell\r\n", "len": 86}
+{"ts": 0.189447, "dir": "in", "enc": "utf8", "data": "export\n", "len": 7}
+{"ts": 0.189474, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m          starts?\r\nexport\r\n", "len": 37}
+{"ts": 0.193154, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m          set    export    env    echo\r\n", "len": 50}
+{"ts": 0.193205, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m\r\n\u001b[93m| ?\u001b[0m ", "len": 25}
+{"ts": 0.204488, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m \u001b[92m[x]\u001b[0m\r\n\r\n", "len": 27}
+{"ts": 0.208339, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m 2 of 3   What does \u001b[92mPATH\u001b[0m hold?\r\n", "len": 51}
+{"ts": 0.208408, "dir": "in", "enc": "utf8", "data": "a list of folders\n", "len": 18}
+{"ts": 0.208435, "dir": "out", "enc": "utf8", "data": "a list of folders\r\n", "len": 19}
+{"ts": 0.211406, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m          a list of folders    one folder    a file name\r\n", "len": 68}
+{"ts": 0.211498, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m\r\n\u001b[93m| ?\u001b[0m ", "len": 25}
+{"ts": 0.220994, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m \u001b[92m[x]\u001b[0m\r\n\r\n", "len": 27}
+{"ts": 0.224675, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m 3 of 3   You type \u001b[92mPS1='me> '\u001b[0m, then \u001b[92mnext\u001b[0m. What is the prompt on the next\r\n", "len": 102}
+{"ts": 0.224749, "dir": "in", "enc": "utf8", "data": "shelltutor>\n", "len": 12}
+{"ts": 0.224776, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m          screen?\r\nshelltutor>\r\n", "len": 42}
+{"ts": 0.227823, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m          me>    shelltutor>\r\n", "len": 40}
+{"ts": 0.227855, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m\r\n\u001b[93m| ?\u001b[0m ", "len": 25}
+{"ts": 0.237748, "dir": "out", "enc": "utf8", "data": "\u001b[93m|\u001b[0m \u001b[92m[x]\u001b[0m\r\n\r\n", "len": 27}
+{"ts": 0.249055, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.250363, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[90mModule\u001b[0m \u001b[90m---------------------------------------------------------\u001b[0m \u001b[93menv  task\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 127}
+{"ts": 0.250399, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.250453, "dir": "out", "enc": "utf8", "data": "\u001b[1;97menv — task\u001b[0m\r\n\r\nShow that a child program can see a variable you exported.\r\n\r\n  1. Set TOPIC to the word \u001b[1mshell\u001b[0m.\r\n  2. Export it.\r\n  3. Run a child with \u001b[92mbash -c\u001b[0m that prints \u001b[92m$TOPIC\u001b[0m into seen.txt.\r\n\r\n", "len": 234}
+{"ts": 0.250529, "dir": "out", "enc": "utf8", "data": "\u001b[90mThis task runs in the module's own folder; \u001b[92mpwd\u001b[90m shows it.\u001b[0m\r\n\r\n\u001b[93m> Do the steps, then type \u001b[92mcheck\u001b[93m.\u001b[0m\r\n\r\n", "len": 134}
+{"ts": 0.253446, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mcheck\u001b[0m \u001b[90m(test your work)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(the task again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 132}
+{"ts": 0.253693, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n", "len": 91}
+{"ts": 0.253712, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.264412, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.264535, "dir": "in", "enc": "utf8", "data": "TOPIC=shell\n", "len": 12}
+{"ts": 0.264559, "dir": "out", "enc": "utf8", "data": "TOPIC=shell", "len": 11}
+{"ts": 0.264576, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.264646, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.26467, "dir": "in", "enc": "utf8", "data": "export TOPIC\n", "len": 13}
+{"ts": 0.26469, "dir": "out", "enc": "utf8", "data": "export TO", "len": 9}
+{"ts": 0.264702, "dir": "out", "enc": "utf8", "data": "PIC\r\n", "len": 5}
+{"ts": 0.264763, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.264786, "dir": "in", "enc": "utf8", "data": "bash -c 'echo $TOPIC' > seen.txt\n", "len": 33}
+{"ts": 0.264803, "dir": "out", "enc": "utf8", "data": "bash -c '", "len": 9}
+{"ts": 0.264815, "dir": "out", "enc": "utf8", "data": "echo $T", "len": 7}
+{"ts": 0.264827, "dir": "out", "enc": "utf8", "data": "OPIC' ", "len": 6}
+{"ts": 0.264839, "dir": "out", "enc": "utf8", "data": "> seen.", "len": 7}
+{"ts": 0.264851, "dir": "out", "enc": "utf8", "data": "txt\r\n", "len": 5}
+{"ts": 0.267613, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.267664, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.267695, "dir": "out", "enc": "utf8", "data": "check\r\n", "len": 7}
+{"ts": 0.294846, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.296093, "dir": "out", "enc": "utf8", "data": "\u001b[90m--\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m--\u001b[0m \u001b[90mModule : env\u001b[0m \u001b[90m-----------------------------------------------\u001b[0m \u001b[90m--\u001b[0m\r\n", "len": 136}
+{"ts": 0.296151, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.29622, "dir": "out", "enc": "utf8", "data": "\u001b[1;97menv cleared.\u001b[0m\r\n\r\nCommands and keys from this module:\r\n  \u001b[92mname=value    \u001b[0m \u001b[90mset a variable in this shell\u001b[0m\r\n", "len": 129}
+{"ts": 0.296271, "dir": "out", "enc": "utf8", "data": "  \u001b[92mexport name   \u001b[0m \u001b[90mlet child programs see it\u001b[0m\r\n  \u001b[92mecho \"$PATH\"  \u001b[0m \u001b[90mthe folders searched for programs\u001b[0m\r\n  \u001b[92menv           \u001b[0m \u001b[90mlist what children receive\u001b[0m\r\n  \u001b[92mPS1='$ '      \u001b[0m \u001b[90mchange the prompt (this shell only)\u001b[0m\r\n  \u001b[92mSHELLTUTOR_HOME\u001b[0m \u001b[90mwhere this tutor puts your practice folder\u001b[0m\r\n\r\n\u001b[93m> Type \u001b[92mquit\u001b[93m to leave, or \u001b[92mnext\u001b[93m to return to the start of this module.\u001b[0m\r\n\r\n", "len": 450}
+{"ts": 0.298802, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(start this module again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(leave)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m\r\n", "len": 134}
+{"ts": 0.299039, "dir": "out", "enc": "utf8", "data": "\u001b[90m--------------------------------------------------------------------------------\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.308504, "dir": "out", "enc": "utf8", "data": "\u001b[?1034hshelltutor> ", "len": 20}
+{"ts": 0.308613, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.308637, "dir": "out", "enc": "utf8", "data": "quit\r\n", "len": 6}
+{"ts": 0.311227, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.311431, "dir": "out", "enc": "utf8", "data": "Bye. A module saves nothing; run 'shelltutor env' to start it again.\r\n", "len": 70}

@@ -144,3 +144,12 @@ Round-6 copy fixes (A14). Heights that moved, in rendered rows: S1-C 20 to 19,
 S2-L4 17 to 18, S3-I and S4-I 12 to 14, S5-I 13 to 15, S4-L3 18 to 19, S4-L6
 17 to 18. All core screens stay within the 20-row budget; the table is in
 `audit/2026-11-09/wp29-copy-fixes.md`.
+
+## WP-28 amendment (2026-11-10)
+
+Module screens to the skeleton (A13, A15). Rendered rows, budget 20 (the squeeze
+that held the old module screens to 22 is gone; they were 20 to 23): shells M-I
+15, M-L1 18, M-L2 18, M-L3 18, task 17, cleared 15; env M-I 15, M-L1 19, M-L2 19,
+M-L3 18, M-L4 18, M-L5 18, M-L6 19, task 17, cleared 17. env 1 and env 2 have
+four-command blocks (the skeleton allows one to four): each is one family (set,
+read, list; set, run as a child, export, run again).

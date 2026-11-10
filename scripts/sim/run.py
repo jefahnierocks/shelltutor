@@ -67,6 +67,10 @@ NOT_YET_TEXT = "seen: "
 # Rendered-row ceilings above SCREEN_BUDGET: the welcome box (A12, 22 allowed;
 # it is 21).
 HEIGHT_ALLOWED = {"S1-W": 21}
+# The caller's variables the child may see: the lessons use PATH, HOME is
+# replaced, and USER, LOGNAME and SHELL are what `env` and `echo $SHELL` show
+# (the redactor replaces the login name in the bundle). Nothing else is passed.
+ENV_PASSTHROUGH = ("PATH", "USER", "LOGNAME", "SHELL", "TMPDIR", "TERM")
 # Recall ladder (A7, kept by A11). second-try at Stage 2 misses Q1 twice:
 # miss 1 prints "not quite. hint: ...", miss 2 the same line plus the
 # navigation facts, so "hint:" appears twice and the first navigation fact
@@ -324,11 +328,13 @@ def _run_variant(
         "per_sentinel_timeout_seconds": args.timeout,
     }
 
-    # Build child env: inherit, override SHELLTUTOR_HOME to the fresh
-    # tempdir, set TERM if missing so terminal-aware code paths
-    # (clear, ansi) work, force COLUMNS/LINES so the lesson's vertical-
-    # budget assumptions hold.
-    child_env = dict(os.environ)
+    # Build child env: a short allowlist of the caller's variables (a module's
+    # `env | head` prints the practice shell's whole environment into the
+    # committed bundle, so the operator's other variables stay out), override
+    # SHELLTUTOR_HOME to the fresh tempdir, set TERM if missing so terminal-aware
+    # code paths (clear, ansi) work, force COLUMNS/LINES so the lesson's
+    # vertical-budget assumptions hold.
+    child_env = {k: v for k, v in os.environ.items() if k in ENV_PASSTHROUGH}
     child_env["SHELLTUTOR_HOME"] = sandbox_root
     child_env["HOME"] = user_home
     child_env.setdefault("TERM", "xterm-256color")
@@ -435,7 +441,7 @@ def _run_variant(
         over = sorted(
             (sid, n)
             for sid, n in worst.items()
-            if re.match(r"^S[1-5]-", sid)
+            if re.match(r"^(S[1-5]|M)-", sid)
             and n > HEIGHT_ALLOWED.get(sid, driver.SCREEN_BUDGET)
         )
         outcome["screens_over_budget"] = [("%s=%d" % (sid, n)) for sid, n in over]

@@ -221,11 +221,14 @@ to `scripts/selftest-matching.sh` and its accepted and rejected inputs to
 
 | Screen | Heading |
 | --- | --- |
-| intro | `MODULE — <name>: <title>` |
-| lesson `k` | `<name> <k> — <title>` |
-| gate (opening screen; no `▶` line, the first question follows) | `<name> — gate` |
-| task | `<name> — task` |
+| intro | `<name>: <title>` |
+| lesson `k` of `n` | the title alone; the header's right-hand text is `<name>  k/n` (A15) |
+| gate (opening screen; no `▶` line, the first question follows) | `<name> — gate` (header: `<name>  gate`) |
+| task | `<name> — task` (header: `<name>  task`) |
 | cleared | `<name> cleared.` |
+
+A module has three to six lesson screens (A15). Every module screen is within
+the 20-row harness budget, like the core; a module run fails when one is not.
 
 Module screens are height-checked by the harness's `screen-height` events;
 a module author counts by hand only when the harness is unavailable.
