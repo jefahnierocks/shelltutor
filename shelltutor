@@ -453,12 +453,16 @@ panel_header() {
         used=$((used + 14))
     fi
     if [ -n "$PANEL_MODULE" ]; then
-        lead="${lead}${DIM}Module ${G_DOT_SEP} ${PANEL_MODULE}${RST} "
-        used=$((used + 10 + ${#PANEL_MODULE}))
         if [ -n "$PANEL_POS" ]; then
-            tail=" ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${G_RULE}${RST}"
-            n=$((PANEL_COLS - used - 4 - ${#PANEL_POS}))
+            # A lesson, the gate or the task: "── Module ───…── <module>  k/n ──"
+            # (A15; PANEL_POS is k/n, gate or task).
+            lead="${lead}${DIM}Module${RST} "
+            used=$((used + 7))
+            tail=" ${INSTR}${PANEL_MODULE}  ${PANEL_POS}${RST} ${RULE}${G_RULE}${G_RULE}${RST}"
+            n=$((PANEL_COLS - used - 6 - ${#PANEL_MODULE} - ${#PANEL_POS}))
         else
+            lead="${lead}${DIM}Module ${G_DOT_SEP} ${PANEL_MODULE}${RST} "
+            used=$((used + 10 + ${#PANEL_MODULE}))
             tail=" ${RULE}${G_RULE}${G_RULE}${RST}"
             n=$((PANEL_COLS - used - 3))
         fi
@@ -2820,11 +2824,11 @@ RECAP
 # fixtures under $SANDBOX/<name>/ (C-003) and never touches .progress. It
 # follows the stage pattern: intro, lessons, a recall gate, a task, a
 # cleared screen. Headings are the harness sentinels and are binding:
-#   intro     MODULE — <name>: <title>
-#   lessons   <name> <k> — <title>
+#   intro     <name>: <title>
+#   lessons   header right-hand text <name>  <k>/<n>; the title carries no position
 #   gate      <name> — gate           (opening screen has no action line)
 #   task      <name> — task
-#   cleared   ✓ <name> cleared.
+#   cleared   <name> cleared.
 # ---------------------------------------------------------------------
 
 module_known() {
@@ -2839,83 +2843,71 @@ module_known() {
 
 module_shells_intro() {
     lesson "$SANDBOX/shells" <<EOF
-${H1}MODULE — shells: what runs your commands${RST}
+${H1}shells: what runs your commands${RST}
 
-Three short lessons, then a gate. This module stands alone and saves
-nothing. Type ${CMD}quit${RST} to leave at any point.
+Three short lessons, then a task. This module stands alone and saves
+nothing. You'll look at the shell as a program, at other shells, and
+at the difference between your login shell and this one.
 
-You will look at three things:
-  the shell is a program you can inspect
-  other shells exist, and what they change
-  your login shell and this tutor's shell can differ
+Assumes the five stages, or that you know ${CMD}ls${RST}, ${CMD}cd${RST} and ${CMD}>${RST}.
 
-Everything is read-only except one small file at the gate, written
-inside ${DIR}${SANDBOX}/shells${RST}.
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 1.${RST}
 EOF
+    return $?
 }
 
 module_shells_lesson_1() {
     lesson "$SANDBOX/shells" <<EOF
-${H1}shells 1 — the shell is a program${RST}
+${H1}The shell is a program${RST}
 
-The shell reads the line you type, finds the program you named, runs
-it, and shows what it printed. The shell is itself a program.
+The shell reads your line, finds the program you named, and runs it.
+It is itself a program, and you can look at it.
 
-  ${CMD}echo \$BASH_VERSION${RST}   ${DIM}# the version of the shell running now${RST}
-  ${CMD}ps${RST}                    ${DIM}# one line is this shell, one is ps itself${RST}
+  ${CMD}echo \$BASH_VERSION${RST}     ${DIM}# the version of the shell running now${RST}
+  ${CMD}ps -o pid,comm${RST}         ${DIM}# the programs on this terminal, by name${RST}
 
-${CMD}\$BASH_VERSION${RST} is a ${SUB}variable${RST}: a name that holds a value. The
-shell swaps ${CMD}\$name${RST} for its value before it runs the line.
+Two of those lines are shells: the tutor's own, and the one you are
+typing into. ${CMD}\$BASH_VERSION${RST} is a ${BOLD}variable${RST}: a name that holds a value.
 
-Notice that ${CMD}ps${RST} lists the shell next to the command you just ran.
-
-${INSTR}${G_PLAY} Run both commands, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run both, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 module_shells_lesson_2() {
     lesson "$SANDBOX/shells" <<EOF
-${H1}shells 2 — other shells exist${RST}
+${H1}Other shells exist${RST}
 
-Four shells you will meet:
-  ${CMD}bash${RST}   common on Linux; the shell this tutor runs
-  ${CMD}zsh${RST}    the default on current macOS
-  ${CMD}fish${RST}   a shell with its own syntax, installed separately
-  ${CMD}sh${RST}     the minimal standard shell, used by scripts
+${CMD}bash${RST} is common on Linux and is what this tutor runs. ${CMD}zsh${RST} is the
+default on macOS. ${CMD}fish${RST} is another, installed separately.
 
-Ask which of two are installed here:
-  ${CMD}command -v zsh fish${RST}   ${DIM}# one path per shell found${RST}
+  ${CMD}command -v zsh fish${RST}     ${DIM}# one path for each that is installed${RST}
 
-${SUB}Different${RST}: configuration syntax, prompt, completion.
-${SUB}The same${RST}: the programs (${CMD}ls${RST}, ${CMD}cat${RST}), paths, pipes, redirection.
+No line for a shell means it is not installed. That is normal. What
+differs between shells is setup and prompt; ${CMD}ls${RST}, paths and pipes are
+the same in all of them.
 
-Notice that no output means that shell is not installed. That is normal.
-
-${INSTR}${G_PLAY} Run the check, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run it, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 module_shells_lesson_3() {
     lesson "$SANDBOX/shells" <<EOF
-${H1}shells 3 — your login shell and this shell${RST}
+${H1}Your login shell and this shell${RST}
 
-Your account has a ${SUB}login shell${RST}: the one a new terminal window
-starts. It can differ from the shell running now.
+Your ${BOLD}login shell${RST} is the one a new terminal window starts. It can
+differ from the shell running now.
 
-  ${CMD}echo \$SHELL${RST}          ${DIM}# your login shell${RST}
-  ${CMD}echo \$BASH_VERSION${RST}   ${DIM}# the shell running now${RST}
+  ${CMD}echo \$SHELL${RST}            ${DIM}# your login shell${RST}
+  ${CMD}echo \$BASH_VERSION${RST}     ${DIM}# the shell running now${RST}
 
-${CMD}\$SHELL${RST} comes from your account. It does not change when you start
-another shell from inside it.
+This tutor always runs its lessons in bash, whatever your login shell
+is. What you practise here works the same under zsh.
 
-This tutor runs its lessons in Bash whatever your login shell is, so
-every learner sees the same thing. The programs you practise here
-behave the same under ${CMD}zsh${RST}.
-
-${INSTR}${G_PLAY} Compare the two lines, then type ${CMD}next${INSTR} to take the gate.${RST}
+${INSTR}${G_PLAY} Compare the two lines, then type ${CMD}next${INSTR} for the task.${RST}
 EOF
+    return $?
 }
 
 # The file must exist and hold exactly what `command -v zsh` prints on this
@@ -2989,20 +2981,15 @@ EOF
             show_screen gate <<EOF
 ${H1}shells — task${RST}
 
-Find out whether ${CMD}zsh${RST} is installed here, and record the answer in a
-file. You will work inside ${DIR}${SANDBOX}/shells${RST}.
+Find out whether ${CMD}zsh${RST} is installed, and keep the answer in a file.
 
-  1. ask the shell where ${CMD}zsh${RST} is
-  2. send what it prints to a file named ${DIR}zsh.txt${RST}
-     ${DIM}(hint: Stage 4's ${CMD}>${RST}${DIM} sends output to a file)${RST}
+  1. Ask the shell where zsh is.
+  2. Send what it prints into a file named zsh.txt.
 
-If zsh is not installed, the shell prints nothing, and the file is
-empty. That is a correct answer.
+If zsh is not installed the file is empty, and that is a right answer.
+${DIM}This task runs in the module's own folder; ${CMD}pwd${DIM} shows it.${RST}
 
-${DIM}I will check: zsh.txt exists and holds exactly what ${RST}${CMD}command -v zsh${RST}
-${DIM}prints on this machine, and your history shows you asked.${RST}
-
-${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Do both steps, then type ${CMD}check${INSTR}.${RST}
 EOF
         fi
         skip_screen=0
@@ -3054,7 +3041,7 @@ ${H1}shells cleared.${RST}
 
 Commands and keys from this module:
 $(recap_line 'echo $BASH_VERSION' 'the shell running now')
-$(recap_line ps 'the shell is one of the running programs')
+$(recap_line 'ps -o pid,comm' 'the programs on this terminal')
 $(recap_line 'command -v NAME' 'is NAME installed, and where')
 $(recap_line 'echo $SHELL' 'your login shell')
 
@@ -3073,7 +3060,7 @@ run_module_shells() {
         i=0
         while [ "$i" -lt "${#lessons[@]}" ]; do
             PANEL_POS=''
-            [ "$i" -ge 1 ] && PANEL_POS="$i of $((${#lessons[@]} - 1))"
+            [ "$i" -ge 1 ] && PANEL_POS="$i/$((${#lessons[@]} - 1))"
             "${lessons[$i]}"
             rc=$?
             case "$rc" in
@@ -3129,7 +3116,7 @@ EOF
 
 module_env_lesson_1() {
     lesson "$SANDBOX/env" <<EOF
-${H1}env 1 — variables${RST}
+${H1}Variables${RST}
 
 A ${SUB}variable${RST} is a name that holds a value. The shell swaps
 ${CMD}\$name${RST} for the value before it runs the line.
@@ -3149,7 +3136,7 @@ EOF
 
 module_env_lesson_2() {
     lesson "$SANDBOX/env" <<EOF
-${H1}env 2 — export and child programs${RST}
+${H1}Export and child programs${RST}
 
 A program the shell starts is a ${SUB}child${RST}. It receives only the
 variables that were ${SUB}exported${RST}. Single quotes stop this shell from
@@ -3170,7 +3157,7 @@ EOF
 
 module_env_lesson_3() {
     lesson "$SANDBOX/env" <<EOF
-${H1}env 3 — PATH is a list${RST}
+${H1}PATH is a list${RST}
 
 ${CMD}PATH${RST} is a variable that holds folders separated by ${CMD}:${RST}. When you
 type a command name, the shell looks in those folders, in order, and
@@ -3189,7 +3176,7 @@ EOF
 
 module_env_lesson_4() {
     lesson "$SANDBOX/env" <<EOF
-${H1}env 4 — the prompt is a variable${RST}
+${H1}The prompt is a variable${RST}
 
 The text before your cursor is the variable ${CMD}PS1${RST}. Change it and the
 prompt changes at once.
@@ -3205,7 +3192,7 @@ EOF
 
 module_env_lesson_5() {
     lesson "$SANDBOX/env" <<EOF
-${H1}env 5 — where this lives for real${RST}
+${H1}Where this lives for real${RST}
 
 Your prompt went back: each screen starts a fresh shell, and the tutor
 ignores your own configuration files so every learner sees the same thing.
@@ -3374,7 +3361,7 @@ run_module_env() {
         i=0
         while [ "$i" -lt "${#lessons[@]}" ]; do
             PANEL_POS=''
-            [ "$i" -ge 1 ] && PANEL_POS="$i of $((${#lessons[@]} - 1))"
+            [ "$i" -ge 1 ] && PANEL_POS="$i/$((${#lessons[@]} - 1))"
             "${lessons[$i]}"
             rc=$?
             case "$rc" in

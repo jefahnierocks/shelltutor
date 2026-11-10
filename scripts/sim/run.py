@@ -423,26 +423,25 @@ def _run_variant(
         expected_errors = result["expected_errors"]
         screen_heights = result["screen_heights"]
         run_ok = result["gate_passed"] and outcome["progress_ok"]
-        # A13: the 19-row panel is enforced on the core stage screens (the
-        # budget in driver.SCREEN_BUDGET counts the blank under the rule).
-        # The welcome may take one more row (A12) and the finale is not a
-        # panel; modules are checked by WP-28.
-        if not args.module:
-            worst: dict = {}
-            for h in screen_heights:
-                sid = h["screen_id"]
-                worst[sid] = max(worst.get(sid, 0), int(h["lines"]))
-            over = sorted(
-                (sid, n)
-                for sid, n in worst.items()
-                if re.match(r"^S[1-5]-", sid)
-                and n > HEIGHT_ALLOWED.get(sid, driver.SCREEN_BUDGET)
-            )
-            outcome["screens_over_budget"] = [("%s=%d" % (sid, n)) for sid, n in over]
-            if over and run_ok:
-                run_ok = False
-                outcome["notes"] = "screens over the %d-row budget: %s" % (
-                    driver.SCREEN_BUDGET, ", ".join("%s=%d" % x for x in over))
+        # A13/A15: the 19-row panel is enforced on the core stage screens and
+        # on module screens (the budget in driver.SCREEN_BUDGET counts the
+        # blank under the rule). The welcome may take one more row (A12) and
+        # the finale is not a panel.
+        worst: dict = {}
+        for h in screen_heights:
+            sid = h["screen_id"]
+            worst[sid] = max(worst.get(sid, 0), int(h["lines"]))
+        over = sorted(
+            (sid, n)
+            for sid, n in worst.items()
+            if re.match(r"^S[1-5]-", sid)
+            and n > HEIGHT_ALLOWED.get(sid, driver.SCREEN_BUDGET)
+        )
+        outcome["screens_over_budget"] = [("%s=%d" % (sid, n)) for sid, n in over]
+        if over and run_ok:
+            run_ok = False
+            outcome["notes"] = "screens over the %d-row budget: %s" % (
+                driver.SCREEN_BUDGET, ", ".join("%s=%d" % x for x in over))
         if persona_name == "second-try":
             # The deliberate first failure must show the gate's `not yet:`
             # feedback exactly once; zero or two means the gate changed.

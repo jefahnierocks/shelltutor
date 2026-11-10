@@ -51,9 +51,9 @@ FAKE_TUTOR = r"""#!/usr/bin/env bash
 name="$1"
 clr() { printf '\033[3J\033[H\033[2J'; }
 prompt_until() { local want="$1" line; while :; do read -r -p "shelltutor> " line || exit 1; [ "$line" = "$want" ] && return; done; }
-clr; printf 'MODULE — %s: A demo\n\nintro line\n\n' "$name"; prompt_until next
-clr; printf '%s 1 — Lesson title\n\nbody\n\n' "$name"; prompt_until next
-clr; printf '%s 2 — Lesson title\n\nbody\n\n' "$name"
+clr; printf '%s: A demo\n\nintro line\n\n' "$name"; prompt_until next
+clr; printf 'Lesson title  %s  1/2\n\nbody\n\n' "$name"; prompt_until next
+clr; printf 'Lesson title  %s  2/2\n\nbody\n\n' "$name"
 read -r -p "p2> " line || exit 1   # changed prompt for the first command only
 prompt_until next
 clr; printf '%s — gate\n\n' "$name"
@@ -74,11 +74,11 @@ def check_expansion() -> int:
     walk = P.module_walk("demo", TABLE["lessons"], TABLE["gate"])
     got = [(a.wait_for, a.send, a.screen_id) for a in walk]
     want = [
-        ("MODULE — demo:", "", "M-I"),
+        ("demo: ", "", "M-I"),
         (P.PROMPT, "next", "M-I"),
-        ("demo 1 — ", "", "M-L1"),
+        ("demo  1/2", "", "M-L1"),
         (P.PROMPT, "next", "M-L1"),
-        ("demo 2 — ", "", "M-L2"),
+        ("demo  2/2", "", "M-L2"),
         (P.PROMPT, "next", "M-L2"),
         ("demo — gate", "", "M-G"),
         ("1 of 3", "a", "M-G"),
@@ -95,7 +95,7 @@ def check_expansion() -> int:
     print("ok - expansion (%d actions)" % len(got))
 
     empty = [a.wait_for for a in P.module_walk("m", 0, {})]
-    if empty != ["MODULE — m:", P.PROMPT, "m — gate", "m cleared.", P.PROMPT]:
+    if empty != ["m: ", P.PROMPT, "m — gate", "m cleared.", P.PROMPT]:
         return _fail("empty-gate expansion differs: %r" % (empty,))
     print("ok - empty gate spec expands")
 
@@ -104,11 +104,11 @@ def check_expansion() -> int:
     )
     got = [(a.wait_for, a.send) for a in extra]
     want = [
-        ("MODULE — m:", ""),
+        ("m: ", ""),
         (P.PROMPT, "next"),
-        ("m 1 — ", ""),
+        ("m  1/2", ""),
         (P.PROMPT, "next"),
-        ("m 2 — ", ""),
+        ("m  2/2", ""),
         ("p2> ", "echo x"),
         (P.PROMPT, "next"),
         ("m — gate", ""),
@@ -125,9 +125,9 @@ def check_expansion() -> int:
     )
     got = [(a.wait_for, a.send) for a in before]
     want = [
-        ("MODULE — m:", ""),
+        ("m: ", ""),
         (P.PROMPT, "next"),
-        ("m 1 — ", ""),
+        ("m  1/1", ""),
         (P.PROMPT, "PS1='x> '"),
         ("\nx> ", "next"),
         ("m — gate", ""),
@@ -137,6 +137,26 @@ def check_expansion() -> int:
     if got != want:
         return _fail("prompt_before_next expansion differs:\n got  %r\n want %r" % (got, want))
     print("ok - prompt_before_next expands")
+
+    two = P.module_walk(
+        "m", 1, {}, lesson_actions={1: ["PS1='x> '", "PS1='$ '"]},
+        lesson_prompts={1: ["\nx> ", "\n$ "]}, prompt_after={1: "p> "},
+    )
+    got = [(a.wait_for, a.send) for a in two]
+    want = [
+        ("m: ", ""),
+        (P.PROMPT, "next"),
+        ("m  1/1", ""),
+        (P.PROMPT, "PS1='x> '"),
+        ("\nx> ", "PS1='$ '"),
+        ("\n$ ", "next"),
+        ("m — gate", ""),
+        ("m cleared.", ""),
+        (P.PROMPT, "quit"),
+    ]
+    if got != want:
+        return _fail("lesson_prompts expansion differs:\n got  %r\n want %r" % (got, want))
+    print("ok - lesson_prompts asserts both prompts in order")
     return 0
 
 

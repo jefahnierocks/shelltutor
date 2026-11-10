@@ -401,6 +401,7 @@ def module_walk(
     lesson_actions: Optional[dict] = None,
     prompt_after: Optional[dict] = None,
     prompt_before_next: Optional[dict] = None,
+    lesson_prompts: Optional[dict] = None,
 ) -> List[Action]:
     """Expand a module table into a careful-beginner walk.
 
@@ -408,8 +409,8 @@ def module_walk(
     carries no per-module entries (the driver treats an unregistered
     `wait_for` as a literal substring):
 
-        intro    ``MODULE — <name>:``
-        lesson   ``<name> <k> — ``            (prefix, no title text)
+        intro    ``<name>: ``                 (the title starts <name>: )
+        lesson   ``<name>  <k>/<n>``          (the header's right-hand text)
         gate     ``<name> — gate``
         task     ``<name> — task``
         cleared  ``<name> cleared.``
@@ -428,11 +429,16 @@ def module_walk(
     `prompt_before_next` maps a lesson number to the prompt text the lesson's
     own commands leave behind: the wait before that lesson's `next` uses it
     (a lesson that changes `PS1` types `next` at the new prompt).
+    `lesson_prompts` maps a lesson number to the prompts its commands leave
+    behind, one per command and in order: command i+1 (and `next`, after the
+    last) waits for prompt i, so a lesson that changes the prompt twice
+    asserts both prompts and skips neither.
     """
     gate = gate or {}
     lesson_actions = lesson_actions or {}
     prompt_after = prompt_after or {}
     prompt_before_next = prompt_before_next or {}
+    lesson_prompts = lesson_prompts or {}
     recall = list(gate.get("recall") or [])
     task = list(gate.get("task") or [])
     pending = {"text": None}
@@ -442,16 +448,20 @@ def module_walk(
         return text if text is not None else PROMPT
 
     walk = [
-        Action("MODULE — %s:" % name, "", "render-module-intro", "M-I"),
+        Action("%s: " % name, "", "render-module-intro", "M-I"),
         Action(prompt(), "next", "leave-module-intro", "M-I"),
     ]
     for k in range(1, lessons + 1):
         sid = "M-L%d" % k
-        walk.append(Action("%s %d — " % (name, k), "", "render-lesson-%d" % k, sid))
-        for cmd in lesson_actions.get(k, []):
-            walk.append(Action(prompt(), cmd, "run-" + cmd.split()[0], sid))
+        walk.append(Action("%s  %d/%d" % (name, k, lessons), "", "render-lesson-%d" % k, sid))
+        seq = lesson_prompts.get(k, [])
+        for idx, cmd in enumerate(lesson_actions.get(k, [])):
+            wait = seq[idx - 1] if idx >= 1 and idx - 1 < len(seq) else prompt()
+            walk.append(Action(wait, cmd, "run-" + cmd.split()[0], sid))
         wait_next = prompt()
-        if k in prompt_before_next:
+        if seq and len(lesson_actions.get(k, [])) >= 1:
+            wait_next = seq[len(lesson_actions.get(k, [])) - 1] if len(lesson_actions.get(k, [])) - 1 < len(seq) else wait_next
+        elif k in prompt_before_next:
             wait_next = prompt_before_next[k]
         walk.append(Action(wait_next, "next", "leave-lesson-%d" % k, sid))
         if k in prompt_after:
