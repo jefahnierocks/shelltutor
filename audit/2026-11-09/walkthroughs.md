@@ -1044,9 +1044,9 @@ All reproduced through `recall_matches` on `main`:
   result. Sheets: leo O-001, maya O-a, O-b, arthur O-1, O-2.
 - **O-AZ — The 2.4 `cd <folder>` line wraps for a long path.** The line is
   `  cd ${SANDBOX}  # come back, using the folder's full name` (`1605`); with the
-  colour codes removed its fixed part is 48 columns. Width: 72 for
-  `/Users/alice/.shelltutor` (24 characters), 73 for `/home/learner/.shelltutor`
-  (25), 108 for a 60-character path, and 125 for the sim path (77 characters).
+  colour codes removed its fixed part is 48 columns. Width: 72 for a
+  24-character default path on macOS (a five-letter login name), 73 for a
+  25-character default path on Linux, 108 for a 60-character path, and 125 for the sim path (77 characters).
   The longest path that keeps the line within 80 columns is 32 characters. So
   the default fits and a long `SHELLTUTOR_HOME` wraps. Sheets: maya O-c, arthur.
 - **O-BA — 3.1 says "beside them" and the files land one folder away.** 3.1 says
