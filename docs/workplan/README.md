@@ -4,7 +4,7 @@ category: planning
 component: workplan
 status: active
 version: 0.1.0
-last_updated: 2026-11-07
+last_updated: 2026-11-09
 tags: [workplan, decisions, worker-protocol, cycle-2026-11]
 priority: high
 ---
@@ -274,6 +274,13 @@ deviate must say so in its report and get operator approval first.
   committed file. Lands before, or in the same series as, the first new
   bundle (WP-11). Existing bundles are not rewritten unless the operator
   says so: a login name is not a credential.
+- **D-20 Outside design review adopted as A11; brief and response are checked
+  in.** (Decisions amendment A11, 2026-11-09.) The operator commissioned an
+  outside review of the screens. `docs/design-brief-consultant-2026-11.md` and
+  `docs/design-consultant-response-2026-11.md` are committed so the reasoning
+  survives the session; A11 adopts the response with its five defaults and
+  retires the identity phrase "a vimtutor prerequisite course". The work is
+  split: WP-25 rendering only, WP-26 lesson content with one synthetic round.
 - **D-16 License is the operator's decision.** Decided 2026-11-07: MIT.
   WP-08 remains parameterised on the copyright line and the human Phase 2
   results. No worker executes it before those

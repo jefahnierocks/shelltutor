@@ -3,7 +3,7 @@ title: shelltutor Status
 category: status
 component: project-status
 status: active
-version: 0.5.0
+version: 0.6.0
 last_updated: 2026-11-09
 tags: [status, posture, deferrals]
 priority: high
@@ -44,9 +44,14 @@ Current truth for the `shelltutor` repository.
   They are candidate evidence only (`audit/2026-11-09/walkthroughs.md`); Phase A's
   human exit (three sittings, one on Bash 3.2) is still open, one of three recorded.
 - The synthetic loop is paused (2026-11-09) and resumes only when a package
-  changes lesson content (ROADMAP Phase 5).
-- Open: WP-08 part B (CHANGELOG, `v0.1.0`), which human sittings gate
-  (A1.10). WP-24 landed at `7489d50`.
+  changes lesson content (ROADMAP Phase 5); WP-24 landed at `7489d50`.
+- Amendment A11 (2026-11-09) adopted the outside design review (chrome v2).
+  WP-25 (rendering only) is in progress; WP-26 (lesson skeleton and body
+  rewrite) is drafted and waits for it.
+- Open: the identity line. "A vimtutor prerequisite course" is retired in the
+  docs; the script, harness sentinel and smoke strings change in WP-25 and the
+  item is closed when that lands (lands in WP-25). Also open: WP-08 part B
+  (CHANGELOG, `v0.1.0`), which human sittings gate (A1.10).
 
 ### The 2026-11 cycle, in one place
 
@@ -81,7 +86,8 @@ documents agree with the code.
 
 ### Curriculum and tutor
 
-- `shelltutor` is a vimtutor-prerequisite course: five mastery-gated stages,
+- `shelltutor` is a course in working in a Unix shell, whose five mastery-gated
+  stages hand off to `vimtutor`:
   each closing with three recall questions and one practical task, on a
   Bash 3.2 runtime floor (ROADMAP Phase 3 is complete, `9f61570`,
   2026-05-21; Phase 1, the user-agnostic refactor, is complete, `e6257aa`).
@@ -216,12 +222,18 @@ documents agree with the code.
 
 ## Immediate Next Steps
 
-1. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
+1. **WP-25 — chrome v2, rendering only** (`docs/workplan/WP-25-chrome-v2.md`;
+   in progress): the response's footer, palette, glyphs, recall block,
+   checklist, welcome, cleared and finale, and the identity strings.
+2. **WP-26 — lesson skeleton and body rewrite**
+   (`docs/workplan/WP-26-lesson-skeleton.md`; drafted): per-lesson approval,
+   then one synthetic round as its evidence.
+3. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
    tag waits for human evidence (A1.10): the Phase A sittings (one on macOS
    `/bin/bash` 3.2 with `echo $BASH_VERSION` recorded) and the Phase 2 items that
    need a person (Debian/Ubuntu walk, no-TTY negative test, the
    `LC_ALL=de_DE.UTF-8` day check).
-2. **Module standard going forward**: modules `shells` and `env` are in;
+4. **Module standard going forward**: modules `shells` and `env` are in;
    `processes` and `permissions` follow only after two human walks of both
    (`docs/direction-decisions-2026-11.md` §4), under the module standard in
    `CONTRIBUTING.md`.

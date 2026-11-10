@@ -4,7 +4,7 @@ category: reference
 component: design-description
 status: active
 version: 0.1.0
-last_updated: 2026-11-08
+last_updated: 2026-11-09
 tags: [design, game-design, mda, architecture, user-journey, pedagogy, baseline]
 priority: high
 ---
@@ -715,6 +715,8 @@ before the course and a pointer during it; for 4 to 6 it offers text.
 
 *Amended 2026-11 (WP-15, A3).* The table above describes the baseline and stays as written. Screens now carry three further cues: a header rule with five stage dots (`●` passed, `◉` current, `○` not reached) and the position (`N.k` or `task`), which show position rather than score and stay inside §1.11; a footer bar (`next ▸ go on   show ▸ …`) that replaces the parenthesised mode footer; and a `┃` checklist (`✓` / `○` with `not yet: …`) that replaces the "Almost — you still need to" list and the expected/seen listing. The glyphs fall back to ASCII on the plain path or under `SHELLTUTOR_ASCII=1`.
 
+*Amended 2026-11 (A11).* An outside design review has since replaced A3's chrome with a v2 (footer above the rule, a 19-row panel with the body at most 12 rows, a reduced palette, a `(gloss)` footer, a `?` recall prompt, `[✓]`/`[ ]` checklists, a welcome box and a retired identity phrase). The brief and the response are checked in (`docs/design-brief-consultant-2026-11.md`, `docs/design-consultant-response-2026-11.md`); `docs/direction-decisions-2026-11.md` A11 records what was adopted and splits the work into WP-25 (rendering) and WP-26 (lesson content). The cue table above describes the baseline, and the A3 note above describes the chrome until WP-25 lands.
+
 ### 4.3 Sequencing logic
 
 **Within a stage**, each stage moves from recognition to action to model:
@@ -784,6 +786,7 @@ checklist); the course teaches every item and measures all but the last.
 | contract (C-nnn) | `docs/contracts.md` | interface specification (informal), stability commitment | partial: no schema; grep-level checks |
 | density audit | `audit/2026-05-23/stage1-density.md` | cognitive-load review per screen | full |
 | synthetic sitting | `audit/2026-11-09/walkthroughs.md`; `audit/2026-11-09/sim-sittings/` | an AI-played learner persona against the real tutor; candidate evidence until a maintainer reproduces it | partial: no human learner, no real pace or motivation |
+| consultant documents | `docs/design-brief-consultant-2026-11.md`; `docs/design-consultant-response-2026-11.md`; A11 | an outside design review: brief, response and mock-ups, adopted by amendment A11 | partial: a proposal reasoned from the screens, not observed learners |
 | hint ladder / escalation | `gate_escalate`, `shelltutor:554-566` | graded scaffolding on failure; feedback escalation | full |
 | finale | `shelltutor:1991-2029` | win screen; handoff pointer | partial: "handoff" is a pointer, not a launch |
 

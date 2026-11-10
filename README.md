@@ -4,16 +4,15 @@ category: reference
 component: project-overview
 status: active
 version: 0.2.0
-last_updated: 2026-11-08
+last_updated: 2026-11-09
 tags: [shell, bash, tutor, education, unix, posix]
 priority: high
 ---
 
 # shelltutor
 
-`shelltutor` is a **shell course** delivered as a single bash script. Its
-five-stage core is the **vimtutor prerequisite course** and hands off to
-`vimtutor`; stand-alone modules (`./shelltutor shells`, `./shelltutor env`) cover a topic on its
+`shelltutor` is a course in **working in a Unix shell**, delivered as a single
+bash script. Its five-stage core hands off to `vimtutor`; stand-alone modules (`./shelltutor shells`, `./shelltutor env`) cover a topic on its
 own, need nothing passed and save nothing. The core teaches the small set of shell concepts a learner needs
 before sitting down to `vimtutor`: where am I, how do paths work, how do
 I create and edit files safely, how do commands and pipes combine, and

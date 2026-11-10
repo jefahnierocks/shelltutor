@@ -3,8 +3,8 @@ title: shelltutor Roadmap
 category: planning
 component: roadmap
 status: active
-version: 0.3.0
-last_updated: 2026-11-08
+version: 0.4.0
+last_updated: 2026-11-09
 tags: [roadmap, phases, planning, workplan, direction]
 priority: medium
 ---
@@ -560,6 +560,30 @@ holds; the personas have no clock (D8) and their friction meter is a model.
 **Standing.** Synthetic results are candidate evidence only. Phase A's human
 exit stands, and human sittings still gate `v0.1.0` (A1.10). The loop is paused
 after the exit test and resumes only when a package changes lesson content.
+
+### Screen chrome v2 (A11, 2026-11-09)
+
+The operator commissioned an outside design review: a brief
+(`docs/design-brief-consultant-2026-11.md`), a response
+(`docs/design-consultant-response-2026-11.md`) and amendment A11, which adopts
+the response's priorities, its answers to the three operator requests and the ten
+questions, and its sheet with all five defaults. Q10 (wide terminals:
+left-aligned, rule at 80) is closed as-is. The identity phrase "a vimtutor
+prerequisite course" is retired in favour of "working in a Unix shell"; the
+Stage 5 title stays. A3's 20/22-row budgets are superseded by the 19-row panel
+(body at most 12) once WP-26 has brought the over-budget screens down; until
+then WP-25 enforces a 21-row cap and reports the excess.
+
+The work splits in two. **WP-25** is rendering only: chrome, footer, roles,
+glyphs, the recall block, the checklist, welcome, cleared screens, the finale,
+the identity strings and the title prefixes. **WP-26** is content: the lesson
+skeleton and the body rewrite, drafted now, approved per lesson, and checked by
+one synthetic round (the only point at which the paused loop resumes, because a
+package changes lesson content).
+
+Order of work: WP-25, then WP-26 (per-lesson approval), then WP-08 part B
+(`CHANGELOG.md`, `v0.1.0`, which human sittings still gate), then the module
+standard going forward.
 
 ### Phase C — Module infrastructure (agent; lands with the first module)
 
