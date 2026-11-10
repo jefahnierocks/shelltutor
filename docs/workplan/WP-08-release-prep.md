@@ -91,7 +91,7 @@ The report ends with the exact tag command for the operator to run after
 review:
 
 ```sh
-git tag -a v0.1.0 -m "shelltutor v0.1.0 — vimtutor prerequisite course, five mastery-gated stages"
+git tag -a v0.1.0 -m "shelltutor v0.1.0 — working in a Unix shell: five mastery-gated stages, handing off to vimtutor"
 ```
 
 and the reminder to push the tag only after the hosted `verify` run on the

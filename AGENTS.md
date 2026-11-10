@@ -163,7 +163,7 @@ context that already exists.
 - `profile/2026-05-21/project_profile.yaml` and `profile-discovery.md` —
   first profile snapshot (Project Profile Discovery Directive v1.2).
 - `ROADMAP.md` Phase 3 — completed curriculum redesign spec: five
-  mastery-gated stages, vimtutor-prerequisite framing, 3/3 recall + task gates.
+  mastery-gated stages, shell-first framing that hands off to vimtutor, 3/3 recall + task gates.
 - `docs/audit/references/` — verified research reference set (six docs,
   v0.2.0; see `README.md` for the index and verification notes).
   `shell-research.md` is the curriculum basis for Phase 3 (12 concepts /
