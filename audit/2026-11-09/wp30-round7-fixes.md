@@ -44,9 +44,11 @@ shells 1 stays at 18 rows.
   at 80 columns, so it sits on the next line under the command (layout only; no
   word changed).
 - 5.2: the `<Enter>` sentence is 86 characters and wraps after "not".
-- shells 1: the notice says "The second line prints one row: a number and a
-  name." Real `ps -o pid,comm` also prints a `PID COMM` header; the copy is the
-  package's. Under the harness the name is `/opt/homebrew/bin/bash`, which ends in
+- shells 1: the notice says "The second line prints a heading and one row: a
+  number and a name. The name ends in bash. The shell is a program like any
+  other; $$ is its number." (re-wrapped to 76 columns; the coordinator's
+  correction, because the real command prints a `PID COMM` heading above the
+  row). Under the harness the name is `/opt/homebrew/bin/bash`, which ends in
   bash.
 - A scan of all bundle screens found no other line over 80 columns apart from
   the host paths and Vim's own screen.

@@ -2886,8 +2886,9 @@ It is itself a program, and you can look at it.
   ${CMD}echo \$BASH_VERSION${RST}       ${DIM}# the version of the shell running now${RST}
   ${CMD}ps -p \$\$ -o pid,comm${RST}     ${DIM}# this shell, as a running program${RST}
 
-The second line prints one row: a number and a name. The name ends in
-bash. The shell is a program like any other; ${CMD}\$\$${RST} is its number.
+The second line prints a heading and one row: a number and a name. The
+name ends in bash. The shell is a program like any other; ${CMD}\$\$${RST} is
+its number.
 
 ${INSTR}${G_PLAY} Run both, then type ${CMD}next${INSTR}.${RST}
 EOF
