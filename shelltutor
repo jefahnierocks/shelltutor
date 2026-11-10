@@ -1369,7 +1369,7 @@ stage1_gate() {
 
     ask_question \
         "Q2: What does ${CMD}pwd${RST} print?" \
-        "Lesson 1.3: pwd answers a where question, not a who question." \
+        "Lesson 1.3: pwd printed one line starting with /. What does that line name?" \
         'the current working directory' \
         'current working directory' \
         'the working directory' \
@@ -1386,10 +1386,22 @@ stage1_gate() {
         'where i am' \
         'the folder youre in' \
         'the folder you are in' \
+        'folder' \
+        'a folder' \
+        'directory' \
+        'a directory' \
+        'path' \
+        'a path' \
+        'the path' \
+        'location' \
+        'my location' \
+        'where' \
+        'here' \
+        'the place' \
         -- \
         'the folder|a folder|this folder|the current folder|current folder|the directory|current directory|working directory|where i am|where you are|your location|current location|the current path|the path i am in' \
         --reject \
-        'cloud|python|user|browser|phone' || return $?
+        'cloud|python|user|browser|phone|manual|file|date|listing' || return $?
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
