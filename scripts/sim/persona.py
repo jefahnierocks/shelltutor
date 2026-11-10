@@ -382,13 +382,19 @@ MODULE_TABLES: dict = {
     # `next` at the changed prompt and then asserts the next screen's prompt
     # is the tutor's own again (the module's central claim: it reverts).
     "env": {
-        "lessons": 5,
+        "lessons": 6,
         "gate": {
             "recall": ["export", "a list of folders", "shelltutor>"],
             "task": ["TOPIC=shell", "export TOPIC", "bash -c 'echo $TOPIC' > seen.txt"],
         },
-        "lesson_actions": {4: ["PS1='me> '"]},
-        "prompt_before_next": {4: "\nme> "},
+        "lesson_actions": {
+            1: ["echo $HOME", "pet=owl", "echo $pet", "env | head"],
+            2: ["pet=owl", "bash -c 'echo pet=$pet'", "export pet", "bash -c 'echo pet=$pet'"],
+            3: ['echo "$PATH"', "echo \"$PATH\" | tr : '\\n'", "command -v ls"],
+            4: ["PS1='me> '", "PS1='$ '"],
+            5: ['echo "[$SHELLTUTOR_HOME]"', "pwd"],
+        },
+        "lesson_prompts": {4: ["\nme> ", "\n$ "]},
         "prompt_after": {4: "shelltutor> "},
     },
 }

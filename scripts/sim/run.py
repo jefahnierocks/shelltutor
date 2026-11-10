@@ -222,6 +222,7 @@ def _build_actions(
             lesson_actions=table.get("lesson_actions"),
             prompt_after=table.get("prompt_after"),
             prompt_before_next=table.get("prompt_before_next"),
+            lesson_prompts=table.get("lesson_prompts"),
         )
     return persona_mod.build_walk(
         stage,

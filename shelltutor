@@ -3095,83 +3095,76 @@ run_module_shells() {
 
 module_env_intro() {
     lesson "$SANDBOX/env" <<EOF
-${H1}MODULE — env: variables and the prompt${RST}
+${H1}env: variables and the prompt${RST}
 
-Five short lessons, then a gate. This module stands alone and saves
-nothing. Type ${CMD}quit${RST} to leave at any point.
+Six short lessons, then a task. This module stands alone and saves
+nothing. Everything stays inside this practice shell; your own setup
+files are not touched.
 
-You will see:
-  variables, and how the shell uses them
-  ${CMD}export${RST}, and what a child program receives
-  ${CMD}PATH${RST}, the list the shell searches for programs
-  the prompt, which is a variable too
-  where these settings live for real
+Assumes the five stages, or that you know ${CMD}ls${RST}, ${CMD}cd${RST} and ${CMD}>${RST}.
 
-Everything stays inside this tutor's practice shell. Your own
-configuration files are not touched.
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 1.${RST}
 EOF
+    return $?
 }
 
 module_env_lesson_1() {
     lesson "$SANDBOX/env" <<EOF
 ${H1}Variables${RST}
 
-A ${SUB}variable${RST} is a name that holds a value. The shell swaps
-${CMD}\$name${RST} for the value before it runs the line.
+A ${BOLD}variable${RST} is a name that holds a value. The shell swaps ${CMD}\$name${RST} for
+the value before it runs the line.
 
-  ${CMD}echo \$HOME${RST}           ${DIM}# a variable the shell already has${RST}
-  ${CMD}pet=owl${RST}               ${DIM}# set one: no spaces around =${RST}
-  ${CMD}echo \$pet${RST}            ${DIM}# prints owl${RST}
-  ${CMD}env | head${RST}            ${DIM}# the first lines of the variable list${RST}
-  ${CMD}env | grep '^pet='${RST}    ${DIM}# prints nothing${RST}
+  ${CMD}echo \$HOME${RST}        ${DIM}# one the shell already has${RST}
+  ${CMD}pet=owl${RST}           ${DIM}# set your own: no spaces around =${RST}
+  ${CMD}echo \$pet${RST}         ${DIM}# prints owl${RST}
+  ${CMD}env | head${RST}        ${DIM}# some of the variables programs receive${RST}
 
-Notice that ${CMD}pet${RST} is missing from the list. A variable you set
-is private to this shell until you export it (lesson 2).
+${CMD}pet${RST} is not in that list yet. The next lesson shows why.
 
-${INSTR}${G_PLAY} Try the five lines, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all four, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
+# bash -c in this lesson resolves bash through PATH, like any command; it
+# need not be the practice shell's own binary ($BASH, F-014). Only the exported
+# variable matters to the child.
 module_env_lesson_2() {
     lesson "$SANDBOX/env" <<EOF
-${H1}Export and child programs${RST}
+${H1}Export${RST}
 
-A program the shell starts is a ${SUB}child${RST}. It receives only the
-variables that were ${SUB}exported${RST}. Single quotes stop this shell from
-replacing ${CMD}\$pet${RST}, so the child does it.
+A program the shell starts is a ${BOLD}child${RST}. It receives only the variables
+you ${BOLD}exported${RST}.
 
-  ${CMD}pet=owl${RST}                          ${DIM}# set it again: new screen, new shell${RST}
-  ${CMD}bash -c 'echo [\$pet]'${RST}            ${DIM}# prints [] : the child sees nothing${RST}
-  ${CMD}export pet${RST}                       ${DIM}# mark it for children${RST}
-  ${CMD}bash -c 'echo [\$pet]'${RST}            ${DIM}# prints [owl]${RST}
-  ${CMD}env | grep '^pet='${RST}               ${DIM}# now it is listed${RST}
+  ${CMD}pet=owl${RST}                    ${DIM}# set it again: each screen is a new shell${RST}
+  ${CMD}bash -c 'echo pet=\$pet'${RST}    ${DIM}# pet=    : the child sees nothing${RST}
+  ${CMD}export pet${RST}                 ${DIM}# mark it for children${RST}
+  ${CMD}bash -c 'echo pet=\$pet'${RST}    ${DIM}# pet=owl${RST}
 
-Notice that ${CMD}export${RST} copies nothing. It marks the name so every
-child gets the value at the moment it starts.
+The single quotes matter: they leave ${CMD}\$pet${RST} for the child to fill in.
 
-${INSTR}${G_PLAY} Run the five lines in order, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run all four in order, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 module_env_lesson_3() {
     lesson "$SANDBOX/env" <<EOF
 ${H1}PATH is a list${RST}
 
-${CMD}PATH${RST} is a variable that holds folders separated by ${CMD}:${RST}. When you
-type a command name, the shell looks in those folders, in order, and
-runs the first match.
+${CMD}PATH${RST} holds folders separated by colons. When you type a command name,
+the shell looks in those folders, in order, and runs the first match.
 
   ${CMD}echo "\$PATH"${RST}                  ${DIM}# one long line${RST}
-  ${CMD}echo "\$PATH" | tr : '\n'${RST}      ${DIM}# one folder per line${RST}
-  ${CMD}command -v ls${RST}                 ${DIM}# the folder where ls was found${RST}
+  ${CMD}echo "\$PATH" | tr : '\\n'${RST}      ${DIM}# one folder per line${RST}
+  ${CMD}command -v ls${RST}                 ${DIM}# the full name of ls: its folder, then ls${RST}
 
-This is why ${CMD}command -v${RST} (Stage 4) could answer: it reads this list.
 A program in a folder that is not on the list is not found by name.
 
-${INSTR}${G_PLAY} Run the three lines, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Run all three, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 module_env_lesson_4() {
@@ -3181,35 +3174,52 @@ ${H1}The prompt is a variable${RST}
 The text before your cursor is the variable ${CMD}PS1${RST}. Change it and the
 prompt changes at once.
 
-  ${CMD}PS1='me> '${RST}       ${DIM}# the prompt is now me>${RST}
-  ${CMD}PS1='\$ '${RST}         ${DIM}# and now a plain dollar sign${RST}
+  ${CMD}PS1='me> '${RST}        ${DIM}# the prompt is now me>${RST}
+  ${CMD}PS1='\$ '${RST}          ${DIM}# and now a plain dollar sign${RST}
 
-Try both. Then type ${CMD}next${RST} and look at the prompt on the next screen.
+That last one is the prompt most terminals show. Watch the next
+screen: the prompt will be back to shelltutor>.
 
-${INSTR}${G_PLAY} Change the prompt, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Change it twice, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 module_env_lesson_5() {
     lesson "$SANDBOX/env" <<EOF
+${H1}A program that reads a variable${RST}
+
+This tutor is configured the same way. It reads ${CMD}SHELLTUTOR_HOME${RST} to
+decide where your practice folder goes.
+
+  ${CMD}echo "[\$SHELLTUTOR_HOME]"${RST}     ${DIM}# [] means: not set, so the default is used${RST}
+  ${CMD}pwd${RST}                           ${DIM}# where you are now, inside the practice folder${RST}
+
+To put the folder somewhere else, set the variable on the line that
+starts the tutor:   ${CMD}SHELLTUTOR_HOME=~/practice ./shelltutor${RST}
+
+${INSTR}${G_PLAY} Run both, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+module_env_lesson_6() {
+    lesson "$SANDBOX/env" <<EOF
 ${H1}Where this lives for real${RST}
 
-Your prompt went back: each screen starts a fresh shell, and the tutor
-ignores your own configuration files so every learner sees the same thing.
-A real terminal reads one file when it starts:
-  ${DIR}~/.bashrc${RST}   if your login shell is bash
-  ${DIR}~/.zshrc${RST}    if it is zsh ${DIM}(check: echo \$SHELL)${RST}
-${DIM}macOS with bash reads ~/.bash_profile instead.${RST}
+The prompt went back because each screen starts a fresh shell. A real
+terminal reads one file when it starts, and settings there last:
 
-Lines you could add there:
-  ${CMD}PS1='\$ '${RST}
-  ${CMD}export PATH="\$HOME/bin:\$PATH"${RST}
+  ~/.bashrc     if your login shell is bash
+  ~/.zshrc      if it is zsh
+  ~/.bash_profile   on macOS with bash
 
-${EM}Quit the tutor${RST}, open a new terminal, edit the file there. The tutor
-will not touch it. Open another new terminal to see the change.
+A line like  ${CMD}PS1='me> '${RST}  in that file gives you your own prompt every
+time. Edit it in a normal terminal, not here; the tutor never touches it.
 
-${INSTR}${G_PLAY} Read the lines, then type ${CMD}next${INSTR} to take the gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for the task.${RST}
 EOF
+    return $?
 }
 
 module_env_verify_task() {
@@ -3280,18 +3290,15 @@ EOF
             show_screen gate <<EOF
 ${H1}env — task${RST}
 
-Prove that a child program can see a variable you exported. You will
-work inside ${DIR}${SANDBOX}/env${RST}.
+Show that a child program can see a variable you exported.
 
-  1. set ${CMD}TOPIC${RST} to the word ${SUB}shell${RST}
-  2. export it
-  3. run a child ${CMD}bash -c${RST} that prints ${CMD}\$TOPIC${RST} into ${DIR}seen.txt${RST}
-     ${DIM}(hint: single quotes, so the child replaces the variable)${RST}
+  1. Set TOPIC to the word ${BOLD}shell${RST}.
+  2. Export it.
+  3. Run a child with ${CMD}bash -c${RST} that prints ${CMD}\$TOPIC${RST} into seen.txt.
 
-${DIM}I will check: seen.txt holds the word shell, and your history shows${RST}
-${DIM}TOPIC set, exported, and read inside single quotes by a child.${RST}
+${DIM}This task runs in the module's own folder; ${CMD}pwd${DIM} shows it.${RST}
 
-${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
+${INSTR}${G_PLAY} Do the steps, then type ${CMD}check${INSTR}.${RST}
 EOF
         fi
         skip_screen=0
@@ -3345,6 +3352,7 @@ $(recap_line 'export name' 'let child programs see it')
 $(recap_line 'echo "$PATH"' 'the folders searched for programs')
 $(recap_line env 'list what children receive')
 $(recap_line "PS1='\$ '" 'change the prompt (this shell only)')
+$(recap_line SHELLTUTOR_HOME 'where this tutor puts your practice folder')
 
 ${INSTR}${G_PLAY} Type ${CMD}quit${INSTR} to leave, or ${CMD}next${INSTR} to return to the start of this module.${RST}
 EOF
@@ -3355,7 +3363,7 @@ EOF
 run_module_env() {
     PANEL_MODULE='env'
     setup_module_dir env
-    local lessons=(module_env_intro module_env_lesson_1 module_env_lesson_2 module_env_lesson_3 module_env_lesson_4 module_env_lesson_5)
+    local lessons=(module_env_intro module_env_lesson_1 module_env_lesson_2 module_env_lesson_3 module_env_lesson_4 module_env_lesson_5 module_env_lesson_6)
     local i rc
     while true; do
         i=0
