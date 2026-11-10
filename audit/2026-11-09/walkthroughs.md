@@ -1373,3 +1373,335 @@ not reached because the sitting ended first.
 | arthur-shells | O-b `pipes` undefined | O-BE (terms) |
 | arthur-shells | O-c silent `>`, no pass line | O-BM |
 | arthur-shells | O-d "a window" option | not a defect (option list by design) |
+
+## Synthetic sittings, round 8
+
+**Result: three core sittings and one module sitting ran against `7e01410`
+(WP-30). Leo (v0.3.1) and Arthur reached the finale; Maya quit at the Stage 5
+gate (friction 8); `shells` cleared. Maya and Arthur answered every recall
+question as a full sentence in their own words, and the matcher rejected 10 of
+those 39 attempts, every one of them a correct answer: the round is about the
+matcher (F-034..F-039).** Persona versions: Leo 0.3.1, Maya and Arthur 0.2.0.
+`shelltutor` on `main` (`d4cce0e`) is unchanged from the sheets' script.
+Numbering continues at F-034, O-BQ and H-5 (none new).
+
+### Friction by source
+
+| Sheet | Final | Reading | Rejections (+2) | Scripted errors | Gates cleared | Turns |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| leo-8 | 0 (finale) | 1 | 4 (two) | 0 (11 performed, each recovered in one input) | -5 | 174 of 240 |
+| maya-8 | 8 (quit, Stage 5 Q3) | 0 | 12 (six) | n/a | -4 | 168 |
+| arthur-8 | 5 (finale) | 0 | 10 (five: `type words.txt` +2, S3Q2 x1, S5Q3 x3) | n/a | -5 | 196 |
+| arthur-shells-8 | -2 (`shells` cleared) | 0 | 0 | n/a | -2 | 15 of 70 |
+
+Maya's sheet notes its running total was one off from Stage 2 on; the bundle and
+the table agree on 8. Leo's scripted errors cost 0 under v0.3.1, which is why his
+friction is 0.
+
+### Round-7 items closed (with evidence)
+
+- **F-032 closed.** `folder`, `where`, `directory`, `path`, `here`, `a directory`,
+  `location` and `the place` are now exact forms at Stage 1 Q2 (`1371`); Leo's
+  `the folder` passed. (Sentences are another matter: F-037.)
+- **F-033 closed.** The `shells` lesson now says `ps -p $$ -o pid,comm` prints "a
+  heading and one row: a number and a name. The name ends in bash." Arthur's
+  sitting counted 2 lines and the name `/bin/bash`, matching.
+- **O-BH closed in effect.** The stray-slash help moved to 1.1 ("look for a stray /
+  or a missing space", `1151`); Leo's five scripted slashes each recovered in one
+  input. The reply itself is still bash's (`bash: /echo: No such file or directory`).
+- **O-BI closed.** 5.3 now says "The next two lessons try these in Vim."
+- **O-BJ closed.** env 5 now reads "[] if you never set it; otherwise the folder you
+  chose".
+- **O-BK closed for the lessons.** 2.3 says "Folder names are joined with /, never
+  \" and 5.2 says "Vim's own screen writes that as :q<Enter>. <Enter> means the
+  key". The replies themselves are bash's and Vim's (see O-BU).
+- **O-BL not exercised.** env 2's comment now reads "every screen starts a fresh
+  shell"; no `env` sitting ran this round.
+
+### The matcher against own-words answers
+
+**Method.** The probe extracts the real `normalize_lines`, `RECALL_NEGATIONS` and
+`recall_matches` and each `ask_question` call from `shelltutor` and runs every
+answer through the real function; a separate mirror then names the rule that fired.
+The mirror and the real function agreed on all 103 inputs below (61 sheet
+answers, 42 probes), and the real function reproduced every accept and reject
+the sheets recorded. Rule order in `recall_matches` is: exact forms; (no group
+means exact-only); negation guard (`not no never nowhere nothing none isnt doesnt
+dont wont cant without instead rather neither nor only`); reject phrases; then each
+group in turn, with `--ordered` requiring each match after the previous one.
+
+**All own-words answers** (Maya 20, Arthur 19, Leo's unscripted 17; the five scripted
+one-word guesses are listed after the table):
+
+| Sheet | Q | Answer | Result | Rule that decided |
+| --- | --- | --- | --- | --- |
+| maya | S1Q1 | it ends with a dollar sign | accept | group match |
+| maya | S1Q2 | it shows you which folder you're in | **reject** | no group word (group 1) |
+| maya | S1Q2 | it prints the full location of where you are right now | accept | group match |
+| maya | S1Q3 | it shows up on the screen right under what I typed | accept | group match |
+| maya | S2Q1 | it takes you back out to the folder that's above the one you're in | accept | group match |
+| maya | S2Q2 | it's the short way of saying my own home folder | accept | group match |
+| maya | S2Q3 | you'd be in the notes folder that's inside projects inside your home folder | accept | group match |
+| maya | S3Q1 | you use touch to make a blank file | accept | group match |
+| maya | S3Q2 | it's deleted for good and doesn't go to the trash | **reject** | negation guard: "doesnt" |
+| maya | S3Q2 | the file is gone and you can't get it back | **reject** | negation guard: "cant" |
+| maya | S3Q2 | rm removes it and you can't undo it, so it's gone | **reject** | negation guard: "cant" |
+| maya | S3Q2 | it is gone | accept | group match |
+| maya | S3Q3 | you type mv old.txt new.txt | accept | group match |
+| maya | S4Q1 | it prints the path to where vim is on your computer | accept | group match |
+| maya | S4Q2 | the single one wipes out what was in the file and the double one adds onto the end | accept | group match |
+| maya | S4Q3 | because the space splits it into two separate names unless you put quotes around it | accept | group match |
+| maya | S5Q1 | you press the q key to get out of it | accept | group match |
+| maya | S5Q2 | you have to save it by typing colon w, or colon w q to save and close | accept | group match |
+| maya | S5Q3 | no, the file stays exactly how it was because the changes get thrown away | **reject** | exact-only (no group) |
+| maya | S5Q3 | no, it didn't change because you only edited the copy and never wrote it back | **reject** | exact-only (no group) |
+| arthur | S1Q1 | An ordinary bash prompt usually ends with the dollar sign | accept | group match |
+| arthur | S1Q2 | It tells you the directory you are presently in | accept | group match |
+| arthur | S1Q3 | Its output goes onto the screen where I can read it | accept | group match |
+| arthur | S2Q1 | It moves you up one level into the folder that contains the one you are standing in | accept | group match |
+| arthur | S2Q2 | The tilde is a short name that stands for your own personal home folder | accept | group match |
+| arthur | S2Q3 | You would be standing in the notes folder inside projects, which is ~/projects/notes | accept | group match |
+| arthur | S3Q1 | The touch command makes a new empty file | accept | group match |
+| arthur | S3Q2 | The file is removed permanently because there is no Trash to recover it from | **reject** | negation guard: "no" |
+| arthur | S3Q2 | The file is gone and cannot be brought back | accept | group match |
+| arthur | S3Q3 | You would type mv old.txt new.txt to rename it | accept | group match |
+| arthur | S4Q1 | It prints the location of the vim program, the folder path where it lives | accept | group match |
+| arthur | S4Q2 | The single arrow wipes out the old contents of the file, while the double arrow adds new text after what is already there | accept | group match |
+| arthur | S4Q3 | Because the shell breaks the line apart at the space, so my and notes.txt are treated as two separate names | accept | group match |
+| arthur | S5Q1 | You leave the manual page by pressing the letter q on the keyboard | accept | group match |
+| arthur | S5Q2 | You have to write the working copy back to the file, which the colon w command does | accept | group match |
+| arthur | S5Q3 | No, the file on disk stayed exactly as it was, because the changes were thrown away | **reject** | exact-only (no group) |
+| arthur | S5Q3 | No, it did not change, because I never wrote the copy back | **reject** | exact-only (no group) |
+| arthur | S5Q3 | No, the file on disk is unchanged | **reject** | exact-only (no group) |
+| arthur | S5Q3 | No | accept | exact form |
+| leo | S1Q2 | the folder | accept | exact form |
+| leo | S1Q3 | the screen | accept | exact form |
+| leo | S2Q1 | goes up | accept | group match |
+| leo | S2Q2 | home | accept | exact form |
+| leo | S2Q3 | notes | **reject** | no group word (group 1) |
+| leo | S2Q3 | projects/notes | accept | exact form |
+| leo | S3Q2 | gone | accept | exact form |
+| leo | S3Q3 | mv old.txt new.txt | accept | exact form |
+| leo | S4Q1 | /usr/bin/vim | accept | exact form |
+| leo | S4Q2 | >> adds more, > replaces | **reject** | ordered groups: the second group's words come first |
+| leo | S4Q2 | single one writes over it and double puts at the end | accept | group match |
+| leo | S4Q3 | because of the space | accept | exact form |
+| leo | S5Q2 | :wq | accept | exact form |
+| leo | S5Q3 | no | accept | exact form |
+| leo | S1Q1 | $ | accept | exact form |
+| leo | S3Q1 | touch | accept | exact form |
+| leo | S5Q1 | q | accept | exact form |
+
+Leo's scripted guesses `dtae` (S1Q1), `pwd` (S2Q1), `ls` (S3Q1), `wc` (S4Q1) and
+`command` (S5Q1) were all rejected, correctly, by "no group word".
+
+**Totals.** Maya and Arthur: 39 attempts, all correct in meaning, **10 rejected**
+(26%): negation guard 4 (all S3Q2), exact-only 5 (all S5Q3), no group word 1
+(S1Q2, `which folder`). Leo's unscripted: 17 attempts, 16 correct, 1 correct
+rejected (S4Q2, ordering) and 1 wrong rejected (S2Q3 `notes`). No wrong answer
+was accepted in the round.
+
+### Wrong-answer probes for the four affected questions
+
+Plausible wrong answers in sentence form, run through the same function (42 rows;
+the Stage 4 Q2 and Stage 5 Q3 sets are included although nothing passes there,
+because they are the fix's regression rows):
+
+| Q | Wrong answer | Today | Rule |
+| --- | --- | --- | --- |
+| S1Q2 | it shows who you are | reject | no group word (group 1) |
+| S1Q2 | it prints your user name and the date | reject | reject phrase: "user" |
+| S1Q2 | it lists the files in the folder | **PASSES** | group match |
+| S1Q2 | it makes a new folder | reject | no group word (group 1) |
+| S1Q2 | it deletes the folder you are in | **PASSES** | group match |
+| S1Q2 | it changes the folder you are in | **PASSES** | group match |
+| S1Q2 | it shows the folder icon on your desktop | **PASSES** | group match |
+| S1Q2 | it prints the name of the computer | reject | no group word (group 1) |
+| S1Q2 | it tells you the time | reject | no group word (group 1) |
+| S1Q2 | where the manual page lives | reject | reject phrase: "manual" |
+| S1Q2 | it shows the files in this folder | **PASSES** | group match |
+| S1Q2 | it moves you to another folder | reject | no group word (group 1) |
+| S3Q2 | it goes to the trash so you can get it back | reject | reject phrase: "trash" |
+| S3Q2 | it moves to the recycle bin | reject | reject phrase: "recycle" |
+| S3Q2 | it is hidden but still on the disk | reject | no group word (group 1) |
+| S3Q2 | it is deleted but you can undo it | **PASSES** | group match |
+| S3Q2 | it is removed from the screen but kept on the disk | **PASSES** | group match |
+| S3Q2 | it is permanently moved to another folder | **PASSES** | group match |
+| S3Q2 | it depends on your settings | reject | no group word (group 1) |
+| S3Q2 | it stays where it was until you restart | reject | no group word (group 1) |
+| S3Q2 | it is gone until you press undo | **PASSES** | group match |
+| S3Q2 | it is deleted for good and then it comes back after a restart | **PASSES** | group match |
+| S4Q2 | > adds to the end and >> starts over | reject | no group word (group 1) |
+| S4Q2 | > appends and >> overwrites | reject | ordered groups: the second group's words come first |
+| S4Q2 | they do exactly the same thing | reject | no group word (group 1) |
+| S4Q2 | > is for output and >> is for input | reject | no group word (group 1) |
+| S4Q2 | > writes to the screen and >> writes to a file | reject | no group word (group 1) |
+| S4Q2 | one deletes the file and the other copies it | reject | no group word (group 1) |
+| S4Q2 | > overwrites the file and >> overwrites it too | reject | no group word (group 2) |
+| S4Q2 | the single arrow adds to the end and the double arrow wipes out the old contents | reject | ordered groups: the second group's words come first |
+| S4Q2 | > adds new text at the end and >> replaces everything in the file | reject | ordered groups: the second group's words come first |
+| S4Q2 | > replaces the file and >> deletes it | reject | no group word (group 2) |
+| S5Q3 | yes the file changed because I typed in it | reject | exact-only (no group) |
+| S5Q3 | yes, the letters were saved to the file | reject | exact-only (no group) |
+| S5Q3 | no, the file was saved with my letters | reject | exact-only (no group) |
+| S5Q3 | the file changed because quitting writes it | reject | exact-only (no group) |
+| S5Q3 | it depends on what letters you typed | reject | exact-only (no group) |
+| S5Q3 | no, it was overwritten with the new text | reject | exact-only (no group) |
+| S5Q3 | no, the file was changed and then changed back | reject | exact-only (no group) |
+| S5Q3 | yes, the file on disk now has my letters | reject | exact-only (no group) |
+| S5Q3 | no the file did change | reject | exact-only (no group) |
+| S5Q3 | it changed a little | reject | exact-only (no group) |
+
+**Passing today (false accepts):** Stage 1 Q2, five: `it lists the files in the
+folder`, `it deletes the folder you are in`, `it changes the folder you are in`,
+`it shows the folder icon on your desktop`, `it shows the files in this folder`
+(the group phrases `the folder` and `this folder` are bare containment). Stage 3 Q2,
+five: `it is deleted but you can undo it`, `it is removed from the screen but kept on
+the disk`, `it is permanently moved to another folder`, `it is gone until you press
+undo`, `it is deleted for good and then it comes back after a restart` (the group
+words `deleted`, `removed`, `permanently`, `gone`, `for good` have no partner for
+the rest of the sentence). Stage 4 Q2 and Stage 5 Q3: none (the order check and the
+exact-only rule hold). These ten, and the rejects, are the rows for the fix.
+
+### Which rules reject correct answers and which reject wrong ones (rounds 1-8 material)
+
+Material: the 220 core-question rows of `scripts/matching-corpus.tsv` (118 accepts
+from rounds 1-7, which pass by construction, and 102 rejects authored as
+distractors and negation counterexamples), the 56 round-8 answers above plus the
+5 scripted guesses, and the 42 probes. "Correct rejected" can only come from
+round 8, since every corpus accept already passes. Each rejection is attributed to
+the first rule that fires:
+
+| Rule | Correct answers rejected | Wrong answers rejected | If the rule were off (wrong answers newly accepted) |
+| --- | ---: | ---: | --- |
+| negation guard | **4** (all S3Q2, round 8) | 23 (all corpus counterexamples; **0** from real learner answers) | 18 |
+| reject phrases | 0 | 37 | 21 |
+| ordered groups | 1 (S4Q2 `>> adds more, > replaces`) | 4 | 4 |
+| no group word | 1 (S1Q2 `which folder`) | 60 | not applicable (it is the matcher) |
+| exact-only (S5Q3) | **5** (all round 8) | 16 | not applicable |
+
+Reading: the negation guard has rejected four correct answers and, in the learner
+material, no wrong one; the 18 wrong answers it alone blocks (`not touch`, `not the
+folder`, `nowhere, the screen stays blank`, ...) are corpus counterexamples that no
+learner in eight rounds typed. On S3Q2 it fires on the lesson's own words ("no
+Trash and no undo", `can't`, `doesn't`), so it rejects the correct sentence
+exactly where the lesson teaches a negative fact. The reject phrases and the order
+check have not rejected a correct answer except Leo's reversed S4Q2; they earn
+their keep on the evidence (21 and 4 wrong answers blocked). The exact-only rule at
+S5Q3 rejected five of five correct sentences and no wrong one. Which way to go
+(drop the guard on S3Q2, add exact-negation phrases, a prefix rule for S5Q3) is
+the operator's choice; the numbers are above.
+
+### Findings (reproduced)
+
+- **F-034 — The negation guard rejects correct Stage 3 Q2 answers.** Severity 2.
+  Maya's `it's deleted for good and doesn't go to the trash`, `the file is gone and
+  you can't get it back` and `rm removes it and you can't undo it, so it's gone`
+  fire the guard on `doesnt` and `cant`; Arthur's `The file is removed permanently
+  because there is no Trash to recover it from` fires on `no`. The reject phrase
+  `trash` would also fire. Maya took +6 and read the repeated "Passed stages are
+  saved. Type quit" lines as an invitation to leave. Arthur's second answer passed.
+  *Closes when*: the guard does not apply to the S3Q2 negatives the lesson teaches
+  (or exact negation phrases are added) and the corpus gains these four as accepts.
+  Sheets: maya F-b, arthur F-1.
+- **F-035 — Stage 5 Q3 accepts only `no` and a few exact phrases; every sentence
+  fails.** Severity 2. Rejected: `no, the file stays exactly how it was because the
+  changes get thrown away`, `no, it didn't change because you only edited the copy
+  and never wrote it back`, `No, the file on disk stayed exactly as it was, because
+  the changes were thrown away`, `No, it did not change, because I never wrote the copy
+  back`, `No, the file on disk is unchanged` (rule: exact-only, the question has no
+  group). Bare `No` passed for Arthur after three rejections. Maya quit here at
+  friction 8; Arthur took +6. *Closes when*: a keyword or prefix rule accepts a
+  leading `no` and an "unchanged" phrase (`unchanged`, `did not change`, `thrown
+  away`, `never wrote`) while `yes ...` and `no, it changed` stay rejected (the probe
+  rows above are the guard rows). Sheets: maya F-a, arthur F-2.
+- **F-036 — Stage 4 Q2's ordering rejects the correct answer said in the other order.**
+  Severity 3. Leo's `>> adds more, > replaces` is correct; the second group's word
+  (`adds`) comes before the first group's (`replaces`), so `ordered groups` rejects
+  it. The ordering is what blocks `> appends and >> overwrites` (swapped), so it
+  earns its keep (F-029); the fix is to match each arrow with its verb rather than
+  by sentence order. Sheets: leo F-a.
+- **F-037 — Stage 1 Q2 rejects `it shows you which folder you're in`.** Severity 3.
+  Rule: no group word (the group needs `the folder`, `a folder`, `this folder`, ...,
+  and `which folder` is not one). The hint, "pwd printed one line starting with /.
+  What does that line name?", asks a question whose answer is the rejected word.
+  Maya +2, then `it prints the full location of where you are right now` passed.
+  Sheets: maya F-c.
+- **F-038 — False accepts remain at Stage 1 Q2 and Stage 3 Q2 (F-029's class).**
+  Severity 3. Ten wrong sentences pass (listed above). *Closes when* they become
+  reject rows and the groups need a verb for the folder or a partner for `deleted`.
+- **F-039 — The Stage 3 intro says "a few files the tutor put there" and the folder
+  is empty.** Severity 3 (false statement on screen). The line is on the Stage 3,
+  4 and 5 intros (WP-29). Reproduced at each stage entry with `ls -A` at the first
+  prompt: `stage3` printed nothing; `stage4` printed `poem.txt` and `seed.txt`;
+  `stage5` printed `practice.txt`. So only Stage 3 is false (the folder starts
+  empty; 3.1 says "the tutor put poem.txt and numbers.txt one folder up"), and "a
+  few" overstates Stage 5's single file. Sheets: arthur O-4.
+
+### Observations (reproduced)
+
+- **O-BQ — `type words.txt` says "not found".** Reproduced: `bash: type: words.txt:
+  not found` (the `type` builtin, a DOS habit). It names the learner's own file, so it
+  reads as the file lost (Arthur, +2). Sheets: arthur F-3.
+- **O-BR — The hint is identical on every miss.** `ask_question` prints the same hint
+  on each miss (S3Q2 three times for Maya, S5Q3 three times for Arthur); from the
+  second miss only the three navigation facts are added. Two sheets call it "the
+  ladder does not advance". Sheets: maya O-a, arthur O-8.
+- **O-BS — Vim's own message after Ctrl+C names `:qa`, the lesson `:q`.** Reproduced:
+  Ctrl+C in Vim prints "Type  :qa  and press <Enter> to exit Vim". 5.2 teaches `:q`
+  and says "Vim's own screen writes that as :q<Enter>", which is true of the splash
+  but not of this message (`:qa` quits all windows). Maya followed the lesson. Sheets:
+  maya O-f.
+- **O-BT — The stray-slash help sits only in 1.1.** `/pwd` at 2.1, `/touch` at 3.1,
+  `/wc` at 4.1 and `/man` at 5.1 print the same `No such file or directory` with no
+  help on those screens; Leo recovered from memory of 1.1 each time. Sheets: leo O-e.
+- **O-BU — `cd ..\stage2` drops the backslash; the sentence was on 2.3.** Reproduced:
+  `bash: cd: ..stage2: No such file or directory`. "Folder names are joined with /,
+  never \" is on 2.3 (`1611`), two screens before 2.5 where Arthur typed it; he reads
+  every line, so it was on screen earlier, but the reply does not echo the
+  backslash. Sheets: arthur O-3.
+- **O-BV — Recall reads as words but shows an option row; the quit lines follow the
+  second miss.** Maya typed sentences without noticing the row of options until
+  `show`; the "Passed stages are saved. Type quit to leave now" block appears after
+  the second miss. Sheets: maya O-b, O-c.
+- **O-BW — Hints use words a child cannot read.** S2Q3 "relative", S3Q1 "timestamp";
+  Leo recovered from the options or his own commands. Sheets: leo O-a, O-b.
+- **O-BX — Recurring, unchanged.** Terms before they are defined: `.` and `..` in 2.2
+  before 2.5, "stream of lines" (4.3), "vimtutor" (5.1), `wc -l` labels in 4.1, `pipes`,
+  `$$` and `login` in `shells`; no drive letter (Arthur); silent commands; the Esc /
+  `-- INSERT --` capture (H-3); the 2.4 line wrapping with the sim path.
+
+### Persona fidelity (simulation)
+
+Leo v0.3.1 was applied as written: eleven scripted errors (five leading slashes,
+five one-word guesses, one `check` first), each recovered in one further input and
+scored 0; his two unscripted rejections cost +4 and the finale left him at 0. This
+is the first round in which Leo reached the finale and the one that exercised the
+rejection and hint paths 11 times, as v0.3 intended.
+
+### Candidate → disposition
+
+| Sheet | Candidate | Disposition |
+| --- | --- | --- |
+| leo | F-a `>> adds more, > replaces` | F-036 |
+| leo | F-b `notes` rejected | correct rejection (incomplete answer); O-BW |
+| leo | O-a, O-b hint words | O-BW |
+| leo | O-c 2.5 jargon; O-d 4.1; O-g; O-h | O-BX |
+| leo | O-e no stray-slash line at 2.1 | O-BT |
+| leo | O-f `[ ]` vs `○` | no effect (the checklist uses `[ ]`) |
+| maya | F-a S5Q3 sentences | F-035 |
+| maya | F-b S3Q2 sentences | F-034 |
+| maya | F-c S1Q2 `which folder` | F-037 |
+| maya | F-d `touch my notes.txt` | O-BP (round 7) |
+| maya | O-a identical hint | O-BR |
+| maya | O-b quit lines; O-c option row | O-BV |
+| maya | O-d, O-g, O-h, O-i | O-BX (layout, wrap, height, density) |
+| maya | O-e Ctrl+C in `less`; O-f `:qa` | no defect (3.3 says so); O-BS |
+| arthur | F-1 S3Q2 | F-034 |
+| arthur | F-2 S5Q3 | F-035 |
+| arthur | F-3 `type words.txt` | O-BQ |
+| arthur | O-1, O-2, O-5, O-6, O-7 | O-BX |
+| arthur | O-3 backslash | O-BU |
+| arthur | O-4 stage intro | F-039 |
+| arthur | O-8 identical hint; O-9 bare `No` | O-BR; F-035 |
+| arthur-shells | O-a, O-b, O-c, O-d | O-BX / O-BC (no new item; every line-count claim matched) |
