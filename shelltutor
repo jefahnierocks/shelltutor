@@ -237,47 +237,47 @@ show_info() {
     printf '\n%bshelltutor — working in a Unix shell%b\n%benvironment check%b\n\n' "$H1" "$RST" "$DIM" "$RST"
 
     # --- bash version
-    printf '  %bbash%b         : %s\n' "$SUB" "$RST" "${BASH_VERSION:-unknown}"
+    printf '  %b%-17s%b : %s\n' "$SUB" 'bash' "$RST" "${BASH_VERSION:-unknown}"
     if [ "${BASH_VERSINFO[0]:-0}" -ge 3 ]; then
-        printf '                 [%s] requires 3.2+\n' "$ok"
+        printf '                      [%s] requires 3.2+\n' "$ok"
     else
-        printf '                 [%s] requires 3.2+; please upgrade bash\n' "$no"
+        printf '                      [%s] requires 3.2+; please upgrade bash\n' "$no"
     fi
 
     # --- login shell (informational)
-    printf '  %b$SHELL%b       : %s\n' "$SUB" "$RST" "${SHELL:-(unset)}"
-    printf '                 [%s] tutor spawns bash for practice regardless of your login shell\n' "$info"
+    printf '  %b%-17s%b : %s\n' "$SUB" '$SHELL' "$RST" "${SHELL:-(unset)}"
+    printf '                      [%s] tutor spawns bash for practice regardless of your login shell\n' "$info"
 
     # --- sandbox
-    printf '  %bPractice folder%b : %s\n' "$SUB" "$RST" "$SANDBOX"
+    printf '  %b%-17s%b : %s\n' "$SUB" 'Practice folder' "$RST" "$SANDBOX"
     if [ -d "$SANDBOX" ] && [ -w "$SANDBOX" ]; then
-        printf '                 [%s] writable\n' "$ok"
+        printf '                      [%s] writable\n' "$ok"
     elif [ -d "$SANDBOX" ]; then
-        printf '                 [%s] exists but is not writable — see SHELLTUTOR_HOME override\n' "$no"
+        printf '                      [%s] exists but is not writable — see SHELLTUTOR_HOME override\n' "$no"
     elif [ -w "$(dirname "$SANDBOX")" ] 2>/dev/null; then
-        printf '                 [%s] not yet created; will be made on first run\n' "$info"
+        printf '                      [%s] not yet created; will be made on first run\n' "$info"
     else
-        printf '                 [%s] parent directory is not writable — see SHELLTUTOR_HOME override\n' "$no"
+        printf '                      [%s] parent directory is not writable — see SHELLTUTOR_HOME override\n' "$no"
     fi
     if [ -n "${SHELLTUTOR_HOME:-}" ]; then
-        printf '  %b$SHELLTUTOR_HOME%b : %s\n' "$SUB" "$RST" "$SHELLTUTOR_HOME"
+        printf '  %b%-17s%b : %s\n' "$SUB" '$SHELLTUTOR_HOME' "$RST" "$SHELLTUTOR_HOME"
     else
-        printf '  %b$SHELLTUTOR_HOME%b : %b(unset; default applies)%b\n' "$SUB" "$RST" "$DIM" "$RST"
+        printf '  %b%-17s%b : %b(unset; default applies)%b\n' "$SUB" '$SHELLTUTOR_HOME' "$RST" "$DIM" "$RST"
     fi
 
     # --- terminal / colour
-    printf '  %b$TERM%b        : %s\n' "$SUB" "$RST" "${TERM:-(unset)}"
+    printf '  %b%-17s%b : %s\n' "$SUB" '$TERM' "$RST" "${TERM:-(unset)}"
     if [ -e /dev/tty ]; then
-        printf '  %b/dev/tty%b     : available\n' "$SUB" "$RST"
+        printf '  %b%-17s%b : available\n' "$SUB" '/dev/tty' "$RST"
     else
-        printf '  %b/dev/tty%b     : %bnot available — practice prompts will fail%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %b%-17s%b : %bnot available — practice prompts will fail%b\n' "$SUB" '/dev/tty' "$RST" "$EM" "$RST"
     fi
     if [ -n "${NO_COLOR:-}" ]; then
-        printf '  %bColour%b       : disabled (NO_COLOR is set)\n' "$SUB" "$RST"
+        printf '  %b%-17s%b : disabled (NO_COLOR is set)\n' "$SUB" 'Colour' "$RST"
     elif [ -t 1 ]; then
-        printf '  %bColour%b       : enabled\n' "$SUB" "$RST"
+        printf '  %b%-17s%b : enabled\n' "$SUB" 'Colour' "$RST"
     else
-        printf '  %bColour%b       : disabled (stdout is not a terminal)\n' "$SUB" "$RST"
+        printf '  %b%-17s%b : disabled (stdout is not a terminal)\n' "$SUB" 'Colour' "$RST"
     fi
 
     # --- vim / vimtutor (Stage 5 hand-off)
@@ -288,26 +288,26 @@ show_info() {
     man_path=$(command -v man 2>/dev/null || true)
     less_path=$(command -v less 2>/dev/null || true)
     if [ -n "$man_path" ]; then
-        printf '  %bman%b          : %s\n' "$SUB" "$RST" "$man_path"
+        printf '  %b%-17s%b : %s\n' "$SUB" 'man' "$RST" "$man_path"
     else
-        printf '  %bman%b          : %bnot found — the man ls example in lesson 5.1 will not work until it is installed%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %b%-17s%b : %bnot found — the man ls example in lesson 5.1 will not work until it is installed%b\n' "$SUB" 'man' "$RST" "$EM" "$RST"
     fi
     if [ -n "$less_path" ]; then
-        printf '  %bless%b         : %s\n' "$SUB" "$RST" "$less_path"
+        printf '  %b%-17s%b : %s\n' "$SUB" 'less' "$RST" "$less_path"
     else
-        printf '  %bless%b         : %bnot found — the less example in lesson 3.2 will not work until it is installed%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %b%-17s%b : %bnot found — the less example in lesson 3.3 will not work until it is installed%b\n' "$SUB" 'less' "$RST" "$EM" "$RST"
     fi
     if [ -n "$vim_path" ]; then
-        printf '  %bvim%b          : %s\n' "$SUB" "$RST" "$vim_path"
+        printf '  %b%-17s%b : %s\n' "$SUB" 'vim' "$RST" "$vim_path"
     else
-        printf '  %bvim%b          : %bnot found — Stage 5 cannot demo Vim entry/exit until installed%b\n' "$SUB" "$RST" "$EM" "$RST"
+        printf '  %b%-17s%b : %bnot found — Stage 5 cannot demo Vim entry/exit until installed%b\n' "$SUB" 'vim' "$RST" "$EM" "$RST"
     fi
     if [ -n "$vimtutor_path" ]; then
-        printf '  %bvimtutor%b     : %s\n' "$SUB" "$RST" "$vimtutor_path"
-        printf '                 [%s] the finale names this as the next step\n' "$ok"
+        printf '  %b%-17s%b : %s\n' "$SUB" 'vimtutor' "$RST" "$vimtutor_path"
+        printf '                      [%s] the finale names this as the next step\n' "$ok"
     else
-        printf '  %bvimtutor%b     : %bnot found%b\n' "$SUB" "$RST" "$DIM" "$RST"
-        printf '                 [%s] Stage 5 finale will print install hints instead of handing off\n' "$info"
+        printf '  %b%-17s%b : %bnot found%b\n' "$SUB" 'vimtutor' "$RST" "$DIM" "$RST"
+        printf '                      [%s] Stage 5 finale will print install hints instead of handing off\n' "$info"
     fi
 
     printf '\n%bIf anything above is marked "not ok", see README.md "Run" section.%b\n\n' "$DIM" "$RST"
@@ -405,9 +405,8 @@ PANEL_POS=''
 PANEL_DONE=''
 PANEL_MODULE=''
 PANEL_COLS=80
-# Panel rows (header through lower rule): the budget is 19 (A11, enforced by the
-# harness); lessons may run to this hard cap of 21 until WP-26 cuts them.
-PANEL_HARD_CAP=21
+# Panel rows (header through lower rule): the budget is 19 (A11), enforced by
+# the harness's screen-height check; a screen that does not fit is cut, not squeezed.
 
 # panel_rule N  -> sets REPLY to N rule glyphs.
 panel_rule() {
@@ -687,18 +686,6 @@ show_screen() {
             ;;
     esac
     while [ "${rest%$'\n'}" != "$rest" ]; do rest=${rest%$'\n'}; done
-    # Interim squeeze (WP-25, until WP-26 cuts the bodies): the panel may not
-    # pass PANEL_HARD_CAP rows, so interior blank rows go from the bottom up,
-    # never the one under the title. Words are never touched.
-    local rows blanks_before
-    rows=$(printf '%s\n%s\n' "$rest" "$para" | wc -l)
-    while [ $((rows + 6)) -gt "$PANEL_HARD_CAP" ]; do
-        blanks_before=${rest%$'\n\n'*}
-        [ "$blanks_before" != "$rest" ] || break
-        case "$blanks_before" in *$'\n\n'*) ;; *) break ;; esac
-        rest="$blanks_before"$'\n'"${rest##*$'\n\n'}"
-        rows=$((rows - 1))
-    done
     if [ -n "$para" ]; then
         printf '%s\n\n%s\n\n' "$rest" "$para"
     else
@@ -2775,18 +2762,18 @@ stage_recap() {
             ;;
         3)
             can_line 'make an empty file' touch
-            can_line 'make or remove a folder' mkdir rmdir
+            can_line 'make a folder' mkdir
             can_line 'read a file' cat less
             can_line 'copy, move or rename' cp mv
             can_line 'delete a file (no undo)' rm
             ;;
         4)
             can_line 'ask if a program is there' 'command -v'
-            can_line 'count, order, filter' wc sort grep
-            can_line 'take the first lines, count out' head seq
+            can_line 'count lines, count out numbers' wc seq
+            can_line 'order lines, take the first' sort head
             can_line 'chain commands' '|'
             can_line 'send output to a file' '>' '>>'
-            can_line 'read input, match many names' '<' '*'
+            can_line 'match many names' '*'
             ;;
     esac
 }

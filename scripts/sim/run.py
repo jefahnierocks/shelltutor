@@ -32,6 +32,7 @@ import argparse
 import datetime
 import getpass
 import os
+import re
 import secrets
 import shutil
 import subprocess
@@ -63,6 +64,9 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
 NOT_YET_TEXT = "seen: "
+# Rendered-row ceilings above SCREEN_BUDGET: the welcome box (A12, 22 allowed;
+# it is 21).
+HEIGHT_ALLOWED = {"S1-W": 21}
 # Recall ladder (A7, kept by A11). second-try at Stage 2 misses Q1 twice:
 # miss 1 prints "not quite. hint: ...", miss 2 the same line plus the
 # navigation facts, so "hint:" appears twice and the first navigation fact
@@ -419,6 +423,26 @@ def _run_variant(
         expected_errors = result["expected_errors"]
         screen_heights = result["screen_heights"]
         run_ok = result["gate_passed"] and outcome["progress_ok"]
+        # A13: the 19-row panel is enforced on the core stage screens (the
+        # budget in driver.SCREEN_BUDGET counts the blank under the rule).
+        # The welcome may take one more row (A12) and the finale is not a
+        # panel; modules are checked by WP-28.
+        if not args.module:
+            worst: dict = {}
+            for h in screen_heights:
+                sid = h["screen_id"]
+                worst[sid] = max(worst.get(sid, 0), int(h["lines"]))
+            over = sorted(
+                (sid, n)
+                for sid, n in worst.items()
+                if re.match(r"^S[1-5]-", sid)
+                and n > HEIGHT_ALLOWED.get(sid, driver.SCREEN_BUDGET)
+            )
+            outcome["screens_over_budget"] = [("%s=%d" % (sid, n)) for sid, n in over]
+            if over and run_ok:
+                run_ok = False
+                outcome["notes"] = "screens over the %d-row budget: %s" % (
+                    driver.SCREEN_BUDGET, ", ".join("%s=%d" % x for x in over))
         if persona_name == "second-try":
             # The deliberate first failure must show the gate's `not yet:`
             # feedback exactly once; zero or two means the gate changed.
