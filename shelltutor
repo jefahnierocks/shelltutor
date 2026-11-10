@@ -1148,6 +1148,8 @@ one: it repeats its words back to you.
   ${CMD}echo "I am at the shell"${RST}     ${DIM}# quotes make them one word${RST}
 
 Notice the quotes never print. They only group.
+If bash answers No such file or command not found, look for a stray / or a
+missing space, and type the line again.
 
 ${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1202,8 +1204,7 @@ Type a real command, then the same letters scrambled.
   ${CMD}dtae${RST}     ${DIM}# bash: dtae: command not found${RST}
 
 ${BOLD}bash:${RST} is the shell speaking. It looked for a program named dtae and
-found none. A stray / in front or a missing space earns the same kind
-of message: read it, then type the line again.
+found none.
 
 ${BOLD}terminal${RST} → ${BOLD}shell${RST} → ${BOLD}program${RST}: the window, bash, and date.
 
@@ -1607,6 +1608,7 @@ shows where you are.
   ${CMD}cd -${RST}       ${DIM}# back to where you just were (it prints the place)${RST}
 
 ${CMD}cd..${RST} with no space is a different word, and bash cannot find it.
+Folder names are joined with /, never \\.
 
 ${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1857,7 +1859,7 @@ ${H1}Making files${RST}
 The tutor put poem.txt and numbers.txt one folder up. This stage has a
 folder of its own. Make your files here.
 
-  ${CMD}touch hello.txt${RST}            ${DIM}# an empty file${RST}
+  ${CMD}touch hello.txt${RST}            ${DIM}# an empty file; no spaces in the name yet${RST}
   ${CMD}echo hi > words.txt${RST}        ${DIM}# a file with the word hi in it${RST}
   ${CMD}mkdir notes${RST}                ${DIM}# a folder${RST}
   ${CMD}ls -p${RST}                      ${DIM}# all three are there${RST}
@@ -2418,6 +2420,8 @@ Vim is a text editor. Learn the way out before anything else.
 
 To leave, type ${CMD}:q${RST} and press Enter. If Vim refuses, type ${CMD}:q!${RST} and
 press Enter: that leaves and throws away any changes.
+Vim's own screen writes that as ${CMD}:q<Enter>${RST}. ${CMD}<Enter>${RST} means the key, not
+letters to type.
 
 ${INSTR}${G_PLAY} Open ${CMD}vim${INSTR}, leave with ${CMD}:q${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -2438,7 +2442,7 @@ and you edit that. The file changes only when you write it back.
   ${BOLD}:q!${RST}    quit and throw the changes away
   ${BOLD}:wq${RST}    write, then quit
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to try them in Vim.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR}. The next two lessons try these in Vim.${RST}
 EOF
     return $?
 }
@@ -2487,8 +2491,9 @@ ${CMD}vimtutor${RST} is a command too. It opens Vim on a copy of a lesson file.
 
   ${CMD}command -v vimtutor${RST}    ${DIM}# a path means it is installed${RST}
 
-No path? On Linux, install the full vim package. On macOS with Homebrew,
-${CMD}brew install vim${RST} adds it.
+No path? Vim's tutor is not installed here. Ask whoever looks after this
+computer.
+${DIM}Linux: the full vim package. macOS: brew install vim.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage 5's task.${RST}
 EOF
@@ -2734,9 +2739,9 @@ Four habits to keep
 
 ${INSTR}${G_PLAY} Next: ${CMD}vimtutor${INSTR}, about 30 minutes, hands-on.${RST}
 
-${DIM}If vimtutor isn't installed: install your distro's full vim package${RST}
-${DIM}(Debian/Ubuntu: sudo apt install vim; Fedora: sudo dnf install vim-enhanced;${RST}
-${DIM}macOS: brew install vim). Re-take a stage with: shelltutor 1${RST}
+If vimtutor is not installed here, ask whoever looks after this computer.
+${DIM}For them, Linux: the full vim package. macOS: brew install vim.${RST}
+${DIM}Re-take a stage with: shelltutor 1${RST}
 ${DIM}The practice folder stays at ${SANDBOX} if you want to keep playing.${RST}
 
 EOF
@@ -3153,7 +3158,7 @@ ${H1}Export${RST}
 A program the shell starts is a ${BOLD}child${RST}. It receives only the variables
 you ${BOLD}exported${RST}.
 
-  ${CMD}pet=owl${RST}                    ${DIM}# set it again: each screen is a new shell${RST}
+  ${CMD}pet=owl${RST}                    ${DIM}# set it again: every screen starts a fresh shell${RST}
   ${CMD}bash -c 'echo pet=\$pet'${RST}    ${DIM}# pet=    : the child sees nothing${RST}
   ${CMD}export pet${RST}                 ${DIM}# mark it for children${RST}
   ${CMD}bash -c 'echo pet=\$pet'${RST}    ${DIM}# pet=owl${RST}
@@ -3208,7 +3213,8 @@ ${H1}A program that reads a variable${RST}
 This tutor is configured the same way. It reads ${CMD}SHELLTUTOR_HOME${RST} to
 decide where your practice folder goes.
 
-  ${CMD}echo "[\$SHELLTUTOR_HOME]"${RST}     ${DIM}# [] means: not set, so the default is used${RST}
+  ${CMD}echo "[\$SHELLTUTOR_HOME]"${RST}
+      ${DIM}# [] if you never set it; otherwise the folder you chose${RST}
   ${CMD}pwd${RST}                           ${DIM}# where you are now, inside the practice folder${RST}
 
 To put the folder somewhere else, set the variable on the line that
