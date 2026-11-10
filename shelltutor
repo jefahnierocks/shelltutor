@@ -1110,23 +1110,16 @@ welcome() {
 }
 
 orientation() {
-    # Vertical budget: ~17 lines.
     lesson <<EOF
 ${H1}Orientation${RST}
 
-In a moment you'll be at the practice prompt below. It looks like:
+Below this panel is a real shell prompt. It looks like:
 
-    ${DIM}shelltutor>${RST}
+  ${DIM}shelltutor>${RST}
 
-Type a command, press Enter — the shell runs it. The terminal is
-keyboard-only; you can't click mid-line to move the cursor. Resize
-your terminal larger if text wraps (80×24 or bigger).
-
-${BOLD}Four words steer the tutor:${RST}
-  ${CMD}next${RST}  advance        ${CMD}prev${RST}  go back
-  ${CMD}show${RST}  redisplay      ${CMD}quit${RST}  leave (progress saved)
-
-A fifth word, ${CMD}check${RST}, appears at gate tasks when relevant.
+Type a command there and press Enter; the shell runs it. Four words
+steer the tutor instead: ${CMD}next${RST}, ${CMD}prev${RST}, ${CMD}show${RST} and ${CMD}quit${RST}. A fifth, ${CMD}check${RST},
+appears when a stage's task is ready to be tested.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin Stage 1.${RST}
 EOF
@@ -1138,39 +1131,29 @@ EOF
 # ---------------------------------------------------------------------
 
 stage1_intro() {
-    # Vertical budget: ~7 lines. Stage banner pattern shared with
-    # stages 2-5. Welcome and orientation are separate screens above.
     lesson <<EOF
-${H1}STAGE 1 — Where am I?${RST}
+${H1}Stage 1: Where am I?${RST}
 
-Five short lessons (about 10 minutes) followed by a small task.
-You'll meet the prompt, run a few simple commands, and learn the
-keyboard habits that make the shell easy to live with.
+Five short lessons, then a task. You'll run your first commands and
+learn the few keys that make a shell comfortable.
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to start lesson 1.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 1.1.${RST}
 EOF
     return $?
 }
 
 stage1_lesson_1() {
-    # Vertical budget: ~15 lines of content.
     lesson <<EOF
-${H1}Running commands${RST}
+${H1}Running a command${RST}
 
-At the prompt below, type this and press Enter:
+A command is a name, then the words you hand it. ${BOLD}echo${RST} is the simplest
+one: it repeats its words back to you.
 
-  ${CMD}echo hello${RST}
+  ${CMD}echo hello${RST}                   ${DIM}# prints hello, then the prompt returns${RST}
+  ${CMD}echo I am at the shell${RST}       ${DIM}# spaces separate the words${RST}
+  ${CMD}echo "I am at the shell"${RST}     ${DIM}# quotes make them one word${RST}
 
-You'll see ${DIM}hello${RST} printed, then the prompt comes back. Now try:
-
-  ${CMD}echo I am at the shell${RST}      ${DIM}# spaces separate words${RST}
-  ${CMD}echo "I am at the shell"${RST}    ${DIM}# quotes group them into one${RST}
-If bash says ${CMD}command not found${RST} or ${CMD}No such file${RST}, you mistyped: a stray
-${CMD}/${RST} in front, or a missing space. Type it again.
-
-${CMD}echo${RST} just repeats its words back. It is the simplest command
-there is, and its shape is the shape of every command you'll meet:
-a name, then the words you hand it.
+Notice the quotes never print. They only group.
 
 ${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1178,21 +1161,18 @@ EOF
 }
 
 stage1_lesson_2() {
-    # Vertical budget: ~17 lines of content.
     lesson <<EOF
-${H1}Keyboard habits${RST}
+${H1}Four keys${RST}
 
-Four keys make the shell comfortable. Try each one now.
+These keys make the shell comfortable. Try each one now.
 
-  ${BOLD}Tab${RST}       bash finishes a word. Several matches? The first ${BOLD}Tab${RST}
-            fills in the shared part; ${BOLD}Tab${RST} again lists them. (Other
-            shells and setups differ.) Try: type ${CMD}echo p${RST}, press ${BOLD}Tab${RST};
-            it becomes ${CMD}echo poem.txt${RST}, then press Enter to run it.
-  ${BOLD}↑${RST}         brings back the last line. Enter runs it; ${BOLD}Ctrl+C${RST} throws it away.
-  ${BOLD}Ctrl+L${RST}    clears the screen (${CMD}clear${RST} too); ${CMD}show${RST} brings the lesson back.
-  ${BOLD}Ctrl+C${RST}    the escape hatch at a prompt: if a command feels stuck,
-            press it and you get a fresh prompt. Inside a full-screen
-            program like ${CMD}less${RST} (Stage 3), ${BOLD}q${RST} is the way out.
+  ${BOLD}Tab${RST}       finishes a word: type ${CMD}echo p${RST}, press Tab, then Enter
+  ${BOLD}↑${RST}         brings back your last line; Enter runs it again
+  ${BOLD}Ctrl+C${RST}    throws away the line you are typing; a fresh prompt
+  ${BOLD}Ctrl+L${RST}    clears the screen; type ${CMD}show${RST} to bring this lesson back
+
+${BOLD}Ctrl+C${RST} is the way out at a prompt. Inside a full-screen program
+(you'll meet one in Stage 3) the way out is ${BOLD}q${RST}.
 
 ${INSTR}${G_PLAY} Try each key, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1200,21 +1180,18 @@ EOF
 }
 
 stage1_lesson_3() {
-    # Vertical budget: ~13 lines of content.
     lesson <<EOF
 ${H1}Where am I, who am I, when is it${RST}
 
-Three commands that ask the system about itself.
+The tutor made a folder for you to practise in. Ask the system where
+it is, who you are, and what time it is.
 
-  ${CMD}whoami${RST}     ${DIM}# the user name you're logged in as${RST}
-  ${CMD}pwd${RST}        ${DIM}# print working directory — the folder you're in${RST}
-  ${CMD}date${RST}       ${DIM}# the current date and time${RST}
+  ${CMD}pwd${RST}        ${DIM}# where: the folder you are in${RST}
+  ${CMD}whoami${RST}     ${DIM}# who: your user name${RST}
+  ${CMD}date${RST}       ${DIM}# when: the date and time${RST}
 
-Here ${CMD}pwd${RST} shows the tutor's own folder, because that is where
-this practice prompt starts. Stage 2 is all about folders.
-
-Your prompt here ends in ${CMD}>${RST}. A normal bash window's prompt
-usually ends in ${CMD}\$${RST}; same idea, different decoration.
+${CMD}pwd${RST} printed the full name of your practice folder.
+This prompt ends in ${CMD}>${RST}. An ordinary bash prompt usually ends in ${CMD}\$${RST}.
 
 ${INSTR}${G_PLAY} Run all three, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1225,20 +1202,16 @@ stage1_lesson_4() {
     lesson <<EOF
 ${H1}The shell, caught in the act${RST}
 
-Type ${CMD}date${RST}. Now type ${CMD}dtae${RST}.
+Type a real command, then the same letters scrambled.
 
   ${CMD}date${RST}     ${DIM}# prints the date and time${RST}
   ${CMD}dtae${RST}     ${DIM}# bash: dtae: command not found${RST}
 
-Read who is speaking. ${CMD}bash:${RST} is the shell. It looked for a
-program called dtae, found none, and told you. When the name is
-right, it finds the program and runs it; what the program prints
-comes back to you.
+${BOLD}bash:${RST} is the shell speaking. It looked for a program named dtae and
+found none. A stray / in front or a missing space earns the same kind
+of message: read it, then type the line again.
 
-Three parts, kept apart for the rest of this tutor:
-  ${BOLD}terminal${RST}  →  ${BOLD}shell${RST}  →  ${BOLD}program${RST}
-The terminal is the window. The shell is the program named ${CMD}bash${RST}
-that read your line. ${CMD}date${RST} is the program it ran.
+${BOLD}terminal${RST} → ${BOLD}shell${RST} → ${BOLD}program${RST}: the window, bash, and date.
 
 ${INSTR}${G_PLAY} Try both, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1249,20 +1222,16 @@ stage1_lesson_5() {
     lesson <<EOF
 ${H1}Who else types here${RST}
 
-Everything you typed went terminal → shell → program. There is no
-other way in: anything that runs a command on this machine goes
-through a shell the same way.
+Every command goes terminal → shell → program. An AI assistant that
+"runs commands" for you goes the same way: it types a line, the shell
+finds the program, the program runs.
 
-An AI assistant that "runs commands" for you is no exception. It
-types a line into a shell; the shell finds the program; the program
-runs. The line it typed can be read exactly as you read your own.
+So three habits count twice, for you and for a helper:
+  read the line before anyone presses Enter
+  know which folder it will run in
+  read what comes back
 
-So the habits in this course count twice:
-  ${BOLD}read the line${RST} before anyone presses Enter — you, or a helper
-  ${BOLD}know the folder${RST} it will run in
-  ${BOLD}read the output${RST} when it comes back, instead of skimming it
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 1's gate.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage 1's task.${RST}
 EOF
     return $?
 }
@@ -1430,7 +1399,7 @@ stage1_gate() {
 
     ask_question \
         "Q3: After ${CMD}whoami${RST} runs, where does its output go?" \
-        "Lesson 1.4: whoami printed something; think about where you read it." \
+        "Lesson 1.1: whoami printed something; think about where you read it." \
         'stdout' \
         'standard output' \
         'the screen' \
@@ -1475,7 +1444,8 @@ Then type ${CMD}check${RST}.
   ${CMD}date${RST}
 
 After all three have run, I'll ask you what each one printed.
-${DIM}Only commands you type after this screen count.${RST}
+${DIM}Only commands you type after this screen count. This task runs in
+${SANDBOX}/stage1; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} only after running all three.${RST}
 EOF

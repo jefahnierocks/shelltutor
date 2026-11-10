@@ -22,9 +22,9 @@ PROMPT = "shelltutor> "
 SENTINELS = {
     "WELCOME": "working in a Unix shell",
     "ORIENTATION": "Orientation",
-    "STAGE1_INTRO": "STAGE 1 — Where am I?",
-    "LESSON_1_1": "Running commands",
-    "LESSON_1_2": "Keyboard habits",
+    "STAGE1_INTRO": "Stage 1: Where am I?",
+    "LESSON_1_1": "Running a command",
+    "LESSON_1_2": "Four keys",
     "LESSON_1_3": "Where am I, who am I, when is it",
     "LESSON_1_4": "The shell, caught in the act",
     "LESSON_1_5": "Who else types here",
