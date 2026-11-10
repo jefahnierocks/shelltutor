@@ -116,13 +116,13 @@ fi
 # shellcheck disable=SC2034  # the full glyph set is defined here; not every one is used yet
 if [ ! -t 1 ] || [ -n "${NO_COLOR:-}" ] || [ "${SHELLTUTOR_ASCII:-}" = "1" ]; then
     G_PLAY='>'; G_OK='ok'; G_DONE='#'; G_CUR='*'; G_TODO='-'
-    G_HINT='>'; G_BACK='<'; G_SEP='-'
+    G_HINT='>'; G_BACK='<'; G_SEP='-'; G_DOT_SEP=':'
     G_RULE='-'; G_VBAR='|'; G_BAR='|'
     G_TEE_L='+'; G_BL='+'; G_RTL='+'; G_RTR='+'; G_RBL='+'; G_RBR='+'
     G_TL='+'; G_TR='+'; G_BR='+'
 else
     G_PLAY='▶'; G_OK='✓'; G_DONE='●'; G_CUR='◉'; G_TODO='○'
-    G_HINT='▸'; G_BACK='◀'; G_SEP='·'
+    G_HINT='▸'; G_BACK='◀'; G_SEP='·'; G_DOT_SEP='·'
     G_RULE='─'; G_VBAR='│'; G_BAR='┃'
     G_TEE_L='├'; G_BL='└'; G_RTL='╭'; G_RTR='╮'; G_RBL='╰'; G_RBR='╯'
     G_TL='┌'; G_TR='┐'; G_BR='┘'
@@ -418,9 +418,9 @@ panel_rule() {
 panel_title() {
     case "$1" in
         1) REPLY='Where am I?' ;;
-        2) REPLY='Paths and the filesystem' ;;
-        3) REPLY='Files and operations' ;;
-        4) REPLY='Commands, streams, composition' ;;
+        2) REPLY='Paths' ;;
+        3) REPLY='Files' ;;
+        4) REPLY='Commands and streams' ;;
         5) REPLY='Ready for vimtutor' ;;
         *) REPLY='' ;;
     esac
@@ -430,38 +430,63 @@ panel_title() {
 panel_at() {
     PANEL_STAGE=$1
     PANEL_POS=''
+    PANEL_DONE=''
     case "$2" in
         welcome|orientation) PANEL_STAGE='' ;;
         stage[1-5]_lesson_[1-9]) PANEL_POS="$1.${2##*_}" ;;
     esac
 }
 
+# panel_header (A11 C2): "── Stage N · <title> ──…── ●◉○○○  N.k ──", two rule
+# glyphs at each end, 80 columns. The product name leads only where the
+# learner pauses (welcome, orientation, stage intro, cleared): a screen with
+# no position. A cleared screen has no current dot; its done count is
+# PANEL_DONE. A module has no dots: "── Module · name ──…── 2 of 4 ──".
 panel_header() {
-    local prog i title='' head tail dots='' n used
+    local prog i title='' lead tail dots='' n used cleared='' show_name=''
     prog=$(read_progress)
-    # Left: "<rule> shelltutor <rule> " is 15 columns.
-    used=15
-    head="${RULE}${G_RULE}${RST} ${INSTR}shelltutor${RST} ${RULE}${G_RULE}${RST} "
+    [ -z "$PANEL_POS" ] && show_name=1
+    lead="${RULE}${G_RULE}${G_RULE}${RST} "
+    used=3
+    if [ -n "$show_name" ]; then
+        lead="${lead}${INSTR}shelltutor${RST} ${RULE}${G_RULE}${G_RULE}${RST} "
+        used=$((used + 14))
+    fi
     if [ -n "$PANEL_MODULE" ]; then
-        # A module has no place in the five-stage line, so no dots: the
-        # header names the module and the position within it.
-        head="${head}${DIM}Module ${G_SEP} ${PANEL_MODULE}${RST} "
+        lead="${lead}${DIM}Module ${G_DOT_SEP} ${PANEL_MODULE}${RST} "
         used=$((used + 10 + ${#PANEL_MODULE}))
-        tail=" ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${RST}"
-        n=$((PANEL_COLS - used - 3 - ${#PANEL_POS}))
+        if [ -n "$PANEL_POS" ]; then
+            tail=" ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${G_RULE}${RST}"
+            n=$((PANEL_COLS - used - 4 - ${#PANEL_POS}))
+        else
+            tail=" ${RULE}${G_RULE}${G_RULE}${RST}"
+            n=$((PANEL_COLS - used - 3))
+        fi
         [ "$n" -ge 1 ] || n=1
         panel_rule "$n"
-        printf '%s%s%s%s%s\n' "$head" "$RULE" "$REPLY" "$RST" "$tail"
+        printf '%s%s%s%s%s\n' "$lead" "$RULE" "$REPLY" "$RST" "$tail"
         return 0
     fi
-    if [ -n "$PANEL_STAGE" ]; then
+    if [ -z "$PANEL_STAGE" ] && [ -n "$PANEL_DONE" ]; then
+        cleared=1
+        panel_title "$PANEL_DONE"
+        title="$REPLY"
+        lead="${lead}${DIM}Stage ${PANEL_DONE} ${G_DOT_SEP} ${title}${RST} "
+        used=$((used + 11 + ${#title}))
+    elif [ -n "$PANEL_STAGE" ]; then
         panel_title "$PANEL_STAGE"
         title="$REPLY"
-        head="${head}${DIM}Stage ${PANEL_STAGE} ${G_SEP} ${title}${RST} "
+        lead="${lead}${DIM}Stage ${PANEL_STAGE} ${G_DOT_SEP} ${title}${RST} "
         used=$((used + 11 + ${#title}))
     fi
     for ((i = 1; i <= 5; i++)); do
-        if [ "$i" = "$PANEL_STAGE" ]; then
+        if [ -n "$cleared" ]; then
+            if [ "$i" -le "$PANEL_DONE" ]; then
+                dots="${dots}${OK}${G_DONE}${RST}"
+            else
+                dots="${dots}${DIM}${G_TODO}${RST}"
+            fi
+        elif [ "$i" = "$PANEL_STAGE" ]; then
             dots="${dots}${INSTR}${G_CUR}${RST}"
         elif [ "$i" -le "$prog" ]; then
             dots="${dots}${OK}${G_DONE}${RST}"
@@ -469,12 +494,18 @@ panel_header() {
             dots="${dots}${DIM}${G_TODO}${RST}"
         fi
     done
-    # Right: " <5 dots>  <pos> <rule>" is 10 columns plus the position.
-    tail=" ${dots}  ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${RST}"
-    n=$((PANEL_COLS - used - 10 - ${#PANEL_POS}))
+    if [ -n "$PANEL_POS" ]; then
+        # " <5 dots>  <pos> ──" is 11 columns plus the position.
+        tail=" ${dots}  ${INSTR}${PANEL_POS}${RST} ${RULE}${G_RULE}${G_RULE}${RST}"
+        n=$((PANEL_COLS - used - 11 - ${#PANEL_POS}))
+    else
+        # " <5 dots> ──" is 9 columns.
+        tail=" ${dots} ${RULE}${G_RULE}${G_RULE}${RST}"
+        n=$((PANEL_COLS - used - 9))
+    fi
     [ "$n" -ge 1 ] || n=1
     panel_rule "$n"
-    printf '%s%s%s%s%s\n' "$head" "$RULE" "$REPLY" "$RST" "$tail"
+    printf '%s%s%s%s%s\n' "$lead" "$RULE" "$REPLY" "$RST" "$tail"
 }
 
 panel_lower_rule() {
@@ -1007,7 +1038,7 @@ EOF
 stage1_lesson_1() {
     # Vertical budget: ~15 lines of content.
     lesson <<EOF
-${H1}1.1 — running commands${RST}
+${H1}Running commands${RST}
 
 At the prompt below, type this and press Enter:
 
@@ -1032,7 +1063,7 @@ EOF
 stage1_lesson_2() {
     # Vertical budget: ~17 lines of content.
     lesson <<EOF
-${H1}1.2 — keyboard habits${RST}
+${H1}Keyboard habits${RST}
 
 Four keys make the shell comfortable. Try each one now.
 
@@ -1054,7 +1085,7 @@ EOF
 stage1_lesson_3() {
     # Vertical budget: ~13 lines of content.
     lesson <<EOF
-${H1}1.3 — where am I, who am I, when is it${RST}
+${H1}Where am I, who am I, when is it${RST}
 
 Three commands that ask the system about itself.
 
@@ -1075,7 +1106,7 @@ EOF
 
 stage1_lesson_4() {
     lesson <<EOF
-${H1}1.4 — the shell, caught in the act${RST}
+${H1}The shell, caught in the act${RST}
 
 Type ${CMD}date${RST}. Now type ${CMD}dtae${RST}.
 
@@ -1099,7 +1130,7 @@ EOF
 
 stage1_lesson_5() {
     lesson <<EOF
-${H1}1.5 — who else types here${RST}
+${H1}Who else types here${RST}
 
 Everything you typed went terminal → shell → program. There is no
 other way in: anything that runs a command on this machine goes
@@ -1444,7 +1475,7 @@ EOF
 
 stage2_lesson_1() {
     lesson <<EOF
-${H1}2.1 — where you are${RST}
+${H1}Where you are${RST}
 
 A folder can hold files and other folders. You are always standing
 in one folder; the shell calls it the ${SUB}current directory${RST}.
@@ -1465,7 +1496,7 @@ EOF
 
 stage2_lesson_2() {
     lesson <<EOF
-${H1}2.2 — ls: what is here${RST}
+${H1}ls: what is here${RST}
 
 ${CMD}ls${RST} lists the names in the current directory.
 
@@ -1486,7 +1517,7 @@ EOF
 
 stage2_lesson_3() {
     lesson <<EOF
-${H1}2.3 — cd: moving${RST}
+${H1}cd: moving${RST}
 
 ${CMD}cd${RST} changes your current folder.
 
@@ -1509,7 +1540,7 @@ EOF
 
 stage2_lesson_4() {
     lesson <<EOF
-${H1}2.4 — names for places${RST}
+${H1}Names for places${RST}
 
 Three short names point at places in the tree you have seen:
   ${SUB}.${RST}    here, the current directory
@@ -1722,7 +1753,7 @@ EOF
 
 stage3_lesson_1() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}3.1 — creating: touch, mkdir${RST}
+${H1}Creating: touch, mkdir${RST}
 
 ${CMD}touch${RST} creates an empty file (or updates the timestamp of
 an existing one).
@@ -1744,7 +1775,7 @@ EOF
 
 stage3_lesson_2() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}3.2 — reading: cat, less${RST}
+${H1}Reading: cat, less${RST}
 
 ${CMD}cat${RST} prints the entire file at once.
   ${CMD}cat hello.txt${RST}                ${DIM}# probably empty${RST}
@@ -1767,7 +1798,7 @@ EOF
 
 stage3_lesson_3() {
     lesson "$SANDBOX/stage3" <<EOF
-${H1}3.3 — copy, move, delete${RST}
+${H1}Copy, move, delete${RST}
 
 ${CMD}cp${RST} copies. The original stays.
   ${CMD}cp hello.txt backup.txt${RST}
@@ -1960,7 +1991,7 @@ EOF
 
 stage4_lesson_1() {
     lesson "$SANDBOX/stage4" <<EOF
-${H1}4.1 — reading a command${RST}
+${H1}Reading a command${RST}
 
 A shell command has a small grammar:
   ${SUB}command  options  arguments${RST}
@@ -1983,7 +2014,7 @@ EOF
 
 stage4_lesson_2() {
     lesson "$SANDBOX/stage4" <<EOF
-${H1}4.2 — the pipe${RST}
+${H1}The pipe${RST}
 
 A ${SUB}pipe${RST} ( ${CMD}|${RST} ) sends one command's output into the next command's
 input. ${EM}Most important idea in the shell.${RST}
@@ -2006,7 +2037,7 @@ EOF
 
 stage4_lesson_3() {
     lesson "$SANDBOX/stage4" <<EOF
-${H1}4.3 — redirection${RST}
+${H1}Redirection${RST}
 
 A pipe sends output to ${SUB}another program${RST}. A redirect sends it
 to ${SUB}a file${RST}, and ${CMD}>${RST} replaces it without asking, whoever typed the line.
@@ -2029,7 +2060,7 @@ EOF
 
 stage4_lesson_4() {
     lesson "$SANDBOX/stage4" <<EOF
-${H1}4.4 — globs${RST}
+${H1}Globs${RST}
 
 ${SUB}Globs${RST} match many filenames at once. The shell expands them
 ${SUB}before${RST} the command sees them.
@@ -2239,7 +2270,7 @@ EOF
 
 stage5_lesson_1() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.1 — print-and-exit vs full-screen${RST}
+${H1}Print-and-exit vs full-screen${RST}
 
 Most of the commands you've used print output and return immediately:
   ${CMD}ls${RST}          ${CMD}date${RST}          ${CMD}wc -l file${RST}
@@ -2261,7 +2292,7 @@ EOF
 
 stage5_lesson_2() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.2 — entering and leaving Vim${RST}
+${H1}Entering and leaving Vim${RST}
 
 ${CMD}vim${RST} is a text editor. Before you ${SUB}edit${RST} anything,
 let's learn how to ${SUB}leave${RST}.
@@ -2284,7 +2315,7 @@ EOF
 
 stage5_lesson_3() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.3 — buffer vs file${RST}
+${H1}Buffer vs file${RST}
 
 ${EM}The most important idea in this stage.${RST} When you open a file in
 Vim, Vim ${SUB}reads it into a buffer${RST} — a copy in memory. Your
@@ -2306,7 +2337,7 @@ EOF
 
 stage5_lesson_4() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.4 — practice: discard, then save${RST}
+${H1}Practice: discard, then save${RST}
 
 ${EM}Practice on a file you don't mind editing.${RST}  A ${DIR}practice.txt${RST}
 fixture is in this stage's folder. Try:
@@ -2329,7 +2360,7 @@ EOF
 
 stage5_lesson_5() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}5.5 — calling vimtutor${RST}
+${H1}Calling vimtutor${RST}
 
 ${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a ${SUB}copy${RST}
 of a tutorial file so you can practice without damaging the original.
