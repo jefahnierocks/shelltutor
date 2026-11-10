@@ -147,7 +147,7 @@ Usage:
   shelltutor N          enter stage N (1..5) for re-take or first-time
   shelltutor MODULE     run a stand-alone module (see Modules; nothing is saved)
   shelltutor -h         this help
-  shelltutor --info     environment check (bash, shell, sandbox, vim, ...)
+  shelltutor --info     environment check (bash, shell, practice folder, vim, ...)
 
 Stages:
   1  Where am I?
@@ -169,7 +169,7 @@ Inside the practice prompt:
   prev   go back              quit   leave (progress is saved)
   check  verify gate task (only at a gate)
 
-Sandbox folder: $SANDBOX
+Practice folder: $SANDBOX
 (Override with SHELLTUTOR_HOME=/path ./shelltutor; NO_COLOR disables colour.)
 EOF
 }
@@ -207,14 +207,14 @@ preflight() {
 
     # 2. Writable sandbox.
     if ! mkdir -p "$SANDBOX" 2>/dev/null; then
-        printf '%bshelltutor:%b cannot create the sandbox folder at %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
+        printf '%bshelltutor:%b cannot create the practice folder at %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
         printf 'Set SHELLTUTOR_HOME to a writable location, e.g.:\n' >&2
         printf '    %bSHELLTUTOR_HOME=/tmp/shelltutor %s%b\n' "$CMD" "$0" "$RST" >&2
         return 1
     fi
     local writetest="$SANDBOX/.shelltutor_writetest"
     if ! ( : > "$writetest" ) 2>/dev/null; then
-        printf '%bshelltutor:%b the sandbox folder exists but is not writable: %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
+        printf '%bshelltutor:%b the practice folder exists but is not writable: %s%s%s\n' "$EM" "$RST" "$DIR" "$SANDBOX" "$RST" >&2
         printf 'Set SHELLTUTOR_HOME to a writable location, e.g.:\n' >&2
         printf '    %bSHELLTUTOR_HOME=/tmp/shelltutor %s%b\n' "$CMD" "$0" "$RST" >&2
         return 1
@@ -249,7 +249,7 @@ show_info() {
     printf '                 [%s] tutor spawns bash for practice regardless of your login shell\n' "$info"
 
     # --- sandbox
-    printf '  %bSandbox%b      : %s\n' "$SUB" "$RST" "$SANDBOX"
+    printf '  %bPractice folder%b : %s\n' "$SUB" "$RST" "$SANDBOX"
     if [ -d "$SANDBOX" ] && [ -w "$SANDBOX" ]; then
         printf '                 [%s] writable\n' "$ok"
     elif [ -d "$SANDBOX" ]; then
@@ -2740,7 +2740,7 @@ ${INSTR}${G_PLAY} Next: ${CMD}vimtutor${INSTR}, about 30 minutes, hands-on.${RST
 ${DIM}If vimtutor isn't installed: install your distro's full vim package${RST}
 ${DIM}(Debian/Ubuntu: sudo apt install vim; Fedora: sudo dnf install vim-enhanced;${RST}
 ${DIM}macOS: brew install vim). Re-take a stage with: shelltutor 1${RST}
-${DIM}Sandbox stays at ${SANDBOX} if you want to keep playing.${RST}
+${DIM}The practice folder stays at ${SANDBOX} if you want to keep playing.${RST}
 
 EOF
     # Clean up progress so the next plain `shelltutor` invocation starts from

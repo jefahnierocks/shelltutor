@@ -174,7 +174,7 @@ stages. Drift between the usage text and either of those is caught by
 `scripts/smoke-test.sh` (FF-006a).
 
 Stability commitment: structural content (Usage section, Stages
-table, Sandbox folder line, navigation-word list) is stable. Cosmetic
+table, Practice folder line, navigation-word list) is stable. Cosmetic
 phrasing is not.
 
 ## C-006 — Lesson heredoc text
