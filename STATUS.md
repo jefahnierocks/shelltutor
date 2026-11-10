@@ -46,8 +46,8 @@ Current truth for the `shelltutor` repository.
 - The synthetic loop is paused (2026-11-09) and resumes only when a package
   changes lesson content (ROADMAP Phase 5); WP-24 landed at `7489d50`.
 - Amendment A11 (2026-11-09) adopted the outside design review (chrome v2).
-  WP-25 (rendering only) landed at `dd297d2`; WP-26 (lesson skeleton and body
-  rewrite) is drafted and is next, with per-lesson approval.
+  WP-25 (rendering only) landed at `dd297d2`; WP-26 (lesson skeleton, 28 lessons;
+  A13) landed at `2cb3f53`; synthetic round 6 is its evidence.
 - The identity line is closed: "working in a Unix shell" in the script, the
   harness sentinel and the docs (WP-25). Open: WP-08 part B (CHANGELOG,
   `v0.1.0`), which human sittings gate (A1.10).
@@ -76,7 +76,7 @@ documents agree with the code.
 | WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
 | WP-18 | `f372da1` | Stages 3–5 and the finale to the screen budget (A5, O-J): every screen at most 18 heredoc lines and 22 rendered rows; 4.3 split (Stage 4 has four lessons), 5.3 split (Stage 5 has five); no command removed, gates unchanged. |
 | WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
-| WP-26 | branch `wp/26-lesson-skeleton` | Lesson skeleton (A13; content): 28 lessons in place of 21 (Stage 2: 6, Stage 3: 5, Stage 4: 6, Stage 5: 6), one typeable block each, every core screen within the 19-row panel; `ls /usr/bin`, `grep`, `<`, `rmdir`, `vim --version` and the intro command tables leave the core; the practice-folder thread starts (1.3 `pwd`, 2.1 tree, 2.4 `cd`); `mkdir` and `echo > file` get rehearsal lessons; Stage 5 says working copy; hints renumbered; the interim squeeze is removed and the harness enforces the budget; `--info` aligned. Modules wait for WP-28. Bundles `audit/2026-11-09/sim/wp26-*`. |
+| WP-26 | `2cb3f53` | Lesson skeleton (A13; content): 28 lessons in place of 21 (Stage 2: 6, Stage 3: 5, Stage 4: 6, Stage 5: 6), one typeable block each, every core screen within the 19-row panel; `ls /usr/bin`, `grep`, `<`, `rmdir`, `vim --version` and the intro command tables leave the core; the practice-folder thread starts (1.3 `pwd`, 2.1 tree, 2.4 `cd`); `mkdir` and `echo > file` get rehearsal lessons; Stage 5 says working copy; hints renumbered; the interim squeeze is removed and the harness enforces the budget; `--info` aligned. Modules wait for WP-28. Bundles `audit/2026-11-09/sim/wp26-*`. |
 | WP-27 | `be9e86c` | Welcome map and vocabulary (A12; O-AW, O-AX rendering half): the course map inside the box, one stage per row with a dot each (passed stages green on a retake), the `Sandbox:` row off the welcome, and every learner-visible "sandbox" now "practice folder" (`-h`, `--info`, preflight errors, finale). Bundles `audit/2026-11-09/sim/wp27-*`. |
 | WP-25 | `dd297d2` | Screen chrome v2 (A11; consultant response), rendering only: footer above the rule, blank before the prompt, `▶` isolated, 19-row panel budget; header without the product name on lessons and gates, titles without `N.k —`; progressive footer with `(gloss)`; BOLD role (SUB/KEY/DIR out of core bodies); width-stable glyph pairs; recall `┃ N of 3` with a `┃ ? ` prompt (the hint stays on the first miss, A7); `[✓]`/`[ ]` checklist with `seen:`; welcome box and identity line; capability-first cleared screens and finale; "answer in words" on every gate intro. `run.py --ascii`, `compare_heights.py`. Bundles `audit/2026-11-09/sim/wp25-*`. |
 | WP-24 | `7489d50` | Matcher tightening after the exit test (A10; F-029, F-030, O-AR, O-AS, O-AT): 36 probe reject rows (FF-011 now 235 cases), one-word groups replaced by lesson phrases, `--ordered` groups for Stage 4 Q2, `--reject` phrases on fifteen questions, parentheses and semicolons normalised, Stage 5 Q2 forms, three screen lines. Bundles `audit/2026-11-09/sim/wp24-*`. |
@@ -224,9 +224,8 @@ documents agree with the code.
 
 ## Immediate Next Steps
 
-1. **WP-26 — lesson skeleton and body rewrite**
-   (`docs/workplan/WP-26-lesson-skeleton.md`; drafted): per-lesson approval,
-   then one synthetic round as its evidence.
+1. **Synthetic round 6** against WP-26 (`2cb3f53`), then **WP-28**: the
+   skeleton applied to the modules, with the `SHELLTUTOR_HOME` beat (A12).
 2. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
    tag waits for human evidence (A1.10): the Phase A sittings (one on macOS
    `/bin/bash` 3.2 with `echo $BASH_VERSION` recorded) and the Phase 2 items that
