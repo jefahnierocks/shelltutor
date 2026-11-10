@@ -66,6 +66,8 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-22](WP-22-stage2-sequencing-and-hint-rule.md) | Stage 2 teaches mkdir and checks both items; `~` and Stage 4 Q1 forms; Ctrl+C/`q`; FF-010 hint anchors (A9) | — | approved 2026-11-09 | **landed** 13847ef (2026-11-09) |
 | [WP-23](WP-23-keyword-matching.md) | Keyword-group matching with negation guard; FF-011 corpus; shape line removed; 3.1 redirection; harness hygiene (A10) | — | approved 2026-11-09 | **landed** 7e126cf (2026-11-09) |
 | [WP-24](WP-24-matcher-tightening.md) | Matcher tightening after the exit test: false accepts, ordered groups, F-030 forms, three screen lines (A10) | — | approved 2026-11-09 | **landed** 7489d50 (2026-11-09) |
+| [WP-25](WP-25-chrome-v2.md) | Screen chrome v2 from the consultant response: footer above the rule, 19-row panel, reduced palette, `(gloss)` footer, `?` recall prompt, `[✓]/[ ]` checklist, welcome box and identity line, capability-first cleared/finale (A11) | — | approved 2026-11-09 | ready |
+| [WP-26](WP-26-lesson-skeleton.md) | Lesson skeleton: one typeable block, body ≤ 12 rows (content; A11) | WP-25 | per-lesson approval | drafted |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Loop paused 2026-11-09 after the exit test (synthetic sittings round 5, A10 item 4);

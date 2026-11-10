@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.10.0
+version: 0.11.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -911,6 +911,26 @@ all three personas reaching the finale on one revision. After it the
 synthetic loop pauses and effort moves to release preparation and the
 module standard. Human sittings still gate v0.1.0 (A1.10); synthetic
 results remain candidate evidence.
+
+### A11 — Screen chrome v2 from the consultant response (2026-11-09)
+
+The operator commissioned an outside design review
+(`docs/design-brief-consultant-2026-11.md`) and relayed the answer
+(`docs/design-consultant-response-2026-11.md`). Adopted: the response's
+§1 priorities, §2 answers to the three operator requests, §3 answers to
+the ten questions, and §4 sheet, with all five of its defaults (body
+palette reduced to bold/green/grey/yellow with rare red; product name off
+lesson and gate headers; progressive footer; `?` recall prompt; `(gloss)`
+in place of `▸`). Q10 (wide terminals: left-aligned, rule at 80) is
+closed as-is. The identity phrase "a vimtutor prerequisite course" is
+retired in favour of "working in a Unix shell"; the Stage 5 title stays.
+Split: WP-25 is rendering only (chrome, footer, roles, glyphs, recall
+block, checklist, welcome, cleared, finale, identity strings, title
+prefixes); the §3.7 lesson skeleton and the §5.2 body rewrite are content
+and go to WP-26, drafted now, scheduled after WP-25 with one synthetic
+round as its evidence. A3's 20/22-row budgets are superseded by the
+19-row panel (body ≤ 12) once WP-26 has brought the over-budget screens
+down; until then WP-25 enforces a 21-row cap and reports the excess.
 
 ## Cross-references
 
