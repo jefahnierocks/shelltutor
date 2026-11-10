@@ -123,3 +123,9 @@ two rows; an interim squeeze drops interior blank rows to hold a 21-row panel
 hard cap. The full table (before WP-25, after, over 20) is in
 `audit/2026-11-09/wp25-chrome-v2.md`; the screens over the new budget are the
 input to WP-26.
+
+## WP-27 amendment (2026-11-09)
+
+| Screen | Rendered | Change |
+| --- | ---: | --- |
+| S1-W `welcome` | 21 (was 19) | The course map moves inside the box, one stage per row with a dot each (O-AW); the dots-and-names row and the `Sandbox:` row under the box go (O-AX). 17 box rows, all exactly 80 columns in both glyph forms; the review allows 22. |

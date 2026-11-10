@@ -922,6 +922,9 @@ columns). Full text: `docs/operator-review-welcome-2026-11-09.md`.
   response §5.3 proposed it; the proposal does not fit 80 columns with
   findable separators. *Closes when*: the map is vertical, inside the box,
   one stage per row with its own dot (WP-27).
+  **Closed 2026-11-09 by WP-27, `5d50f46`** (rebased SHA on landing): the map
+  is inside the box, one stage per row; passed stages show a green dot on a
+  retake.
 - **O-AX — The sandbox path row is jargon on the welcome and a missed
   lesson.** A `Sandbox:` row with a long path sits under the box; "sandbox"
   is undefined for a beginner and over-claims isolation. *Closes when*: the
@@ -930,6 +933,9 @@ columns). Full text: `docs/operator-review-welcome-2026-11-09.md`.
   the Stage 2 tree and `cd`, Stage 3 and the `env` module (WP-26 and the
   `env` follow-up). Relates to O-AG/O-AV (the prompt folder changes at gate
   tasks without a word).
+  **Closed for its rendering half 2026-11-09 by WP-27, `ca8ed86`:** the row is
+  off the welcome and no screen, `-h`, `--info` label or error message prints
+  "sandbox"; the teaching thread stays with WP-26 and the `env` follow-up.
 
 Check requested by the review: the default practice folder is
 `$HOME/.shelltutor` (`shelltutor:62`), so it sits under home and the `~`
