@@ -56,7 +56,7 @@ agent sandbox `pty.openpty` can fail (exit 6) — run it outside the sandbox.
 6. Reads `.progress` before sandbox cleanup: stages 1–4 expect the stage
    number, stage 5 and `all` expect it absent (the finale removes it).
    TAP `ok` requires `gate_passed` and `progress_ok` (and, for
-   `second-try`, exactly one `not yet:`).
+   `second-try`, exactly one `seen:`).
 
 Controlled inputs (decision D-03), recorded in `summary.md`: `LC_ALL=C`,
 `VIMINIT='set nocompatible'`, `PAGER=less`, `MANPAGER` and `LESS` unset,
@@ -89,18 +89,18 @@ covers the Stage 2 and Stage 4 gates only.
   `check` of the gate task on purpose to observe the first rung of the
   gate's escalating feedback (WP-05, decision D-14):
   - Stage 2 task: `mkdir practice`, `check` → wait for `NOT_YET`
-    (`not yet:`) → `cd practice`, `pwd`, `check` →
+    (`seen:`) → `cd practice`, `pwd`, `check` →
     `S2_CLEARED`, then `next` at the cleared screen's prompt (single-stage
     runs send `quit` there instead).
   - Stage 4 task: `seq 1 100 | wc -l > count.txt`, `check` → `NOT_YET` →
     `ls *.txt`, `check` → `S4_CLEARED`.
   - Recall answers are the same as `careful-beginner`'s, except Stage 2 Q1:
     `second-try` misses it twice (WP-10, A1.3; A7) so the recall ladder is
-    observed: the `Hint:` rung prints at miss 1 and again at miss 2 together
+    observed: the `hint:` rung prints at miss 1 and again at miss 2 together
     with the navigation facts
     (`RECALL_HINT`, `RECALL_NAV`: `Passed stages
     are saved.`), then it answers correctly. TAP `ok` requires the stage
-    cleared, exactly one `not yet:`, and for Stage 2 exactly two `Hint:` and
+    cleared, exactly one `seen:`, and for Stage 2 exactly two `hint:` and
     one navigation fact in the output (Stage 4: none); any other count means
     the ladder changed.
 
@@ -283,6 +283,14 @@ Only synthetic harness bundles are committed; never a human transcript.
 - Synthetic evidence may be committed (`audit/<date>/sim/`); real
   human transcripts must not be committed (see
   `docs/simulation-design-plan.md` §Evidence Locations).
+
+## Forms and row counts
+
+`run.py --ascii` runs the same walk with `SHELLTUTOR_ASCII=1`.
+`compare_heights.py A/current-rc/summary.md B/current-rc/summary.md` exits 1
+when two runs (UTF-8 against ASCII, Bash 3.2 against 5.x) differ in any
+screen's rendered row count. The screen budget is 20 rendered rows (19 panel
+rows plus the blank under the rule).
 
 ## Known limits
 

@@ -63,18 +63,19 @@ SUPPORTED_PERSONAS = ("careful-beginner", "second-try")
 # Stage 4 gates have a history check to trip (WP-05, decision D-14).
 SECOND_TRY_STAGES = ("2", "4")
 NOT_YET_TEXT = "seen: "
-# Recall ladder (A11). second-try at Stage 2 misses Q1 twice: miss 1 prints
-# "not quite. try again.", miss 2 prints "hint:" with the navigation facts,
-# so "hint:" appears once and the first navigation fact once. The task
-# ladder keeps its own "Hint:" (capital), which this count ignores.
+# Recall ladder (A7, kept by A11). second-try at Stage 2 misses Q1 twice:
+# miss 1 prints "not quite. hint: ...", miss 2 the same line plus the
+# navigation facts, so "hint:" appears twice and the first navigation fact
+# once. The task ladder keeps its own "Hint:" (capital), which is not counted.
 RECALL_HINT_TEXT = "hint:"
 RECALL_NAV_TEXT = "Passed stages are saved."
 # A9 (F-022): the Stage 2 gate's first check prints both items.
 # second-try makes the folder and skips the cd, so the first check shows the
 # folder item done (no "seen:" reason) and the cd item todo.
+GATE_CLOSE_TEXT = "Finish the step marked [ ]"
 GATE_ITEM_FOLDER_TEXT = "seen: no practice folder"
 GATE_ITEM_CD_TEXT = "seen: no cd in your history"
-RECALL_EXPECTED = {"2": (1, 1), "4": (0, 0)}
+RECALL_EXPECTED = {"2": (2, 1), "4": (0, 0)}
 
 VARIANT_CURRENT = "current-rc"
 # Retired in Slice 2: the practice shell no longer sources the system
@@ -148,6 +149,14 @@ def _parse_args(argv) -> argparse.Namespace:
     parser.add_argument("--cols", type=int, default=80)
     parser.add_argument("--rows", type=int, default=24)
     parser.add_argument("--shelltutor", default="./shelltutor")
+    parser.add_argument(
+        "--ascii",
+        action="store_true",
+        help=(
+            "Run the tutor with SHELLTUTOR_ASCII=1 (the width-stable ASCII "
+            "glyph set, A11). Same walk, same row counts."
+        ),
+    )
     parser.add_argument("--keep-sandbox", action="store_true")
     parser.add_argument("-v", "--verbose", action="store_true")
     return parser.parse_args(argv)
@@ -323,6 +332,10 @@ def _run_variant(
     # D-03 controlled inputs.
     child_env["LC_ALL"] = "C"
     child_env["VIMINIT"] = "set nocompatible"
+    if args.ascii:
+        child_env["SHELLTUTOR_ASCII"] = "1"
+    else:
+        child_env.pop("SHELLTUTOR_ASCII", None)
     child_env["PAGER"] = "less"
     child_env.pop("MANPAGER", None)
     child_env.pop("LESS", None)
@@ -336,6 +349,7 @@ def _run_variant(
         "TERM": child_env["TERM"],
         "COLUMNS": args.cols,
         "LINES": args.rows,
+        "SHELLTUTOR_ASCII": "1" if args.ascii else "unset",
     }
 
     outcome: dict = {
@@ -432,6 +446,17 @@ def _run_variant(
                         "second-try expected %d %r and %d %r, saw %d and %d."
                         % (want_hint, RECALL_HINT_TEXT, want_nav,
                            RECALL_NAV_TEXT, got_hint, got_nav)
+                    )
+            if run_ok:
+                # A11 C7: a failed check prints the checklist's closing line
+                # once ("Finish the step marked [ ], ...").
+                got_close = text.count(GATE_CLOSE_TEXT)
+                outcome["gate_close_count"] = got_close
+                if got_close != 1:
+                    run_ok = False
+                    outcome["notes"] = (
+                        "second-try expected one checklist closing line "
+                        "(%r), saw %d." % (GATE_CLOSE_TEXT, got_close)
                     )
             if run_ok and str(args.stage) == "2":
                 # A9 (F-022): the first Stage 2 check lists both items.

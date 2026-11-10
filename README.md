@@ -38,9 +38,9 @@ walkthrough on both platform families remains pending; see `STATUS.md`.
 | # | Title | Commands introduced |
 | --- | --- | --- |
 | 1 | Where am I? | `echo`, `pwd`, `whoami`, `date`, `clear`, `exit` |
-| 2 | Paths and the filesystem | `pwd`, `ls`, `ls -p`, `ls -a`, `cd`, `cd ..`, `cd ~` |
-| 3 | Files and operations | `touch`, `mkdir`, `rmdir`, `cat`, `less`, `cp`, `mv`, `rm` |
-| 4 | Commands, streams, composition | `command -v`, `wc`, `seq`, `head`, `sort`, `grep`, `\|`, `>`, `>>`, `<`, `*` |
+| 2 | Paths | `pwd`, `ls`, `ls -p`, `ls -a`, `cd`, `cd ..`, `cd ~` |
+| 3 | Files | `touch`, `mkdir`, `rmdir`, `cat`, `less`, `cp`, `mv`, `rm` |
+| 4 | Commands and streams | `command -v`, `wc`, `seq`, `head`, `sort`, `grep`, `\|`, `>`, `>>`, `<`, `*` |
 | 5 | Ready for `vimtutor` | `man`, `less` (full-screen), `vim`, `:q!`, `:wq`, `vimtutor` |
 
 The full curriculum spec, learning goals, and gate definitions live in

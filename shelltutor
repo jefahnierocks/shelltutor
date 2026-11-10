@@ -920,11 +920,9 @@ ask_question() {
             return 0
         fi
         attempt=$((attempt + 1))
+        fb_note "${EM}not quite.${RST} ${DIM}hint:${RST} $hint"
         if [ "$attempt" -ge 2 ]; then
-            fb_note "${EM}not quite.${RST} ${DIM}hint:${RST} $hint"
             recall_navigation
-        else
-            fb_note "${EM}not quite.${RST} try again."
         fi
     done
 }
@@ -1027,9 +1025,9 @@ gate_require_history() {
 gate_escalate() {
     local attempt="$1" hint="$2"; shift 2
     if [ "$attempt" -ge 2 ]; then
-        fb_note "${SUB}Hint:${RST} $hint"
+        fb_note "${BOLD}Hint:${RST} $hint"
         if [ "$attempt" -ge 3 ] && [ "$#" -gt 0 ]; then
-            fb_note "${SUB}Worked example — type these yourself:${RST}"
+            fb_note "${BOLD}Worked example — type these yourself:${RST}"
             local line
             for line in "$@"; do
                 fb_note "  ${CMD}${line}${RST}"
@@ -1950,6 +1948,8 @@ stage3_gate() {
 ${H1}STAGE 3 — GATE${RST}
 
 ${BOLD}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${BOLD}practical task${RST}.
 EOF
 
@@ -2209,6 +2209,8 @@ stage4_gate() {
 ${H1}STAGE 4 — GATE${RST}
 
 ${BOLD}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${BOLD}practical task${RST}.
 EOF
 
@@ -2529,6 +2531,8 @@ stage5_gate() {
 ${H1}STAGE 5 — GATE${RST}
 
 ${BOLD}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${BOLD}two-phase practical task${RST}.
 EOF
 
@@ -2953,6 +2957,8 @@ module_shells_gate() {
 ${H1}shells — gate${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${SUB}practical task${RST}.
 EOF
 
@@ -3253,6 +3259,8 @@ module_env_gate() {
 ${H1}env — gate${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
+First, three questions. Type your answer in words; this is not the shell.
+
 Then a ${SUB}practical task${RST}.
 EOF
 

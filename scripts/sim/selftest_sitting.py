@@ -105,7 +105,7 @@ def main():
         return fail("missing --bash path: rc=%s err=%r" % (rc, err))
     try:
         rc, text, err = run(out, "start", "--out", out, "--persona", "probe", "--bash", "bash")
-        if rc != 0 or "SHELLTUTOR" not in text:
+        if rc != 0 or "working in a Unix shell" not in text:
             return fail("start rc=%s err=%r text=%r" % (rc, err, text[:200]))
         if "[prompt] shelltutor> " not in text:
             return fail("first screen lacks the marked prompt: %r" % text[-120:])

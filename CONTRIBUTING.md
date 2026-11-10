@@ -114,17 +114,61 @@ the non-portable surface.
 
 ## Screen Chrome
 
-Every tutor screen is a panel between two rules (A3, `docs/direction-decisions-2026-11.md`):
-a header rule with the stage dots and position, a blank, the heredoc content,
-a lower rule, then the practice shell's footer bar and prompt. `show_screen`
-draws the header and lower rule; the runners set `PANEL_STAGE` and `PANEL_POS`
-first. The chrome costs two rows over a bare screen, so heredoc content is at
-most 19 rows and authored to 18 (22 rendered rows before the prompt). Rules
-are built by a loop at a fixed 80 columns; never `tr` on a multibyte glyph or
-`${s:0:n}`, and never `tput`. Use the glyph variables (`${G_PLAY}`, `${G_OK}`, ...),
-not literal `▶` or `✓`; ASCII substitutes are selected by the plain-text path or
-`SHELLTUTOR_ASCII=1`, never by locale. Gate feedback goes through `fb_ok`,
-`fb_todo` and `fb_note`.
+Every tutor screen is a panel between a header and a lower rule, with the
+practice shell below it (A3, A11; `docs/design-consultant-response-2026-11.md`).
+`show_screen [MODE]` draws, in order: the header, a blank, the body, a blank,
+the `▶` line, a blank, the footer, the lower rule and a blank row; the prompt
+follows. The `▶` line is the body's last paragraph and always has one blank
+row above and below it. The footer sits above the rule, so everything below
+the rule is the real shell. The header is `── Stage N · <title> ──…── ●◉○○○  N.k ──`
+(`gate` or `task` in place of `N.k`); the product name leads it only on the
+welcome, orientation, stage-intro, cleared and finale screens. Lesson titles
+carry no `N.k —` prefix. The runners set `PANEL_STAGE` and `PANEL_POS` first.
+
+**Budget.** The panel (header through rule) is at most 19 rows; the harness
+counts 20 rendered rows (the blank under the rule included), so the prompt
+lands on row 21 of a 24-row terminal. Until WP-26 cuts the bodies, a lesson
+may run to a hard cap of 21 panel rows: `show_screen` squeezes interior blank
+rows (never words) to stay under it. Rules are built by a loop at a fixed 80
+columns; never `tr` on a multibyte glyph or `${s:0:n}`, and never `tput`.
+
+**Footer.** Words in bold grey (`NAVW`) with the gloss in parentheses: glosses
+through Stage 1, in modules and on cleared screens, words only from Stage 2.
+The gate's recall and task phases have their own forms.
+
+**Colour roles** (the tutor emits the codes; the terminal picks the colours):
+
+| Role | SGR | Marks |
+| --- | --- | --- |
+| `BOLD` | 1 | a concept or key being named (replaces cyan and magenta in the body) |
+| `CMD` | 92 | something you can type |
+| `DIM` | 90 | `#` asides, footer glosses, unreached dots, the stage title in the header |
+| `NAVW` | 1;90 | the navigation words in the footer |
+| `INSTR` | 93 | `▶`, `┃`, the current-stage dot: the tutor speaking |
+| `EM` | 91 | the word that matters, not the line; rare |
+| `H1` | 1;97 | the screen title |
+| `OK` | 92 | `[✓]`, filled dots |
+| (plain) | | paths; box drawing and rules are `RULE` (90), never text |
+
+`SUB` and `DIR` stay defined for the modules and `--info` until WP-26 sweeps
+them; do not use them in core screens.
+
+**Glyphs.** Use the glyph variables (`${G_PLAY}`, `${G_BOX_OK}`, `${G_DOT_SEP}`,
+...), not literal `▶` or `✓`. Each UTF-8 glyph has an ASCII twin of the same
+width, so only the texture changes: `▶ >`, `┃ |`, `─ -`, `● #`, `◉ *`, `○ -`,
+`[✓] [x]`, `· :`, corners `+`; `(gloss)` and `[ ]` are the same in both. ASCII
+is selected by the plain-text path (`NO_COLOR`, non-TTY) or `SHELLTUTOR_ASCII=1`,
+never by locale. The harness has `run.py --ascii`; `scripts/sim/compare_heights.py`
+asserts two runs have the same row counts.
+
+**Recall and gate feedback.** A recall question prints once as
+`┃ N of 3   <question>` wrapped under the bar, options on their own row, then
+`┃ ? ` for the answer; every miss prints `not quite. hint: …` (A7: the hint is on the first
+miss), and from the second miss the three navigation facts follow. A gate checklist is
+`┃ [✓] item` and `┃ [ ] item   seen: <what the gate saw>`, closed by
+`Finish the step marked [ ], then type check again.`. The `seen:` text is an
+observation, never an instruction; the instruction belongs to the hint rung.
+Use `fb_ok`, `fb_todo`, `fb_close` and `fb_note`.
 The lesson-screen template is under Module Standard below.
 
 ## Module Standard
@@ -180,7 +224,7 @@ to `scripts/selftest-matching.sh` and its accepted and rejected inputs to
 | lesson `k` | `<name> <k> — <title>` |
 | gate (opening screen; no `▶` line, the first question follows) | `<name> — gate` |
 | task | `<name> — task` |
-| cleared | `✓ <name> cleared.` |
+| cleared | `<name> cleared.` |
 
 Module screens are height-checked by the harness's `screen-height` events;
 a module author counts by hand only when the harness is unavailable.

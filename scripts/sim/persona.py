@@ -155,8 +155,8 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
     """Recall walk for stage `n`.
 
     `misses` (second-try, Stage 2 only) answers Q1 wrong twice so each
-    rung of the recall ladder appears in the evidence (A11): miss 1 prints
-    "not quite. try again.", miss 2 the hint plus the three navigation
+    rung of the recall ladder appears in the evidence (A7): miss 1 prints
+    `not quite. hint: …`, miss 2 the same line plus the three navigation
     facts. The question is printed once; after the second miss the persona
     waits for the next `? ` prompt.
     """
@@ -167,8 +167,7 @@ def _recall(n: int, answers: List[str], misses: bool = False) -> List[Action]:
         if i == 1 and misses:
             walk += [
                 Action(q, "it lists files", "miss-q1-1", sid),
-                Action("RECALL_TRY", "it lists files again", "miss-q1-2", sid),
-                Action("RECALL_HINT", "", "observe-recall-hint", sid),
+                Action("RECALL_HINT", "it lists files again", "miss-q1-2", sid),
                 Action("RECALL_NAV", "", "observe-recall-nav", sid),
                 Action("RECALL_PROMPT", ans, "answer-q%d" % i, sid),
             ]

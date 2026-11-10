@@ -147,7 +147,7 @@ Removing individual files inside `$SANDBOX` self-heals on the next
 | `HOME`               | startup        | Parent of the default sandbox root.                              | shell default                |
 | `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`. Normalised at startup: made absolute against the invoking directory and stripped of trailing slashes; `--info` and all lesson copy show the normalised value. | unset                        |
 | `NO_COLOR`           | startup        | When set and non-empty, disables ANSI colour output and selects the ASCII glyph set. | unset                        |
-| `SHELLTUTOR_ASCII`   | startup        | When `1`, selects the ASCII glyph set (A3.7) while colours stay on. The ASCII set is also used when stdout is not a terminal. Never selected by locale (A3.7). | unset                        |
+| `SHELLTUTOR_ASCII`   | startup        | When `1`, selects the ASCII glyph set (A3.7, A11: each glyph has a same-width twin, so row counts do not change) while colours stay on. The ASCII set is also used when stdout is not a terminal. Never selected by locale (A3.7). | unset                        |
 | `SHELL`              | `--info`       | Reported as the login shell; does not choose the practice shell.   | unset shown explicitly       |
 | `TERM`               | `--info`       | Reported as terminal context.                                      | unset shown explicitly       |
 | `PATH`               | runtime        | Resolves external commands; `--info` reports selected tool paths.  | inherited                    |
@@ -211,9 +211,12 @@ order is of words, not of arrows, so `>> overwrites and > appends` still
 passes. A hint never holds an exact form or a keyword phrase (FF-009). Contractual:
 exact-or-groups, the negation guard, whole words. Not contractual: the lists.
 
-Recall escalation: two rungs (A7; it was three under A1.1). A first miss
-prints the message and the question's hint; the second and later print the
-hint and the three navigation facts (A10 removed the A8 answer-shape line;
+Recall rendering and escalation (A11): the question prints once as
+`┃ N of 3   <question>`, wrapped under the bar, with options on their own
+row and `┃ ? ` as the input prompt. Two rungs (it was three under A1.1): a first
+miss prints `not quite. hint: <hint>` (A7; the consultant mock-up's first-miss
+line without a hint was not adopted); the second and later add the three
+navigation facts (A10 removed the A8 answer-shape line;
 passed stages are saved; `quit` leaves
 now and the next run starts this stage from its first lesson; `show` repeats
 the question). The task ladder (restatement, hint, worked example) keeps its

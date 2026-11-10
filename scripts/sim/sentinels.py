@@ -96,7 +96,6 @@ SENTINELS.update(
         "MAN_LS": "LS(1)",
         "LESS_NUMBERS": "1\n2\n3\n4\n5",
         "NOT_YET": "seen: ",
-        "RECALL_TRY": "try again.",
         "RECALL_HINT": "hint:",
         "RECALL_PROMPT": "? ",
         "RECALL_NAV": "Passed stages are saved.",

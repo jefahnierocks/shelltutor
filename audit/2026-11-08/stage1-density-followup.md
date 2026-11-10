@@ -113,3 +113,13 @@ Heredoc lines on the WP-22 branch; rendered heights identical on Bash 5.3 and
 | Screen | Heredoc lines | Rendered | Change |
 | --- | ---: | ---: | --- |
 | S3-L1 `3.1 creating` | 17 (was 18) | 21 | `echo hello > notes.txt` is a taught line (more on `>` in Stage 4); the try-it line is "Make a few, put a word in one, then next" (F-028). |
+
+## WP-25 amendment (2026-11-09)
+
+Chrome v2 (A11) changes the budget to a 19-row panel (20 rendered rows with the
+blank under the rule): the footer moved above the rule, and the `▶` line has a
+blank row on each side. Bodies are unchanged, so most screens grew by one or
+two rows; an interim squeeze drops interior blank rows to hold a 21-row panel
+hard cap. The full table (before WP-25, after, over 20) is in
+`audit/2026-11-09/wp25-chrome-v2.md`; the screens over the new budget are the
+input to WP-26.

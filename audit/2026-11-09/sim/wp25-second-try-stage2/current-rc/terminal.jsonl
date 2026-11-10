@@ -1,0 +1,165 @@
+{"ts": 0.040163, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.041917, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m \u001b[90m──\u001b[0m\r\n\r\n", "len": 282}
+{"ts": 0.045855, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mSTAGE 2 — Paths and the filesystem\u001b[0m\r\n\r\nFour lessons, then a gate. The shell is always \u001b[1msomewhere\u001b[0m in\r\nthe filesystem; this stage teaches you to see where, look around,\r\nmove, and predict where files land.\r\n\r\nYou'll use:\r\n  \u001b[92mpwd\u001b[0m   print where you are now\r\n  \u001b[92mls\u001b[0m    list what's in the current folder\r\n  \u001b[92mcd\u001b[0m    change to another folder\r\nAnd the path symbols:\r\n  \u001b[1m.\u001b[0m     this folder\r\n  \u001b[1m..\u001b[0m    the parent folder\r\n", "len": 463}
+{"ts": 0.045984, "dir": "out", "enc": "utf8", "data": "  \u001b[1m~\u001b[0m     your home folder\r\n\r\n\u001b[93m▶ Type \u001b[92mnext\u001b[93m to begin lesson 2.1.\u001b[0m\r\n\r\n", "len": 93}
+{"ts": 0.049329, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.049615, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.063974, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.064106, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.064137, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.069656, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.071074, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.1\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.071117, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.074312, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mWhere you are\u001b[0m\r\n\r\nA folder can hold files and other folders. You are always standing\r\nin one folder; the shell calls it the \u001b[1mcurrent directory\u001b[0m.\r\nYour practice folder looks like this:\r\n\r\n  /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82\u001b[0m  \u001b[93m◀ you are here\u001b[0m\r\n  ├── poem.txt\r\n  ├── numbers.txt\r\n", "len": 362}
+{"ts": 0.074383, "dir": "out", "enc": "utf8", "data": "  ├── stage1/\r\n  └── stage2/\r\n\r\n\u001b[92mpwd\u001b[0m prints the name of the current directory.\r\nPredict what it will print, then run it.\r\n\r\n\u001b[93m▶ Run \u001b[92mpwd\u001b[93m, then type \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 205}
+{"ts": 0.077879, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.078158, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.092067, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.09216, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.092186, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.092201, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82\r\n", "len": 79}
+{"ts": 0.092291, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.092304, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.092341, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.092361, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.097494, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.099032, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.2\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.099071, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.102593, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mls: what is here\u001b[0m\r\n\r\n\u001b[92mls\u001b[0m lists the names in the current directory.\r\n\r\n  \u001b[92mls\u001b[0m            \u001b[90m# names only\u001b[0m\r\n  \u001b[92mls -p\u001b[0m         \u001b[90m# folders end in /\u001b[0m\r\n  \u001b[92mls -a\u001b[0m         \u001b[90m# also hidden names: those starting with .\u001b[0m\r\n\r\nPredict which names will end in \u001b[92m/\u001b[0m, then run \u001b[92mls -p\u001b[0m. The\r\ntutor keeps its own hidden files here; \u001b[92mls -a\u001b[0m shows them.\r\n\r\nThen \u001b[92mls\u001b[0m a folder you are not in:\r\n  \u001b[92mls /\u001b[0m          \u001b[90m# the top of everything\u001b[0m\r\n", "len": 515}
+{"ts": 0.102679, "dir": "out", "enc": "utf8", "data": "  \u001b[92mls /usr/bin\u001b[0m   \u001b[90m# long: many commands live here\u001b[0m\r\n\r\n\u001b[93m▶ Try a few, then \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 117}
+{"ts": 0.106021, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.106287, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.106306, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.120309, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.120444, "dir": "in", "enc": "utf8", "data": "ls\n", "len": 3}
+{"ts": 0.120477, "dir": "out", "enc": "utf8", "data": "ls\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.122566, "dir": "out", "enc": "utf8", "data": "numbers.txt\tpoem.txt\tstage1\t\tstage2\r\n", "len": 37}
+{"ts": 0.12282, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.122876, "dir": "in", "enc": "utf8", "data": "ls -p\n", "len": 6}
+{"ts": 0.122903, "dir": "out", "enc": "utf8", "data": "ls -p\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.124606, "dir": "out", "enc": "utf8", "data": "numbers.txt\tpoem.txt\tstage1/\t\tstage2/\r\n", "len": 39}
+{"ts": 0.124829, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.124863, "dir": "in", "enc": "utf8", "data": "ls -a\n", "len": 6}
+{"ts": 0.124884, "dir": "out", "enc": "utf8", "data": "ls -a\r\n", "len": 7}
+{"ts": 0.124896, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.12656, "dir": "out", "enc": "utf8", "data": ".\t\t\tnumbers.txt\t\tstage2\r\n..\t\t\tpoem.txt\r\n.shelltutor_history\tstage1\r\n", "len": 68}
+{"ts": 0.126772, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.1268, "dir": "in", "enc": "utf8", "data": "ls /\n", "len": 5}
+{"ts": 0.126818, "dir": "out", "enc": "utf8", "data": "ls /\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.128857, "dir": "out", "enc": "utf8", "data": "Applications\tVolumes\t\tetc\t\tprivate\t\tvar\r\nLibrary\t\tbin\t\thome\t\tsbin\r\nSystem\t\tcores\t\topt\t\ttmp\r\nUsers\t\tdev\t\tpkg\t\tusr\r\n", "len": 114}
+{"ts": 0.129102, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.129133, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.129154, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.134038, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.135358, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.3\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.135392, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.139048, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mcd: moving\u001b[0m\r\n\r\n\u001b[92mcd\u001b[0m changes your current folder.\r\n\r\n  \u001b[92mcd /tmp\u001b[0m       \u001b[90m# go to /tmp\u001b[0m\r\n  \u001b[92mpwd\u001b[0m           \u001b[90m# confirm you got there\u001b[0m\r\n  \u001b[92mcd\u001b[0m            \u001b[90m# your home folder, outside this practice area\u001b[0m\r\n  \u001b[92mcd ~\u001b[0m          \u001b[90m# also your home folder (~ is its short name)\u001b[0m\r\n  \u001b[92mcd -\u001b[0m          \u001b[90m# come back to where you were\u001b[0m\r\n  \u001b[92mcd ..\u001b[0m         \u001b[90m# go up one level (to the parent folder)\u001b[0m\r\n", "len": 480}
+{"ts": 0.139152, "dir": "out", "enc": "utf8", "data": "\u001b[92mcd..\u001b[0m with no space is a different word; bash cannot find it.\r\n\u001b[91mStages 1 and 2 start every practice prompt in\u001b[0m /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82\u001b[0m\u001b[91m.\u001b[0m\r\nLater stages start in a stage folder inside it. If you wander off,\r\n\u001b[92mcd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82\u001b[0m brings you back.\r\n\r\n\u001b[93m▶ Try \u001b[92mcd ..\u001b[93m, \u001b[92mpwd\u001b[93m, then \u001b[92mcd -\u001b[93m, then \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 491}
+{"ts": 0.142594, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.142884, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.155979, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.156063, "dir": "in", "enc": "utf8", "data": "cd /tmp\n", "len": 8}
+{"ts": 0.156085, "dir": "out", "enc": "utf8", "data": "cd /tmp\r\n\u001b[?2004l\r", "len": 18}
+{"ts": 0.156189, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.156201, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156246, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.156265, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.156277, "dir": "out", "enc": "utf8", "data": "/tmp\r\n", "len": 6}
+{"ts": 0.156337, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.156364, "dir": "in", "enc": "utf8", "data": "cd\n", "len": 3}
+{"ts": 0.156381, "dir": "out", "enc": "utf8", "data": "cd\r\n\u001b[?2004l\r", "len": 13}
+{"ts": 0.156467, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.156477, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156498, "dir": "in", "enc": "utf8", "data": "cd -\n", "len": 5}
+{"ts": 0.156513, "dir": "out", "enc": "utf8", "data": "cd -\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.156524, "dir": "out", "enc": "utf8", "data": "/tmp\r\n", "len": 6}
+{"ts": 0.156584, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.156594, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156614, "dir": "in", "enc": "utf8", "data": "cd ..\n", "len": 6}
+{"ts": 0.15663, "dir": "out", "enc": "utf8", "data": "cd ..\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.156697, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.156708, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156731, "dir": "in", "enc": "utf8", "data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82\n", "len": 81}
+{"ts": 0.156846, "dir": "out", "enc": "utf8", "data": "cd /var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-ho\rome-vsjmn_82\r\n\u001b[?2004l\r", "len": 93}
+{"ts": 0.156925, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.156935, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.156956, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.156971, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.16187, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.163297, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m───────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93m2.4\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 285}
+{"ts": 0.163332, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.166557, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mNames for places\u001b[0m\r\n\r\nThree short names point at places in the tree you have seen:\r\n  \u001b[1m.\u001b[0m    here, the current directory\r\n  \u001b[1m..\u001b[0m   one level up, the parent\r\n  \u001b[1m~\u001b[0m    your home folder\r\n\r\nA \u001b[1mpath\u001b[0m names a place. \u001b[1mRelative\u001b[0m paths start where you are:\r\n", "len": 288}
+{"ts": 0.166603, "dir": "out", "enc": "utf8", "data": "  \u001b[90mpractice/notes.txt\u001b[0m   a file inside a subfolder\r\n  \u001b[90m../notes.txt\u001b[0m         a file in the parent folder\r\n\u001b[1mAbsolute\u001b[0m paths start from the root, \u001b[1m/\u001b[0m:\r\n  \u001b[90m/etc/hosts\u001b[0m   \u001b[90m/usr/bin/vim\u001b[0m\r\n\u001b[91mPredict before you act.\u001b[0m  In \u001b[90m~/projects\u001b[0m, the bare name \u001b[90mnotes\u001b[0m means \u001b[90m~/projects/notes\u001b[0m.\r\n  \u001b[92mmkdir name\u001b[0m    \u001b[90m# make a folder called name, right here\u001b[0m\r\n\r\n\u001b[93m▶ Try \u001b[92mmkdir demo\u001b[93m, \u001b[92mls -p\u001b[93m, then \u001b[92mnext\u001b[93m.\u001b[0m\r\n\r\n", "len": 501}
+{"ts": 0.170282, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m   \u001b[1;90mshow\u001b[0m   \u001b[1;90mprev\u001b[0m   \u001b[1;90mquit\u001b[0m\r\n", "len": 71}
+{"ts": 0.170558, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.170579, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.184107, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.184195, "dir": "in", "enc": "utf8", "data": "next\n", "len": 5}
+{"ts": 0.184218, "dir": "out", "enc": "utf8", "data": "next\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.18912, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.190422, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93mtask\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 283}
+{"ts": 0.190449, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.193351, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mSTAGE 2 — GATE\u001b[0m\r\n\r\n\u001b[1mRecall\u001b[0m (three questions, all three must be correct).\r\nFirst, three questions. Type your answer in words; this is not the shell.\r\n\r\nThen a \u001b[1mpractical task\u001b[0m.\r\n\r\n", "len": 204}
+{"ts": 0.195643, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mshow\u001b[0m \u001b[90m(the question again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 91}
+{"ts": 0.19593, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.200264, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 1 of 3   What does \u001b[92mcd ..\u001b[0m do?\r\n", "len": 52}
+{"ts": 0.200381, "dir": "in", "enc": "utf8", "data": "it lists files\n", "len": 15}
+{"ts": 0.200431, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m it lists files\r\n", "len": 45}
+{"ts": 0.217529, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[91mnot quite.\u001b[0m \u001b[90mhint:\u001b[0m Lesson 2.3: the two dots are the name of one particular other folder.\r\n\u001b[93m┃ ?\u001b[0m ", "len": 134}
+{"ts": 0.217623, "dir": "in", "enc": "utf8", "data": "it lists files again\n", "len": 21}
+{"ts": 0.21766, "dir": "out", "enc": "utf8", "data": "it lists files again\r\n", "len": 22}
+{"ts": 0.233224, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[91mnot quite.\u001b[0m \u001b[90mhint:\u001b[0m Lesson 2.3: the two dots are the name of one particular other folder.\r\n\u001b[93m┃\u001b[0m Passed stages are saved.\r\n", "len": 158}
+{"ts": 0.233315, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m Type \u001b[92mquit\u001b[0m to leave now; the next run starts this stage from its first lesson.\r\n\u001b[93m┃\u001b[0m Type \u001b[92mshow\u001b[0m to see the question again.\r\n\u001b[93m┃ ?\u001b[0m ", "len": 176}
+{"ts": 0.233356, "dir": "in", "enc": "utf8", "data": "goes up one folder\n", "len": 19}
+{"ts": 0.233379, "dir": "out", "enc": "utf8", "data": "goes up one folder\r\n", "len": 20}
+{"ts": 0.243045, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.24676, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 2 of 3   What does \u001b[92m~\u001b[0m mean in a path?\r\n", "len": 60}
+{"ts": 0.246843, "dir": "in", "enc": "utf8", "data": "home folder\n", "len": 12}
+{"ts": 0.246876, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m home folder\r\n", "len": 42}
+{"ts": 0.256743, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.260402, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m 3 of 3   If I'm in \u001b[90m~/projects\u001b[0m and I type \u001b[92mcd notes\u001b[0m, what folder am I in?\r\n", "len": 104}
+{"ts": 0.260488, "dir": "in", "enc": "utf8", "data": "~/projects/notes\n", "len": 17}
+{"ts": 0.260519, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m\r\n\u001b[93m┃ ?\u001b[0m ~/projects/notes\r\n", "len": 47}
+{"ts": 0.271868, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m\r\n\r\n", "len": 31}
+{"ts": 0.280234, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.281661, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────────────\u001b[0m \u001b[90m○\u001b[0m\u001b[93m◉\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m  \u001b[93mtask\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 283}
+{"ts": 0.281702, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.284542, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mSTAGE 2 — GATE TASK\u001b[0m\r\n\r\nInside the practice prompt, do these (in any order):\r\n\r\n  1. make a folder called practice\u001b[0m (inside this stage's folder)\r\n", "len": 161}
+{"ts": 0.284588, "dir": "out", "enc": "utf8", "data": "  2. cd into it\r\n  3. confirm you're inside it with \u001b[92mpwd\u001b[0m\r\n\r\nThen type \u001b[92mcheck\u001b[0m.\r\n\r\n\u001b[90mI will check that the folder exists, and how you got there.\u001b[0m\r\n\u001b[90mThe task runs in this stage's own folder; \u001b[92mpwd\u001b[90m shows it.\u001b[0m\r\n\r\n\u001b[93m▶ Type \u001b[92mcheck\u001b[93m when done.\u001b[0m\r\n\r\n", "len": 293}
+{"ts": 0.287317, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mcheck\u001b[0m \u001b[90m(test your work)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(the task again)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(save and leave)\u001b[0m\r\n", "len": 132}
+{"ts": 0.287603, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n\r\n", "len": 253}
+{"ts": 0.30377, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.303863, "dir": "in", "enc": "utf8", "data": "mkdir practice\n", "len": 15}
+{"ts": 0.303892, "dir": "out", "enc": "utf8", "data": "mkdir practice\r\n\u001b[?2004l\r", "len": 25}
+{"ts": 0.30624, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.306273, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.306292, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.312389, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.31243, "dir": "out", "enc": "utf8", "data": "\u001b[93m┃\u001b[0m \u001b[92m[✓]\u001b[0m folder exists\r\n\u001b[93m┃\u001b[0m \u001b[90m[ ]\u001b[0m cd into it                     \u001b[90mseen: no cd in your history\u001b[0m\r\n\u001b[93m┃\u001b[0m Finish the step marked [ ], then type \u001b[92mcheck\u001b[0m again.\r\n", "len": 212}
+{"ts": 0.312467, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.328184, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.328242, "dir": "in", "enc": "utf8", "data": "cd practice\n", "len": 12}
+{"ts": 0.328266, "dir": "out", "enc": "utf8", "data": "cd practice\r\n", "len": 13}
+{"ts": 0.328279, "dir": "out", "enc": "utf8", "data": "\u001b[?2004l\r", "len": 9}
+{"ts": 0.328417, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.328429, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.32845, "dir": "in", "enc": "utf8", "data": "pwd\n", "len": 4}
+{"ts": 0.328466, "dir": "out", "enc": "utf8", "data": "pwd\r\n\u001b[?2004l\r", "len": 14}
+{"ts": 0.328478, "dir": "out", "enc": "utf8", "data": "/var/folders/jx/f_4n055973x5cwnyh_mhlw9h0000gn/T/shelltutor-sim-home-vsjmn_82/stage2/practice\r\n", "len": 95}
+{"ts": 0.328541, "dir": "out", "enc": "utf8", "data": "\u001b[?2004h", "len": 8}
+{"ts": 0.328552, "dir": "out", "enc": "utf8", "data": "shelltutor> ", "len": 12}
+{"ts": 0.32857, "dir": "in", "enc": "utf8", "data": "check\n", "len": 6}
+{"ts": 0.328586, "dir": "out", "enc": "utf8", "data": "check\r\n\u001b[?2004l\r", "len": 16}
+{"ts": 0.340836, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.342303, "dir": "out", "enc": "utf8", "data": "\u001b[90m──\u001b[0m \u001b[93mshelltutor\u001b[0m \u001b[90m──\u001b[0m \u001b[90mStage 2 · Paths\u001b[0m \u001b[90m──────────────────────────────────────\u001b[0m \u001b[92m●\u001b[0m\u001b[92m●\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m\u001b[90m○\u001b[0m \u001b[90m──\u001b[0m\r\n", "len": 280}
+{"ts": 0.342335, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.34543, "dir": "out", "enc": "utf8", "data": "\u001b[1;97mStage 2 cleared\u001b[0m\r\n\r\nYou can now\r\n\r\n  find where you are           \u001b[92mpwd\u001b[0m\r\n", "len": 90}
+{"ts": 0.345481, "dir": "out", "enc": "utf8", "data": "  see what is here             \u001b[92mls       \u001b[0m \u001b[92mls -p    \u001b[0m \u001b[92mls -a\u001b[0m\r\n  move                         \u001b[92mcd       \u001b[0m \u001b[92mcd ..    \u001b[0m \u001b[92mcd ~     \u001b[0m \u001b[92mcd -\u001b[0m\r\n  make a folder                \u001b[92mmkdir\u001b[0m\r\n\r\nNext: Stage 3 · Files\r\n\r\n\u001b[93m▶ Type \u001b[92mnext\u001b[93m to go on, or \u001b[92mquit\u001b[93m to stop here. Your place is saved.\u001b[0m\r\n\r\n", "len": 362}
+{"ts": 0.348015, "dir": "out", "enc": "utf8", "data": "\u001b[1;90mnext\u001b[0m \u001b[90m(Stage 3)\u001b[0m   \u001b[1;90mquit\u001b[0m \u001b[90m(stop here, place saved)\u001b[0m   \u001b[1;90mshow\u001b[0m \u001b[90m(this screen again)\u001b[0m\r\n", "len": 135}
+{"ts": 0.348283, "dir": "out", "enc": "utf8", "data": "\u001b[90m────────────────────────────────────────────────────────────────────────────────\u001b[0m\r\n", "len": 251}
+{"ts": 0.348297, "dir": "out", "enc": "utf8", "data": "\r\n", "len": 2}
+{"ts": 0.361101, "dir": "out", "enc": "utf8", "data": "\u001b[?2004hshelltutor> ", "len": 20}
+{"ts": 0.361234, "dir": "in", "enc": "utf8", "data": "quit\n", "len": 5}
+{"ts": 0.361263, "dir": "out", "enc": "utf8", "data": "quit\r\n\u001b[?2004l\r", "len": 15}
+{"ts": 0.364124, "dir": "out", "enc": "utf8", "data": "\u001b[3J\u001b[H\u001b[2J", "len": 11}
+{"ts": 0.364295, "dir": "out", "enc": "utf8", "data": "Bye. Run 'shelltutor' again to pick up where you left off.\r\n", "len": 60}
