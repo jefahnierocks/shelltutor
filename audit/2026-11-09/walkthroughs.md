@@ -1208,6 +1208,7 @@ Read from the script and checked on the sheets:
   rejected). Reproduced through `recall_matches` (`1370`; exact forms are phrases;
   the group needs `the folder`, `a folder`, `the directory`, `where i am`,
   `where you are`, ... and a `--reject` list `cloud|python|user|browser|phone`):
+  **Resolved 2026-11-10 by WP-30, b56d5ec:** the twelve bare words are exact forms only; reject phrases `manual|file|date|listing`; the hint stops naming a word; corpus rows (266 cases).
 
   | Input | Result |
   | --- | --- |
@@ -1263,6 +1264,7 @@ Read from the script and checked on the sheets:
   *Closes when*: the lesson selects the terminal (`ps -t "$(ps -o tty= -p $$)"`) and
   says "three" or does not count shells, or uses a command with a bounded output.
   Sheets: arthur-shells F-a, O-a.
+  **Resolved 2026-11-10 by WP-30, 7ab7c9a:** shells 1 types `ps -p $$ -o pid,comm`; the notice says the name ends in bash; the cleared list follows.
 
 ### Observations (reproduced)
 
@@ -1271,9 +1273,11 @@ Read from the script and checked on the sheets:
   stray / in front or a missing space earns the same kind of message: read it,
   then type the line again", `1205-1206`). Leo recovered by comparing with the
   screen; this is O-R's history (rounds 1 and 2). Sheets: leo O-a.
+  **Closed 2026-11-10 by WP-30, 9a14dd5:** the sentence moves to 1.1's notice and leaves 1.4.
 - **O-BI — 5.3 says "Type next to try them in Vim", and `next` opens no Vim.**
   (`2429`; `next` moves to 5.4 where the tries are.) The round-6 rewording kept
   the mismatch. Sheets: maya F-001.
+  **Closed 2026-11-10 by WP-30, 9a14dd5:** 5.3's line says the next two lessons try these in Vim.
 - **O-BJ — The env 5/6 aside covers only the unset case.** The lesson (`3192-3200`)
   says of `echo "[$SHELLTUTOR_HOME]"`: "[] means: not set, so the default is used".
   Reproduced with the variable unset before launch (a pty driver, `HOME` a scratch
@@ -1282,15 +1286,18 @@ Read from the script and checked on the sheets:
   aside holds. A learner who sets it, including by the lesson's own example
   `SHELLTUTOR_HOME=~/practice ./shelltutor`, and every harness run (the harness
   sets it) sees a path, which the aside does not describe. Sheets: maya-env F-a.
+  **Closed 2026-11-10 by WP-30, 9a14dd5:** the env 5 aside covers both cases.
 - **O-BK — Two typos the lessons do not cover.** Reproduced in the practice shell:
   `cd .\practice` → `bash: cd: .practice: No such file or directory` (the
   backslash vanishes), and `:q<Enter>` typed literally in Vim → `E488: Trailing
   characters: <Enter>` (Vim's splash prints `:q<Enter>`; 5.2 says "type :q and
   press Enter"). Sheets: arthur O-001, O-002.
+  **Closed 2026-11-10 by WP-30, 9a14dd5:** 2.3 names the backslash; 5.2 explains `<Enter>`.
 - **O-BL — "each screen is a new shell" arrives before its explanation.** env 2
   (`3137`, comment "set it again: each screen is a new shell") precedes env 6
   ("The prompt went back because each screen starts a fresh shell"). Sheets:
   maya-env O-a.
+  **Closed 2026-11-10 by WP-30, 9a14dd5:** the env 2 aside says every screen starts a fresh shell.
 - **O-BM — A passing `check` shows no checklist.** Reproduced on `shells`: the
   passing `check` goes straight to the cleared screen; a failing one prints the
   `[ ]`/`[✓]` list (the Stage 3 first `check` printed `[ ] done.txt has hello`,

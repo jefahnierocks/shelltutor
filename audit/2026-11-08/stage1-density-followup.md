@@ -153,3 +153,12 @@ that held the old module screens to 22 is gone; they were 20 to 23): shells M-I
 M-L3 18, M-L4 18, M-L5 18, M-L6 19, task 17, cleared 17. env 1 and env 2 have
 four-command blocks (the skeleton allows one to four): each is one family (set,
 read, list; set, run as a child, export, run again).
+
+## WP-30 amendment (2026-11-10)
+
+Round-7 fixes (A16). Heights that moved, in rendered rows (budget 20): S1-L1 18
+to 20 (the slash sentence joins the notice), S1-L4 20 to 19, S2-L3 18 to 19
+(the backslash line), S5-L2 17 to 19 (the `<Enter>` sentence, two lines),
+S5-L6 16 to 17 (the learner-first install line); env M-L5 18 to 19 (the aside
+sits on its own line). Every core and module screen is within the budget; the
+table is in `audit/2026-11-09/wp30-round7-fixes.md`.
