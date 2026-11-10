@@ -998,6 +998,7 @@ All reproduced through `recall_matches` on `main`:
   `no it did not`, `no it didnt`, `no it didn't`, `no the file did not change`,
   `no, the file did not change`, `unchanged` and `it did not change`.
   Reproduced:
+  **Resolved 2026-11-09 by WP-29, 9710444:** five exact forms added (`no the changes were thrown away`, `no it is unchanged`, `no it did not change`, `the file did not change`, `no nothing changed`); corpus accept and reject rows added.
 
   | Input | Result |
   | --- | --- |
@@ -1042,6 +1043,7 @@ All reproduced through `recall_matches` on `main`:
   long or personal. *Closes when*: the lesson says that `..` of the practice folder
   and `~` can be the same place, or the command is changed to one with a stable
   result. Sheets: leo O-001, maya O-a, O-b, arthur O-1, O-2.
+  **Closed 2026-11-09 by WP-29, 7ffd177:** 2.5's block is `cd stage1`, `ls ..`, `cd ..`, `echo ~`; the persona types it.
 - **O-AZ — The 2.4 `cd <folder>` line wraps for a long path.** The line is
   `  cd ${SANDBOX}  # come back, using the folder's full name` (`1605`); with the
   colour codes removed its fixed part is 48 columns. Width: 72 for a
@@ -1049,14 +1051,17 @@ All reproduced through `recall_matches` on `main`:
   25-character default path on Linux, 108 for a 60-character path, and 125 for the sim path (77 characters).
   The longest path that keeps the line within 80 columns is 32 characters. So
   the default fits and a long `SHELLTUTOR_HOME` wraps. Sheets: maya O-c, arthur.
+  **Closed 2026-11-09 by WP-29, 7ffd177:** the full path is on its own line and the aside moved into the notice.
 - **O-BA — 3.1 says "beside them" and the files land one folder away.** 3.1 says
   "The tutor put poem.txt and numbers.txt one folder up. Now make your own beside
   them." (`1835-1836`). Reproduced: the prompt starts in `stage3`; `pwd` ends
   `/stage3`; after `touch hello.txt`, `ls -p` shows `hello.txt` and `ls -p ..`
   shows `numbers.txt poem.txt stage3/`. Sheets: arthur O-3.
+  **Closed 2026-11-09 by WP-29, de4b995:** 3.1 says this stage has a folder of its own.
 - **O-BB — 2.3 says `cd` "prints nothing" and `cd -` prints a path.** 2.3
   (`1583`) lists `cd ..`, `pwd`, `cd -`. Reproduced: `cd -` printed the previous
   folder. Bash prints it. Sheets: arthur O-6.
+  **Closed 2026-11-09 by WP-29, 7ffd177:** `cd` usually prints nothing; the `cd -` aside says it prints the place.
 - **O-BC — The cleared lists name two commands no lesson types.** `can_line`
   rows in `stage_recap` (`2747-2780`) compared with the commands in each stage's
   lesson blocks: Stage 1 lists `clear` (`2753`; 1.2 teaches `Ctrl+L`, the word
@@ -1065,8 +1070,10 @@ All reproduced through `recall_matches` on `main`:
   lists is typed in a lesson of its stage (Stage 4's `sort` and `head` appear in
   the 4.3 pipeline; the keys `Tab`, `Up`, `Ctrl+C`, `Ctrl+L` are taught in 1.2).
   Sheets: arthur O-5, O-8.
+  **Closed 2026-11-09 by WP-29, 9710444:** the Stage 1 list drops `clear`; Stage 2 shows `cd`, `cd ..`, `cd -`.
 - **O-BD — 5.3 ends "Type next to try both" with nothing to try.** (`2413`.) The
   tries are in 5.4 and 5.5. Sheets: leo O-002, arthur O-9.
+  **Closed 2026-11-09 by WP-29, de4b995:** the line says to try them in Vim.
 - **O-BE — Four words used before a lesson defines them.** `seq`: described only
   by the comment "wc counted seq's lines" (`2116`) and named in the Stage 4 task
   (`2270`); `glob`: in the Stage 4 task twice (`2272`, `2276`) and in the hint
@@ -1076,12 +1083,15 @@ All reproduced through `recall_matches` on `main`:
   program" ("you'll meet one in Stage 3") and `~` introduced in 2.4 before a
   command uses it. Sheets: arthur O-4, O-8, O-11, and the "terms met before
   defined" list.
+  **Closed 2026-11-09 by WP-29, de4b995:** seq/wc -l aside, the stream sentence, the glob definition and Homebrew.
 - **O-BF — 1.3 says `pwd` "printed" before the learner has run it.** (`1180`:
   "`pwd` printed the full name of your practice folder.") Sheets: arthur O-7.
+  **Closed 2026-11-09 by WP-29, de4b995:** 1.3 says pwd prints the full name.
 - **O-BG — The lessons never name the current folder in Stages 4 and 5.**
   `ls` in 4.2 shows a `seed.txt` the learner did not make (the stage seeds it
   at entry, `setup_stage_dir`); the gate task lines now name the folder, the
   lessons do not. Sheets: arthur O-10.
+  **Closed 2026-11-09 by WP-29, de4b995:** the Stage 3, 4 and 5 intros name the stage folder.
 
 ### Harness (not the tutor)
 

@@ -137,3 +137,10 @@ screen to the 19-row panel. The rendered height of every screen, before and
 after, is in `audit/2026-11-09/wp26-lesson-skeleton.md`; the squeeze is gone and
 the harness enforces the budget. Stage intros are at most four lines and list
 no commands; the cleared screen carries the command list.
+
+## WP-29 amendment (2026-11-09)
+
+Round-6 copy fixes (A14). Heights that moved, in rendered rows: S1-C 20 to 19,
+S2-L4 17 to 18, S3-I and S4-I 12 to 14, S5-I 13 to 15, S4-L3 18 to 19, S4-L6
+17 to 18. All core screens stay within the 20-row budget; the table is in
+`audit/2026-11-09/wp29-copy-fixes.md`.
