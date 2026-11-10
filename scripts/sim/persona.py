@@ -373,6 +373,11 @@ MODULE_TABLES: dict = {
     # shells (WP-16): intro + 3 lessons, three recall answers, one task.
     "shells": {
         "lessons": 3,
+        "lesson_actions": {
+            1: ["echo $BASH_VERSION", "ps -p $$ -o pid,comm"],
+            2: ["command -v zsh fish"],
+            3: ["echo $SHELL", "echo $BASH_VERSION"],
+        },
         "gate": {
             "recall": ["a program", "command -v zsh", "login shell"],
             "task": ["command -v zsh > zsh.txt"],

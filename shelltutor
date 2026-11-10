@@ -2866,11 +2866,11 @@ ${H1}The shell is a program${RST}
 The shell reads your line, finds the program you named, and runs it.
 It is itself a program, and you can look at it.
 
-  ${CMD}echo \$BASH_VERSION${RST}     ${DIM}# the version of the shell running now${RST}
-  ${CMD}ps -o pid,comm${RST}         ${DIM}# the programs on this terminal, by name${RST}
+  ${CMD}echo \$BASH_VERSION${RST}       ${DIM}# the version of the shell running now${RST}
+  ${CMD}ps -p \$\$ -o pid,comm${RST}     ${DIM}# this shell, as a running program${RST}
 
-Two of those lines are shells: the tutor's own, and the one you are
-typing into. ${CMD}\$BASH_VERSION${RST} is a ${BOLD}variable${RST}: a name that holds a value.
+The second line prints one row: a number and a name. The name ends in
+bash. The shell is a program like any other; ${CMD}\$\$${RST} is its number.
 
 ${INSTR}${G_PLAY} Run both, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -3045,7 +3045,7 @@ ${H1}shells cleared.${RST}
 
 Commands and keys from this module:
 $(recap_line 'echo $BASH_VERSION' 'the shell running now')
-$(recap_line 'ps -o pid,comm' 'the programs on this terminal')
+$(recap_line 'ps -p $$ -o pid,comm' 'this shell, as a running program')
 $(recap_line 'command -v NAME' 'is NAME installed, and where')
 $(recap_line 'echo $SHELL' 'your login shell')
 
