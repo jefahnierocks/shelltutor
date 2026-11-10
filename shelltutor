@@ -59,6 +59,9 @@ fi
 # Constants
 # ---------------------------------------------------------------------
 
+# SHELLTUTOR_HOME itself is never reassigned, exported or unset here: the tutor
+# normalises a copy (SANDBOX), and the practice shell gets the variable exactly
+# as the learner's environment had it (A15; C-004, C-007; selftest_home.py).
 SANDBOX="${SHELLTUTOR_HOME:-$HOME/.shelltutor}"
 # A relative SHELLTUTOR_HOME is anchored to the caller's directory once, so
 # the sandbox does not move when the practice shell changes folder.

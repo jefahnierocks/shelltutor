@@ -273,7 +273,7 @@ commit series as the first module.
 
 Default order `shells`, then `env` (Q2); the operator may swap them
 after Phase A according to what learners asked for. Outlines in §6.
-Each is three to five screens and one gate. After both have been walked
+Each is three to six lesson screens (amended by A15; it was three to five) and one gate. After both have been walked
 by at least two humans, the operator decides whether `processes` and
 `permissions` follow.
 

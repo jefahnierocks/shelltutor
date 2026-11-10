@@ -145,7 +145,7 @@ Removing individual files inside `$SANDBOX` self-heals on the next
 | Variable             | Read at        | Effect                                                          | Default                      |
 | ---                  | ---            | ---                                                             | ---                          |
 | `HOME`               | startup        | Parent of the default sandbox root.                              | shell default                |
-| `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`. Normalised at startup: made absolute against the invoking directory and stripped of trailing slashes; `--info` and all lesson copy show the normalised value. | unset                        |
+| `SHELLTUTOR_HOME`    | startup        | Overrides the entire sandbox root path. Wins over `$HOME`. Normalised at startup: made absolute against the invoking directory and stripped of trailing slashes; `--info` and all lesson copy show the normalised value. The normalised value is the tutor's own (`$SANDBOX`): the variable itself is never reassigned, exported or unset, so the practice shell sees it exactly as the learner's environment had it (unset stays unset, a relative value stays relative, a trailing slash stays; A15, C-007). | unset                        |
 | `NO_COLOR`           | startup        | When set and non-empty, disables ANSI colour output and selects the ASCII glyph set. | unset                        |
 | `SHELLTUTOR_ASCII`   | startup        | When `1`, selects the ASCII glyph set (A3.7, A11: each glyph has a same-width twin, so row counts do not change) while colours stay on. The ASCII set is also used when stdout is not a terminal. Never selected by locale (A3.7). | unset                        |
 | `SHELL`              | `--info`       | Reported as the login shell; does not choose the practice shell.   | unset shown explicitly       |
@@ -258,7 +258,7 @@ anything else it did.
 | Readline | `INPUTRC=/dev/null`; `show-all-if-ambiguous off`, `show-all-if-unmodified off`, `completion-ignore-case off`, `bell-style none` |
 | Working directory | the stage folder passed by the caller (see C-003) |
 | Navigation words | per C-002 |
-| Not controlled | `PATH`, `TERM`, `COLUMNS`, `LINES`, locale variables, exported functions other than `command_not_found_handle`, programmable-completion specs loaded by a system rcfile |
+| Not controlled | `PATH`, `TERM`, `COLUMNS`, `LINES`, locale variables, `SHELLTUTOR_HOME` (deliberately not scrubbed or normalised: passed through as the learner set it, so the env module's `echo "[$SHELLTUTOR_HOME]"` is true; checked by `scripts/sim/selftest_home.py`), exported functions other than `command_not_found_handle`, programmable-completion specs loaded by a system rcfile |
 
 Tab contract taught by lesson 1.2: a single Tab completes a unique match;
 with several matches the first Tab inserts the shared prefix and a second

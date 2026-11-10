@@ -284,6 +284,13 @@ Only synthetic harness bundles are committed; never a human transcript.
   human transcripts must not be committed (see
   `docs/simulation-design-plan.md` §Evidence Locations).
 
+## Self-tests
+
+`python3 -m scripts.sim.selftest_modules`, `selftest_sitting` and
+`selftest_home` (SHELLTUTOR_HOME reaches the practice shell as the learner set
+it: unset stays unset, a relative value and a trailing slash stay) run without
+a network; the last two need a pseudo-terminal.
+
 ## Forms and row counts
 
 `run.py --ascii` runs the same walk with `SHELLTUTOR_ASCII=1`.
