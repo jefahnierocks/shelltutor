@@ -313,30 +313,31 @@ def stage_walk(
         else:
             l1 += [Action("", "", "skip-man-missing", "S5-L1")]
         l1 += [Action(PROMPT, "next", "leave-lesson-5-1", "S5-L1")]
-        l2 = [Action("S5_L2", "", "render-lesson-5-2", "S5-L2")] + _cmds(
-            "S5-L2", ["command -v vim", "vim --version"]
-        )
+        l2 = [Action("S5_L2", "", "render-lesson-5-2", "S5-L2")] + _cmds("S5-L2", ["command -v vim"])
         l2 += [
             Action(PROMPT, "vim", "run-vim", "S5-L2"),
             Action("VIM_INTRO", ":q", "vim-quit", "S5-L2"),
             Action(PROMPT, "next", "leave-lesson-5-2", "S5-L2"),
         ]
-        # 5.3 is the idea (read only); 5.4 practises both sequences; 5.5
-        # probes for vimtutor.
+        # 5.3 is the idea (read only); 5.4 throws an edit away, 5.5 keeps one;
+        # 5.6 probes for vimtutor.
         l3 = _lesson(5, 3, [])
         l4 = (
             [Action("S5_L4", "", "render-lesson-5-4", "S5-L4")]
-            + _cmds("S5-L4", ["cat practice.txt"])
             + _vim_edit("S5-L4", "abc", ":q!")
-            + _cmds("S5-L4", ["cat practice.txt"])
-            + _vim_edit("S5-L4", "abc", ":wq")
             + _cmds("S5-L4", ["cat practice.txt"])
             + [Action(PROMPT, "next", "leave-lesson-5-4", "S5-L4")]
         )
         l5 = (
             [Action("S5_L5", "", "render-lesson-5-5", "S5-L5")]
-            + _cmds("S5-L5", ["command -v vimtutor"])
+            + _vim_edit("S5-L5", "abc", ":wq")
+            + _cmds("S5-L5", ["cat practice.txt"])
             + [Action(PROMPT, "next", "leave-lesson-5-5", "S5-L5")]
+        )
+        l6 = (
+            [Action("S5_L6", "", "render-lesson-5-6", "S5-L6")]
+            + _cmds("S5-L6", ["command -v vimtutor"])
+            + [Action(PROMPT, "next", "leave-lesson-5-6", "S5-L6")]
         )
         gate = _recall(5, ["q", ":w", "no"])
         task1 = (
@@ -358,7 +359,7 @@ def stage_walk(
                 Action("S5_CLEARED", "", "stage5-cleared", "S5-GT2"),
             ]
         )
-        return _intro(5) + l1 + l2 + l3 + l4 + l5 + gate + task1 + task2
+        return _intro(5) + l1 + l2 + l3 + l4 + l5 + l6 + gate + task1 + task2
     raise ValueError("stage_walk: unsupported stage %r" % (n,))
 
 

@@ -2365,128 +2365,119 @@ run_stage4() {
 
 stage5_intro() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}STAGE 5 — Ready for vimtutor${RST}
+${H1}Stage 5: Ready for vimtutor${RST}
 
-Five lessons, then a gate. By the end, you'll know the difference
-between a command that prints-and-exits and one that takes over the
-terminal; you'll be able to leave any of them deliberately; and you'll
-understand why Vim has ${CMD}:w${RST}, ${CMD}:q${RST}, and ${CMD}:q!${RST}.
+Six short lessons, then a task. Some programs take over the whole
+screen. You'll learn to enter and leave them, Vim included. After
+this stage comes vimtutor.
 
-After the gate, this tutor hands you to ${CMD}vimtutor${RST} (if it's
-installed on your system) — that is the next step.
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 5.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 5.1.${RST}
 EOF
+    return $?
 }
 
 stage5_lesson_1() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}Print-and-exit vs full-screen${RST}
+${H1}Programs that take over the screen${RST}
 
-Most of the commands you've used print output and return immediately:
-  ${CMD}ls${RST}          ${CMD}date${RST}          ${CMD}wc -l file${RST}
+Most commands print and return. A few take over the screen until you
+leave them; the prompt is gone while they run.
 
-Other commands ${EM}take over the screen${RST} until you exit them:
-  ${CMD}man ls${RST}              ${DIM}# the manual page for ls${RST}
-  ${CMD}less long-file.txt${RST}  ${DIM}# page through a long file${RST}
-  ${CMD}vim file${RST}            ${DIM}# the Vim editor${RST}
+  ${CMD}man ls${RST}       ${DIM}# the manual page for ls; q leaves${RST}
 
-While one runs, the shell prompt is ${BOLD}gone${RST}: you're inside a program,
-and the same keys may do different things there.
+${CMD}man${RST} and ${CMD}less${RST} leave with ${BOLD}q${RST}. Vim leaves differently; that is next.
 
-${BOLD}Exit keys${RST}:  ${CMD}man${RST} and ${CMD}less${RST} ${BOLD}q${RST}   ·   ${CMD}vim${RST} ${CMD}:q${RST} then Enter (Lesson 5.3)
-Try one: ${CMD}man ls${RST}, then ${BOLD}q${RST} to come back.
-
-${INSTR}${G_PLAY} When back at ${DIM}shelltutor>${INSTR}, type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Open it, press ${BOLD}q${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage5_lesson_2() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}Entering and leaving Vim${RST}
+${H1}Leaving Vim${RST}
 
-${CMD}vim${RST} is a text editor. Before you ${BOLD}edit${RST} anything,
-let's learn how to ${BOLD}leave${RST}.
+Vim is a text editor. Learn the way out before anything else.
 
-First, see if Vim is installed:
-  ${CMD}command -v vim${RST}   ${DIM}# a path means it is; if not, install it${RST}
+  ${CMD}command -v vim${RST}     ${DIM}# a path means it is installed${RST}
+  ${CMD}vim${RST}                ${DIM}# opens with no file${RST}
 
-A safe entrance, then a full session with no file:
-  ${CMD}vim --version${RST}   ${DIM}# prints version info and exits${RST}
-  ${CMD}vim${RST}             ${DIM}# leave with ${RST}${CMD}:q${RST}${DIM} then Enter${RST}
+To leave, type ${CMD}:q${RST} and press Enter. If Vim refuses, type ${CMD}:q!${RST} and
+press Enter: that leaves and throws away any changes.
 
-If Vim refuses (unsaved changes), use the ${EM}discard${RST} form:
-  ${CMD}:q!${RST} then Enter
-
-${EM}You will need :q!${RST} the first few times you use Vim. Memorize it.
-
-${INSTR}${G_PLAY} Try ${CMD}vim --version${INSTR} and ${CMD}vim${INSTR} (then ${CMD}:q${INSTR}). Then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Open ${CMD}vim${INSTR}, leave with ${CMD}:q${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage5_lesson_3() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}Buffer vs file${RST}
+${H1}The copy and the file${RST}
 
-${EM}The most important idea in this stage.${RST} When you open a file in
-Vim, Vim ${BOLD}reads it into a buffer${RST} — a copy in memory. Your
-keystrokes change the ${BOLD}buffer${RST}, not the file. The file on disk
-only changes when you ${BOLD}write${RST} the buffer back.
+Vim does not edit the file. It reads the file into a ${BOLD}working copy${RST}
+and you edit that. The file changes only when you write it back.
 
-  ${BOLD}file on disk${RST}  →  ${BOLD}buffer in memory${RST}  →  ${BOLD}file on disk${RST}
-       (read)                  (edit)                     (write)
+  file  →  working copy (you edit here)  →  file
 
-That's why Vim has separate commands for save and quit:
-  ${CMD}:w${RST}    write the buffer to the file
-  ${CMD}:q${RST}    quit (only if there are no unsaved changes)
-  ${CMD}:q!${RST}   quit and discard unsaved changes
-  ${CMD}:wq${RST}   write, then quit
+  ${BOLD}:w${RST}     write the copy to the file
+  ${BOLD}:q${RST}     quit, if nothing is unsaved
+  ${BOLD}:q!${RST}    quit and throw the changes away
+  ${BOLD}:wq${RST}    write, then quit
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to practise both.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to try both.${RST}
 EOF
+    return $?
 }
 
 stage5_lesson_4() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}Practice: discard, then save${RST}
+${H1}Throw it away${RST}
 
-${EM}Practice on a file you don't mind editing.${RST}  A practice.txt${RST}
-fixture is in this stage's folder. Try:
-
-  ${CMD}vim practice.txt${RST}
-     type ${CMD}i${RST} to enter insert mode (vimtutor will teach modes)
-     type a few letters
-     press ${BOLD}Esc${RST}
-     type ${CMD}:q!${RST} then Enter
-     ${CMD}cat practice.txt${RST}   ${DIM}# the file is unchanged${RST}
+A file called practice.txt is in this folder.
 
   ${CMD}vim practice.txt${RST}
-     type ${CMD}i${RST}, then a few letters, ${BOLD}Esc${RST}
-     type ${CMD}:wq${RST}, Enter
-     ${CMD}cat practice.txt${RST}   ${DIM}# now the file has changed${RST}
 
-${INSTR}${G_PLAY} Try both, then ${CMD}next${INSTR}.${RST}
+Inside Vim: press ${BOLD}i${RST}, type a few letters, press ${BOLD}Esc${RST}. Then type ${CMD}:q!${RST}
+and press Enter.
+
+  ${CMD}cat practice.txt${RST}       ${DIM}# unchanged: the changes were thrown away${RST}
+
+${INSTR}${G_PLAY} Do it, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage5_lesson_5() {
     lesson "$SANDBOX/stage5" <<EOF
-${H1}Calling vimtutor${RST}
+${H1}Keep it${RST}
 
-${CMD}vimtutor${RST} is itself a shell command. It launches Vim on a ${BOLD}copy${RST}
-of a tutorial file so you can practice without damaging the original.
+The same again, but this time write the copy back.
 
-Check whether it's installed:
-  ${CMD}command -v vimtutor${RST}
+  ${CMD}vim practice.txt${RST}
 
-If it prints a path, you're set. If not:
-  - Linux: install your distro's full ${BOLD}vim${RST} package (not ${BOLD}vim-minimal${RST}).
-  - macOS: ${CMD}vimtutor${RST} may not be on PATH; ${CMD}brew install vim${RST} adds it.
+Inside Vim: press ${BOLD}i${RST}, type a few letters, press ${BOLD}Esc${RST}. Then type ${CMD}:wq${RST}
+and press Enter.
 
-This stage's gate runs the practice from 5.4 once more, then you'll be done.
+  ${CMD}cat practice.txt${RST}       ${DIM}# now the file has your letters${RST}
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to take Stage 5's gate.${RST}
+${INSTR}${G_PLAY} Do it, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
+}
+
+stage5_lesson_6() {
+    lesson "$SANDBOX/stage5" <<EOF
+${H1}vimtutor${RST}
+
+${CMD}vimtutor${RST} is a command too. It opens Vim on a copy of a lesson file.
+
+  ${CMD}command -v vimtutor${RST}    ${DIM}# a path means it is installed${RST}
+
+No path? On Linux, install the full vim package. On macOS,
+${CMD}brew install vim${RST} adds it.
+
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage 5's task.${RST}
+EOF
+    return $?
 }
 
 # Stage 5 verification is two-phase. The script controls a known starting
@@ -2541,7 +2532,7 @@ EOF
 
     ask_question \
         "Q2: After ${CMD}vim notes.txt${RST}, what makes Vim write your edit to the file?" \
-        "Lesson 5.3: the colon command for putting the buffer into the file." \
+        "Lesson 5.3: the colon command for putting the copy into the file." \
         ':w' \
         ':w<enter>' \
         ':w then enter' \
@@ -2558,7 +2549,7 @@ EOF
 
     ask_question \
         "Q3: If you open notes.txt${RST} in ${CMD}vim${RST}, type some letters, and quit with ${CMD}:q!${RST} — did the file on disk change?" \
-        "Lesson 5.3: the buffer is a copy; the disk only changes when you write it." \
+        "Lesson 5.4: the working copy is a copy; the disk only changes when you write it." \
         'no' \
         'no it did not' \
         'no it didnt' \
@@ -2576,20 +2567,16 @@ EOF
             show_screen gate <<EOF
 ${H1}STAGE 5 — GATE TASK (phase 1 of 2)${RST}
 
-I've reset practice.txt${RST} to contain just the word ${BOLD}before${RST}.
-
+I've reset practice.txt to contain just the word ${BOLD}before${RST}.
 At the practice prompt:
-
   1. ${CMD}cat practice.txt${RST}        ${DIM}# confirm it says 'before'${RST}
   2. ${CMD}vim practice.txt${RST}
-       ${CMD}i${RST}  ${DIM}# enter insert mode${RST}
-       type a few letters
-       ${BOLD}Esc${RST}
+       ${CMD}i${RST}, type a few letters, ${BOLD}Esc${RST}
        ${CMD}:q!${RST}  Enter   ${DIM}# discard your changes${RST}
   3. ${CMD}cat practice.txt${RST}        ${DIM}# should still say 'before'${RST}
-
 Then type ${CMD}check${RST}.
 ${DIM}I will verify the file is still exactly 'before'.${RST}
+${DIM}This task runs in ${SANDBOX}/stage5; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
@@ -2635,8 +2622,8 @@ Now save a real edit.
   2. ${CMD}cat practice.txt${RST}        ${DIM}# now it differs from 'before'${RST}
 
 Then type ${CMD}check${RST}.
-
 ${DIM}I will verify the file is no longer exactly 'before'.${RST}
+${DIM}This task runs in ${SANDBOX}/stage5; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
@@ -2658,7 +2645,7 @@ EOF
                 fb_note "Did you use ${CMD}:q!${RST} instead of ${CMD}:wq${RST}? Try again,"
                 fb_note "then type ${CMD}check${RST}."
                 gate_escalate "$attempt" \
-                    ":wq writes the buffer to the file, then quits." \
+                    ":wq writes the working copy to the file, then quits." \
                     "vim practice.txt" "i" "type a letter" "Esc" ":wq"
                 skip_screen=1
                 ;;
@@ -2670,7 +2657,7 @@ EOF
 
 run_stage5() {
     setup_stage_dir 5
-    local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4 stage5_lesson_5)
+    local lessons=(stage5_intro stage5_lesson_1 stage5_lesson_2 stage5_lesson_3 stage5_lesson_4 stage5_lesson_5 stage5_lesson_6)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 5 "${lessons[$i]}"
