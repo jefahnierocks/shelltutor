@@ -1,9 +1,9 @@
 ---
-title: WP-26 — Lesson skeleton: one typeable block, body ≤ 12 rows, the practice-folder thread — awaiting operator approval
+title: WP-26 — Lesson skeleton: one typeable block, body ≤ 12 rows, the practice-folder thread
 category: planning
 component: workplan
-status: drafted
-version: 0.2.0
+status: ready
+version: 0.3.0
 last_updated: 2026-11-09
 tags: [workplan, lessons, density, content, a11, a12]
 priority: high
@@ -14,7 +14,7 @@ priority: high
 **Governing text**: `docs/design-consultant-response-2026-11.md` §3.7,
 adopted in principle by A11; the practice-folder thread of A12;
 `audit/2026-11-09/wp25-chrome-v2.md` (screens over the 19-row panel).
-**Status**: drafted for operator approval. Nothing here is implemented.
+**Status**: approved in full by the operator on 2026-11-09 (A13): the lesson count, the cuts of §2, "working copy", `touch` for spaces and quotes, the rehearsal lessons, and the dropped hidden-folder beat.
 **Tier**: core standard, then one synthetic round (A10: the loop resumes
 when lesson content changes).
 
@@ -675,3 +675,19 @@ One synthetic round (three personas, v0.2 sheets, same revision) after the
 implementation; intake as before. The comparison of interest: lessons read
 versus skipped, and whether the Stage 2 and Stage 4 tasks are passed on the
 first `check` now that each is rehearsed in the lesson before it.
+
+## 8. Commits (worker)
+
+1. `feat(stage1): lessons to the skeleton; orientation and intro trimmed (A13)`
+2. `feat(stage2): six lessons — home and back, names for places, making a folder; task folder line (A13)`
+3. `feat(stage3): five lessons — reading a long file and removing split out (A13)`
+4. `feat(stage4): six lessons — spaces and quotes, pipe then file; grep and < leave the core (A13)`
+5. `feat(stage5): six lessons — working copy, throw it away, keep it (A13)`
+6. `fix(chrome): squeeze removed; 19-row panel enforced; --info labels aligned; cleared and finale lists follow the cuts`
+7. `chore(sim): sentinels and personas for 28 lessons; hints renumbered; density rows; records; STATUS`
+
+Copy is used exactly as written in §3. Where a line cannot fit 80 columns
+with colour variables stripped, or a screen exceeds 19 panel rows, trim
+whitespace first and report any word changed. Report: the rendered height
+of every screen, the hint renumbering table, FF-009/FF-010/FF-011 results,
+and harness runs on 3.2 and 5.x in both glyph forms.

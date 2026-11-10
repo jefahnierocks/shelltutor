@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.12.0
+version: 0.13.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -958,6 +958,17 @@ response as adopted by A11, A12 governs.
 - **Process.** The coordinator's suggested review command now uses the
   default folder or a path under `$HOME`, not `mktemp`, so what the operator
   sees is what a learner sees.
+
+### A13 — Lesson skeleton approved in full (2026-11-09)
+
+The operator approved `docs/workplan/WP-26-lesson-skeleton.md` as drafted:
+28 lessons in place of 21 (one typeable block each, body ≤ 12 rows); the
+cuts of its §2 (`grep` pipelines, `<`, `vim --version`, `ls /usr/bin` in
+Stage 2, `cd /tmp`, `rmdir`, the intro command tables); "working copy" for
+"buffer" on screen; spaces and quotes taught with `touch`; each gate task
+rehearsed in the lesson before it; the practice-folder thread of A12
+without the hidden-folder beat. The synthetic loop resumes for one round
+after it lands. Modules follow in WP-28.
 
 ## Cross-references
 
