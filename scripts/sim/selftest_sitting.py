@@ -95,6 +95,7 @@ def main():
     if len(user) < 3:
         print("selftest_sitting: skip - login name too short to redact")
         return 0
+    os.environ["SHELLTUTOR_CANARY"] = "leak"
     out = os.path.join(tempfile.mkdtemp(prefix="selftest-sitting-"), "s")
     # A missing interpreter is refused before anything is created.
     rc, _, err = run(out, "start", "--out", out, "--bash", "no-such-bash-xyz")
@@ -118,6 +119,12 @@ def main():
                 return fail("send next: %s" % err)
         if "1.1" not in text and "Stage 1" not in text:
             return fail("three nexts did not reach a Stage 1 screen: %r" % text[:200])
+        # H-4: a variable set in the parent must not reach the practice shell.
+        rc, text, _ = run(out, "send", "--out", out, "env")
+        if "SHELLTUTOR_CANARY" in text or "leak" in text.split("SHELLTUTOR_HOME")[0]:
+            return fail("the canary variable leaked into the sitting environment: %r" % text[:300])
+        if "USER=" not in text and "LOGNAME=" not in text:
+            return fail("the allowlisted USER/LOGNAME are missing from `env`: %r" % text[:300])
         run(out, "note", "--out", out, "bash", "I will ask who I am")
         rc, text, _ = run(out, "send", "--out", out, "whoami")
         if user not in text:
@@ -139,8 +146,8 @@ def main():
             rows = [json.loads(line) for line in fp if line.strip()]
         inputs = [r for r in rows if r["kind"] == "persona-input"]
         notes = [r for r in rows if r["kind"] == "note"]
-        if len(inputs) != 5:
-            return fail("expected 5 persona-input rows, saw %d" % len(inputs))
+        if len(inputs) != 6:
+            return fail("expected 6 persona-input rows, saw %d" % len(inputs))
         if [r["intent"] for r in inputs[-2:]] != ["bash", "bash"]:
             return fail("inputs after the note should carry context 'bash'")
         if not inputs[-1]["payload"].get("raw") or len(notes) != 1:

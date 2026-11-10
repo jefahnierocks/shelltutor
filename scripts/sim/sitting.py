@@ -62,6 +62,7 @@ _PARENT = os.path.dirname(os.path.dirname(_HERE))
 if _PARENT not in sys.path:
     sys.path.insert(0, _PARENT)
 
+from scripts.sim import childenv  # noqa: E402
 from scripts.sim import env as sim_env  # noqa: E402
 from scripts.sim import recorder as sim_recorder  # noqa: E402
 from scripts.sim.driver import SCREEN_BUDGET, ScreenHeightTracker  # noqa: E402
@@ -201,7 +202,8 @@ class Sitting:
     # -- child -----------------------------------------------------------
 
     def _child_env(self) -> Dict[str, str]:
-        e = dict(os.environ)
+        # H-4: the shared allowlist, not the operator's whole environment.
+        e = childenv.base_env()
         e["SHELLTUTOR_HOME"] = self.sandbox
         e["HOME"] = self.user_home
         e.setdefault("TERM", "xterm-256color")

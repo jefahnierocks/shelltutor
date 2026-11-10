@@ -48,7 +48,7 @@ _PARENT = os.path.dirname(os.path.dirname(_HERE))
 if _PARENT not in sys.path:
     sys.path.insert(0, _PARENT)
 
-from scripts.sim import driver, env, persona as persona_mod, recorder  # noqa: E402
+from scripts.sim import childenv, driver, env, persona as persona_mod, recorder  # noqa: E402
 from scripts.sim.project import project_terminal_out  # noqa: E402
 from scripts.sim.errors import (  # noqa: E402
     NoTTYError,
@@ -67,10 +67,6 @@ NOT_YET_TEXT = "seen: "
 # Rendered-row ceilings above SCREEN_BUDGET: the welcome box (A12, 22 allowed;
 # it is 21).
 HEIGHT_ALLOWED = {"S1-W": 21}
-# The caller's variables the child may see: the lessons use PATH, HOME is
-# replaced, and USER, LOGNAME and SHELL are what `env` and `echo $SHELL` show
-# (the redactor replaces the login name in the bundle). Nothing else is passed.
-ENV_PASSTHROUGH = ("PATH", "USER", "LOGNAME", "SHELL", "TMPDIR", "TERM")
 # Recall ladder (A7, kept by A11). second-try at Stage 2 misses Q1 twice:
 # miss 1 prints "not quite. hint: ...", miss 2 the same line plus the
 # navigation facts, so "hint:" appears twice and the first navigation fact
@@ -334,7 +330,7 @@ def _run_variant(
     # SHELLTUTOR_HOME to the fresh tempdir, set TERM if missing so terminal-aware
     # code paths (clear, ansi) work, force COLUMNS/LINES so the lesson's
     # vertical-budget assumptions hold.
-    child_env = {k: v for k, v in os.environ.items() if k in ENV_PASSTHROUGH}
+    child_env = childenv.base_env()
     child_env["SHELLTUTOR_HOME"] = sandbox_root
     child_env["HOME"] = user_home
     child_env.setdefault("TERM", "xterm-256color")
