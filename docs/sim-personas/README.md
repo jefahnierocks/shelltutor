@@ -3,8 +3,8 @@ title: Synthetic learner personas
 category: process
 component: sim-personas
 status: active
-version: 0.3.0
-last_updated: 2026-11-09
+version: 0.3.1
+last_updated: 2026-11-10
 tags: [phase-a-sim, personas, synthetic-learner, evidence]
 priority: high
 ---
@@ -136,6 +136,23 @@ own version in the sitting block ("Persona sheet version").
   slash, no brute-force guess, no blind arrival) and its debrief said the errors
   could not be honestly produced; scripting them keeps the child persona a real
   test of the rejection and hint paths.
+
+- **Round 7** (`audit/2026-11-09/walkthroughs.md`, WP-29 and WP-28 tutor, script
+  `a7cd1ac`; Leo v0.3.0, Maya and Arthur v0.2.0; core sittings and two modules).
+  Friction by source:
+
+  | Sheet | Final | Reading charges | Rejections (+2 each) | Mode confusion | Gates cleared |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | leo-7 | 9 (quit) | 1 | 8 | 0 | 0 |
+  | maya-7 | -5 | 0 | 0 | 0 | -5 |
+  | arthur-7 | -3 | 0 | 2 | 0 | -5 |
+  | maya-env-7 (`env`) | -2 | 0 | 0 | 0 | -2 |
+  | arthur-shells-7 (`shells`) | -2 | 0 | 0 | 0 | -2 |
+
+- **Leo v0.3.1** (amendment A16, simulation calibration only). v0.3 charged every
+  scripted error, which made an early quit nearly certain and measured the script,
+  not the tutor; a scripted error he recovers from within one further input now
+  scores 0, and under v0.3.1 leo-7 would have stood at 5.
 
 ## Running a sitting
 

@@ -3,8 +3,8 @@ title: Persona — Leo (gamer-brute-forcer)
 category: process
 component: sim-personas
 status: active
-version: 0.3.0
-last_updated: 2026-11-09
+version: 0.3.1
+last_updated: 2026-11-10
 tags: [phase-a-sim, persona, child]
 priority: medium
 ---
@@ -55,14 +55,19 @@ that knows the commands will not produce them unprompted). Each is marked
   slash (`/pwd`, `/ls`, `/cd`, ...). He retypes it correctly only after reading
   the error.
 - **(b) One-word guess at the first recall answer.** At each gate the first
-  recall answer is a one-word guess taken from the last command he typed. It is
-  scored per rule 6 (a rejection he does not understand costs +2; an accepted
-  guess costs nothing).
+  recall answer is a one-word guess taken from the last command he typed. An
+  accepted guess costs nothing.
 - **(c) `check` first.** At the first gate task (Stage 1) he types `check`
   before doing anything, and reads the checklist that comes back.
 
 These are in addition to the triggers above. The sheet records, for each, the
 screen, the exact input and the word "scripted".
+
+**Scoring a scripted error.** A scripted error he recovers from within one
+further input scores **0** friction. It scores **+2** only when recovery takes
+more than one further input; the sheet counts and records those inputs. Unscripted
+rejections are scored per rule 6 as before (+2 for a rejected input he does not
+understand).
 
 ## Reading
 
