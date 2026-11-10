@@ -922,7 +922,7 @@ columns). Full text: `docs/operator-review-welcome-2026-11-09.md`.
   response §5.3 proposed it; the proposal does not fit 80 columns with
   findable separators. *Closes when*: the map is vertical, inside the box,
   one stage per row with its own dot (WP-27).
-  **Closed 2026-11-09 by WP-27, `5d50f46`** (rebased SHA on landing): the map
+  **Closed 2026-11-09 by WP-27, `31ff361`** (rebased SHA on landing): the map
   is inside the box, one stage per row; passed stages show a green dot on a
   retake.
 - **O-AX — The sandbox path row is jargon on the welcome and a missed
