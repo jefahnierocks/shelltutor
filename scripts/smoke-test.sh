@@ -70,8 +70,8 @@ smoke_run() {
     # 2. help-text content
     if out=$("$invoke_path" -h 2>&1); then
         local h_failed=0
-        printf '%s\n' "$out" | grep -q 'vimtutor prerequisite' \
-            || { printf '  ✗ -h missing: "vimtutor prerequisite"\n' >&2; h_failed=1; }
+        printf '%s\n' "$out" | grep -q 'working in a Unix shell' \
+            || { printf '  ✗ -h missing: "working in a Unix shell"\n' >&2; h_failed=1; }
         printf '%s\n' "$out" | grep -q '1\.\.5' \
             || { printf '  ✗ -h missing: stage range "1..5"\n' >&2; h_failed=1; }
         printf '%s\n' "$out" | grep -qi 'Stages:' \
@@ -79,7 +79,7 @@ smoke_run() {
         printf '%s\n' "$out" | grep -q 'check' \
             || { printf '  ✗ -h missing: "check" navigation word\n' >&2; h_failed=1; }
         if [ "$h_failed" -eq 0 ]; then
-            printf '  ✓ -h content         "vimtutor prerequisite", "1..5", "Stages:", "check"\n'
+            printf '  ✓ -h content         "working in a Unix shell", "1..5", "Stages:", "check"\n'
         else
             failed=1
         fi

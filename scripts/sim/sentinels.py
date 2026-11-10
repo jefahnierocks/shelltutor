@@ -20,7 +20,7 @@ PROMPT = "shelltutor> "
 
 # Stage 1 screen-and-question sentinels, ordered along the careful-beginner walk.
 SENTINELS = {
-    "WELCOME": "SHELLTUTOR  —  a vimtutor prerequisite course",
+    "WELCOME": "working in a Unix shell",
     "ORIENTATION": "Orientation",
     "STAGE1_INTRO": "STAGE 1 — Where am I?",
     "LESSON_1_1": "Running commands",
@@ -36,7 +36,7 @@ SENTINELS = {
     "TASK_Q_WHOAMI": "What did whoami print? (just the username)",
     "TASK_Q_PWD": "What did pwd print? (paste the full path)",
     "TASK_Q_DAY": "What day of the week did date show?",
-    "STAGE_CLEARED": "Stage 1 cleared.",
+    "STAGE_CLEARED": "Stage 1 cleared",
 }
 
 # Stages 2-5, the finale and the full-screen-program markers. Transcribed
@@ -56,7 +56,7 @@ SENTINELS.update(
         "S2_Q2": "What does ~ mean in a path?",
         "S2_Q3": "If I'm in ~/projects and I type cd notes",
         "S2_TASK": "STAGE 2 — GATE TASK",
-        "S2_CLEARED": "Stage 2 cleared.",
+        "S2_CLEARED": "Stage 2 cleared",
         "S3_INTRO": "STAGE 3 — Files and operations",
         "S3_L1": "Creating: touch, mkdir",
         "S3_L2": "Reading: cat, less",
@@ -66,7 +66,7 @@ SENTINELS.update(
         "S3_Q2": "After rm important.txt, where is the file?",
         "S3_Q3": "What single command renames old.txt to new.txt?",
         "S3_TASK": "STAGE 3 — GATE TASK",
-        "S3_CLEARED": "Stage 3 cleared.",
+        "S3_CLEARED": "Stage 3 cleared",
         "S4_INTRO": "STAGE 4 — Commands, streams, composition",
         "S4_L1": "Reading a command",
         "S4_L2": "The pipe",
@@ -77,7 +77,7 @@ SENTINELS.update(
         "S4_Q2": "What is the difference between > and >>?",
         "S4_Q3": "Why does vim my notes.txt open two files",
         "S4_TASK": "STAGE 4 — GATE TASK",
-        "S4_CLEARED": "Stage 4 cleared.",
+        "S4_CLEARED": "Stage 4 cleared",
         "S5_INTRO": "STAGE 5 — Ready for vimtutor",
         "S5_L1": "Print-and-exit vs full-screen",
         "S5_L2": "Entering and leaving Vim",
@@ -91,7 +91,7 @@ SENTINELS.update(
         "S5_TASK1": "STAGE 5 — GATE TASK (phase 1 of 2)",
         "S5_PHASE1_OK": "Phase 1 verified — the file was unchanged.",
         "S5_TASK2": "STAGE 5 — GATE TASK (phase 2 of 2)",
-        "S5_CLEARED": "Stage 5 cleared.",
+        "S5_CLEARED": "Stage 5 cleared",
         "FINALE": "You're ready for vimtutor.",
         "MAN_LS": "LS(1)",
         "LESS_NUMBERS": "1\n2\n3\n4\n5",

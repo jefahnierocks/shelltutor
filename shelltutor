@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shelltutor — a vimtutor prerequisite course in five mastery-gated stages.
+# shelltutor — working in a Unix shell: five mastery-gated stages, then vimtutor.
 # SPDX-License-Identifier: MIT  — see LICENSE
 #
 # Usage:
@@ -17,7 +17,7 @@
 # script). Passing means passing — there is no skip, but there is also
 # no time pressure and unlimited retries.
 #
-# Stage map (vimtutor prerequisite curriculum):
+# Stage map:
 #   1  Where am I?                    echo, pwd, whoami, date, clear, exit
 #   2  Paths and the filesystem       ls, cd, .., ~
 #   3  Files and operations           touch, mkdir, cat, less, cp, mv, rm
@@ -140,7 +140,7 @@ fi
 
 usage() {
     cat <<EOF
-shelltutor — a vimtutor prerequisite course (five mastery-gated stages).
+shelltutor — working in a Unix shell (five mastery-gated stages, then vimtutor).
 
 Usage:
   shelltutor            resume where you left off
@@ -151,9 +151,9 @@ Usage:
 
 Stages:
   1  Where am I?
-  2  Paths and the filesystem
-  3  Files and operations
-  4  Commands, streams, composition
+  2  Paths
+  3  Files
+  4  Commands and streams
   5  Ready for vimtutor
 
 Modules (stand alone; nothing saved):
@@ -234,7 +234,7 @@ preflight() {
 
 show_info() {
     local ok="${OK}ok${RST}" no="${EM}not ok${RST}" info="${DIM}info${RST}"
-    printf '\n%bshelltutor — environment check%b\n\n' "$H1" "$RST"
+    printf '\n%bshelltutor — working in a Unix shell%b\n%benvironment check%b\n\n' "$H1" "$RST" "$DIM" "$RST"
 
     # --- bash version
     printf '  %bbash%b         : %s\n' "$SUB" "$RST" "${BASH_VERSION:-unknown}"
@@ -1055,24 +1055,58 @@ gate_escalate() {
 #   rows; author to 18 to keep one row of margin. Most pages target 10-18.
 # ---------------------------------------------------------------------
 
+# box_row PLAIN [COLOURED]: one row of the welcome box, "│  text  …  │" at
+# 80 columns. PLAIN is the text without colour codes (its length pads the row);
+# COLOURED is what is printed (default PLAIN).
+box_row() {
+    local plain="$1" shown="${2:-$1}" pad
+    pad=$((PANEL_COLS - 6 - ${#plain}))
+    [ "$pad" -ge 0 ] || pad=0
+    printf '%s%s%s  %s%*s  %s%s%s\n' "$RULE" "$G_VBAR" "$RST" "$shown" "$pad" '' "$RULE" "$G_VBAR" "$RST"
+}
+
+# box_edge LEFT RIGHT: the top or bottom edge of the box.
+box_edge() {
+    panel_rule $((PANEL_COLS - 2))
+    printf '%s%s%s%s%s\n' "$RULE" "$1" "$REPLY" "$2" "$RST"
+}
+
+# welcome (A11 C8): a rounded box with the identity line, the course map and
+# the sandbox line, then the footer, rule and a blank row. No header row.
 welcome() {
-    # Vertical budget: ~14 lines.
-    lesson <<EOF
-${H1}SHELLTUTOR${RST}  —  a vimtutor prerequisite course
-
-Welcome. A short hands-on course in ${BOLD}five stages${RST} that
-prepare you for ${CMD}vimtutor${RST}. About 45 to 60 minutes total.
-
-Each stage is a few short lessons followed by a small task. Pass the
-task to advance. Retry as much as you like — no time pressure, no
-skip.
-
-Your work happens in ${SANDBOX}${RST}; the tutor never writes
-outside that folder. Commands you run yourself have your full
-authority: this is the real thing, not a simulation.
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for a quick orientation.${RST}
-EOF
+    local i prog map='' title plain_map=''
+    prog=$(read_progress)
+    clear 2>/dev/null || printf '\n'
+    box_edge "$G_RTL" "$G_RTR"
+    box_row "shelltutor$(printf '%*s' $((PANEL_COLS - 6 - 10 - 23)) '')working in a Unix shell" \
+        "${H1}shelltutor${RST}$(printf '%*s' $((PANEL_COLS - 6 - 10 - 23)) '')${DIM}working in a Unix shell${RST}"
+    box_row ''
+    box_row 'Five stages. Each is a few short lessons, then one task you have to pass.'
+    box_row 'No timer, no score. Try as many times as you like.'
+    box_row ''
+    box_row 'Everything you type runs in a real shell. The tutor only writes inside'
+    box_row 'its own sandbox folder; what you run yourself is really run.'
+    box_row ''
+    # The plain text is ASCII so its length is its width in either glyph set.
+    box_row "> Type next to begin." "${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin.${RST}"
+    box_edge "$G_RBL" "$G_RBR"
+    printf '\n'
+    for ((i = 1; i <= 5; i++)); do
+        panel_title "$i"
+        title="$REPLY"
+        if [ "$i" -le "$prog" ]; then
+            map="${map}${OK}${G_DONE}${RST}"
+        else
+            map="${map}${DIM}${G_TODO}${RST}"
+        fi
+        plain_map="${plain_map}  ${title}"
+    done
+    printf ' %s %s%s%s\n\n' "$map" "$DIM" "${plain_map# }" "$RST"
+    printf '%sSandbox: %s%s\n\n' "$DIM" "$SANDBOX" "$RST"
+    printf '%s\n' "$(footer_bar lesson '')"
+    panel_lower_rule
+    printf '\n'
+    practice "$SANDBOX"
     return $?
 }
 
@@ -2619,7 +2653,7 @@ EOF
             "$RC_CHECK")
                 if stage5_verify_phase2; then
                     printf '\n%b%s Phase 2 verified — the file was written.%b\n\n' "$OK" "$G_BOX_OK" "$RST"
-                    printf '%b%s Stage 5 cleared.%b\n\n' "$OK" "$G_BOX_OK" "$RST"
+                    printf '%bStage 5 cleared.%b\n\n' "$OK" "$RST"
                     save_progress 5
                     return 0
                 fi
@@ -2670,29 +2704,38 @@ run_stage5() {
 # Finale
 # ---------------------------------------------------------------------
 
+# finale_line STAGE CAPABILITY COMMANDS: one row of the finale table.
+finale_line() {
+    printf '  %s%s%s  %-43s %s%s%s' "$BOLD" "$1" "$RST" "$2" "$CMD" "$3" "$RST"
+}
+
 finale() {
     clear 2>/dev/null || printf '\n'
+    PANEL_STAGE=''; PANEL_POS=''; PANEL_DONE=5
+    panel_header
     cat <<EOF
+
 ${H1}You're ready for vimtutor.${RST}
 
-This course covered:
+You can now
 
-  ${BOLD}commands${RST}    echo, pwd, whoami, date, clear, exit, ls, cd, ~, .., touch,
-                mkdir, rmdir, cat, less, cp, mv, rm, command -v, wc, seq,
-                head, sort, grep, man, vim, vim --version, vimtutor
-  ${BOLD}keys${RST}        Tab, Up Arrow, Ctrl+C, Ctrl+L, q, Esc
-  ${BOLD}operators${RST}   ${CMD}|${RST} (pipe)  ${CMD}>${RST} (redirect)  ${CMD}>>${RST} (append)  ${CMD}<${RST} (input)  ${CMD}*${RST} (glob)
-  ${BOLD}ideas${RST}       prompt vs program  ·  buffer vs file  ·  relative vs absolute
+$(finale_line 'Stage 1' 'find where you are, who you are, the date' 'pwd  whoami  date')
+$(finale_line 'Stage 2' 'move around and look at folders' 'cd  ls  mkdir')
+$(finale_line 'Stage 3' 'make, read, copy, move and remove files' 'touch  cat  cp  mv  rm')
+$(finale_line 'Stage 4' 'chain commands, send output to files' '|  >  >>  *')
+$(finale_line 'Stage 5' 'leave full-screen programs, open Vim' 'q  :q!  vim  vimtutor')
 
-${BOLD}What's next${RST}:  ${CMD}vimtutor${RST}  ${DIM}# the Vim tutor itself; about 30 minutes, hands-on${RST}
+Four habits to keep
 
-If ${CMD}vimtutor${RST} isn't installed:
-  - Linux: install your distro's full vim package
-    (Fedora: ${CMD}sudo dnf install vim-enhanced${RST}; Debian/Ubuntu: ${CMD}sudo apt install vim${RST})
-  - macOS:  ${CMD}brew install vim${RST}
+  read the line before you press Enter       know which folder you are in
+  predict what it will print                 list before you remove
 
-Re-take any stage at any time: ${CMD}shelltutor 1${RST} ${DIM}# replay Stage 1${RST}
-Sandbox stays at ${SANDBOX}${RST} if you want to keep playing.
+${INSTR}${G_PLAY} Next: ${CMD}vimtutor${INSTR}, about 30 minutes, hands-on.${RST}
+
+${DIM}If vimtutor isn't installed: install your distro's full vim package${RST}
+${DIM}(Debian/Ubuntu: sudo apt install vim; Fedora: sudo dnf install vim-enhanced;${RST}
+${DIM}macOS: brew install vim). Re-take a stage with: shelltutor 1${RST}
+${DIM}Sandbox stays at ${SANDBOX} if you want to keep playing.${RST}
 
 EOF
     # Clean up progress so the next plain `shelltutor` invocation starts from
@@ -2709,52 +2752,59 @@ EOF
 # ---------------------------------------------------------------------
 
 # recap_line LABEL GLOSS [ROLE]: "  label   gloss", label in ROLE (default CMD).
+# Modules only until WP-26; the stage recaps use can_line.
 recap_line() {
     printf '  %s%-14s%s %s%s%s\n' "${3:-$CMD}" "$1" "$RST" "$DIM" "$2" "$RST"
 }
 
-# stage_recap N: at most eight lines, commands then keys or operators.
+# can_line CAPABILITY CMD...: "  capability   cmd   cmd" (A11 C9): what the
+# learner can do first, the commands second, in two columns.
+can_line() {
+    local cap="$1" c i=0; shift
+    printf '  %-28s' "$cap"
+    for c in "$@"; do
+        i=$((i + 1))
+        if [ "$i" -lt "$#" ]; then
+            printf ' %s%-9s%s' "$CMD" "$c" "$RST"
+        else
+            printf ' %s%s%s' "$CMD" "$c" "$RST"
+        fi
+    done
+    printf '\n'
+}
+
+# stage_recap N: at most six lines (the cleared panel stays at 19 rows),
+# capability first.
 stage_recap() {
     case "$1" in
         1)
-            recap_line echo 'print the words you give it'
-            recap_line pwd 'show where you are'
-            recap_line whoami 'show who you are'
-            recap_line date 'show the date and time'
-            recap_line clear 'empty the screen (Ctrl+L too)'
-            recap_line Tab 'finish a name for you' "$BOLD"
-            recap_line Up 'bring back an earlier command' "$BOLD"
-            recap_line Ctrl+C 'stop a running command' "$BOLD"
+            can_line 'say something back' echo
+            can_line 'find where you are' pwd
+            can_line 'find out who you are, when' whoami date
+            can_line 'clear the screen' clear Ctrl+L
+            can_line 'finish a name, reuse a line' Tab Up
+            can_line 'stop a running command' Ctrl+C
             ;;
         2)
-            recap_line ls 'list what is here'
-            recap_line 'ls -p' 'mark folders with /'
-            recap_line 'ls -a' 'include hidden names'
-            recap_line cd 'change folder'
-            recap_line 'cd ..' 'go up one folder'
-            recap_line 'cd ~' 'go to your home folder'
-            recap_line 'cd -' 'go back to the last folder'
-            recap_line pwd 'show where you are'
+            can_line 'find where you are' pwd
+            can_line 'see what is here' ls 'ls -p' 'ls -a'
+            can_line 'move' cd 'cd ..' 'cd ~' 'cd -'
+            can_line 'make a folder' mkdir
             ;;
         3)
-            recap_line touch 'make an empty file'
-            recap_line mkdir 'make a folder'
-            recap_line rmdir 'remove an empty folder'
-            recap_line cat 'print a file'
-            recap_line less 'page through a file (q leaves)'
-            recap_line cp 'copy a file'
-            recap_line mv 'move or rename a file'
-            recap_line rm 'delete a file (no undo)'
+            can_line 'make an empty file' touch
+            can_line 'make or remove a folder' mkdir rmdir
+            can_line 'read a file' cat less
+            can_line 'copy, move or rename' cp mv
+            can_line 'delete a file (no undo)' rm
             ;;
         4)
-            recap_line 'command -v' 'is this program installed?'
-            recap_line wc 'count lines and words'
-            recap_line seq 'count out numbers'
-            recap_line head 'show the first lines only'
-            recap_line sort 'put lines in order'
-            recap_line grep 'keep the lines that match'
-            recap_line '|' 'feed one output into the next command'
-            recap_line '>  >>  <  *' 'to a file, add, from a file, match many'
+            can_line 'ask if a program is there' 'command -v'
+            can_line 'count, order, filter' wc sort grep
+            can_line 'take the first lines, count out' head seq
+            can_line 'chain commands' '|'
+            can_line 'send output to a file' '>' '>>'
+            can_line 'read input, match many names' '<' '*'
             ;;
     esac
 }
@@ -2767,14 +2817,15 @@ stage_cleared() {
     next_title="$REPLY"
     PANEL_STAGE=''; PANEL_POS=''; PANEL_DONE=$n
     show_screen cleared <<RECAP
-${H1}Stage ${n} cleared.${RST}
+${H1}Stage ${n} cleared${RST}
 
-You can now:
+You can now
+
 $(stage_recap "$n")
 
-${DIM}Next: Stage ${next} ${G_DOT_SEP} ${next_title}${RST}
+Next: Stage ${next} ${G_DOT_SEP} ${next_title}
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage ${next}, or ${CMD}quit${INSTR} to stop here. Your place is saved.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to go on, or ${CMD}quit${INSTR} to stop here. Your place is saved.${RST}
 RECAP
     practice "$SANDBOX"
     return $?
