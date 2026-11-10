@@ -1069,38 +1069,39 @@ box_edge() {
     printf '%s%s%s%s%s\n' "$RULE" "$1" "$REPLY" "$2" "$RST"
 }
 
-# welcome (A11 C8): a rounded box with the identity line, the course map and
-# the sandbox line, then the footer, rule and a blank row. No header row.
+# welcome (A11 C8, A12): a rounded box with the identity line, the course map
+# (one stage per row, a dot each; passed stages filled and green on a resume)
+# and the practice-folder sentence, then the footer, rule and a blank row. No
+# header row. The plain text passed to box_row is ASCII, so its length is its
+# width in either glyph set.
 welcome() {
-    local i prog map='' title plain_map=''
+    local i prog title dot
     prog=$(read_progress)
     clear 2>/dev/null || printf '\n'
     box_edge "$G_RTL" "$G_RTR"
     box_row "shelltutor$(printf '%*s' $((PANEL_COLS - 6 - 10 - 23)) '')working in a Unix shell" \
         "${H1}shelltutor${RST}$(printf '%*s' $((PANEL_COLS - 6 - 10 - 23)) '')${DIM}working in a Unix shell${RST}"
     box_row ''
-    box_row 'Five stages. Each is a few short lessons, then one task you have to pass.'
-    box_row 'No timer, no score. Try as many times as you like.'
+    box_row 'Five stages, each a few short lessons and one task to pass:'
     box_row ''
-    box_row 'Everything you type runs in a real shell. The tutor only writes inside'
-    box_row 'its own sandbox folder; what you run yourself is really run.'
-    box_row ''
-    # The plain text is ASCII so its length is its width in either glyph set.
-    box_row "> Type next to begin." "${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin.${RST}"
-    box_edge "$G_RBL" "$G_RBR"
-    printf '\n'
     for ((i = 1; i <= 5; i++)); do
         panel_title "$i"
         title="$REPLY"
         if [ "$i" -le "$prog" ]; then
-            map="${map}${OK}${G_DONE}${RST}"
+            dot="${OK}${G_DONE}${RST}"
         else
-            map="${map}${DIM}${G_TODO}${RST}"
+            dot="${DIM}${G_TODO}${RST}"
         fi
-        plain_map="${plain_map}  ${title}"
+        box_row "  - Stage $i   $title" "  ${dot} ${DIM}Stage ${i}${RST}   ${title}"
     done
-    printf ' %s %s%s%s\n\n' "$map" "$DIM" "${plain_map# }" "$RST"
-    printf '%sSandbox: %s%s\n\n' "$DIM" "$SANDBOX" "$RST"
+    box_row ''
+    box_row 'Everything you type runs in a real shell. The tutor made a practice'
+    box_row 'folder for you and only ever writes there. No timer, no score; try as'
+    box_row 'many times as you like.'
+    box_row ''
+    box_row "> Type next to begin." "${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin.${RST}"
+    box_edge "$G_RBL" "$G_RBR"
+    printf '\n'
     printf '%s\n' "$(footer_bar lesson '')"
     panel_lower_rule
     printf '\n'
