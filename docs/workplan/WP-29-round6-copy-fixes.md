@@ -1,9 +1,9 @@
 ---
-title: WP-29 — Round-6 copy fixes (F-031, O-AY..O-BG) — awaiting operator approval
+title: WP-29 — Round-6 copy fixes (F-031, O-AY..O-BG)
 category: planning
 component: workplan
-status: drafted
-version: 0.1.0
+status: ready
+version: 0.2.0
 last_updated: 2026-11-09
 tags: [workplan, lessons, copy, recall, round6]
 priority: medium
@@ -12,8 +12,7 @@ priority: medium
 # WP-29 — Round-6 copy fixes
 
 **Governing text**: `audit/2026-11-09/walkthroughs.md` round 6 (F-031,
-O-AY..O-BG). **Status**: drafted for operator approval; nothing is
-implemented. **Tier**: core standard; no synthetic round of its own (it
+O-AY..O-BG). **Status**: approved in full by the operator on 2026-11-09 (A14). **Tier**: core standard; no synthetic round of its own (it
 rides with WP-28's). WP-28 (modules) follows this package.
 
 ## Proposed wording

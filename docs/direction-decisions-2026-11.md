@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.13.0
+version: 0.14.0
 last_updated: 2026-11-09
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -969,6 +969,18 @@ Stage 2, `cd /tmp`, `rmdir`, the intro command tables); "working copy" for
 rehearsed in the lesson before it; the practice-folder thread of A12
 without the hidden-folder beat. The synthetic loop resumes for one round
 after it lands. Modules follow in WP-28.
+
+### A14 — Round-6 copy fixes approved (2026-11-09)
+
+After synthetic round 6 (all three personas at the finale on the 28-lesson
+course; every gate task passed on the first `check`; F-031, O-AY..O-BG in
+`audit/2026-11-09/walkthroughs.md`) the operator approved
+`docs/workplan/WP-29-round6-copy-fixes.md` in full: the 2.3–2.5 copy, the
+small wording and defined terms, the stage-folder line in the Stage 3–5
+intros, the cleared-list corrections, the Stage 5 Q3 exact forms, and Leo
+persona v0.3 with a scripted error schedule (round 6 was a weak test of
+the child persona). WP-28 (modules, `SHELLTUTOR_HOME` beat) follows, and
+one synthetic round covers both packages.
 
 ## Cross-references
 
