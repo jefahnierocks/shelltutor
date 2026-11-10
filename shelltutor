@@ -2915,7 +2915,8 @@ EOF
 
 # The file must exist and hold exactly what `command -v zsh` prints on this
 # machine (nothing, when zsh is not installed). The tutor's PATH is the
-# practice shell's PATH.
+# practice shell's PATH. The gate checks the content, not which command made it
+# (A15): `which zsh > zsh.txt` passes, and so does `command -v zsh > zsh.txt`.
 module_shells_verify_task() {
     local want
     want=$(command -v zsh 2>/dev/null || true)
@@ -3001,8 +3002,8 @@ EOF
         case "$rc" in
             "$RC_CHECK")
                 if ! gate_require_history "$hist_mark" \
-                    "ask the shell where zsh is: command -v zsh" \
-                    'command[[:space:]]+-v[[:space:]]+zsh'; then
+                    "ask the shell where zsh is: command -v zsh or which zsh" \
+                    '(command[[:space:]]+-v|which)[[:space:]]+zsh'; then
                     attempt=$((attempt + 1))
                     gate_escalate "$attempt" \
                         "command -v zsh prints where zsh is, or nothing; > sends it to a file." \
@@ -3225,6 +3226,11 @@ EOF
     return $?
 }
 
+# The task needs `export TOPIC` in the history as well as shell in seen.txt (a
+# double-quoted bash -c "echo $TOPIC" would fill the file without any export).
+# The gate cannot tell single from double quotes in the bash -c line once the
+# variable is exported, so it checks what it can: the three history lines and
+# the file's content (A15).
 module_env_verify_task() {
     [ -f "$SANDBOX/env/seen.txt" ] || return 1
     [ "$(cat "$SANDBOX/env/seen.txt")" = "shell" ] || return 1
@@ -3312,8 +3318,8 @@ EOF
                 if ! gate_require_history "$hist_mark" \
                     'set TOPIC to shell: TOPIC=shell' 'TOPIC=shell' \
                     'export TOPIC' 'export[[:space:]]+TOPIC' \
-                    'a child bash -c that reads $TOPIC inside single quotes' \
-                    '(ba)?sh[[:space:]]+-c[[:space:]]+'\''[^'\'']*\$\{?TOPIC'; then
+                    'a child bash -c that prints $TOPIC' \
+                    '(ba)?sh[[:space:]]+-c([[:space:]]|$)'; then
                     attempt=$((attempt + 1))
                     gate_escalate "$attempt" \
                         "Set it, export it, then bash -c with single quotes around echo \$TOPIC and > seen.txt." \
