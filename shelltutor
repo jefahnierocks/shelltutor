@@ -1580,12 +1580,12 @@ stage2_lesson_3() {
     lesson <<EOF
 ${H1}Moving${RST}
 
-${CMD}cd${RST} changes the folder you are standing in. It prints nothing; ${CMD}pwd${RST}
-shows that it worked.
+${CMD}cd${RST} changes the folder you are standing in. It usually prints nothing; ${CMD}pwd${RST}
+shows where you are.
 
   ${CMD}cd ..${RST}      ${DIM}# up one level, to the folder that contains this one${RST}
   ${CMD}pwd${RST}        ${DIM}# see where you are now${RST}
-  ${CMD}cd -${RST}       ${DIM}# back to where you just were${RST}
+  ${CMD}cd -${RST}       ${DIM}# back to where you just were (it prints the place)${RST}
 
 ${CMD}cd..${RST} with no space is a different word, and bash cannot find it.
 
@@ -1602,9 +1602,10 @@ Every user has a home folder. ${BOLD}~${RST} is its short name.
 
   ${CMD}cd${RST}                 ${DIM}# with nothing after it: go home${RST}
   ${CMD}pwd${RST}                ${DIM}# home is outside your practice folder${RST}
-  ${CMD}cd ${SANDBOX}${RST}  ${DIM}# come back, using the folder's full name${RST}
+  ${CMD}cd ${SANDBOX}${RST}
 
-A full name works from anywhere. That is what makes it a full name.
+The last line uses your practice folder's full name. A full name works
+from anywhere.
 
 ${INSTR}${G_PLAY} Go home and come back, then type ${CMD}next${INSTR}.${RST}
 EOF
@@ -1616,17 +1617,17 @@ stage2_lesson_5() {
 ${H1}Names for places${RST}
 
 A ${BOLD}path${RST} names a place. Three short names:
-  ${BOLD}.${RST}     here, the current directory
-  ${BOLD}..${RST}    one level up
-  ${BOLD}~${RST}     your home folder
+  ${BOLD}.${RST}  here, the current directory    ${BOLD}..${RST}  one level up    ${BOLD}~${RST}  your home folder
 
 A ${BOLD}relative${RST} path starts where you are: in ~/projects, the name notes
 means ~/projects/notes. An ${BOLD}absolute${RST} path starts from /, the top:
 /usr/bin is the same place wherever you stand.
-  ${CMD}ls ..${RST}      ${DIM}# look one level up without moving${RST}
-  ${CMD}ls ~${RST}       ${DIM}# look at home without moving${RST}
+  ${CMD}cd stage1${RST}      ${DIM}# step into a folder${RST}
+  ${CMD}ls ..${RST}          ${DIM}# look one level up: your practice folder${RST}
+  ${CMD}cd ..${RST}          ${DIM}# go back up${RST}
+  ${CMD}echo ~${RST}         ${DIM}# ~ is a name: echo prints what it stands for${RST}
 
-${INSTR}${G_PLAY} Try both, then type ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all four, then type ${CMD}next${INSTR}.${RST}
 EOF
     return $?
 }
