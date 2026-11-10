@@ -46,12 +46,11 @@ Current truth for the `shelltutor` repository.
 - The synthetic loop is paused (2026-11-09) and resumes only when a package
   changes lesson content (ROADMAP Phase 5); WP-24 landed at `7489d50`.
 - Amendment A11 (2026-11-09) adopted the outside design review (chrome v2).
-  WP-25 (rendering only) is in progress; WP-26 (lesson skeleton and body
-  rewrite) is drafted and waits for it.
-- Open: the identity line. "A vimtutor prerequisite course" is retired in the
-  docs; the script, harness sentinel and smoke strings change in WP-25 and the
-  item is closed when that lands (lands in WP-25). Also open: WP-08 part B
-  (CHANGELOG, `v0.1.0`), which human sittings gate (A1.10).
+  WP-25 (rendering only) landed at `dd297d2`; WP-26 (lesson skeleton and body
+  rewrite) is drafted and is next, with per-lesson approval.
+- The identity line is closed: "working in a Unix shell" in the script, the
+  harness sentinel and the docs (WP-25). Open: WP-08 part B (CHANGELOG,
+  `v0.1.0`), which human sittings gate (A1.10).
 
 ### The 2026-11 cycle, in one place
 
@@ -77,7 +76,7 @@ documents agree with the code.
 | WP-14 | `2873636` | Stages 1–2 grounding: 1.4 shows the shell speaking (`dtae`); Stage 2 has four lessons and opens with a drawn tree and `pwd`; `ls -p` replaces `ls -l`; expected-error screens in the harness. |
 | WP-18 | `f372da1` | Stages 3–5 and the finale to the screen budget (A5, O-J): every screen at most 18 heredoc lines and 22 rendered rows; 4.3 split (Stage 4 has four lessons), 5.3 split (Stage 5 has five); no command removed, gates unchanged. |
 | WP-13 C–D, WP-16 | `486e7ac` | Module entry (`./shelltutor shells`; C-001, C-003), the module standard and screen template in `CONTRIBUTING.md`, identity and non-goals reframed, and the `shells` module. Module bundle `audit/2026-11-08/sim/module-shells/`: macOS only (hosted Linux pending). |
-| WP-25 | branch `wp/25-chrome-v2` | Screen chrome v2 (A11; consultant response), rendering only: footer above the rule, blank before the prompt, `▶` isolated, 19-row panel budget; header without the product name on lessons and gates, titles without `N.k —`; progressive footer with `(gloss)`; BOLD role (SUB/KEY/DIR out of core bodies); width-stable glyph pairs; recall `┃ N of 3` with a `┃ ? ` prompt (the hint stays on the first miss, A7); `[✓]`/`[ ]` checklist with `seen:`; welcome box and identity line; capability-first cleared screens and finale; "answer in words" on every gate intro. `run.py --ascii`, `compare_heights.py`. Bundles `audit/2026-11-09/sim/wp25-*`. |
+| WP-25 | `dd297d2` | Screen chrome v2 (A11; consultant response), rendering only: footer above the rule, blank before the prompt, `▶` isolated, 19-row panel budget; header without the product name on lessons and gates, titles without `N.k —`; progressive footer with `(gloss)`; BOLD role (SUB/KEY/DIR out of core bodies); width-stable glyph pairs; recall `┃ N of 3` with a `┃ ? ` prompt (the hint stays on the first miss, A7); `[✓]`/`[ ]` checklist with `seen:`; welcome box and identity line; capability-first cleared screens and finale; "answer in words" on every gate intro. `run.py --ascii`, `compare_heights.py`. Bundles `audit/2026-11-09/sim/wp25-*`. |
 | WP-24 | `7489d50` | Matcher tightening after the exit test (A10; F-029, F-030, O-AR, O-AS, O-AT): 36 probe reject rows (FF-011 now 235 cases), one-word groups replaced by lesson phrases, `--ordered` groups for Stage 4 Q2, `--reject` phrases on fifteen questions, parentheses and semicolons normalised, Stage 5 Q2 forms, three screen lines. Bundles `audit/2026-11-09/sim/wp24-*`. |
 | WP-23 | `7e126cf` | Keyword matching for recall (A10; F-025..F-028, O-AN): `ask_question` takes exact forms or keyword groups with a negation guard, groups for all 21 questions, FF-009 extended to keyword phrases, six hints reworded, shape line removed, **FF-011** matcher corpus (184 cases) in `make check`; 3.1 teaches `echo hello > notes.txt`. Part C (sitting hygiene) is a6's. Bundles `audit/2026-11-09/sim/wp23-*`. |
 | WP-22 | `13847ef` | Stage 2 sequencing and defect fixes (A9; F-021..F-024, O-AG, O-AI, O-AK): 2.4 teaches `mkdir`; the first gate `check` lists both items and needs the folder; `~` and Stage 4 Q1 take the lessons' words; Ctrl+C truth in 1.2, `q` in 3.2's try-it, 3.3 asks to type `cp`/`mv`/`rm`; **FF-010** (every recall hint starts `Lesson N: `) in `make check`, eleven hints reworded. Bundles `audit/2026-11-09/sim/wp22-*`. |
@@ -223,13 +222,10 @@ documents agree with the code.
 
 ## Immediate Next Steps
 
-1. **WP-25 — chrome v2, rendering only** (`docs/workplan/WP-25-chrome-v2.md`;
-   in progress): the response's footer, palette, glyphs, recall block,
-   checklist, welcome, cleared and finale, and the identity strings.
-2. **WP-26 — lesson skeleton and body rewrite**
+1. **WP-26 — lesson skeleton and body rewrite**
    (`docs/workplan/WP-26-lesson-skeleton.md`; drafted): per-lesson approval,
    then one synthetic round as its evidence.
-3. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
+2. **WP-08 part B — release prep**: `CHANGELOG.md` and the `v0.1.0` inputs. The
    tag waits for human evidence (A1.10): the Phase A sittings (one on macOS
    `/bin/bash` 3.2 with `echo $BASH_VERSION` recorded) and the Phase 2 items that
    need a person (Debian/Ubuntu walk, no-TTY negative test, the
