@@ -240,8 +240,10 @@ def stage_walk(
             _intro(2)
             + _lesson(2, 1, ["pwd"])
             + _lesson(2, 2, ["ls", "ls -p", "ls -a", "ls /"])
-            + _lesson(2, 3, ["cd /tmp", "pwd", "cd", "cd -", "cd ..", "cd " + sandbox_root])
-            + _lesson(2, 4, [])
+            + _lesson(2, 3, ["cd ..", "pwd", "cd -"])
+            + _lesson(2, 4, ["cd", "pwd", "cd " + sandbox_root])
+            + _lesson(2, 5, ["ls ..", "ls ~"])
+            + _lesson(2, 6, ["mkdir demo", "ls -p", "cd demo", "pwd"])
             + _recall(2, ["goes up one folder", "home folder", "~/projects/notes"], second_try)
             + [Action("S2_TASK", "", "render-gate-task", "S2-GT")]
             + _gate_commands(

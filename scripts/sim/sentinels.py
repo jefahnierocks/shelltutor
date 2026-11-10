@@ -46,11 +46,13 @@ SENTINELS = {
 # handles the order because the gate screen renders first.
 SENTINELS.update(
     {
-        "S2_INTRO": "STAGE 2 — Paths and the filesystem",
+        "S2_INTRO": "Stage 2: Paths",
         "S2_L1": "Where you are",
-        "S2_L2": "ls: what is here",
-        "S2_L3": "cd: moving",
-        "S2_L4": "Names for places",
+        "S2_L2": "What is here",
+        "S2_L3": "Moving",
+        "S2_L4": "Home and back",
+        "S2_L5": "Names for places",
+        "S2_L6": "Making a folder",
         "S2_GATE": "STAGE 2 — GATE",
         "S2_Q1": "What does cd .. do?",
         "S2_Q2": "What does ~ mean in a path?",

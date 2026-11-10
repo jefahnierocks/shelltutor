@@ -1540,112 +1540,126 @@ run_stage1() {
 
 stage2_intro() {
     lesson <<EOF
-${H1}STAGE 2 — Paths and the filesystem${RST}
+${H1}Stage 2: Paths${RST}
 
-Four lessons, then a gate. The shell is always ${BOLD}somewhere${RST} in
-the filesystem; this stage teaches you to see where, look around,
-move, and predict where files land.
+Six short lessons, then a task. The shell is always standing in one
+folder. You'll learn to see where, look around, and move.
 
-You'll use:
-  ${CMD}pwd${RST}   print where you are now
-  ${CMD}ls${RST}    list what's in the current folder
-  ${CMD}cd${RST}    change to another folder
-
-And the path symbols:
-  ${BOLD}.${RST}     this folder
-  ${BOLD}..${RST}    the parent folder
-  ${BOLD}~${RST}     your home folder
-
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to begin lesson 2.1.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 2.1.${RST}
 EOF
+    return $?
 }
 
 stage2_lesson_1() {
     lesson <<EOF
 ${H1}Where you are${RST}
 
-A folder can hold files and other folders. You are always standing
-in one folder; the shell calls it the ${BOLD}current directory${RST}.
-Your practice folder looks like this:
-
-  ${SANDBOX}${RST}  ${INSTR}${G_BACK} you are here${RST}
+You are always standing in one folder: the ${BOLD}current directory${RST}. Here
+is your practice folder, drawn as a tree:
+  ${SANDBOX}  ${INSTR}${G_BACK} you are here${RST}
   ${G_TEE_L}${G_RULE}${G_RULE} poem.txt
   ${G_TEE_L}${G_RULE}${G_RULE} numbers.txt
   ${G_TEE_L}${G_RULE}${G_RULE} stage1/
   ${G_BL}${G_RULE}${G_RULE} stage2/
 
-${CMD}pwd${RST} prints the name of the current directory.
-Predict what it will print, then run it.
+  ${CMD}pwd${RST}        ${DIM}# predict what it prints, then run it${RST}
+The line ${CMD}pwd${RST} prints is the full name of the "you are here" folder.
 
 ${INSTR}${G_PLAY} Run ${CMD}pwd${INSTR}, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage2_lesson_2() {
     lesson <<EOF
-${H1}ls: what is here${RST}
+${H1}What is here${RST}
 
-${CMD}ls${RST} lists the names in the current directory.
+${CMD}ls${RST} lists the names in the folder you are standing in.
 
-  ${CMD}ls${RST}            ${DIM}# names only${RST}
-  ${CMD}ls -p${RST}         ${DIM}# folders end in /${RST}
-  ${CMD}ls -a${RST}         ${DIM}# also hidden names: those starting with .${RST}
+  ${CMD}ls${RST}            ${DIM}# the names${RST}
+  ${CMD}ls -p${RST}         ${DIM}# the same, with / after each folder${RST}
+  ${CMD}ls -a${RST}         ${DIM}# also the hidden names, which start with a dot${RST}
+  ${CMD}ls /${RST}          ${DIM}# a folder you are not in: the top of everything${RST}
 
-Predict which names will end in ${CMD}/${RST}, then run ${CMD}ls -p${RST}. The
-tutor keeps its own hidden files here; ${CMD}ls -a${RST} shows them.
+Notice stage1/ in the second listing: the slash means a folder you
+could step into.
 
-Then ${CMD}ls${RST} a folder you are not in:
-  ${CMD}ls /${RST}          ${DIM}# the top of everything${RST}
-  ${CMD}ls /usr/bin${RST}   ${DIM}# long: many commands live here${RST}
-
-${INSTR}${G_PLAY} Try a few, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all four, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage2_lesson_3() {
     lesson <<EOF
-${H1}cd: moving${RST}
+${H1}Moving${RST}
 
-${CMD}cd${RST} changes your current folder.
+${CMD}cd${RST} changes the folder you are standing in. It prints nothing; ${CMD}pwd${RST}
+shows that it worked.
 
-  ${CMD}cd /tmp${RST}       ${DIM}# go to /tmp${RST}
-  ${CMD}pwd${RST}           ${DIM}# confirm you got there${RST}
-  ${CMD}cd${RST}            ${DIM}# your home folder, outside this practice area${RST}
-  ${CMD}cd ~${RST}          ${DIM}# also your home folder (~ is its short name)${RST}
-  ${CMD}cd -${RST}          ${DIM}# come back to where you were${RST}
-  ${CMD}cd ..${RST}         ${DIM}# go up one level (to the parent folder)${RST}
+  ${CMD}cd ..${RST}      ${DIM}# up one level, to the folder that contains this one${RST}
+  ${CMD}pwd${RST}        ${DIM}# see where you are now${RST}
+  ${CMD}cd -${RST}       ${DIM}# back to where you just were${RST}
 
-${CMD}cd..${RST} with no space is a different word; bash cannot find it.
+${CMD}cd..${RST} with no space is a different word, and bash cannot find it.
 
-${EM}Stages 1 and 2 start every practice prompt in${RST} ${SANDBOX}${RST}${EM}.${RST}
-Later stages start in a stage folder inside it. If you wander off,
-${CMD}cd ${SANDBOX}${RST} brings you back.
-
-${INSTR}${G_PLAY} Try ${CMD}cd ..${INSTR}, ${CMD}pwd${INSTR}, then ${CMD}cd -${INSTR}, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try all three, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
 }
 
 stage2_lesson_4() {
     lesson <<EOF
+${H1}Home and back${RST}
+
+Every user has a home folder. ${BOLD}~${RST} is its short name.
+
+  ${CMD}cd${RST}                 ${DIM}# with nothing after it: go home${RST}
+  ${CMD}pwd${RST}                ${DIM}# home is outside your practice folder${RST}
+  ${CMD}cd ${SANDBOX}${RST}  ${DIM}# come back, using the folder's full name${RST}
+
+A full name works from anywhere. That is what makes it a full name.
+
+${INSTR}${G_PLAY} Go home and come back, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
+}
+
+stage2_lesson_5() {
+    lesson <<EOF
 ${H1}Names for places${RST}
 
-Three short names point at places in the tree you have seen:
-  ${BOLD}.${RST}    here, the current directory
-  ${BOLD}..${RST}   one level up, the parent
-  ${BOLD}~${RST}    your home folder
+A ${BOLD}path${RST} names a place. Three short names:
+  ${BOLD}.${RST}     here, the current directory
+  ${BOLD}..${RST}    one level up
+  ${BOLD}~${RST}     your home folder
 
-A ${BOLD}path${RST} names a place. ${BOLD}Relative${RST} paths start where you are:
-  ${DIM}practice/notes.txt${RST}   a file inside a subfolder
-  ${DIM}../notes.txt${RST}         a file in the parent folder
-${BOLD}Absolute${RST} paths start from the root, ${BOLD}/${RST}:
-  ${DIM}/etc/hosts${RST}   ${DIM}/usr/bin/vim${RST}
+A ${BOLD}relative${RST} path starts where you are: in ~/projects, the name notes
+means ~/projects/notes. An ${BOLD}absolute${RST} path starts from /, the top:
+/usr/bin is the same place wherever you stand.
+  ${CMD}ls ..${RST}      ${DIM}# look one level up without moving${RST}
+  ${CMD}ls ~${RST}       ${DIM}# look at home without moving${RST}
 
-${EM}Predict before you act.${RST}  In ${DIM}~/projects${RST}, the bare name ${DIM}notes${RST} means ${DIM}~/projects/notes${RST}.
-
-  ${CMD}mkdir name${RST}    ${DIM}# make a folder called name, right here${RST}
-
-${INSTR}${G_PLAY} Try ${CMD}mkdir demo${INSTR}, ${CMD}ls -p${INSTR}, then ${CMD}next${INSTR}.${RST}
+${INSTR}${G_PLAY} Try both, then type ${CMD}next${INSTR}.${RST}
 EOF
+    return $?
+}
+
+stage2_lesson_6() {
+    lesson <<EOF
+${H1}Making a folder${RST}
+
+${CMD}mkdir${RST} makes a new folder inside the one you are standing in.
+
+  ${CMD}mkdir demo${RST}     ${DIM}# make it${RST}
+  ${CMD}ls -p${RST}          ${DIM}# demo/ is in the list${RST}
+  ${CMD}cd demo${RST}        ${DIM}# step into it${RST}
+  ${CMD}pwd${RST}            ${DIM}# its full name ends in /demo${RST}
+
+You'll do exactly this in the task that follows.
+
+${INSTR}${G_PLAY} Try all four, then type ${CMD}next${INSTR}.${RST}
+EOF
+    return $?
 }
 
 
@@ -1685,7 +1699,7 @@ EOF
 
     ask_question \
         "Q2: What does ${CMD}~${RST} mean in a path?" \
-        "Lesson 2.3: where ${CMD}cd${RST} with nothing after it takes you." \
+        "Lesson 2.4: where ${CMD}cd${RST} with nothing after it takes you." \
         'home' \
         'home folder' \
         'home directory' \
@@ -1709,7 +1723,7 @@ EOF
     # shellcheck disable=SC2088  # literal ~/projects/notes is the expected learner answer (no tilde expansion intended here)
     ask_question \
         "Q3: If I'm in ${DIM}~/projects${RST} and I type ${CMD}cd notes${RST}, what folder am I in?" \
-        "Lesson 2.4: a relative name starts from the folder you are already in." \
+        "Lesson 2.5: a relative name starts from the folder you are already in." \
         '~/projects/notes' \
         '$home/projects/notes' \
         'projects/notes' \
@@ -1735,7 +1749,7 @@ Inside the practice prompt, do these (in any order):
 Then type ${CMD}check${RST}.
 
 ${DIM}I will check that the folder exists, and how you got there.${RST}
-${DIM}The task runs in this stage's own folder; ${CMD}pwd${DIM} shows it.${RST}
+${DIM}This task runs in ${SANDBOX}/stage2; ${CMD}pwd${DIM} shows it.${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
@@ -1786,7 +1800,7 @@ run_stage2() {
     # Lesson 2.1 draws the practice folder; the fixtures are constants (C-003).
     setup_stage_dir 1
     setup_stage_dir 2
-    local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3 stage2_lesson_4)
+    local lessons=(stage2_intro stage2_lesson_1 stage2_lesson_2 stage2_lesson_3 stage2_lesson_4 stage2_lesson_5 stage2_lesson_6)
     local i=0
     while [ "$i" -lt "${#lessons[@]}" ]; do
         panel_at 2 "${lessons[$i]}"
