@@ -3,7 +3,7 @@ title: Persona — Leo (gamer-brute-forcer)
 category: process
 component: sim-personas
 status: active
-version: 0.2.0
+version: 0.3.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, persona, child]
 priority: medium
@@ -43,6 +43,26 @@ video tutorials to install shader packs, with no idea what they do.
 - **Boredom threshold.** Three reading screens without a practice prompt
   and he types `next` or Enter without reading, arriving at the gate
   blind and leaning on the ladder.
+
+## Scripted errors (mandatory)
+
+Leo's habits are a schedule, not a mood: the persona session performs them even
+when it judges that Leo would have got the thing right (round 6 showed a model
+that knows the commands will not produce them unprompted). Each is marked
+"scripted" in the sheet at the turn where it happens.
+
+- **(a) Leading slash.** The first command of each stage is typed with a leading
+  slash (`/pwd`, `/ls`, `/cd`, ...). He retypes it correctly only after reading
+  the error.
+- **(b) One-word guess at the first recall answer.** At each gate the first
+  recall answer is a one-word guess taken from the last command he typed. It is
+  scored per rule 6 (a rejection he does not understand costs +2; an accepted
+  guess costs nothing).
+- **(c) `check` first.** At the first gate task (Stage 1) he types `check`
+  before doing anything, and reads the checklist that comes back.
+
+These are in addition to the triggers above. The sheet records, for each, the
+screen, the exact input and the word "scripted".
 
 ## Reading
 

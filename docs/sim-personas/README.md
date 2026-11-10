@@ -3,7 +3,7 @@ title: Synthetic learner personas
 category: process
 component: sim-personas
 status: active
-version: 0.2.0
+version: 0.3.0
 last_updated: 2026-11-09
 tags: [phase-a-sim, personas, synthetic-learner, evidence]
 priority: high
@@ -120,6 +120,22 @@ own version in the sitting block ("Persona sheet version").
   | arthur-5 | -5 | 0 | 0 | 0 | -5 |
 
   The loop is paused after round 5 (A10 item 4). Persona sheets stay at v0.2.
+
+- **Round 6** (`audit/2026-11-09/walkthroughs.md`, WP-25..WP-27 tutor, script
+  `2cb3f53`, turn cap 220; all v0.2). All three reached the finale. Friction by
+  source:
+
+  | Sheet | Final | Reading charges | Rejections (+2 each) | Mode confusion | Gates cleared |
+  | --- | ---: | ---: | ---: | ---: | ---: |
+  | leo-6 | -4 | 1 | 0 | 0 | -5 |
+  | maya-6 | -5 | 0 | 0 | 0 | -5 |
+  | arthur-6 | -3 | 0 | 2 | 0 | -5 |
+
+- **Leo v0.3** (amendment A14, simulation calibration only). Leo has a scripted
+  error schedule because round 6's sheet recorded none of his habits (no leading
+  slash, no brute-force guess, no blind arrival) and its debrief said the errors
+  could not be honestly produced; scripting them keeps the child persona a real
+  test of the rejection and hint paths.
 
 ## Running a sitting
 
