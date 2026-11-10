@@ -1177,7 +1177,7 @@ it is, who you are, and what time it is.
   ${CMD}whoami${RST}     ${DIM}# who: your user name${RST}
   ${CMD}date${RST}       ${DIM}# when: the date and time${RST}
 
-${CMD}pwd${RST} printed the full name of your practice folder.
+${CMD}pwd${RST} prints the full name of your practice folder.
 This prompt ends in ${CMD}>${RST}. An ordinary bash prompt usually ends in ${CMD}\$${RST}.
 
 ${INSTR}${G_PLAY} Run all three, then type ${CMD}next${INSTR}.${RST}
@@ -1823,6 +1823,8 @@ ${H1}Stage 3: Files${RST}
 
 Five short lessons, then a task. You'll make, read, copy, move and
 remove files. One warning now: ${EM}rm removes for good.${RST} There is no Trash.
+This stage runs in its own folder, stage3, with a few files the tutor put
+there; ${CMD}pwd${RST} shows it.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 3.1.${RST}
 EOF
@@ -1833,8 +1835,8 @@ stage3_lesson_1() {
     lesson "$SANDBOX/stage3" <<EOF
 ${H1}Making files${RST}
 
-The tutor put poem.txt and numbers.txt one folder up. Now make your
-own beside them.
+The tutor put poem.txt and numbers.txt one folder up. This stage has a
+folder of its own. Make your files here.
 
   ${CMD}touch hello.txt${RST}            ${DIM}# an empty file${RST}
   ${CMD}echo hi > words.txt${RST}        ${DIM}# a file with the word hi in it${RST}
@@ -2065,6 +2067,8 @@ ${H1}Stage 4: Commands and streams${RST}
 
 Six short lessons, then a task. You'll read a command's parts, then
 join commands together and send what they print into files.
+This stage runs in its own folder, stage4, with a few files the tutor put
+there; ${CMD}pwd${RST} shows it.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 4.1.${RST}
 EOF
@@ -2112,9 +2116,10 @@ stage4_lesson_3() {
     lesson "$SANDBOX/stage4" <<EOF
 ${H1}The pipe${RST}
 
-A pipe, ${CMD}|${RST}, sends what one command prints into the next command.
+What a command prints is a stream of lines. A pipe, ${CMD}|${RST}, sends that stream
+into the next command.
 
-  ${CMD}seq 1 100 | wc -l${RST}              ${DIM}# 100: wc counted seq's lines${RST}
+  ${CMD}seq 1 100 | wc -l${RST}              ${DIM}# seq prints 1 to 100; wc -l counts the lines${RST}
   ${CMD}ls /usr/bin | wc -l${RST}            ${DIM}# how many programs live there${RST}
   ${CMD}ls /usr/bin | sort | head${RST}      ${DIM}# pipes stack: list, sort, first ten${RST}
 
@@ -2170,7 +2175,8 @@ the names before the command runs.
   ${CMD}ls *.txt${RST}         ${DIM}# every name ending in .txt${RST}
   ${CMD}wc -l *.txt${RST}      ${DIM}# count the lines in each one${RST}
 
-Predict before you act: ${CMD}rm *${RST} would remove everything in the folder.
+A name with ${CMD}*${RST} in it is called a ${BOLD}glob${RST}. Predict before you act: ${CMD}rm *${RST}
+would remove everything in the folder.
 
 ${INSTR}${G_PLAY} Try both, then type ${CMD}next${INSTR} for Stage 4's task.${RST}
 EOF
@@ -2358,6 +2364,8 @@ ${H1}Stage 5: Ready for vimtutor${RST}
 Six short lessons, then a task. Some programs take over the whole
 screen. You'll learn to enter and leave them, Vim included. After
 this stage comes vimtutor.
+This stage runs in its own folder, stage5, with a few files the tutor put
+there; ${CMD}pwd${RST} shows it.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for lesson 5.1.${RST}
 EOF
@@ -2411,7 +2419,7 @@ and you edit that. The file changes only when you write it back.
   ${BOLD}:q!${RST}    quit and throw the changes away
   ${BOLD}:wq${RST}    write, then quit
 
-${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to try both.${RST}
+${INSTR}${G_PLAY} Type ${CMD}next${INSTR} to try them in Vim.${RST}
 EOF
     return $?
 }
@@ -2460,7 +2468,7 @@ ${CMD}vimtutor${RST} is a command too. It opens Vim on a copy of a lesson file.
 
   ${CMD}command -v vimtutor${RST}    ${DIM}# a path means it is installed${RST}
 
-No path? On Linux, install the full vim package. On macOS,
+No path? On Linux, install the full vim package. On macOS with Homebrew,
 ${CMD}brew install vim${RST} adds it.
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage 5's task.${RST}
