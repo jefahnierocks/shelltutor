@@ -3,7 +3,7 @@ title: shelltutor Direction Decisions and Expansion Plan — November 2026
 category: planning
 component: direction-decisions
 status: active
-version: 0.15.0
+version: 0.16.0
 last_updated: 2026-11-10
 tags: [design, direction, decisions, roadmap, modules, curriculum, scope, evidence-tiers]
 priority: high
@@ -997,6 +997,21 @@ five lesson screens to three to six. Review rule recorded for future
 module packages: module content gets a shell-detail read (globbing,
 quoting, what a command really prints, what the harness waits for) before
 approval.
+
+### A16 — Round-7 fixes approved (2026-11-10)
+
+After synthetic round 7 (Maya and Arthur at the finale with their habits
+played; both modules cleared by a persona; Leo on v0.3 quitting at the
+Stage 1 gate; F-032, F-033, O-BH..O-BO in
+`audit/2026-11-09/walkthroughs.md`) the operator approved
+`docs/workplan/WP-30-round7-fixes.md` in full: `ps -p $$ -o pid,comm` in
+shells 1 (the earlier `ps` claims were true only inside the harness);
+one-word exact forms, reject phrases and a new hint at Stage 1 Q2; the
+stray-slash sentence in 1.1; the backslash, `<Enter>`, 5.3, 3.1 and `env`
+aside lines; 5.6 and the finale addressed to the learner first; Leo
+persona v0.3.1 scoring scripted errors on recovery. The two items listed
+as considered and not proposed stay unproposed. One more synthetic round
+follows the package.
 
 ## Cross-references
 

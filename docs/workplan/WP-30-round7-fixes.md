@@ -1,9 +1,9 @@
 ---
-title: WP-30 — Round-7 fixes (F-032, F-033, O-BH..O-BO) — awaiting operator approval
+title: WP-30 — Round-7 fixes (F-032, F-033, O-BH..O-BO)
 category: planning
 component: workplan
-status: drafted
-version: 0.1.0
+status: ready
+version: 0.2.0
 last_updated: 2026-11-10
 tags: [workplan, lessons, modules, recall, copy, round7]
 priority: high
@@ -12,8 +12,7 @@ priority: high
 # WP-30 — Round-7 fixes
 
 **Governing text**: `audit/2026-11-09/walkthroughs.md` round 7 (F-032,
-F-033, O-BH..O-BO). **Status**: drafted for operator approval; nothing is
-implemented. **Tier**: core standard for the core items, module standard
+F-033, O-BH..O-BO). **Status**: approved in full by the operator on 2026-11-10 (A16). **Tier**: core standard for the core items, module standard
 for the module items; shell-detail read done per the A15 rule (each
 command below was run on macOS; Linux behaviour reasoned from POSIX and
 to be confirmed by the workflow).
