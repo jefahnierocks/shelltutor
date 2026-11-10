@@ -404,6 +404,9 @@ PANEL_POS=''
 PANEL_DONE=''
 PANEL_MODULE=''
 PANEL_COLS=80
+# Panel rows (header through lower rule): the budget is 19 (A11, enforced by the
+# harness); lessons may run to this hard cap of 21 until WP-26 cuts them.
+PANEL_HARD_CAP=21
 
 # panel_rule N  -> sets REPLY to N rule glyphs.
 panel_rule() {
@@ -484,9 +487,14 @@ footer_item() {
     printf '%s%s%s%s %s %s%s' "$KEY" "$1" "$RST" "$DIM" "$G_HINT" "$2" "$RST"
 }
 
-# footer_bar MODE: one DIM row, the mode's verb first (A3.3).
+# footer_bar MODE [STAGE]: one DIM row, the mode's verb first (A3.3).
 footer_bar() {
     case "$1" in
+        recall)
+            printf '%s   %s' \
+                "$(footer_item show 'the question again')" \
+                "$(footer_item quit 'save and leave')"
+            ;;
         gate)
             printf '%s   %s   %s' \
                 "$(footer_item check 'test your work')" \
@@ -539,15 +547,11 @@ farewell_exit() {
 
 practice() {
     local pd="${1:-$SANDBOX}"
-    local mode="${2:-lesson}"
     setup_sandbox
     mkdir -p "$pd"
 
-    # Context-aware footer bar (A3.3). At a lesson the most likely next
-    # action is `next`; at a gate it is `check`. Showing the wrong verb at
-    # the wrong time trains the learner to type the wrong thing.
-    local footer
-    footer=$(footer_bar "$mode")
+    # The footer is part of the panel now (show_screen prints it above the
+    # lower rule, A11): the shell zone below the rule holds only the prompt.
 
     # Feed the rcfile on fd 3 instead of process substitution. macOS Bash
     # 3.2 can parse <(...) here but does not reliably load it as --rcfile.
@@ -603,8 +607,6 @@ prev()  { exec >/dev/null 2>&1; builtin exit 98; }
 show()  { exec >/dev/null 2>&1; builtin exit 97; }
 quit()  { exec >/dev/null 2>&1; builtin exit 99; }
 exit()  { exec >/dev/null 2>&1; builtin exit 99; }
-
-printf '%s\\n' "${footer}"
 RCFILE
     local code=$?
     if [ "$code" -eq $RC_QUIT ]; then
@@ -617,12 +619,48 @@ RCFILE
 # Lesson screen helper
 # ---------------------------------------------------------------------
 
+# show_screen [MODE]: header, blank, body, blank, the ▶ line, blank, footer,
+# lower rule, blank (A11 C1). MODE picks the footer (lesson by default; also
+# recall, gate, cleared, module-cleared). The ▶ line is the body's last
+# paragraph; it always has exactly one blank row above and below it.
 show_screen() {
+    local mode="${1:-lesson}" body para rest
+    body=$(cat)
     clear 2>/dev/null || printf '\n'
     panel_header
     printf '\n'
-    cat
+    para=${body##*$'\n\n'}
+    case "$para" in
+        "${INSTR}${G_PLAY}"*) rest=${body%"$para"} ;;
+        *)
+            para=${body##*$'\n'}
+            case "$para" in
+                "${INSTR}${G_PLAY}"*) rest=${body%"$para"} ;;
+                *) para=''; rest=$body ;;
+            esac
+            ;;
+    esac
+    while [ "${rest%$'\n'}" != "$rest" ]; do rest=${rest%$'\n'}; done
+    # Interim squeeze (WP-25, until WP-26 cuts the bodies): the panel may not
+    # pass PANEL_HARD_CAP rows, so interior blank rows go from the bottom up,
+    # never the one under the title. Words are never touched.
+    local rows blanks_before
+    rows=$(printf '%s\n%s\n' "$rest" "$para" | wc -l)
+    while [ $((rows + 6)) -gt "$PANEL_HARD_CAP" ]; do
+        blanks_before=${rest%$'\n\n'*}
+        [ "$blanks_before" != "$rest" ] || break
+        case "$blanks_before" in *$'\n\n'*) ;; *) break ;; esac
+        rest="$blanks_before"$'\n'"${rest##*$'\n\n'}"
+        rows=$((rows - 1))
+    done
+    if [ -n "$para" ]; then
+        printf '%s\n\n%s\n\n' "$rest" "$para"
+    else
+        printf '%s\n\n' "$rest"
+    fi
+    printf '%s\n' "$(footer_bar "$mode" "$PANEL_STAGE")"
     panel_lower_rule
+    printf '\n'
 }
 
 # Optional directory argument: the practice prompt starts there. Stages 1
@@ -1082,7 +1120,7 @@ EOF
 }
 
 stage1_gate_screen() {
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}STAGE 1 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -1278,7 +1316,7 @@ stage1_gate() {
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 1 — GATE TASK${RST}
 
 Inside the practice prompt, run each of these once. Read each output.
@@ -1296,7 +1334,7 @@ EOF
         fi
         skip_screen=0
 
-        practice "$SANDBOX/stage1" gate
+        practice "$SANDBOX/stage1"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1494,7 +1532,7 @@ EOF
 
 
 stage2_gate() {
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}STAGE 2 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -1567,7 +1605,7 @@ EOF
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 2 — GATE TASK${RST}
 
 Inside the practice prompt, do these (in any order):
@@ -1586,7 +1624,7 @@ EOF
         fi
         skip_screen=0
         setup_stage_dir 2
-        practice "$SANDBOX/stage2" gate
+        practice "$SANDBOX/stage2"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -1759,7 +1797,7 @@ stage3_verify_task() {
 }
 
 stage3_gate() {
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}STAGE 3 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -1805,7 +1843,7 @@ EOF
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 3 — GATE TASK${RST}
 
 You will work inside ${DIR}${SANDBOX}/stage3${RST}.
@@ -1826,7 +1864,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/stage3" gate
+        practice "$SANDBOX/stage3"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -2018,7 +2056,7 @@ stage4_verify_task() {
 }
 
 stage4_gate() {
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}STAGE 4 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -2092,7 +2130,7 @@ EOF
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 4 — GATE TASK${RST}
 
 Work inside ${DIR}${SANDBOX}/stage4${RST}.
@@ -2113,7 +2151,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/stage4" gate
+        practice "$SANDBOX/stage4"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -2338,7 +2376,7 @@ stage5_verify_phase2() {
 }
 
 stage5_gate() {
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}STAGE 5 — GATE${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -2391,7 +2429,7 @@ EOF
     while true; do
         stage5_seed_practice
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 5 — GATE TASK (phase 1 of 2)${RST}
 
 I've reset ${DIR}practice.txt${RST} to contain just the word ${SUB}before${RST}.
@@ -2413,7 +2451,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/stage5" gate
+        practice "$SANDBOX/stage5"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -2442,7 +2480,7 @@ EOF
         # Don't reset between phases — the learner should see their phase-1
         # 'before' state and edit forward from it.
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}STAGE 5 — GATE TASK (phase 2 of 2)${RST}
 
 Now save a real edit.
@@ -2460,7 +2498,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/stage5" gate
+        practice "$SANDBOX/stage5"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -2613,7 +2651,7 @@ stage_cleared() {
     panel_title "$next"
     next_title="$REPLY"
     PANEL_STAGE=''; PANEL_POS=''; PANEL_DONE=$n
-    show_screen <<RECAP
+    show_screen cleared <<RECAP
 ${H1}${G_OK} Stage ${n} cleared.${RST}
 
 You can now:
@@ -2623,7 +2661,7 @@ ${DIM}Next: Stage ${next} ${G_SEP} ${next_title}${RST}
 
 ${INSTR}${G_PLAY} Type ${CMD}next${INSTR} for Stage ${next}, or ${CMD}quit${INSTR} to stop here. Your place is saved.${RST}
 RECAP
-    practice "$SANDBOX" cleared
+    practice "$SANDBOX"
     return $?
 }
 
@@ -2745,7 +2783,7 @@ module_shells_verify_task() {
 
 module_shells_gate() {
     PANEL_POS=gate
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}shells — gate${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -2798,7 +2836,7 @@ EOF
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}shells — task${RST}
 
 Find out whether ${CMD}zsh${RST} is installed here, and record the answer in a
@@ -2818,7 +2856,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/shells" gate
+        practice "$SANDBOX/shells"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -2861,7 +2899,7 @@ EOF
 
 module_shells_cleared() {
     PANEL_POS=''
-    show_screen <<EOF
+    show_screen module-cleared <<EOF
 ${H1}${G_OK} shells cleared.${RST}
 
 Commands and keys from this module:
@@ -2872,7 +2910,7 @@ $(recap_line 'echo $SHELL' 'your login shell')
 
 ${INSTR}${G_PLAY} Type ${CMD}quit${INSTR} to leave, or ${CMD}next${INSTR} to start this module again.${RST}
 EOF
-    practice "$SANDBOX/shells" module-cleared
+    practice "$SANDBOX/shells"
     return $?
 }
 
@@ -3045,7 +3083,7 @@ module_env_verify_task() {
 
 module_env_gate() {
     PANEL_POS=gate
-    show_screen <<EOF
+    show_screen recall <<EOF
 ${H1}env — gate${RST}
 
 ${SUB}Recall${RST} (three questions, all three must be correct).
@@ -3100,7 +3138,7 @@ EOF
     local skip_screen=0 attempt=0
     while true; do
         if [ "$skip_screen" -eq 0 ]; then
-            show_screen <<EOF
+            show_screen gate <<EOF
 ${H1}env — task${RST}
 
 Prove that a child program can see a variable you exported. You will
@@ -3118,7 +3156,7 @@ ${INSTR}${G_PLAY} Type ${CMD}check${INSTR} when done.${RST}
 EOF
         fi
         skip_screen=0
-        practice "$SANDBOX/env" gate
+        practice "$SANDBOX/env"
         local rc=$?
         case "$rc" in
             "$RC_CHECK")
@@ -3159,7 +3197,7 @@ EOF
 
 module_env_cleared() {
     PANEL_POS=''
-    show_screen <<EOF
+    show_screen module-cleared <<EOF
 ${H1}${G_OK} env cleared.${RST}
 
 Commands and keys from this module:
@@ -3171,7 +3209,7 @@ $(recap_line "PS1='\$ '" 'change the prompt (this shell only)')
 
 ${INSTR}${G_PLAY} Type ${CMD}quit${INSTR} to leave, or ${CMD}next${INSTR} to return to the start of this module.${RST}
 EOF
-    practice "$SANDBOX/env" module-cleared
+    practice "$SANDBOX/env"
     return $?
 }
 

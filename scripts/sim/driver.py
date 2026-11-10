@@ -54,11 +54,13 @@ _ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 # for mechanical error signatures.
 _LESSON_SCREEN_RE = re.compile(r"^S[1-5]-L[0-9]$")
 # Rendered screen height (Q5). A screen starts at a clear sequence and
-# ends at the next practice prompt. The budget is on RENDERED lines: 22
-# rendered lines before the prompt equal the 20 content lines the script
-# states for itself (heredoc 20 + the blank line show_screen adds + the
-# practice footer), so a 24-row terminal still shows the prompt.
-SCREEN_BUDGET = 22
+# ends at the next practice prompt. A11: the panel (header through the
+# lower rule) is at most 19 rows; the blank row below the rule is counted
+# too, so the budget on RENDERED lines is 20 and the prompt lands on row 21
+# of a 24-row terminal. WP-25 lets lessons run to a hard cap of 22 rendered
+# rows (21 panel rows) until WP-26 cuts the bodies; the summary marks every
+# screen over SCREEN_BUDGET.
+SCREEN_BUDGET = 20
 _CLEAR_RE = re.compile(r"\x1b\[(?:H|2J|3J)")
 _PARTIAL_ESC_RE = re.compile(r"\x1b(?:\[[0-9;?]*)?$")
 

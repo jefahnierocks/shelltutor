@@ -328,16 +328,16 @@ class Recorder:
                     "the practice footer printed just before the prompt are included.\n"
                     "Logical lines are counted; a long line that wraps is one line.\n"
                     "Where one screen id has several clears (Ctrl+L, `clear`), the\n"
-                    "largest is shown. Budget: 22 rendered lines before the prompt,\n"
-                    "which equals the script's stated 20 content lines (heredoc 20 +\n"
-                    "the blank line the screen helper adds + the practice footer), so\n"
-                    "a 24-row terminal still shows the prompt. `Lines` is the raw\n"
+                    "largest is shown. Budget (A11): 20 rendered lines before the prompt,\n"
+                    "the 19-row panel (header through lower rule) plus the blank row\n"
+                    "under it, so the prompt lands on row 21 of a 24-row terminal.\n"
+                    "`Lines` is the raw "
                     "rendered count.\n\n"
                 )
                 fp.write("| Screen | Lines | Over budget |\n| --- | ---: | --- |\n")
                 order: List[str] = []
                 best: Dict[str, int] = {}
-                budget = 22
+                budget = 20
                 for row in screen_heights:
                     sid = str(row.get("screen_id") or "?")
                     budget = int(row.get("budget", budget))

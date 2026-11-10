@@ -15,7 +15,7 @@ No module exists yet, so this proves the machinery without one:
 3. A fake tutor that follows the heading convention is driven end to end
    through `run.py --module` with a table injected for the test: green
    TAP, the cleared line counts as the gate pass, `.progress` stays absent
-   and `screen-height` events carry the 22-line rendered budget. This part
+   and `screen-height` events carry the 20-line rendered budget. This part
    needs a pseudo-terminal; without one it is skipped with a message.
 
 Python 3.9 stdlib only. Nothing is written outside a temporary directory.
@@ -169,7 +169,7 @@ def check_drive() -> int:
         if not passes or not passes[-1]["payload"].get("final"):
             return _fail("no final gate-pass event")
         heights = [e for e in events if e["kind"] == "screen-height"]
-        if not heights or any(e["payload"]["budget"] != 22 for e in heights):
+        if not heights or any(e["payload"]["budget"] != 20 for e in heights):
             return _fail("screen-height events missing or wrong budget")
         with open(os.path.join(bundle, "summary.md"), encoding="utf-8") as fp:
             summary = fp.read()
