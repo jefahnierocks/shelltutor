@@ -70,6 +70,7 @@ it, or with `docs/contracts.md`, stop and report rather than choose.
 | [WP-26](WP-26-lesson-skeleton.md) | Lesson skeleton: one typeable block, body ≤ 12 rows (content; A11) | WP-25 | approved 2026-11-09 (A13) | **landed** 2cb3f53 (2026-11-09) |
 | [WP-27](WP-27-welcome-map-and-vocabulary.md) | Welcome map inside the box; "practice folder" on screen; sandbox row removed (A12; O-AW, O-AX) | WP-25 | approved 2026-11-09 | **landed** be9e86c (2026-11-09) |
 | [WP-29](WP-29-round6-copy-fixes.md) | Round-6 copy fixes: 2.3–2.5, terms, stage-folder line, Stage 5 Q3 forms, Leo persona v0.3 (F-031, O-AY..O-BG) | WP-26 | approved 2026-11-09 (A14) | ready |
+| [WP-28](WP-28-modules-skeleton.md) | Modules to the lesson skeleton; `env` gains the `SHELLTUTOR_HOME` lesson (A12, A13) | WP-29 | operator approval | drafted |
 | [WP-08](WP-08-release-prep.md) | LICENSE (MIT, decided 2026-11-07), CHANGELOG, v0.1.0 inputs | operator inputs | **yes** | part A **landed** 7d5065f; part B blocked on Phase 2 results |
 
 Loop paused 2026-11-09 after the exit test (synthetic sittings round 5, A10 item 4);
